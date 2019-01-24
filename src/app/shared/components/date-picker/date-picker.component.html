@@ -1,0 +1,6 @@
+<input class="form-control m-input"
+       style="position: relative" [(ngModel)]="inputText"
+       (focus)="showDatePicker()" readonly >
+<ngb-datepicker id="fechaDesdeDatePicker" [(ngModel)]="selectedDate" [startDate]="selectedDate"
+                *ngIf="showing" class="date-picker" #d="ngbDatepicker" (click)="selectDate()">
+</ngb-datepicker>

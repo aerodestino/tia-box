@@ -1,0 +1,18 @@
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <div class="row" style="justify-content: center">
+                <div class="m-loader" style="width: 30px;" *ngIf="!data"></div>
+            </div>
+
+            <app-facturaciones-datatable
+                    *ngIf="data"
+                    [data]="data"
+                    [filters]="filters"
+                    (filtersChange)="onFiltersChange($event)"
+                    [totalItems]="totalItems"
+            ></app-facturaciones-datatable>
+            <!--end: Datatable -->
+        </div>
+    </div>
+</div>

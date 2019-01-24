@@ -1,0 +1,10 @@
+<div class="auto-complete-container col-12">
+
+    <input class="form-control m-input col-12" (focus)="showDropdown()" (blur)="hideDropdown()" id="inputFilter"
+           [(ngModel)]="inputText" (keyup)="onTextChange()" type="text" style="width: 100%" [placeholder]="placeholder">
+    <div class="auto-complete-dropdown" *ngIf="showing" >
+        <a *ngFor="let item of itemsShowing" (click)="selectItem(item)">{{item[textField]}}</a>
+    </div>
+</div>
+
+

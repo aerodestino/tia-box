@@ -1,0 +1,43 @@
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="m-input-icon m-input-icon--left">
+                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+                           [(ngModel)]="filters.q" name="search" (keyup.enter)="onSearch()">
+                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                        <span>
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-8 m--align-right">
+                <input
+                        name="image"
+                        type="file"
+                        hidden
+                        #fileInput
+                        (change)="uploadAndSelectImage($event)"
+                >
+                <button class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="fileInput.click()">
+                        <span>
+                            <i class="fa fa-folder-open"></i>
+                            <span>
+                                Seleccionar Local
+                            </span>
+                        </span>
+                </button>
+                <div class="m-separator m-separator--dashed d-xl-none"></div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" *ngFor="let image of images">
+                <img [src]="image.web_url" (click)="onAddImage(image)">
+            </div>
+        </div>
+        <div class="row" style="justify-content: center; margin-top: 10px" *ngIf="searching">
+            <div class="m-loader" style="width: 30px;"></div>
+        </div>
+    </div>
+</div>

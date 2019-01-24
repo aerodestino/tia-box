@@ -1,0 +1,66 @@
+<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #extraForm="ngForm"
+      (submit)="onSubmit(extraForm.value)">
+    <div class="m-portlet__body">
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Nombre:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Nombre"
+                       [ngModel]="extra.nombre" #nombre="ngModel" name="nombre" required>
+                <section *ngIf="nombre.invalid && nombre.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="nombre.hasError('required')">El nombre es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Apellidos:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Apellidos"
+                       [ngModel]="extra.apellidos" #apellidos="ngModel" name="apellidos" required>
+                <section *ngIf="apellidos.invalid && apellidos.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="apellidos.hasError('required')">El apellidos es requerido</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Dirección:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Dirección"
+                       [ngModel]="extra.direccion" #direccion="ngModel" name="direccion" required>
+                <section *ngIf="direccion.invalid && direccion.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="nota.hasError('required')">La direccion es requerida</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Identificación:
+            </label>
+            <div class="col-lg-3">
+                <input type="number" class="form-control m-input" placeholder="Identificación"
+                       [ngModel]="extra.identificacion" #identificacion="ngModel" name="identificacion" required min="0">
+                <section *ngIf="identificacion.invalid && identificacion.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="identificacion.hasError('required')">El identificacion es requerida</p>
+                </section>
+            </div>
+        </div>
+
+    </div>
+    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                    <button type="submit" [disabled]="extraForm.invalid"
+                            [class]="extraForm.invalid == false ? 'btn btn-success' : 'btn btn-danger'">
+                        Aceptar
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

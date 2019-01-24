@@ -1,0 +1,51 @@
+.select-multiple-container {
+    position: relative;
+    display: inline-block;
+    padding: 0px;
+}
+.select-multiple-dropdown {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 999;
+    top: auto !important;
+    bottom: calc(100% + 2px) !important;
+}
+
+/* Links inside the dropdown */
+.select-multiple-dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.select-multiple-button {
+    padding: 5px;
+    margin: 2px;
+}
+
+.select-multiple-button i:hover {
+    color: #f1f1f9;
+    cursor: pointer;
+}
+.select-multiple-button i:active {
+    color: #f1f1c9;
+    cursor: pointer;
+}
+
+.select-multiple-button:hover {
+    background-color: #00c5dc;
+    border-bottom-color: #00c5dc;
+    cursor: default;
+}
+
+/* Change color of dropdown links on hover */
+.select-multiple-dropdown a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+

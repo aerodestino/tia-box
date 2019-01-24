@@ -1,0 +1,18 @@
+<form #f="ngForm">
+    <div class="row" style="margin-top: 10px">
+        <div class="form-group m-form__group col-md-2 col-lg-2 col-sm-12">
+            <label for="exampleSelect1">
+                Usuario
+            </label>
+            <select id="exampleSelect1" *ngIf="usuarios" class="form-control m-input" placeholder="Usuario"
+                    [(ngModel)]="filters.user_id" #user_id="ngModel" name="user_id" (change)="onChange()" required>
+                <option [ngValue]="-1">
+                    Todos
+                </option>
+                <option *ngFor="let usuario of usuarios" [value]="usuario.id">
+                   {{usuario.codigo}} {{usuario.nombre}} {{usuario.apellido}}
+                </option>
+            </select>
+        </div>
+    </div>
+</form>

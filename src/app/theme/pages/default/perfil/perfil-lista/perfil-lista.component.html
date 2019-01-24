@@ -1,0 +1,207 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="page-title">
+                {{appService.title}}
+            </h3>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="m-content" *ngIf="usuario">
+    <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
+        <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#resumenTab" role="tab">
+                Resumen
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#cuentaTab" role="tab">
+                Información Personal
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#passwordTab" role="tab">
+                Cambiar Contraseña
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#extrasTab" role="tab">
+                Usuarios Extras
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="resumenTab" role="tabpanel">
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-sm-12">
+                            <img [src]="usuario.avatar.web_url"
+                                 style="width: 150px; height: 150px; object-fit: contain">
+                            <input
+                                    name="archivo"
+                                    type="file"
+                                    hidden
+                                    #fileInput
+                                    [(ngModel)]="inputFile"
+                                    (change)="onPreviewImage($event)"
+                            >
+                            <button class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+                                    (click)="fileInput.click()" style="margin: 3px" *ngIf="!imagenNueva"
+                            >
+                                <i class="fa fa-refresh"></i>
+                                Cambiar
+                            </button>
+                            <button class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+                                    (click)="onCambiarImagen()" *ngIf="imagenNueva" style="margin: 3px"
+                            >
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            <button class="btn btn-danger m-btn m-btn--icon m-btn--air m-btn--custom"
+                                    (click)="onCancelarCambioImagen()" *ngIf="imagenNueva" style="margin: 3px"
+                            >
+                                <i class="fa fa-close"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                        <div class="col-md-7 col-lg-7 col-sm-12">
+                            <div class="row">
+                                <h3>{{usuario.nombre}} {{usuario.apellido}}</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm-12">
+                                    <span><i class="fa fa-briefcase"
+                                             style="margin-right: 5px"></i><strong>PLAN PERSONAL</strong></span><br>
+                                    <span>
+                                        <i class="fa fa-building-o" style="margin-right: 5px"></i> <strong>Dirección Física USA: </strong>SI
+                                    </span><br>
+                                    <span>
+                                        <i class="fa fa-inbox"
+                                           style="margin-right: 5px"></i> <strong>Almacenaje: </strong>15 días
+                                    </span><br>
+                                    <span>
+                                        <i class="fa fa-clock-o" style="margin-right: 5px"></i> <strong>Tiempo de Entrega: </strong>7 a 21 días
+                                    </span><br>
+                                    <span>
+                                        <i class="fa fa-file-image-o"
+                                           style="margin-right: 5px"></i> <strong>Imágenes: </strong>Por pedido del cliente
+                                    </span><br>
+                                    <span>
+                                        <i class="fa fa-bullseye" style="margin-right: 5px"></i> <strong>Rastreo de Pedidos: </strong>SI
+                                    </span><br>
+                                    <span>
+                                        <i class="fa fa-phone" style="margin-right: 5px"></i> <strong>Asistencia Online y Telefónica: </strong>SI
+                                    </span><br>
+                                </div>
+                                <div col-md-6 col-lg-6 col-sm-12>
+                                    <span style="font-size: 14px">
+                                        <strong>Casillero Internacional: </strong>
+                                    </span><br>
+                                    <span style="font-size: 14px">
+                                         {{usuario.nombre}} {{usuario.apellido}} / Enkarga
+                                    </span><br>
+                                    <span style="font-size: 14px">
+                                         {{usuario.pais.direccion}} #{{usuario.codigo}}
+                                    </span><br>
+                                    <span style="font-size: 14px">
+                                         {{usuario.pais.region}}
+                                    </span><br>
+                                    <span style="font-size: 14px">
+                                         Telf: {{usuario.pais.telefono}}
+                                    </span><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>Documento de Identidad (Solo si la Aduana de su país lo requiere)</h4>
+
+                        </div>
+                        <div class="col-12" *ngIf="usuario.identidad">
+                            <span *ngIf="usuario.identidad"
+                                  class="m--font-success">Ya subiste un documento de identidad</span><br>
+                        </div>
+                        <input
+                                name="documento"
+                                type="file"
+                                hidden
+                                #documentoInput
+                                [(ngModel)]="inputDocumento"
+                                (change)="onSubirDocumento($event)"
+                        >
+                        <button class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+                                (click)="documentoInput.click()" style="margin: 15px">
+                            <i class="fa fa-refresh"></i>
+                            Subir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="cuentaTab" role="tabpanel">
+
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <app-cuenta [usuario]="usuario" (verCupos)="verCupos($event, cuposModal)"></app-cuenta>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="passwordTab" role="tabpanel">
+
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <app-password></app-password>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="extrasTab" role="tabpanel">
+
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <app-extras-lista (verCupos)="verCupos($event, cuposModal)"></app-extras-lista>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--begin::Ver Cupos Modal-->
+<ng-template #cuposModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Cupos {{extra.nombre}} {{extra.apellidos}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-list-settings" *ngFor="let cupo of extra.cupos">
+            <h4 class="m--align-center">Arancel: {{cupo.arancel.descripcion}}</h4>
+            <div class="m-list-settings__group">
+                <div class="m-list-settings__item">
+                                        <span class="m-list-settings__item-label">
+                                            Cupo
+                                        </span>
+                    <span class="m-list-settings__item-control">
+                                            {{cupo.cupo}}
+                                        </span>
+                </div>
+                <div class="m-list-settings__item">
+                                        <span class="m-list-settings__item-label">
+                                            Valor
+                                        </span>
+                    <span class="m-list-settings__item-control">
+                                            {{cupo.valor}}
+                                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->  <!--begin::Modal-->

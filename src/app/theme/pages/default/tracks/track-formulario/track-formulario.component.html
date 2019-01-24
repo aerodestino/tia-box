@@ -1,0 +1,68 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title">
+                {{appService.title}}
+            </h3>
+        </div>
+    </div>
+</div>
+<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #trackForm="ngForm"
+      (submit)="onSubmit(trackForm.value)">
+    <div class="m-portlet__body">
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Código:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Codigo"
+                       ngModel #codigo="ngModel" name="codigo" required>
+                <section *ngIf="codigo.invalid && codigo.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="codigo.hasError('required')">El codigo es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Empresa Transporte
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Empresa"
+                       ngModel #empresa_transporte="ngModel" name="empresa_transporte" required>
+                <section *ngIf="empresa_transporte.invalid && empresa_transporte.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="empresa_transporte.hasError('required')">La empresa de transporte es requerida</p>
+                </section>
+            </div>
+        </div>
+
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Fecha Posible
+            </label>
+            <div class="input-group col-lg-3">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="fecha_posible" #fecha_posible="ngModel" ngModel
+                       ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" style="color: #575962; background-color: white"
+                            (click)="d.toggle()" type="button">
+                        <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                    <button type="submit" class="btn btn-success" [disabled]="trackForm.invalid">
+                        Aceptar
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

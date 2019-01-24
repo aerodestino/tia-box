@@ -1,0 +1,121 @@
+<table class="table table-bordered table-responsive">
+    <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Valor Total</th>
+        <th>Arancel</th>
+        <th>Tarifario</th>
+
+        <th>
+            Acciones
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="!data.length">
+        No se encontraron resultados
+    </tr>
+    <tr *ngFor="let facturacion of data">
+        <td>
+            <span *ngIf="facturacion.fecha_notificacion"> {{ facturacion.fecha_notificacion | date: "shortDate" }}</span>
+        </td>
+        <td>{{facturacion.costo}}</td>
+        <td>
+            {{facturacion.arancel?.descripcion}}
+        </td>
+        <td>{{facturacion.tarifario?.nombre}}</td>
+
+        <td>
+            <div class="col-md-3 col-sm-6">
+                <i class="fa fa-eye m--font-info" title="Detalles" style="cursor: pointer"
+                   (click)="onViewItems(facturacion.articulo,articulosModal)"></i>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <ngb-pagination [collectionSize]="totalItems" [pageSize]="filters.limit" [(page)]="page"
+                        aria-label="Default pagination" (pageChange)="onPageChange()"></ngb-pagination>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
+        <div class="m--align-right" style="justify-content: flex-end">
+            <select class="form-control m-input m-input--pill m-input--solid m-input--fixed-small" title="Warning"
+                    data-style="btn-warning"
+                    [(ngModel)]="filters.limit"
+                    name="limit" style="width: auto" (change)="onLimitChange()">
+                <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
+                    {{ numPerPage }}
+                </option>
+            </select>
+        </div>
+        <div class="m--align-right">
+            <span>Mostrando {{ registroInicialPagina}}-{{registroFinalPagina}} de {{totalItems}} registros</span>
+        </div>
+    </div>
+
+</div>
+<!--begin::Artículos Modal-->
+<ng-template #articulosModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Detalles Paquetes</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    Trackbox
+                </th>
+                <th>
+                    Track Tienda
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Peso
+                </th>
+                <th>
+                    Costo
+                </th>
+                <th>
+                    Tienda
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="!data.length">
+                No se encontraron resultados
+            </tr>
+            <tr *ngFor="let articulo of articulos">
+                <td>
+                    {{ articulo.trackbox }}
+                </td>
+                <td>
+                    {{ articulo.tracking }}
+                </td>
+                <td>
+                    {{ articulo.descripcion }}
+                    <span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
+                </td>
+                <td>
+                    {{ articulo.peso }}
+                </td>
+                <td>
+                    {{ articulo.precio_final }}
+                </td>
+                <td>
+                    {{ articulo.tienda }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+<!--end::Modal-->

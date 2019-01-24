@@ -1,0 +1,259 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title">
+                Ingrese los datos siguientes
+            </h3>
+        </div>
+    </div>
+</div>
+<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #signupForm="ngForm" (submit)="onSubmit(signupForm.value)">
+    <div class="m-portlet__body">
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Tipo Registro:
+            </label>
+            <div class="col-lg-3">
+                <select class="form-control m-input" (change)="onChange()"
+                        [(ngModel)]="tipo_registro" #tipo_registro_id="ngModel" name="tipo_registro_id" required>
+                    <option  [ngValue]="1" >
+                        Persona
+                    </option>
+                    <option [ngValue]="2">
+                        Empresa
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
+                Nombre Empresa:
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 2">
+                <input type="text" class="form-control m-input" placeholder="Empresa"
+                       ngModel #empresa="ngModel" name="empresa" required>
+                <section *ngIf="empresa.invalid && empresa.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="empresa.hasError('required')">El nombre de empresa es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Identificación:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="ID"
+                       ngModel #numero_identidad="ngModel" name="numero_identidad" required>
+                <section *ngIf="numero_identidad.invalid && numero_identidad.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="numero_identidad.hasError('required')">El ID es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
+                Nombre:
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 1">
+                <input type="text" class="form-control m-input" placeholder="Nombre"
+                       ngModel #nombre="ngModel" name="nombre" required>
+                <section *ngIf="nombre.invalid && nombre.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="nombre.hasError('required')">El nombre es requerido</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
+                Nombre Contacto:
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 2" >
+                <input type="text" class="form-control m-input" placeholder="Nombre"
+                       ngModel #nombre="ngModel" name="nombre" required>
+                <section *ngIf="nombre.invalid && nombre.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="nombre.hasError('required')">El nombre es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
+                Apellido
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 1">
+                <input type="text" class="form-control m-input" placeholder="Apellido"
+                       ngModel #apellido="ngModel" name="apellido" required>
+                <section *ngIf="apellido.invalid && apellido.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="apellido.hasError('required')">El apellido es requerida</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
+                Apellido Contacto
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 2">
+                <input type="text" class="form-control m-input" placeholder="Apellido"
+                       ngModel #apellido="ngModel" name="apellido" required>
+                <section *ngIf="apellido.invalid && apellido.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="apellido.hasError('required')">El apellido es requerida</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
+                Dirección
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 1">
+                <input type="text" class="form-control m-input" placeholder="Dirección"
+                       ngModel #direccion="ngModel" name="direccion" required>
+                <section *ngIf="direccion.invalid && direccion.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="direccion.hasError('required')">La dirección es requerida</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
+                Dirección
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 2">
+                <input type="text" class="form-control m-input" placeholder="Dirección"
+                       ngModel #direccion="ngModel" name="direccion" required>
+                <section *ngIf="direccion.invalid && direccion.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="direccion.hasError('required')">La dirección es requerida</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                País
+            </label>
+            <div class="col-lg-3">
+                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paises">
+                    <input type="text" class="form-control"/>
+                </div>
+                <select *ngIf="paises" class="form-control m-input" placeholder="País" (change)="getProvincias(pais_id.value)"
+                       ngModel  #pais_id="ngModel" name="pais_id" required>
+                    <option *ngFor="let pais of paises" [value]="pais.id" >
+                        {{pais.nombre}}
+                    </option>
+                </select>
+            </div>
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
+                Provincia/Departamento
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 1">
+                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!provincias">
+                    <input type="text" class="form-control"/>
+                </div>
+                <select *ngIf="provincias" class="form-control m-input" placeholder="Provincia" (change)="getCiudades(provincia_id.value)"
+                         ngModel #provincia_id="ngModel" name="provincia_id" required>
+                    <option *ngFor="let provincia of provincias" [value]="provincia.id" >
+                        {{provincia.nombre}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
+                Provincia/Departamento
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 2">
+                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!provincias">
+                    <input type="text" class="form-control"/>
+                </div>
+                <select *ngIf="provincias"  class="form-control m-input" placeholder="Provincia" (change)="getCiudades(provincia_id.value)"
+                         ngModel #provincia_id="ngModel" name="provincia_id" required>
+                    <option *ngFor="let provincia of provincias" [value]="provincia.id" >
+                        {{provincia.nombre}}
+                    </option>
+                </select>
+            </div>
+            <label class="col-lg-2 col-form-label" >
+                Ciudad
+            </label>
+            <div class="col-lg-3">
+                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!ciudades">
+                    <input type="text" class="form-control"/>
+                </div>
+                <select *ngIf="ciudades" ngModel class="form-control m-input" placeholder="Ciudad"
+                        #ciudad_id="ngModel" name="ciudad_id" required>
+                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.id" >
+                        {{ciudad.nombre}}
+                    </option>
+                </select>
+            </div>
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
+                Código Postal:
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 1">
+                <input type="text" class="form-control m-input" placeholder="Código Postal"
+                       ngModel #codigo_postal="ngModel" name="codigo_postal" required>
+                <section *ngIf="codigo_postal.invalid && codigo_postal.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="codigo_postal.hasError('required')">El Código Postal es requerido</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
+                Código Postal:
+            </label>
+            <div class="col-lg-3" *ngIf="tipo_registro == 2">
+                <input type="text" class="form-control m-input" placeholder="Código Postal"
+                       ngModel #codigo_postal="ngModel" name="codigo_postal" required>
+                <section *ngIf="codigo_postal.invalid && codigo_postal.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="codigo_postal.hasError('required')">El Código Postal es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Teléfono:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Teléfono"
+                       ngModel #telefono1="ngModel" name="telefono1">
+            </div>
+        </div>
+
+
+
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+               Usuario (Email):
+            </label>
+            <div class="col-lg-3">
+                <input type="email" class="form-control m-input" placeholder="email"
+                       ngModel #email="ngModel" name="email" required
+                       pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                <section *ngIf="email.invalid && email.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="email.hasError('required')">El email es requerido</p>
+                    <p class="m--font-danger" *ngIf="email.hasError('pattern')">Introduzca un email válido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Contraseña:
+            </label>
+            <div class="col-lg-3">
+                <input type="password" class="form-control m-input" placeholder="Contraseña"
+                       ngModel #password="ngModel" name="password" required>
+                <section *ngIf="password.invalid && password.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="password.hasError('required')">El email es requerido</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Repetir Contraseña
+            </label>
+            <div class="col-lg-3">
+                <input type="password" class="form-control m-input" placeholder="Contraseña"
+                       ngModel #password_repeat="ngModel" name="password_repeat" required>
+                <section *ngIf="password_repeat.invalid && (password_repeat.dirty)" class="bs">
+                    <p class="m--font-danger" *ngIf="password_repeat.hasError('required')">Debe repetir la contraseña</p>
+                </section>
+                <section *ngIf="(password_repeat.value != password.value) && (password_repeat.dirty)" class="bs">
+                    <p class="m--font-danger">Las contraseñas deben ser iguales</p>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                    <button type="submit" class="btn btn-success" [disabled]="signupForm.invalid">
+                        Aceptar
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

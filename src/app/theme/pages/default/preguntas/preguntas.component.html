@@ -1,0 +1,27 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="page-title">
+                Preguntas Frecuentes
+            </h3>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="m-content">
+    <div class="m-portlet m-portlet--bordered" *ngFor="let pregunta of preguntas">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectPregunta(pregunta)">
+                        {{pregunta.pregunta}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body" *ngIf="pregunta.selected">
+            {{pregunta.respuesta}}
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title">
+                {{appService.title}}
+            </h3>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <!--begin: Search Form -->
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <app-list-header (create)="onCreate()" [filters]="filters" (filtersChange)="onFiltersChange($event)"></app-list-header>
+            </div>
+            <!--end: Search Form -->        <!--begin: Datatable -->
+            <div class="row" style="justify-content: center">
+                <div class="m-loader" style="width: 30px;" *ngIf="!data"></div>
+            </div>
+
+            <app-tracks-datatable
+                    *ngIf="data"
+                    [data]="data"
+                    [filters]="filters"
+                    (filtersChange)="onFiltersChange($event)"
+                    [totalItems]="totalItems"
+            ></app-tracks-datatable>
+            <!--end: Datatable -->
+        </div>
+    </div>
+</div>

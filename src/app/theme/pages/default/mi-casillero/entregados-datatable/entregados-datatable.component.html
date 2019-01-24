@@ -1,0 +1,110 @@
+
+<table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+    <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Articulo/WR</th>
+        <th>Tracking</th>
+        <th>Descripción</th>
+        <th>Tienda</th>
+        <th>Peso</th>
+        <th>Valor</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="!data.length">
+        No se encontraron resultados
+    </tr>
+    <tr *ngFor="let articulo of data">
+        <td>
+            {{articulo.facturacion.fecha_ingreso | date: "shortDate"}}
+        </td>
+        <td>
+            {{articulo.envio.warehouse}}
+        </td>
+        <td>
+            {{articulo.tracking}}
+        </td>
+        <td>
+            <span *ngIf="!articulo.media || !articulo.media[0]">{{articulo.descripcion}}</span>
+            <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media && articulo.media[0]" (click)="onVerImagenes(articulo)">{{articulo.descripcion}}</span>
+        </td>
+        <td>
+            {{articulo.tienda}}
+        </td>
+        <td>
+            {{articulo.peso}}
+        </td>
+        <td>
+            {{articulo.precio}}
+        </td>
+        <td>
+            <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <ngb-pagination [collectionSize]="totalItems" [pageSize]="filters.limit" [(page)]="page"
+                        aria-label="Default pagination" (pageChange)="onPageChange()"
+                        [maxSize]="5"></ngb-pagination>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
+        <div class="m--align-right" style="justify-content: flex-end">
+            <select class="form-control m-input m-input--pill m-input--solid m-input--fixed-small" title="Warning"
+                    data-style="btn-warning"
+                    [(ngModel)]="filters.limit"
+                    name="limit" style="width: auto" (change)="onLimitChange()">
+                <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
+                    {{numPerPage}}
+                </option>
+            </select>
+        </div>
+        <div class="m--align-right">
+            <span>Mostrando {{registroInicialPagina}}-{{registroFinalPagina}} de {{totalItems}} registros</span>
+        </div>
+    </div>
+
+</div>
+
+<!--begin::Articulo Detalles Modal-->
+<ng-template #articuloDetallesModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Detalles</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+            <thead>
+            <tr>
+                <th>Embarcado</th>
+                <th>Enviado</th>
+                <th>#Guia</th>
+                <th>Empresa</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    {{item.fecha_envio | date: "shortDate"}}
+                </td>
+                <td>
+                    {{item.facturacion.fecha_guia | date: "shortDate"}}
+                </td>
+                <td>
+                    {{item.facturacion.guia}}
+                </td>
+                <td>
+                    {{item.facturacion.courier.nombre}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</ng-template>
+<!--end::Modal-->  <!--begin::Modal-->

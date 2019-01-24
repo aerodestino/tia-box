@@ -1,0 +1,14 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="page-title" *ngIf="resourceData">
+                {{resourceData.titulo}}
+            </h3>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="m-content" *ngIf="resourceData">
+
+    <div [innerHtml]="resourceData.texto" ></div>
+</div>

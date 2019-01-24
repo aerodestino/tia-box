@@ -1,0 +1,217 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="page-title">
+                {{appService.title}}
+            </h3>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="m-subheader" *ngIf="appService.user">
+    <div class="d-flex align-items-center">
+        <div class="profile-info col-12">
+            <h1 class="col-12">
+                {{appService.user.nombre}} {{appService.user.apellido}}
+            </h1>
+            <div class="row">
+                <div class="col-md-5 col-lg-5 col-sm-12">
+                    <span style="font-size: 14px">
+                        <i class="fa fa-briefcase"></i>
+                        <strong>Dirección de Entrega: </strong> {{appService.user.direccion}}
+                    </span><br>
+                    <span style="font-size: 14px" *ngIf="appService.user.provincia">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Provincia/Departamento: </strong> {{appService.user.provincia.nombre}}
+                    </span><br>
+                    <span style="font-size: 14px">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Ciudad: </strong> {{appService.user.ciudad.nombre}}
+                    </span><br>
+                </div>
+                <div class="col-md-7 col-lg-7 col-sm-12">
+                    <span style="font-size: 14px">
+                        <strong>Casillero Internacional: </strong>
+                    </span><br>
+                    <span style="font-size: 14px">
+                         {{appService.user.nombre}} {{appService.user.apellido}} / Enkarga
+                    </span><br>
+                    <span style="font-size: 14px">
+                         {{appService.user.pais.direccion}} #{{appService.user.codigo}}
+                    </span><br>
+                    <span style="font-size: 14px">
+                         {{appService.user.pais.region}}
+                    </span><br>
+                    <span style="font-size: 14px">
+                         Telf: {{appService.user.pais.telefono}}
+                    </span><br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('enBodegaSeleccionadas')">
+            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#enBodegaTab" role="tab">
+                En Bodega <span class="m-badge m-badge--success" *ngIf="totalEnBodega">{{totalEnBodega}}</span>
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('enTransitoSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#enTransitoTab" role="tab">
+                En Tránsito <span class="m-badge m-badge--success" *ngIf="totalEnTransito">{{totalEnTransito}}</span>
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('facturacionSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#facturacionTab" role="tab">
+                Facturación <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('rutaNacionalSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#rutaNacionalTab" role="tab">
+                Ruta Nacional <span class="m-badge m-badge--success" *ngIf="totalRutaNacional">{{totalRutaNacional}}</span>
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('entregadosSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#entregadosTab" role="tab">
+                Entregados <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" id="enBodegaTab" role="tabpanel" [class.active]="enBodegaSeleccionadas">
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+
+                    <!--begin: Search Form -->
+                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <app-en-bodega-list-header
+                            (consolidar)="onConsolidar()"
+                            (embarcar)="onEmbarcar()"
+                        ></app-en-bodega-list-header>
+                    </div>
+                    <!--end: Search Form -->        <!--begin: Datatable -->
+
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;" *ngIf="!enBodega && enBodegaSeleccionadas"></div>
+                    </div>
+                    <app-en-bodega-datatable
+                            *ngIf="enBodega && enBodegaSeleccionadas"
+                            [data]="enBodega"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalEnBodega"
+                            [filters]="enBodegaFilters"
+                            (addFactura)="onSubirFactura($event)"
+                            (filtersChange)="onEnBodegaFiltersChange($event)"
+                            (selectionChange)="onEnBodegaSelectionChange($event)"
+                    ></app-en-bodega-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+
+        <div class="tab-pane" id="enTransitoTab" role="tabpanel" [class.active]="enTransitoSeleccionadas">
+
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;"
+                             *ngIf="!enTransito && enTransitoSeleccionadas"></div>
+                    </div>
+                    <app-en-transito-datatable
+                            *ngIf="enTransito && enTransitoSeleccionadas"
+                            [data]="enTransito"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalEnTransito"
+                            [filters]="enTransitoFilters"
+                            (filtersChange)="onEnTransitoFiltersChange($event)"
+                    ></app-en-transito-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+
+        <div class="tab-pane" id="facturacionTab" role="tabpanel" [class.active]="facturacionSeleccionadas">
+
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;"
+                             *ngIf="!facturacion && facturacionSeleccionadas"></div>
+                    </div>
+                    <app-facturacion-datatable
+                            *ngIf="facturacion && facturacionSeleccionadas"
+                            [data]="facturacion"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalFacturacion"
+                            [filters]="facturacionFilters"
+                            (filtersChange)="onFacturacionFiltersChange($event)"
+                    ></app-facturacion-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+
+        <div class="tab-pane" id="rutaNacionalTab" role="tabpanel" [class.active]="rutaNacionalSeleccionadas">
+
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;"
+                             *ngIf="!rutaNacional && rutaNacionalSeleccionadas"></div>
+                    </div>
+                    <app-ruta-nacional-datatable
+                            *ngIf="rutaNacional && rutaNacionalSeleccionadas"
+                            [data]="rutaNacional"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalRutaNacional"
+                            [filters]="rutaNacionalFilters"
+
+                            (filtersChange)="onRutaNacionalFiltersChange($event)"
+                    ></app-ruta-nacional-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+
+        <div class="tab-pane" id="entregadosTab" role="tabpanel" [class.active]="entregadosSeleccionadas">
+
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;"
+                             *ngIf="!entregados && entregadosSeleccionadas"></div>
+                    </div>
+                    <app-entregados-datatable
+                            *ngIf="entregados && entregadosSeleccionadas"
+                            [data]="entregados"
+                            [totalItems]="totalEntregados"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [filters]="entregadosFilters"
+
+                            (filtersChange)="onEntregadosFiltersChange($event)"
+                    ></app-entregados-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--begin::Images Modal-->
+<ng-template #imagenesModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Imágenes</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body row">
+        <div *ngFor="let image of articulo.media" class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+            <img [src]="image.web_url" style="width: 150px; height: 150px; object-fit: contain">
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->  <!--begin::Modal-->
+

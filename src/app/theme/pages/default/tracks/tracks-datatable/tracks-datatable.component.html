@@ -1,0 +1,107 @@
+<table class="table table-bordered table-responsive">
+    <thead>
+    <tr>
+        <th>
+            Código
+        </th>
+        <th>
+            Empresa Transporte
+        </th>
+        <th>
+            Fecha Ingreso
+        </th>
+        <th>
+            Fecha Posible
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="!data.length">
+        No se encontraron resultados
+    </tr>
+    <tr *ngFor="let track of data">
+        <td>
+            {{track.codigo}}
+        </td>
+        <td>
+            {{track.empresa_transporte}}
+        </td>
+        <td>
+            {{track.fecha_ingreso | date: "shortDate"}}
+        </td>
+        <td>
+            {{track.fecha_posible | date: "shortDate"}}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <ngb-pagination [collectionSize]="totalItems" [pageSize]="filters.limit" [(page)]="page"
+                        aria-label="Default pagination" (pageChange)="onPageChange()"></ngb-pagination>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
+        <div class="m--align-right" style="justify-content: flex-end">
+            <select class="form-control m-input m-input--pill m-input--solid m-input--fixed-small" title="Warning"
+                    data-style="btn-warning"
+                    [(ngModel)]="filters.limit"
+                    name="limit" style="width: auto" (change)="onLimitChange()">
+                <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
+                    {{numPerPage}}
+                </option>
+            </select>
+        </div>
+        <div class="m--align-right">
+            <span>Mostrando {{registroInicialPagina}}-{{registroFinalPagina}} de {{totalItems}} registros</span>
+        </div>
+    </div>
+
+</div>
+
+<!--begin::Delete Confirmation Modal-->
+<ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar Eliminación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el recurso?</p><br>
+        <span class="m--font-danger">Esta acción es irreversible!!</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger m-btn--air" (click)="c('aceptar')">Aceptar</button>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #viewModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Mostrar Provincia/Departamento</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <div *ngIf="resourceData" class="m-list-settings__group">
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Nombre
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ resourceData.nombre }}
+                         </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</ng-template>
+<!--end::Modal-->

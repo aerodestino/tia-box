@@ -1,0 +1,32 @@
+<div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--singin m-login--2 m-login-2--skin-2" id="m_login" style="background-image: url(./assets/app/media/img//bg/bg-3.jpg);">
+	<div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
+		<div class="m-login__container">
+			<div class="m-login__logo">
+				<a href="#">
+					<img src="./assets/img/logo/logo-login.png">
+				</a>
+			</div>
+			<div class="m-login__signin">
+				<div class="m-login__head">
+					<h3 class="m-login__title">
+						Introduzca usuario y contraseña
+					</h3>
+				</div>
+				<form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="m-login__form m-form" action="">
+					<ng-template #alertSignin></ng-template>
+					<div class="form-group m-form__group">
+						<input class="form-control m-input"   type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">
+					</div>
+					<div class="form-group m-form__group">
+						<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel">
+					</div>
+					<div class="m-login__form-action">
+						<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+							Sign In
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

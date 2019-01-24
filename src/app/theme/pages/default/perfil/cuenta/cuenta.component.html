@@ -1,0 +1,164 @@
+<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #cuentaForm="ngForm"
+      (submit)="onSubmit(cuentaForm.value)">
+    <div class="m-portlet__body">
+        <div class="form-group m-form__group row">
+            <span class="col-lg-2 m-badge m-badge--wide m-badge--success" (click)="onVerCupos()" style="cursor: pointer">Ver Cupos</span>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Identificación:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="ID" disabled
+                       [(ngModel)]="usuario.numero_identidad" #numero_identidad="ngModel" name="numero_identidad"
+                       required>
+                <section *ngIf="numero_identidad.invalid && numero_identidad.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="numero_identidad.hasError('required')">El ID es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Usuario (Email):
+            </label>
+            <div class="col-lg-3">
+                <input type="email" class="form-control m-input" placeholder="email" disabled
+                       [(ngModel)]="usuario.email" #email="ngModel" name="email" required>
+                <section *ngIf="email.invalid && email.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="email.hasError('required')">El email es requerido</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row" *ngIf="usuario.empresa">
+            <label class="col-lg-2 col-form-label">
+                Nombre Empresa:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Empresa"
+                       [(ngModel)]="usuario.empresa" #empresa="ngModel" name="empresa" required>
+                <section *ngIf="empresa.invalid && empresa.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="empresa.hasError('required')">El nombre de empresa es requerido</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Nombre Contacto:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Nombre"
+                       [(ngModel)]="usuario.nombre" #nombre="ngModel" name="nombre" required>
+                <section *ngIf="nombre.invalid && nombre.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="nombre.hasError('required')">El nombre es requerido</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Apellido Contacto
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Apellido"
+                       [(ngModel)]="usuario.apellido" #apellido="ngModel" name="apellido" required>
+                <section *ngIf="apellido.invalid && apellido.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="apellido.hasError('required')">El apellido es requerida</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Celular:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Celular"
+                       [(ngModel)]="usuario.celular" #celular="ngModel" name="celular">
+            </div>
+
+            <label class="col-lg-2 col-form-label">
+                País
+            </label>
+            <div class="col-lg-3">
+                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paises">
+                    <input type="text" class="form-control"/>
+                </div>
+                <select *ngIf="paises" class="form-control m-input" placeholder="País"
+                        (change)="getProvincias(pais_id.value)"
+                        [(ngModel)]="usuario.pais.id" #pais_id="ngModel" name="pais_id" required>
+                    <option *ngFor="let pais of paises" [value]="pais.id">
+                        {{pais.nombre}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Provincia/Departamento
+            </label>
+            <div class="col-lg-3">
+                <select class="form-control m-input" placeholder="Provincia" (change)="getCiudades(provincia_id.value)"
+                        [(ngModel)]="usuario.provincia.id" #provincia_id="ngModel" name="provincia_id" required>
+                    <option *ngFor="let provincia of provincias" [value]="provincia.id">
+                        {{provincia.nombre}}
+                    </option>
+                </select>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Ciudad
+            </label>
+            <div class="col-lg-3">
+                <select  class="form-control m-input" placeholder="Ciudad"
+                        [(ngModel)]="usuario.ciudad.id" #ciudad_id="ngModel" name="ciudad_id" required>
+                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
+                        {{ciudad.nombre}}
+                    </option>
+                </select>
+            </div>
+
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Dirección
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Dirección"
+                       [(ngModel)]="usuario.direccion" #direccion="ngModel" name="direccion" required>
+                <section *ngIf="direccion.invalid && direccion.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="direccion.hasError('required')">La dirección es requerida</p>
+                </section>
+            </div>
+            <label class="col-lg-2 col-form-label">
+                Código Postal:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Código Postal"
+                       [(ngModel)]="usuario.codigo_postal" #codigo_postal="ngModel" name="codigo_postal" required>
+                <section *ngIf="codigo_postal.invalid && codigo_postal.dirty" class="bs">
+                    <p class="m--font-danger" *ngIf="codigo_postal.hasError('required')">El Código Postal es
+                        requerido</p>
+                </section>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-lg-2 col-form-label">
+                Recibir Boletines:
+            </label>
+            <div class="col-3">
+                <span class="m-switch m-switch--icon">
+                    <label>
+                        <input type="checkbox" checked="checked" name="boletines" [ngModel]="usuario.boletines">
+                        <span></span>
+                    </label>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                    <button type="submit" class="btn btn-success" [disabled]="cuentaForm.invalid">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

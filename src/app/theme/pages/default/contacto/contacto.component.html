@@ -1,0 +1,33 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="page-title">
+                Contáctanos
+            </h3>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+                Si no encuentras la respuesta a lo que buscas, no dudes de contactarnos via email o telefónica y uno
+                de nuestros representantes se comunicará contigo para ayudarte con todo lo referente a tus compras en USA.
+            </p>
+            <input class="form-control m-input" [(ngModel)]="correo.subject" placeholder="Asunto" style="margin: 5px">
+            <input class="form-control m-input" [(ngModel)]="correo.nombre" disabled style="margin: 5px">
+            <input class="form-control m-input" [(ngModel)]="correo.from" disabled style="margin: 5px">
+            <input class="form-control m-input" [(ngModel)]="correo.telefono" placeholder="Teléfono" style="margin: 5px">
+            <textarea class="form-control m-input" [(ngModel)]="correo.body" placeholder="Mensaje" style="margin: 5px">
+            </textarea>
+            <button class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom" style="margin: 5px"
+                    (click)="onEnviar()"
+            >
+                <i class="fa fa-plane"></i>
+                Enviar
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+<div class="row" style="justify-content: center">
+    <div class="m-loader" style="width: 30px;" *ngIf="!extra"></div>
+</div>
+<app-extra-formulario [extra]="extra" (cancel)="cancel()" (submitForm)="updateItem($event)" *ngIf="extra"></app-extra-formulario>

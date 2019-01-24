@@ -1,0 +1,126 @@
+<table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+    <thead>
+    <tr>
+        <th>
+        </th>
+
+        <th>Fecha</th>
+        <th>Código</th>
+        <th>Tracking</th>
+        <th>Descripción</th>
+        <th>Tienda</th>
+        <th>Peso</th>
+        <th>Dim</th>
+        <th>Vol</th>
+        <th>Valor</th>
+        <th>Documento</th>
+        <th>Cargo</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="!data.length">
+        No se encontraron resultados
+    </tr>
+    <tr *ngFor="let articulo of data">
+        <td>
+            <label class="m-checkbox" *ngIf="articulo.factura && !articulo.enviar && !articulo.consolidado">
+                <input type="checkbox" [(ngModel)]="articulo.selected" (change)="changeAllState()">
+                <span></span>
+            </label>
+            <i class="fa fa-dropbox" *ngIf="articulo.consolidado"></i>
+            <i class="fa fa-plane" *ngIf="articulo.enviar"></i>
+            <i class="fa fa-save m--font-success" title="Actualizar" *ngIf="articulo.facturaExcel" style="cursor: pointer;"
+               (click)="subirFactura(articulo)">
+
+            </i>
+        </td>
+        <td>
+            {{articulo.fecha_bodega | date: "shortDate"}}
+        </td>
+        <td>
+            {{articulo.trackbox}}
+        </td>
+        <td>
+           {{articulo.tracking}}
+        </td>
+        <td>
+            <span *ngIf="!articulo.media || !articulo.media[0]">{{articulo.descripcion}}</span>
+            <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media && articulo.media[0]" (click)="onVerImagenes(articulo)">{{articulo.descripcion}}</span>
+        </td>
+        <td>
+            {{articulo.tienda}}
+        </td>
+        <td>
+            {{articulo.peso}}
+        </td>
+        <td>
+            {{articulo.largo}}x{{articulo.ancho}}x{{articulo.alto}}
+        </td>
+        <td>
+            {{articulo.volumen}}
+        </td>
+        <td>
+            <input class="form-control m-input" *ngIf="!articulo.factura" [(ngModel)]="articulo.precio">
+            <span *ngIf="articulo.factura">{{articulo.precio}}</span>
+        </td>
+        <td>
+            <i class="fa fa-check m--font-success" title="Presenta Factura" *ngIf="articulo.factura"></i>
+            <input
+                    name="archivo"
+                    type="file"
+                    hidden
+                    #fileInput
+                    (change)="onSubirFactura($event, articulo)"
+            >
+            <i class="fa fa-folder-open m--font-success" style="cursor: pointer" title="Subir Factura" (click)="fileInput.click()" *ngIf="!articulo.factura"></i>
+            <span *ngIf="articulo.facturaExcel">{{articulo.facturaExcel.name}}</span>
+        </td>
+        <td>
+            {{articulo.precio_final}}
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <ngb-pagination [collectionSize]="totalItems" [pageSize]="filters.limit" [(page)]="page"
+                        aria-label="Default pagination" (pageChange)="onPageChange()"
+                        [maxSize]="5"></ngb-pagination>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
+        <div class="m--align-right" style="justify-content: flex-end">
+            <select class="form-control m-input m-input--pill m-input--solid m-input--fixed-small" title="Warning"
+                    data-style="btn-warning"
+                    [(ngModel)]="filters.limit"
+                    name="limit" style="width: auto" (change)="onLimitChange()">
+                <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
+                    {{numPerPage}}
+                </option>
+            </select>
+        </div>
+        <div class="m--align-right">
+            <span>Mostrando {{registroInicialPagina}}-{{registroFinalPagina}} de {{totalItems}} registros</span>
+        </div>
+    </div>
+
+</div>
+
+<!--begin::Delete Confirmation Modal-->
+<ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar Eliminación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el recurso?</p><br>
+        <span class="m--font-danger">Esta acción es irreversible!!</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger m-btn--air" (click)="c('aceptar')">Aceptar</button>
+    </div>
+</ng-template>
+<!--end::Modal-->  <!--begin::Modal-->
+

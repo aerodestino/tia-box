@@ -1,0 +1,225 @@
+<!-- begin::Quick Sidebar -->
+<div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light" appunwraptag="">
+
+	<div class="m-quick-sidebar__content m--hide">
+		<span id="m_quick_sidebar_close" class="m-quick-sidebar__close">
+			<i class="la la-close"></i>
+		</span>
+		<ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+			<li class="nav-item m-tabs__item">
+				<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_quick_sidebar_tabs_logs" role="tab" >
+					Logs
+				</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane  m-scrollable active" id="m_quick_sidebar_tabs_logs" role="tabpanel">
+				<div class="row" style="justify-content: center" *ngIf="!appService.estadisticas">
+					<div class="m-loader m-loader--success" style="width: 30px; margin-top: 10px"></div>
+				</div>
+				<div class="m-list-timeline" *ngIf="appService.estadisticas">
+					<div class="m-list-timeline__group">
+						<div class="m-list-timeline__heading">
+							Artículos
+						</div>
+						<div class="m-list-timeline__items">
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.items.total}} totales
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.items.actualizados_hoy}} actualizados hoy
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.items.creados_hoy}} creados hoy
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.items.item_relacionado}} items relacionados
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-danger"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.items.total_amazon}} de amazon
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-warning"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.items.total_bestbuy}} de bestbuy
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-warning"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.items.total_bh}} de B&H
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="m-list-timeline__group">
+						<div class="m-list-timeline__heading">
+							Skumasters
+						</div>
+						<div class="m-list-timeline__items">
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.skumasters.total}} totales
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.skumasters.creados_hoy}} creados hoy
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.skumasters.con_categoria}} con categoría
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-danger"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.skumasters.sin_categoria}} sin categoría
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-danger"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.skumasters.traducidos}} traducidos
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-danger"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.skumasters.verificados}} verificados
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-danger"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.skumasters.no_verificados}} no verificados
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="m-list-timeline__group">
+						<div class="m-list-timeline__heading">
+							Productos
+						</div>
+						<div class="m-list-timeline__items">
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.productos.total}} totales
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.productos.creados_hoy}} creados hoy
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="m-list-timeline__group">
+						<div class="m-list-timeline__heading">
+							Cálculos de importación
+						</div>
+						<div class="m-list-timeline__items">
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.calculos_importacion.total}} totales
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.calculos_importacion.creados_hoy}} creados hoy
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.calculos_importacion.actualizados_hoy}} actualizados hoy
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="m-list-timeline__group">
+						<div class="m-list-timeline__heading">
+							Cálculos de plataforma
+						</div>
+						<div class="m-list-timeline__items">
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.calculos_plataforma.total}} totales
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.calculos_plataforma.creados_hoy}} creados hoy
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-info"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.calculos_plataforma.actualizados_hoy}} actualizados hoy
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="m-list-timeline__group">
+						<div class="m-list-timeline__heading">
+							Publicaciones
+						</div>
+						<div class="m-list-timeline__items">
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.publicaciones.total}} totales
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.publicaciones.precios_actualizados}} con precios actualizados
+								</a>
+							</div>
+
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.publicaciones.produccion}} en producción
+								</a>
+							</div>
+							<div class="m-list-timeline__item">
+								<span class="m-list-timeline__badge m-list-timeline__badge--state-success"></span>
+								<a href="" class="m-list-timeline__text">
+									{{appService.estadisticas.publicaciones.test}} en test
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end::Quick Sidebar -->

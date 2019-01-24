@@ -1,0 +1,17 @@
+<div class="select-multiple-container col-12">
+    <div class="select-multiple-dropdown" *ngIf="showing" >
+        <a *ngFor="let item of itemsShowing" (click)="addItem(item)">{{item[textField]}}</a>
+    </div>
+    <input class="form-control m-input" (focus)="showDropdown()" (blur)="hideDropdown()"
+           [(ngModel)]="inputText" (keyup)="onTextChange()" type="text">
+
+    <div id="chips-container" style="height: auto" style="height: 100%">
+        <button *ngFor="let item of selection; let i = index"
+                class="btn btn-accent select-multiple-button"
+                type="button">{{item[textField]}} <i class="fa fa-close" (click)="removeItem(item)"></i></button>
+    </div>
+
+
+</div>
+
+
