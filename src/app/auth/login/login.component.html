@@ -1,12 +1,14 @@
-<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-grid--tablet-and-mobile m-grid--hor-tablet-and-mobile m-login m-login--1 m-login--singin" id="m_login">
+<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-grid--tablet-and-mobile
+ m-grid--hor-tablet-and-mobile m-login m-login--1 m-login--singin" id="m_login" style="background-color: #666">
 	<div class="m-grid__item m-grid__item--order-tablet-and-mobile-2 m-login__aside">
 		<div class="m-stack m-stack--hor m-stack--desktop">
 			<div class="m-stack__item m-stack__item--fluid">
 				<div class="m-login__wrapper">
 					<div class="m-login__logo">
 						<a href="#">
-							<img src="./assets/img/logo/klogin.png">
+							<!--<img src="./assets/img/logo/klogin.png">-->
 						</a>
+						<h1 style="color: #eee">BOX593</h1>
 					</div>
 					<div class="m-stack__item m-stack__item--center">
 						<div class="m-login__account">
@@ -14,7 +16,7 @@
 								¿Aún no tienes una cuenta?
 							</span>
 							&nbsp;&nbsp;
-							<a routerLink="/signup" class="m-link m-link--focus m-login__account-link">
+							<a routerLink="/signup" class="m-link m-login__account-link">
 								Regístrate
 							</a>
 						</div>
@@ -22,7 +24,7 @@
 					<div class="m-login__signin">
 						<div class="m-login__head">
 							<h3 class="m-login__title">
-								Log In
+								Ingresa a tu cuenta
 							</h3>
 						</div>
 						<form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="m-login__form m-form" action="">
@@ -35,7 +37,7 @@
 							</div>
 							<div class="row m-login__form-sub">
 								<div class="col m--align-left">
-									<label class="m-checkbox m-checkbox--focus">
+									<label class="m-checkbox m-checkbox--focus" style="color: #eee">
 										<input type="checkbox" name="remember" [(ngModel)]="model.remember" #remember="ngModel">
 										Recordarme
 										<span></span>
@@ -48,7 +50,8 @@
 								</div>
 							</div>
 							<div class="m-login__form-action">
-								<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom">
+								<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
+										id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom">
 									Ingresa
 								</button>
 							</div>
@@ -69,10 +72,12 @@
 								<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" id="m_email" autocomplete="off">
 							</div>
 							<div class="m-login__form-action">
-								<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+								<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
+										id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom">
 									Resetear
 								</button>
-								<button [disabled]="loading"  id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom">
+								<button [disabled]="loading"  id="m_login_forget_password_cancel"
+										class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom">
 									Cancel
 								</button>
 							</div>
