@@ -23,9 +23,14 @@ export class AppComponent implements OnInit {
         private notificationService: NotificationService,
         private usuariosService: UsuariosService) {
         this.getProfile();
-        Notification.requestPermission().then(result => {
-            this.notificationService.setPermission((result == "granted"));
-        });
+        const ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+        console.log("ios:",ios);
+
+        if(!ios) {
+            Notification.requestPermission().then(result => {
+                this.notificationService.setPermission((result == "granted"));
+            });
+        }
     }
 
     ngOnInit() {

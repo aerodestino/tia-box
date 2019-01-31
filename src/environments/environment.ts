@@ -5,6 +5,6 @@
 
 export const environment = {
     production: false,
-    API_URL: 'https://api-casillero-dev.enkarga.com/app_dev.php/',
-    CHAT_URL: 'wss://api-casillero-dev.enkarga.com/wss2/'
+    API_URL: 'http://159.89.158.221/admin-dev/web/app_dev.php/',
+    CHAT_URL: 'wss://159.89.158.221/admin-dev/web/wss2/'
 };

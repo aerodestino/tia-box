@@ -44,16 +44,19 @@ export class NotificationService {
      */
     handleNotification(msg, notif) {
         console.log(msg);
-        if(msg.titulo) {
-            let audio = new Audio("../../../../assets/sounds/notification.mp3");
-            audio.play().then(() => {
-                let notification = new Notification(msg.titulo, {icon: "../assets/img/logo/klogin.png"});
-                let self = this;
-                notification.onclick = function (event) {
-                    event.preventDefault();
-                    self.handleNotificationClick(msg);
-                }
-            });
+        if(this.notificationsGranted) {
+            if(msg.titulo) {
+                let audio = new Audio("../../../../assets/sounds/notification.mp3");
+                audio.play().then(() => {
+                    let notification = new Notification(msg.titulo, {icon: "../assets/img/logo/klogin.png"});
+                    let self = this;
+                    notification.onclick = function (event) {
+                        event.preventDefault();
+                        self.handleNotificationClick(msg);
+                    }
+                });
+            }
+
         }
 
     }
