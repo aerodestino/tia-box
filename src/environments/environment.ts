@@ -5,6 +5,6 @@
 
 export const environment = {
     production: false,
-    API_URL: 'http://159.89.158.221/admin-dev/web/app_dev.php/',
-    CHAT_URL: 'wss://159.89.158.221/admin-dev/web/wss2/'
+    API_URL: 'http://178.128.181.114/api-dev/web/app_dev.php/',
+    CHAT_URL: 'wss://178.128.181.114/api-dev/web/wss2/'
 };
