@@ -7,7 +7,6 @@ import { ProvinciasService } from "../../shared/services/api/provincias.service"
 import { CiudadesService } from "../../shared/services/api/ciudades.service";
 import { AppService } from "../../app.service";
 import { Helpers } from "../../helpers";
-import {origen_id} from "../../../../config"
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -56,7 +55,7 @@ export class RegistroUsuarioComponent implements OnInit {
     }
 
     onSubmit(datosUsuario) {
-        datosUsuario.origen_id = origen_id;
+        datosUsuario.origen_id = 1;
         this.appService.loadingMessage = "Registrando Usuario";
         Helpers.setLoading(true);
         this.usuariosService.signup(datosUsuario).subscribe(() => {
