@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "dev": "ng build --aot=true --build-optimizer --base-href front-user-dev",
+    "dev": "ng build --aot=true --build-optimizer --base-href /front-user-dev/dist/",
     "prod": "ng build --prod --build-optimizer",
     "start": "ng serve",
     "build": "ng build",
