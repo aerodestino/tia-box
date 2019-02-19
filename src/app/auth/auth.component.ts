@@ -15,7 +15,7 @@ import { SocketService } from "../shared/services/socket/socket.service";
 
 @Component({
     selector: ".m-grid.m-grid--hor.m-grid--root.m-page",
-    templateUrl: './login/login.component.html',
+    templateUrl: './login/login.component-2.html',
     encapsulation: ViewEncapsulation.None
 })
 

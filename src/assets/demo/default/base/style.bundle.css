@@ -11002,9 +11002,9 @@ body.m--skin-dark {
       width: 100%; }
 
 .m-link {
-  color: #169ef4; }
+  color: #169ef4 !important; }
   .m-link:hover {
-    color: #169ef4;
+    color: #169ef4 !important;
       border-bottom: 1px solid #169ef4;}
     .m-link:hover:after {
       border-bottom: 1px solid #169ef4;
@@ -26085,7 +26085,7 @@ select.m-select2 {
     background: rgba(67, 34, 167, 0.8); } }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__head .m-login__title {
-  color: #9e97aa; }
+  color: #eee; }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__head .m-login__desc {
   color: #aba5b6; }
@@ -26123,7 +26123,7 @@ select.m-select2 {
         filter: alpha(opacity=30) ; }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__account .m-login__account-msg {
-  color: #aba5b6; }
+  color: #eee; }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__account .m-login__account-link {
   color: #847b93; }
