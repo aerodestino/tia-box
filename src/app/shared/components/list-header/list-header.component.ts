@@ -1,25 +1,23 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
-    selector: 'app-list-header',
-    templateUrl: './list-header.component.html',
-    styles: []
+  selector: "app-list-header",
+  templateUrl: "./list-header.component.html",
+  styles: []
 })
-export class ListHeaderComponent implements OnInit {
-    @Output() create: EventEmitter<any> = new EventEmitter();
-    @Input() filters: any;
-    @Output() filtersChange: EventEmitter<any> = new EventEmitter();
-    constructor() { }
+export class ListHeaderComponent  {
+	@Input() filters: any;
+	@Input() showCreate = true;
 
-    ngOnInit() {
-    }
+  @Output() create: EventEmitter<any> = new EventEmitter();
+  @Output() filtersChange: EventEmitter<any> = new EventEmitter();
 
-    onCreate() {
-        this.create.emit();
-    }
+  onCreate() {
+    this.create.emit();
+  }
 
-    onSearch() {
-        this.filters.offset = 0;
-        this.filtersChange.emit(this.filters);
-    }
+  onSearch() {
+    this.filters.offset = 0;
+    this.filtersChange.emit(this.filters);
+  }
 }

@@ -14,9 +14,11 @@ export class AuthGuard implements CanActivate {
         const isLoggedIn = this.authService.isLoggedIn();
         const now = new Date();
         const expiresDate = new Date(localStorage.getItem('expires_date'));
-        console.log(now, expiresDate);
         const tokenStillValid = (now < expiresDate);
-        console.log(tokenStillValid);
+
+        // console.log(now, expiresDate);
+        // console.log(tokenStillValid);
+
         if (isLoggedIn && tokenStillValid)
             return isLoggedIn;
         else {

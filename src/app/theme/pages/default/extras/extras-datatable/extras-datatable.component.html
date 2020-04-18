@@ -1,182 +1,233 @@
 <table class="table table-bordered table-responsive">
-    <thead>
+  <thead>
     <tr>
-        <th>
-            Nombre
-        </th>
-        <th>
-            Apellidos
-        </th>
-        <th>
-            Dirección
-        </th>
-        <th>
-            Identificación
-        </th>
-        <th>
-            Acciones
-        </th>
+      <th>
+        Nombre
+      </th>
+      <th>
+        Apellidos
+      </th>
+      <th>
+        Dirección
+      </th>
+      <th>
+        Identificación
+      </th>
+      <th>
+        Acciones
+      </th>
     </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
     <tr *ngIf="!data.length">
-        No se encontraron resultados
+      No se encontraron resultados
     </tr>
     <tr *ngFor="let extra of data">
-        <td>
-            {{extra.nombre}}
-        </td>
-        <td>
-            {{extra.apellidos}}
-        </td>
-        <td>
-            {{extra.direccion}}
-        </td>
-        <td>
-            {{extra.identificacion}}
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-md-2 col-sm-6">
-                    <i class="fa fa-edit m--font-warning" title="Actualizar" style="cursor: pointer"
-                       (click)="onUpdate(extra.id)"></i>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer"
-                       (click)="onDelete(deleteConfirmation,extra.id)"></i>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <input
-                            type="file"
-                            hidden
-                            #documentoInput ngModel
-                            (change)="onSubirDocumento(extra.id, $event)"
-                    >
-                    <i class="fa fa-file m--font-success" title="Subir o Cambiar Documento" style="cursor: pointer"
-                       (click)="documentoInput.click()"></i>
-                </div>
-            </div>
-        </td>
+      <td>
+        {{ extra.nombre }}
+      </td>
+      <td>
+        {{ extra.apellidos }}
+      </td>
+      <td>
+        {{ extra.direccion }}
+      </td>
+      <td>
+        {{ extra.identificacion }}
+      </td>
+      <td>
+        <div class="row">
+					<div *ngIf="can.edit.extra.entity || can.edit.extra[extra.id]"
+						class="col-md-2 col-sm-6">
+            <i
+              class="fa fa-edit m--font-warning"
+              title="Actualizar"
+              style="cursor: pointer"
+              (click)="onUpdate(extra.id)"
+            ></i>
+          </div>
+					<div *ngIf="can.delete.extra.entity || can.delete.extra[extra.id]"
+						class="col-md-2 col-sm-6">
+            <i
+              class="fa fa-trash m--font-danger"
+              title="Eliminar"
+              style="cursor: pointer"
+              (click)="onDelete(deleteConfirmation, extra.id)"
+            ></i>
+					</div>
+					<div *ngIf="can.edit.extra.entity || can.edit.extra[extra.id]"
+						class="col-md-2 col-sm-6">
+            <input
+              type="file"
+              hidden
+              #documentoInput
+              ngModel
+              (change)="onSubirDocumento(extra.id, $event)"
+            />
+            <i
+              class="fa fa-file m--font-success"
+              title="Subir o Cambiar Documento"
+              style="cursor: pointer"
+              (click)="documentoInput.click()"
+            ></i>
+          </div>
+        </div>
+      </td>
     </tr>
-    </tbody>
+  </tbody>
 </table>
 
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-12">
-        <ngb-pagination [collectionSize]="totalItems" [pageSize]="filters.limit" [(page)]="page"
-                        aria-label="Default pagination" (pageChange)="onPageChange()"></ngb-pagination>
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <ngb-pagination
+      [collectionSize]="totalItems"
+      [pageSize]="filters.limit"
+      [(page)]="page"
+      aria-label="Default pagination"
+      (pageChange)="onPageChange()"
+    ></ngb-pagination>
+  </div>
+  <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
+    <div class="m--align-right" style="justify-content: flex-end">
+      <select
+        class="form-control m-input m-input--pill m-input--solid m-input--fixed-small"
+        title="Warning"
+        data-style="btn-warning"
+        [(ngModel)]="filters.limit"
+        name="limit"
+        style="width: auto"
+        (change)="onLimitChange()"
+      >
+        <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
+          {{ numPerPage }}
+        </option>
+      </select>
     </div>
-    <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
-        <div class="m--align-right" style="justify-content: flex-end">
-            <select class="form-control m-input m-input--pill m-input--solid m-input--fixed-small" title="Warning"
-                    data-style="btn-warning"
-                    [(ngModel)]="filters.limit"
-                    name="limit" style="width: auto" (change)="onLimitChange()">
-                <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
-                    {{numPerPage}}
-                </option>
-            </select>
-        </div>
-        <div class="m--align-right">
-            <span>Mostrando {{registroInicialPagina}}-{{registroFinalPagina}} de {{totalItems}} registros</span>
-        </div>
+    <div class="m--align-right">
+      <span
+        >Mostrando {{ registroInicialPagina }}-{{ registroFinalPagina }} de
+        {{ totalItems }} registros</span
+      >
     </div>
-
+  </div>
 </div>
 
 <!--begin::Delete Confirmation Modal-->
 <ng-template #deleteConfirmation let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title">Confirmar Eliminación</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <p>¿Está seguro que desea eliminar el recurso?</p><br>
-        <span class="m--font-danger">Esta acción es irreversible!!</span>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger m-btn--air" (click)="c('aceptar')">Aceptar</button>
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmar Eliminación</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>¿Está seguro que desea eliminar el recurso?</p>
+    <br />
+    <span class="m--font-danger">Esta acción es irreversible!!</span>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger m-btn--air"
+      (click)="c('aceptar')"
+    >
+      Aceptar
+    </button>
+  </div>
 </ng-template>
 <!--end::Modal-->
 
 <!--begin::View  Modal-->
 <ng-template #viewModal let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title">Mostrar Extra</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="m-portlet__head-caption">
-            <div class="m-list-settings">
-                <div *ngIf="resourceData" class="m-list-settings__group">
-                    <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label">
-                            Nombre
-                        </span>
-                        <span class="m-list-settings__item-control">
-                          {{ resourceData.nombre }}
-                         </span>
-                    </div>
-                    <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label">
-                            Telefono
-                        </span>
-                        <span class="m-list-settings__item-control">
-                          {{ resourceData.telefono }}
-                         </span>
-                    </div>
-                    <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label">
-                            Nota Extra
-                        </span>
-                        <span class="m-list-settings__item-control">
-                          {{ resourceData.nota }}
-                         </span>
-                    </div>
-                    <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label">
-                            Precio Libra
-                        </span>
-                        <span class="m-list-settings__item-control">
-                          {{ resourceData.precio_libra }}
-                         </span>
-                    </div>
-                    <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label">
-                            Bodegaje
-                        </span>
-                        <span class="m-list-settings__item-control">
-                          {{ resourceData.bodegaje }}
-                         </span>
-                    </div>
-                    <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label">
-                            Tramite
-                        </span>
-                        <span class="m-list-settings__item-control">
-                          {{resourceData.tramite}}
-                         </span>
-                    </div>
+  <div class="modal-header">
+    <h4 class="modal-title">Mostrar Extra</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="m-portlet__head-caption">
+      <div class="m-list-settings">
+        <div *ngIf="resourceData" class="m-list-settings__group">
+          <div class="m-list-settings__item">
+            <span class="m-list-settings__item-label">
+              Nombre
+            </span>
+            <span class="m-list-settings__item-control">
+              {{ resourceData.nombre }}
+            </span>
+          </div>
+          <div class="m-list-settings__item">
+            <span class="m-list-settings__item-label">
+              Telefono
+            </span>
+            <span class="m-list-settings__item-control">
+              {{ resourceData.telefono }}
+            </span>
+          </div>
+          <div class="m-list-settings__item">
+            <span class="m-list-settings__item-label">
+              Nota Extra
+            </span>
+            <span class="m-list-settings__item-control">
+              {{ resourceData.nota }}
+            </span>
+          </div>
+          <div class="m-list-settings__item">
+            <span class="m-list-settings__item-label">
+              Precio Libra
+            </span>
+            <span class="m-list-settings__item-control">
+              {{ resourceData.precio_libra }}
+            </span>
+          </div>
+          <div class="m-list-settings__item">
+            <span class="m-list-settings__item-label">
+              Bodegaje
+            </span>
+            <span class="m-list-settings__item-control">
+              {{ resourceData.bodegaje }}
+            </span>
+          </div>
+          <div class="m-list-settings__item">
+            <span class="m-list-settings__item-label">
+              Tramite
+            </span>
+            <span class="m-list-settings__item-control">
+              {{ resourceData.tramite }}
+            </span>
+          </div>
 
-                    <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label">
-                         Estado
-                        </span>
-                        <span class="m-list-settings__item-control">
-                         <span class="m-badge m-badge--success m-badge--wide" *ngIf="resourceData.status">Activo</span>
-                         <span class="m-badge m-badge--danger m-badge--wide" *ngIf="!resourceData.status">Inactivo</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
+          <div class="m-list-settings__item">
+            <span class="m-list-settings__item-label">
+              Estado
+            </span>
+            <span class="m-list-settings__item-control">
+              <span
+                class="m-badge m-badge--success m-badge--wide"
+                *ngIf="resourceData.status"
+                >Activo</span
+              >
+              <span
+                class="m-badge m-badge--danger m-badge--wide"
+                *ngIf="!resourceData.status"
+                >Inactivo</span
+              >
+            </span>
+          </div>
         </div>
-
+      </div>
     </div>
+  </div>
 </ng-template>
 <!--end::Modal-->
