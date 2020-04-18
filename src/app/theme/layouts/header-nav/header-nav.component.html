@@ -3,11 +3,11 @@
     <div class="m-container m-container--fluid m-container--full-height">
         <div class="m-stack m-stack--ver m-stack--desktop">
             <!-- BEGIN: Brand -->
-            <div class="m-stack__item m-brand  m-brand--skin-dark">
+            <div class="m-stack__item m-brand  m-brand--skin-dark" style="background-color: rgba(38, 38, 38, 1); width: 180px;">
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
                         <a routerLink="/index" class="m-brand__logo-wrapper">
-                            <img alt="" src="./assets/img/logo/logo_dentro.png"/>
+                            <img alt="" src="./assets/img/logo/logo_dentro.png" height="50" width="auto" />
                         </a>
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <!-- END: Brand -->
-            <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav" style="background-color: #efefef">
+            <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav" style="background-color: rgba(38, 38, 38, 1)">
                 <!-- BEGIN: Horizontal Menu -->
                 <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark"
                         id="m_aside_header_menu_mobile_close_btn">
@@ -271,7 +271,10 @@
 									<span class="m-topbar__userpic">
 										<img [src]="appService.user.avatar.web_url"
                                              class="m--img-rounded m--marginless m--img-centered"
-                                             *ngIf="appService.user" alt=""/>
+                                             *ngIf="appService.user && appService.user.avatar" alt="{{appService.user.nombre}}"/>
+                                        <img [src]="defaultAvatar"
+                                             class="m--img-rounded m--marginless m--img-centered"
+                                             *ngIf="appService.user && !appService.user.avatar" alt="{{appService.user.nombre}}"/>
 									</span>
                                     <span class="m-topbar__username m--hide" *ngIf="appService.user">
 										{{appService.user.nombre}}
@@ -284,8 +287,14 @@
                                              style="background: url(./assets/img/fondo-notificaciones.jpg); background-size: cover;">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
-                                                    <img [src]="appService.user.avatar.web_url" *ngIf="appService.user"
-                                                         class="m--img-rounded m--marginless" alt=""/>
+                                                    <img [src]="appService.user.avatar.web_url" 
+                                                        *ngIf="appService.user && appService.user.avatar"
+                                                         class="m--img-rounded m--marginless" 
+                                                         alt="{{appService.user.nombre}}"/>
+                                                    <img [src]="defaultAvatar" 
+                                                        *ngIf="appService.user && !appService.user.avatar"
+                                                         class="m--img-rounded m--marginless" 
+                                                         alt="{{appService.user.nombre}}"/>
                                                 </div>
                                                 <div class="m-card-user__details">
 													<span class="m-card-user__name m--font-weight-500"

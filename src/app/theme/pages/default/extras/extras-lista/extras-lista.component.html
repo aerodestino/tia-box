@@ -1,50 +1,66 @@
 <!--begin: Search Form -->
 <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-    <app-list-header (create)="openCreate(crearExtraModal)" [filters]="filters"
-                     (filtersChange)="onFiltersChange($event)"></app-list-header>
+  <app-list-header
+    [filters]="filters"
+    [showCreate]="can.create.extra.entity"
+    (create)="openCreate(crearExtraModal)"
+    (filtersChange)="onFiltersChange($event)"
+  ></app-list-header>
 </div>
-<!--end: Search Form -->        <!--begin: Datatable -->
+<!--end: Search Form -->
+<!--begin: Datatable -->
 <div class="row" style="justify-content: center">
-    <div class="m-loader" style="width: 30px;" *ngIf="!data"></div>
+  <div class="m-loader" style="width: 30px;" *ngIf="!data"></div>
 </div>
 
 <app-extras-datatable
-        *ngIf="data"
-        [data]="data"
-        (update)="openUpdate($event, actualizarExtraModal)"
-        (delete)="onDelete($event)"
-        (view)="onView($event)"
-        [filters]="filters"
-        (filtersChange)="onFiltersChange($event)"
-        [totalItems]="totalItems"
-        (verCupos)="onVerCupos($event)"
+  *ngIf="data"
+  [data]="data"
+  (update)="openUpdate($event, actualizarExtraModal)"
+  (delete)="onDelete($event)"
+  (view)="onView($event)"
+  [filters]="filters"
+  (filtersChange)="onFiltersChange($event)"
+  [totalItems]="totalItems"
+  (verCupos)="onVerCupos($event)"
 ></app-extras-datatable>
 <!--end: Datatable -->
 
 <!--begin::Delete Confirmation Modal-->
 <ng-template #crearExtraModal let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title">Crear Extra</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <app-crear-extra (creado)="cerrarModal()"></app-crear-extra>
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title">Crear Extra</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-crear-extra (creado)="cerrarModal()"></app-crear-extra>
+  </div>
 </ng-template>
 <!--end::Modal-->
 
 <!--begin::Delete Confirmation Modal-->
 <ng-template #actualizarExtraModal let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title">Actualizar Extra</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <app-actualizar-extra [id]="id" (updated)="cerrarModal()"></app-actualizar-extra>
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title">Actualizar Extra</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-actualizar-extra
+      [id]="id"
+      (updated)="cerrarModal()"
+    ></app-actualizar-extra>
+  </div>
 </ng-template>
 <!--end::Modal-->

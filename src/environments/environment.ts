@@ -4,7 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-    production: false,
-    API_URL: 'https://api.box593.com/app_dev.php/',
-    CHAT_URL: 'wss://api.box593.com/wss2/'
+  production: false,
+  API_URL: "https://api.box593.com/app_dev.php/",
+  // API_URL: "http://localhost:81/box593-api/web/app_dev.php/",
+  CHAT_URL: "wss://api.box593.com/wss2/"
 };

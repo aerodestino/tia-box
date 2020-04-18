@@ -1,28 +1,37 @@
 <div class="row align-items-center">
-    <div class="col-xl-8 order-2 order-xl-1">
-        <div class="form-group m-form__group row align-items-center">
-            <div class="col-md-4">
-                <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
-                           [(ngModel)]="filters.q" name="search" (keyup.enter)="onSearch()">
-                    <span class="m-input-icon__icon m-input-icon__icon--left">
-                        <span>
-                            <i class="fa fa-search"></i>
-                        </span>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-        <button class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="onCreate()">
+  <div class="col-xl-8 order-2 order-xl-1">
+    <div class="form-group m-form__group row align-items-center">
+      <div class="col-md-4">
+        <div class="m-input-icon m-input-icon--left">
+          <input
+            type="text"
+            class="form-control m-input m-input--solid"
+            placeholder="Search..."
+            [(ngModel)]="filters.q"
+            name="search"
+            (keyup.enter)="onSearch()"
+          />
+          <span class="m-input-icon__icon m-input-icon__icon--left">
             <span>
-                <i class="fa fa-plus"></i>
-                <span>
-                    Crear
-                </span>
+              <i class="fa fa-search"></i>
             </span>
-        </button>
-        <div class="m-separator m-separator--dashed d-xl-none"></div>
+          </span>
+        </div>
+      </div>
     </div>
+  </div>
+	<div *ngIf="showCreate"
+		class="col-xl-4 order-1 order-xl-2 m--align-right">
+    <button
+      class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
+      (click)="onCreate()">
+      <span>
+        <i class="fa fa-plus"></i>
+        <span>
+          Crear
+        </span>
+      </span>
+    </button>
+    <div class="m-separator m-separator--dashed d-xl-none"></div>
+  </div>
 </div>

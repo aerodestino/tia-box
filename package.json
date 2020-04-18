@@ -1,5 +1,5 @@
 {
-  "name": "default",
+  "name": "box593",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -10,9 +10,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "postinstall": "npm run tsformat",
-    "tsformat": "tsfmt -r"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -58,6 +56,7 @@
     "@angular/cli": "1.5.0",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "node-sass": "^4.12.0"
   }
 }
