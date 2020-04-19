@@ -1,211 +1,222 @@
 <div class="m-subheader">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
-            <h3 class="m-subheader__title">
-                CALCULADORA
+            <h3 class="page-title">
+                Calculadora
             </h3>
         </div>
     </div>
 </div>
-<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #calculadoraForm="ngForm"
-      (submit)="calcular(calculadoraForm.value, resultadosModal)">
-    <div class="m-portlet__body">
-        <div class="form-group m-form__group row">
-            <label class="col-lg-2 col-form-label">
-                Peso
-            </label>
-            <div class="col-lg-3">
-                <input type="number" min="0" class="form-control m-input" placeholder="Peso"
-                       ngModel #peso="ngModel" name="peso">
-            </div>
-            <label class="col-lg-2 col-form-label">
-                Ancho
-            </label>
-            <div class="col-lg-3">
-                <input type="number" min="0" class="form-control m-input" placeholder="Ancho"
-                       ngModel #ancho="ngModel" name="ancho">
-            </div>
-        </div>
-        <div class="form-group m-form__group row">
-            <label class="col-lg-2 col-form-label">
-                Largo
-            </label>
-            <div class="col-lg-3">
-                <input type="number" min="0" class="form-control m-input" placeholder="Largo"
-                       ngModel #largo="ngModel" name="largo">
-            </div>
-            <label class="col-lg-2 col-form-label">
-                Alto
-            </label>
-            <div class="col-lg-3">
-                <input type="number" min="0" class="form-control m-input" placeholder="Alto"
-                       ngModel #alto="ngModel" name="alto">
-            </div>
-        </div>
-        <div class="form-group m-form__group row">
-            <label class="col-lg-2 col-form-label">
-                Valor Declarado
-            </label>
-            <div class="col-lg-3">
-                <input type="number" min="0" class="form-control m-input" placeholder="Valor Declarado"
-                       ngModel #precio="ngModel" name="precio">
-            </div>
-            <label class="col-lg-2 col-form-label">
-                Arancel
-            </label>
-            <div class="col-lg-3">
-                <select class="form-control m-input" placeholder="Arancel"
-                        ngModel #arancel_id="ngModel" name="arancel_id" required>
-                    <option *ngFor="let arancel of aranceles" [ngValue]="arancel.id">
-                        {{arancel.descripcion}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group m-form__group row">
-            <label class="col-lg-2 col-form-label">
-                Tarifario
-            </label>
-            <div class="col-lg-3">
-                <select class="form-control m-input" placeholder="Tarifario"
-                        ngModel #tarifario_id="ngModel" name="tarifario_id" required>
-                    <option *ngFor="let tarifario of tarifarios" [ngValue]="tarifario.id">
-                        {{tarifario.nombre}}
-                    </option>
-                </select>
-            </div>
-        </div>
+<hr>
 
-    </div>
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
 
-    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-        <div class="m-form__actions m-form__actions--solid">
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-10">
-                    <button type="submit" class="btn btn-success" [disabled]="calculadoraForm.invalid">
-                        Calcular
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #calculadoraForm="ngForm" 
+                (submit)="calcular(calculadoraForm.value, resultadosModal)">
+                <div class="m-portlet__body">
+                    <div class="form-group m-form__group row">
+                        <label class="col-md-2 col-form-label">
+                            Peso
+                        </label>
+                        <div class="col-md-2">
+                            <input type="number" min="0" class="form-control m-input" placeholder="Peso"
+                                ngModel #peso="ngModel" name="peso">
+                        </div>
+                        <label class="col-md-2 col-form-label">
+                            Ancho
+                        </label>
+                        <div class="col-md-2">
+                            <input type="number" min="0" class="form-control m-input" placeholder="Ancho"
+                                ngModel #ancho="ngModel" name="ancho">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-md-2 col-form-label">
+                            Largo
+                        </label>
+                        <div class="col-md-2">
+                            <input type="number" min="0" class="form-control m-input" placeholder="Largo"
+                                ngModel #largo="ngModel" name="largo">
+                        </div>
+                        <label class="col-md-2 col-form-label">
+                            Alto
+                        </label>
+                        <div class="col-md-2">
+                            <input type="number" min="0" class="form-control m-input" placeholder="Alto"
+                                ngModel #alto="ngModel" name="alto">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-md-2 col-form-label">
+                            Valor Declarado
+                        </label>
+                        <div class="col-md-2">
+                            <input type="number" min="0" class="form-control m-input" placeholder="Valor Declarado"
+                                ngModel #precio="ngModel" name="precio">
+                        </div>
+                        <label class="col-md-2 col-form-label">
+                            Arancel
+                        </label>
+                        <div class="col-md-2">
+                            <select class="form-control m-input" placeholder="Arancel"
+                                    ngModel #arancel_id="ngModel" name="arancel_id" required>
+                                <option *ngFor="let arancel of aranceles" [ngValue]="arancel.id">
+                                    {{arancel.descripcion}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-md-2 col-form-label">
+                            Tarifario
+                        </label>
+                        <div class="col-md-2">
+                            <select class="form-control m-input" placeholder="Tarifario"
+                                    ngModel #tarifario_id="ngModel" name="tarifario_id" required>
+                                <option *ngFor="let tarifario of tarifarios" [ngValue]="tarifario.id">
+                                    {{tarifario.nombre}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions--solid">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-lg-10">
+                                <button type="submit" class="btn btn-success" [disabled]="calculadoraForm.invalid">
+                                    Calcular
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!--begin::Delete Confirmation Modal-->
+            <ng-template #resultadosModal let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">Resultados</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-            </div>
-        </div>
-    </div>
-</form>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 m--align-center">
+                            <h4>Total Gastos</h4>
+                        </div>
+                        <div class="col-12 m--align-center">
+                            <h2>{{resultado.precio_final}}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <h4>TOTAL TRANSPORTE</h4>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.total_transporte}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Flete</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.flete}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Seguro</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.seguro}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Fuel</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.fuel}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Sobrepeso</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.sobrepeso}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Cargo Volumen</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.cubicacion}}</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <h4>Impuestos Aproximados</h4>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.impuesto_total}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Arancel</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.impuesto_arancel}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Impuesto Extra</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.cargos_extra}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Impuesto Extra 2</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.fodinfa}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Tasa</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.ice}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>I.V.A</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.impuesto_iva}}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <!--end::Modal-->
 
-<!--begin::Delete Confirmation Modal-->
-<ng-template #resultadosModal let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title">Resultados</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-12 m--align-center">
-                <h4>Total Gastos</h4>
-            </div>
-            <div class="col-12 m--align-center">
-                <h2>{{resultado.precio_final}}</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <h4>TOTAL TRANSPORTE</h4>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.total_transporte}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Flete</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.flete}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Seguro</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.seguro}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Fuel</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.fuel}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Sobrepeso</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.sobrepeso}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Cargo Volumen</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.cubicacion}}</span>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <h4>Impuestos Aproximados</h4>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.impuesto_total}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Arancel</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.impuesto_arancel}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Impuesto Extra</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.cargos_extra}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Impuesto Extra 2</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.fodinfa}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>Tasa</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.ice}}</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 m--align-left">
-                <span>I.V.A</span>
-            </div>
-            <div class="col-6 m--align-right">
-                <span>{{resultado.impuesto_iva}}</span>
-            </div>
         </div>
     </div>
-</ng-template>
-<!--end::Modal-->
+</div>
+

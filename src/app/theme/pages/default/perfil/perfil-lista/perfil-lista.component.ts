@@ -63,7 +63,7 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
       let reader = new FileReader();
 
       reader.onload = (event1: any) => {
-        this.imagenVieja = this.usuario.avatar ? this.usuario.avatar.web_url : this.defaultAvatar;
+        this.imagenVieja = this.usuario.avatar && this.usuario.avatar.web_url ? this.usuario.avatar.web_url : this.defaultAvatar;
         this.usuario.avatar.web_url = event1.target.result;
       };
 

@@ -1,17 +1,24 @@
 <div class="row align-items-center">
     <div class="col-12 m--align-right">
-        <button class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
-                (click)="onEmbarcar()"
-        >
+        <button *ngIf="totalEnBodega > 0" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onEmbarcar()" >
             <i class="fa fa-plane"></i>
             Embarcar
         </button>
-        <button class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
-                (click)="onConsolidar()"
-        >
+        <button *ngIf="totalEnBodega <= 0" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onEmbarcar()" disabled >
+            <i class="fa fa-plane"></i>
+            Embarcar
+        </button>
+        <button *ngIf="totalEnBodega > 0" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onConsolidar()" >
             <i class="fa fa-dropbox"></i>
             Consolidar
         </button>
-
+        <button *ngIf="totalEnBodega <= 0" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+            (click)="onConsolidar()" disabled >
+        <i class="fa fa-dropbox"></i>
+        Consolidar
+    </button>
     </div>
 </div>
