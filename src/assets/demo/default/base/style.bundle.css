@@ -22189,13 +22189,13 @@ body.m-portlet--fullscreen {
   border: 0; }
 
 .table.table-striped tbody th, .table.table-striped tbody td {
-  border1: 0; }
+  border: 0; }
 
 .m-table.m-table--head-no-border thead th {
   border-top: 0; }
 
 .m-table.m-table--head-bg-brand thead th {
-  background: #38b549;
+  background: #2626269f;
   color: #ffffff;
   border-bottom: 0;
   border-top: 0; }

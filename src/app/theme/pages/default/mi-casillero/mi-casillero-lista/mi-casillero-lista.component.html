@@ -86,7 +86,7 @@
 
                     <!--begin: Search Form -->
                     <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-                        <app-en-bodega-list-header
+                        <app-en-bodega-list-header [totalEnBodega]="totalEnBodega"
                             (consolidar)="onConsolidar()"
                             (embarcar)="onEmbarcar()"
                         ></app-en-bodega-list-header>

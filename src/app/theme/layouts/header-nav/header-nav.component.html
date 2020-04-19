@@ -271,10 +271,10 @@
 									<span class="m-topbar__userpic">
 										<img [src]="appService.user.avatar.web_url"
                                              class="m--img-rounded m--marginless m--img-centered"
-                                             *ngIf="appService.user && appService.user.avatar" alt="{{appService.user.nombre}}"/>
+                                             *ngIf="appService.user && appService.user.avatar.web_url" alt="{{appService.user.nombre}}"/>
                                         <img [src]="defaultAvatar"
                                              class="m--img-rounded m--marginless m--img-centered"
-                                             *ngIf="appService.user && !appService.user.avatar" alt="{{appService.user.nombre}}"/>
+                                             *ngIf="appService.user && !appService.user.avatar.web_url" alt="{{appService.user.nombre}}"/>
 									</span>
                                     <span class="m-topbar__username m--hide" *ngIf="appService.user">
 										{{appService.user.nombre}}
@@ -288,11 +288,11 @@
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
                                                     <img [src]="appService.user.avatar.web_url" 
-                                                        *ngIf="appService.user && appService.user.avatar"
+                                                        *ngIf="appService.user && appService.user.avatar.web_url"
                                                          class="m--img-rounded m--marginless" 
                                                          alt="{{appService.user.nombre}}"/>
                                                     <img [src]="defaultAvatar" 
-                                                        *ngIf="appService.user && !appService.user.avatar"
+                                                        *ngIf="appService.user && !appService.user.avatar.web_url"
                                                          class="m--img-rounded m--marginless" 
                                                          alt="{{appService.user.nombre}}"/>
                                                 </div>
@@ -341,7 +341,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li id="m_quick_sidebar_toggle" class="m-nav__item">
+                            <li id="m_quick_sidebar_toggle" class="m-nav__item m--hide">
                                 <a href="#" class="m-nav__link m-dropdown__toggle" (click)="getEstadisticas()">
 									<span class="m-nav__link-icon">
 										<i class="flaticon-grid-menu"></i>
