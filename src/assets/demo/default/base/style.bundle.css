@@ -6153,42 +6153,42 @@ a.text-dark:focus, a.text-dark:hover {
 
 .btn-focus {
   color: #fff;
-  background-color: #7FBE00;
-  border-color: #7FBE00; }
+  background-color: #b5b6b5;
+  border-color: #b5b6b5; }
   .btn-focus:hover {
     color: #fff;
-    background-color: #5D8B00;
-    border-color: #5D8B00; }
+    background-color: #b5b6b5;
+    border-color: #b5b6b5; }
   .btn-focus:focus, .btn-focus.focus {
-    box-shadow: 0 0 0 3px #5D8B00; }
+    box-shadow: 0 0 0 3px #b5b6b5; }
   .btn-focus.disabled, .btn-focus:disabled {
-    background-color: #7FBE00;
-    border-color: #7FBE00; }
+    background-color: #b5b6b5;
+    border-color: #b5b6b5; }
   .btn-focus:active, .btn-focus.active,
   .show > .btn-focus.dropdown-toggle {
-    background-color: #5D8B00;
+    background-color: #b5b6b5;
     background-image: none;
-    border-color: #5D8B00; }
+    border-color: #b5b6b5; }
 
 .btn-outline-focus {
-  color: #7FBE00;
+  color: #b5b6b5;
   background-color: transparent;
   background-image: none;
-  border-color: #7FBE00; }
+  border-color: #b5b6b5; }
   .btn-outline-focus:hover {
     color: #ffffff;
-    background-color: #7FBE00;
-    border-color: #7FBE00; }
+    background-color: #b5b6b5;
+    border-color: #b5b6b5; }
   .btn-outline-focus:focus, .btn-outline-focus.focus {
-    box-shadow: 0 0 0 3px #7FBE00; }
+    box-shadow: 0 0 0 3px #b5b6b5; }
   .btn-outline-focus.disabled, .btn-outline-focus:disabled {
-    color: #7FBE00;
+    color: #b5b6b5;
     background-color: transparent; }
   .btn-outline-focus:active, .btn-outline-focus.active,
   .show > .btn-outline-focus.dropdown-toggle {
     color: #ffffff;
-    background-color: #7FBE00;
-    border-color: #7FBE00; }
+    background-color: #b5b6b5;
+    border-color: #b5b6b5; }
 
 .btn-primary {
   color: #fff;
@@ -6615,24 +6615,24 @@ a.text-dark:focus, a.text-dark:hover {
   .alert.m-alert--outline.alert-focus {
     color: #575962;
     background-color: #ffffff;
-    border-color: #7FBE00;
-    color: #7FBE00;
+    border-color: #b5b6b5;
+    color: #b5b6b5;
     font-weight: 400; }
     .alert.m-alert--outline.alert-focus hr {
       border-top-color: #8b0be6; }
     .alert.m-alert--outline.alert-focus .alert-link {
       color: #3f4047; }
     .alert.m-alert--outline.alert-focus .close {
-      color: #7FBE00; }
+      color: #b5b6b5; }
     .alert.m-alert--outline.alert-focus .m-alert__icon i {
-      color: #7FBE00; }
+      color: #b5b6b5; }
     .alert.m-alert--outline.alert-focus.m-alert--icon-solid .m-alert__icon {
       position: relative;
-      background: #7FBE00; }
+      background: #b5b6b5; }
       .alert.m-alert--outline.alert-focus.m-alert--icon-solid .m-alert__icon i {
         color: #ffffff; }
       .alert.m-alert--outline.alert-focus.m-alert--icon-solid .m-alert__icon span {
-        border-left-color: #7FBE00; }
+        border-left-color: #b5b6b5; }
   .alert.m-alert--outline.alert-primary {
     color: #575962;
     background-color: #ffffff;
@@ -6960,13 +6960,13 @@ a.text-dark:focus, a.text-dark:hover {
     color: #f0f0f0; }
 
 .nav.nav-pills.nav-pills--focus .nav-link.active {
-  background: #7FBE00;
+  background: #b5b6b5;
   color: #ffffff; }
   .nav.nav-pills.nav-pills--focus .nav-link.active i {
     color: #f0f0f0; }
 
 .nav.nav-pills.nav-pills--focus .nav-item.show .nav-link {
-  background: #7FBE00;
+  background: #b5b6b5;
   color: #ffffff; }
   .nav.nav-pills.nav-pills--focus .nav-item.show .nav-link i {
     color: #f0f0f0; }
@@ -7621,16 +7621,16 @@ body.m--skin-dark {
   color: #ffffff !important; }
 
 .m--font-focus {
-  color: #7FBE00 !important; }
+  color: #b5b6b5 !important; }
 
 .m--font-inverse-focus {
   color: #ffffff !important; }
 
 .m--bg-focus {
-  background-color: #7FBE00 !important; }
+  background-color: #b5b6b5 !important; }
 
 .m--bg-fill-focus {
-  background-color: #7FBE00 !important;
+  background-color: #b5b6b5 !important;
   color: #ffffff !important; }
 
 .m--font-primary {
@@ -10661,12 +10661,12 @@ body.m--skin-dark {
       color: #00dcf6; }
   .m-tabs-line.m-tabs-line--focus.nav.nav-tabs .nav-link:hover,
   .m-tabs-line.m-tabs-line--focus a.m-tabs__link:hover {
-    border-bottom: 1px solid #7FBE00; }
+    border-bottom: 1px solid #b5b6b5; }
   .m-tabs-line.m-tabs-line--focus.nav.nav-tabs .nav-link:hover, .m-tabs-line.m-tabs-line--focus.nav.nav-tabs .nav-link.active,
   .m-tabs-line.m-tabs-line--focus a.m-tabs__link:hover,
   .m-tabs-line.m-tabs-line--focus a.m-tabs__link.active {
-    color: #7FBE00;
-    border-bottom: 1px solid #7FBE00; }
+    color: #b5b6b5;
+    border-bottom: 1px solid #b5b6b5; }
     .m-tabs-line.m-tabs-line--focus.nav.nav-tabs .nav-link:hover > i, .m-tabs-line.m-tabs-line--focus.nav.nav-tabs .nav-link.active > i,
     .m-tabs-line.m-tabs-line--focus a.m-tabs__link:hover > i,
     .m-tabs-line.m-tabs-line--focus a.m-tabs__link.active > i {
@@ -10807,12 +10807,12 @@ body.m--skin-dark {
       color: #00dcf6; }
   .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus.nav.nav-tabs .nav-link:hover,
   .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus a.m-tabs__link:hover {
-    border-bottom: 1px solid #7FBE00; }
+    border-bottom: 1px solid #b5b6b5; }
   .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus.nav.nav-tabs .nav-link:hover, .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus.nav.nav-tabs .nav-link.active,
   .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus a.m-tabs__link:hover,
   .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus a.m-tabs__link.active {
-    color: #7FBE00;
-    border-bottom: 1px solid #7FBE00; }
+    color: #b5b6b5;
+    border-bottom: 1px solid #b5b6b5; }
     .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus.nav.nav-tabs .nav-link:hover > i, .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus.nav.nav-tabs .nav-link.active > i,
     .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus a.m-tabs__link:hover > i,
     .m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--focus a.m-tabs__link.active > i {
@@ -10945,7 +10945,7 @@ body.m--skin-dark {
   color: #ffffff; }
 
 .m-badge.m-badge--focus {
-  background-color: #7FBE00;
+  background-color: #b5b6b5;
   color: #ffffff; }
 
 .m-badge.m-badge--primary {
@@ -11045,7 +11045,7 @@ body.m--skin-dark {
       filter: alpha(opacity=30) ; }
 
 .m-link.m-link--focus {
-  color: #7FBE00; }
+  color: #b5b6b5; }
   .m-link.m-link--focus:hover {
     color: #7c0acd; }
     .m-link.m-link--focus:hover:after {
@@ -11184,9 +11184,9 @@ body.m--skin-dark {
     border-bottom: 1px dashed #507255; }
 
 .m-separator.m-separator--focus {
-  border-bottom: 1px solid #7FBE00; }
+  border-bottom: 1px solid #b5b6b5; }
   .m-separator.m-separator--focus.m-separator--dashed {
-    border-bottom: 1px dashed #7FBE00; }
+    border-bottom: 1px dashed #b5b6b5; }
 
 .m-separator.m-separator--primary {
   border-bottom: 1px solid white; }
@@ -11253,7 +11253,7 @@ code {
       padding-right: 3.5rem; }
   .btn.m-btn--custom {
     padding: 0.75rem 2rem;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 400;
     font-family: Poppins; }
     .btn.m-btn--custom.btn-sm, .btn-group-sm > .btn.m-btn--custom {
@@ -11271,7 +11271,7 @@ code {
   .btn.m-btn--label-accent {
     color: #507255; }
   .btn.m-btn--label-focus {
-    color: #7FBE00; }
+    color: #b5b6b5; }
   .btn.m-btn--label-primary {
     color: white; }
   .btn.m-btn--label-success {
@@ -11620,9 +11620,9 @@ code {
 .btn-outline-focus.m-btn--air,
 .btn-focus.m-btn--air,
 .m-btn--gradient-from-focus.m-btn--air {
-  -webkit-box-shadow: 0px 5px 10px 2px #7FBE00;
-  -moz-box-shadow: 0px 5px 10px 2px #7FBE00;
-  box-shadow: 0px 5px 10px 2px #7FBE00; }
+  -webkit-box-shadow: 0px 5px 10px 2px #b5b6b5;
+  -moz-box-shadow: 0px 5px 10px 2px #b5b6b5;
+  box-shadow: 0px 5px 10px 2px #b5b6b5; }
   .btn-outline-focus.m-btn--air.focus, .btn-outline-focus.m-btn--air:focus, .btn-outline-focus.m-btn--air:hover,
   .btn-focus.m-btn--air.focus,
   .btn-focus.m-btn--air:focus,
@@ -11630,9 +11630,9 @@ code {
   .m-btn--gradient-from-focus.m-btn--air.focus,
   .m-btn--gradient-from-focus.m-btn--air:focus,
   .m-btn--gradient-from-focus.m-btn--air:hover {
-    -webkit-box-shadow: 0px 5px 10px 2px #7FBE00;
-    -moz-box-shadow: 0px 5px 10px 2px #7FBE00;
-    box-shadow: 0px 5px 10px 2px #7FBE00; }
+    -webkit-box-shadow: 0px 5px 10px 2px #b5b6b5;
+    -moz-box-shadow: 0px 5px 10px 2px #b5b6b5;
+    box-shadow: 0px 5px 10px 2px #b5b6b5; }
 
 .btn-outline-primary.m-btn--air,
 .btn-primary.m-btn--air,
@@ -11812,13 +11812,13 @@ code {
   .btn.m-btn--gradient-from-brand.m-btn--gradient-to-focus {
     background: #38b549;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-brand.m-btn--gradient-to-primary {
     background: #38b549;
@@ -11941,13 +11941,13 @@ code {
   .btn.m-btn--gradient-from-metal.m-btn--gradient-to-focus {
     background: #c4c5d6;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-metal.m-btn--gradient-to-primary {
     background: #c4c5d6;
@@ -12070,13 +12070,13 @@ code {
   .btn.m-btn--gradient-from-light.m-btn--gradient-to-focus {
     background: #ffffff;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-light.m-btn--gradient-to-primary {
     background: #ffffff;
@@ -12199,13 +12199,13 @@ code {
   .btn.m-btn--gradient-from-accent.m-btn--gradient-to-focus {
     background: #507255;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-accent.m-btn--gradient-to-primary {
     background: #507255;
@@ -12271,9 +12271,9 @@ code {
 
 .btn.m-btn--hover-focus:hover, .btn.m-btn--hover-focus.active, .btn.m-btn--hover-focus:active, .btn.m-btn--hover-focus:focus,
 .show > .btn.m-btn--hover-focus.dropdown-toggle {
-  border-color: #7FBE00 !important;
+  border-color: #b5b6b5 !important;
   color: #ffffff !important;
-  background-color: #7FBE00 !important; }
+  background-color: #b5b6b5 !important; }
   .btn.m-btn--hover-focus:hover i, .btn.m-btn--hover-focus.active i, .btn.m-btn--hover-focus:active i, .btn.m-btn--hover-focus:focus i,
   .show > .btn.m-btn--hover-focus.dropdown-toggle i {
     color: #ffffff !important; }
@@ -12282,114 +12282,114 @@ code {
   color: #ffffff;
   border: 0 !important; }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-brand {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-metal {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-light {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-accent {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-focus {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-primary {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-success {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-info {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-warning {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-focus.m-btn--gradient-to-danger {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* Standard syntax */ }
 
 .btn.m-btn--hover-primary:not(.btn-secondary):not(.btn-outline-light) {
@@ -12457,13 +12457,13 @@ code {
   .btn.m-btn--gradient-from-primary.m-btn--gradient-to-focus {
     background: white;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-primary.m-btn--gradient-to-primary {
     background: white;
@@ -12586,13 +12586,13 @@ code {
   .btn.m-btn--gradient-from-success.m-btn--gradient-to-focus {
     background: #0CCE6B;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-success.m-btn--gradient-to-primary {
     background: #0CCE6B;
@@ -12715,13 +12715,13 @@ code {
   .btn.m-btn--gradient-from-info.m-btn--gradient-to-focus {
     background: #4D9DE0;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-info.m-btn--gradient-to-primary {
     background: #4D9DE0;
@@ -12844,13 +12844,13 @@ code {
   .btn.m-btn--gradient-from-warning.m-btn--gradient-to-focus {
     background: #FFC44A;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-warning.m-btn--gradient-to-primary {
     background: #FFC44A;
@@ -12973,13 +12973,13 @@ code {
   .btn.m-btn--gradient-from-danger.m-btn--gradient-to-focus {
     background: #E15554;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.m-btn--gradient-from-danger.m-btn--gradient-to-primary {
     background: #E15554;
@@ -13146,13 +13146,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-brand.m-btn--gradient-to-focus {
     background: #38b549;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #38b549 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #38b549 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-brand.m-btn--gradient-to-primary {
     background: #38b549;
@@ -13275,13 +13275,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-metal.m-btn--gradient-to-focus {
     background: #c4c5d6;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #c4c5d6 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #c4c5d6 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-metal.m-btn--gradient-to-primary {
     background: #c4c5d6;
@@ -13404,13 +13404,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-light.m-btn--gradient-to-focus {
     background: #ffffff;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #ffffff 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #ffffff 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-light.m-btn--gradient-to-primary {
     background: #ffffff;
@@ -13533,13 +13533,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-accent.m-btn--gradient-to-focus {
     background: #507255;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #507255 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #507255 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-accent.m-btn--gradient-to-primary {
     background: #507255;
@@ -13605,9 +13605,9 @@ code {
 
 .btn.btn--skin-dark.m-btn--hover-focus:hover, .btn.btn--skin-dark.m-btn--hover-focus.active, .btn.btn--skin-dark.m-btn--hover-focus:active, .btn.btn--skin-dark.m-btn--hover-focus:focus,
 .show > .btn.btn--skin-dark.m-btn--hover-focus.dropdown-toggle {
-  border-color: #7FBE00 !important;
+  border-color: #b5b6b5 !important;
   color: #ffffff !important;
-  background-color: #7FBE00 !important; }
+  background-color: #b5b6b5 !important; }
   .btn.btn--skin-dark.m-btn--hover-focus:hover i, .btn.btn--skin-dark.m-btn--hover-focus.active i, .btn.btn--skin-dark.m-btn--hover-focus:active i, .btn.btn--skin-dark.m-btn--hover-focus:focus i,
   .show > .btn.btn--skin-dark.m-btn--hover-focus.dropdown-toggle i {
     color: #ffffff !important; }
@@ -13616,114 +13616,114 @@ code {
   color: #ffffff;
   border: 0 !important; }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-brand {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #38b549 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #38b549 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-metal {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #c4c5d6 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #c4c5d6 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-light {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #ffffff 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #ffffff 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-accent {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #507255 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #507255 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-focus {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-primary {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, white 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, white 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-success {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #0CCE6B 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #0CCE6B 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-info {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #4D9DE0 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #4D9DE0 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-warning {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #FFC44A 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #FFC44A 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-focus.m-btn--gradient-to-danger {
-    background: #7FBE00;
+    background: #b5b6b5;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: -webkit-linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: -o-linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: -moz-linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #7FBE00 30%, #E15554 100%);
+    background: linear-gradient(135deg, #b5b6b5 30%, #E15554 100%);
     /* Standard syntax */ }
 
 .btn.btn--skin-dark.m-btn--hover-primary:not(.btn-secondary):not(.btn-outline-light) {
@@ -13791,13 +13791,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-primary.m-btn--gradient-to-focus {
     background: white;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, white 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, white 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-primary.m-btn--gradient-to-primary {
     background: white;
@@ -13920,13 +13920,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-success.m-btn--gradient-to-focus {
     background: #0CCE6B;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #0CCE6B 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #0CCE6B 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-success.m-btn--gradient-to-primary {
     background: #0CCE6B;
@@ -14049,13 +14049,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-info.m-btn--gradient-to-focus {
     background: #4D9DE0;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #4D9DE0 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #4D9DE0 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-info.m-btn--gradient-to-primary {
     background: #4D9DE0;
@@ -14178,13 +14178,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-warning.m-btn--gradient-to-focus {
     background: #FFC44A;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #FFC44A 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #FFC44A 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-warning.m-btn--gradient-to-primary {
     background: #FFC44A;
@@ -14307,13 +14307,13 @@ code {
   .btn.btn--skin-dark.m-btn--gradient-from-danger.m-btn--gradient-to-focus {
     background: #E15554;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: -webkit-linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: -o-linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: -moz-linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(135deg, #E15554 30%, #7FBE00 100%);
+    background: linear-gradient(135deg, #E15554 30%, #b5b6b5 100%);
     /* Standard syntax */ }
   .btn.btn--skin-dark.m-btn--gradient-from-danger.m-btn--gradient-to-primary {
     background: #E15554;
@@ -14501,7 +14501,7 @@ code {
   background-color: #507255; }
 
 .m-spinner.m-spinner--focus {
-  background-color: #7FBE00; }
+  background-color: #b5b6b5; }
 
 .m-spinner.m-spinner--primary {
   background-color: white; }
@@ -14620,7 +14620,7 @@ code {
   border-top-color: #507255; }
 
 .m-loader.m-loader--focus:before {
-  border-top-color: #7FBE00; }
+  border-top-color: #b5b6b5; }
 
 .m-loader.m-loader--primary:before {
   border-top-color: #4B6F9B; }
@@ -14931,7 +14931,7 @@ code {
   background-color: #507255; }
 
 .m-list-timeline .m-list-timeline__items .m-list-timeline__item .m-list-timeline__badge.m-list-timeline__badge--focus:before {
-  background-color: #7FBE00; }
+  background-color: #b5b6b5; }
 
 .m-list-timeline .m-list-timeline__items .m-list-timeline__item .m-list-timeline__badge.m-list-timeline__badge--primary:before {
   background-color: white; }
@@ -14983,7 +14983,7 @@ code {
   background-color: #507255; }
 
 .m-list-timeline.m-list-timeline--skin-dark .m-list-timeline__items .m-list-timeline__item .m-list-timeline__badge.m-list-timeline__badge--focus:before {
-  background-color: #7FBE00; }
+  background-color: #b5b6b5; }
 
 .m-list-timeline.m-list-timeline--skin-dark .m-list-timeline__items .m-list-timeline__item .m-list-timeline__badge.m-list-timeline__badge--primary:before {
   background-color: white; }
@@ -16063,7 +16063,7 @@ body.m-portlet--fullscreen {
       background: #507255;
       color: #ffffff; }
     .m-portlet.m-portlet--creative .m-portlet__head .m-portlet__head-caption .m-portlet__head-label.m-portlet__head-label--focus {
-      background: #7FBE00;
+      background: #b5b6b5;
       color: #ffffff; }
     .m-portlet.m-portlet--creative .m-portlet__head .m-portlet__head-caption .m-portlet__head-label.m-portlet__head-label--primary {
       background: white;
@@ -16133,7 +16133,7 @@ body.m-portlet--fullscreen {
       background: #507255;
       color: #ffffff; }
     .m-portlet.m-portlet--skin-dark.m-portlet--creative .m-portlet__head .m-portlet__head-caption .m-portlet__head-label.m-portlet__head-label--focus {
-      background: #7FBE00;
+      background: #b5b6b5;
       color: #ffffff; }
     .m-portlet.m-portlet--skin-dark.m-portlet--creative .m-portlet__head .m-portlet__head-caption .m-portlet__head-label.m-portlet__head-label--primary {
       background: white;
@@ -16412,11 +16412,11 @@ body.m-portlet--fullscreen {
   border-bottom: 3px solid #507255; }
 
 .m-portlet.m-portlet--focus.m-portlet--head-solid-bg {
-  background: #7FBE00;
-  border-color: #7FBE00; }
+  background: #b5b6b5;
+  border-color: #b5b6b5; }
   .m-portlet.m-portlet--focus.m-portlet--head-solid-bg .m-portlet__head {
-    background-color: #7FBE00;
-    border-color: #7FBE00; }
+    background-color: #b5b6b5;
+    border-color: #b5b6b5; }
     .m-portlet.m-portlet--focus.m-portlet--head-solid-bg .m-portlet__head .m-portlet__head-icon {
       color: #f7f7f7; }
     .m-portlet.m-portlet--focus.m-portlet--head-solid-bg .m-portlet__head .m-portlet__head-text {
@@ -16471,10 +16471,10 @@ body.m-portlet--fullscreen {
     background: white; }
   .m-portlet.m-portlet--focus.m-portlet--head-solid-bg .m-portlet__foot {
     background: white;
-    border-color: #7FBE00; }
+    border-color: #b5b6b5; }
 
 .m-portlet.m-portlet--border-bottom-focus {
-  border-bottom: 3px solid #7FBE00; }
+  border-bottom: 3px solid #b5b6b5; }
 
 .m-portlet.m-portlet--primary.m-portlet--head-solid-bg {
   background: white;
@@ -17036,7 +17036,7 @@ body.m-portlet--fullscreen {
   background: #507255; }
 
 .m-widget2__item.m-widget2__item--focus:before {
-  background: #7FBE00; }
+  background: #b5b6b5; }
 
 .m-widget2__item.m-widget2__item--primary:before {
   background: white; }
@@ -18680,13 +18680,13 @@ body.m-portlet--fullscreen {
   .m-checkbox.m-checkbox--focus > span {
     border: 1px solid #bdc3d4; }
     .m-checkbox.m-checkbox--focus > span:after {
-      border: solid #7FBE00; }
+      border: solid #b5b6b5; }
   .m-checkbox.m-checkbox--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-checkbox.m-checkbox--focus > input:disabled ~ span:after {
-    border-color: #7FBE00; }
+    border-color: #b5b6b5; }
   .m-checkbox.m-checkbox--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-checkbox.m-checkbox--focus > input:disabled ~ span {
     opacity: 0.6 ;
     filter: alpha(opacity=60) ; }
@@ -18703,7 +18703,7 @@ body.m-portlet--fullscreen {
     .m-checkbox.m-checkbox--focus.m-checkbox--solid > input:focus ~ span {
       border: 1px solid transparent !important; }
     .m-checkbox.m-checkbox--focus.m-checkbox--solid > input:checked ~ span {
-      background: #7FBE00; }
+      background: #b5b6b5; }
   .m-checkbox.m-checkbox--primary.m-checkbox--disabled {
     opacity: 0.8 ;
     filter: alpha(opacity=80) ; }
@@ -19018,13 +19018,13 @@ body.m-portlet--fullscreen {
   .m-radio.m-radio--focus > span {
     border: 1px solid #bdc3d4; }
     .m-radio.m-radio--focus > span:after {
-      border: solid #7FBE00; }
+      border: solid #b5b6b5; }
   .m-radio.m-radio--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-radio.m-radio--focus > input:disabled ~ span:after {
-    border-color: #7FBE00; }
+    border-color: #b5b6b5; }
   .m-radio.m-radio--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-radio.m-radio--focus > input:disabled ~ span {
     opacity: 0.6 ;
     filter: alpha(opacity=60) ; }
@@ -19041,7 +19041,7 @@ body.m-portlet--fullscreen {
     .m-radio.m-radio--focus.m-radio--solid > input:focus ~ span {
       border: 1px solid transparent !important; }
     .m-radio.m-radio--focus.m-radio--solid > input:checked ~ span {
-      background: #7FBE00; }
+      background: #b5b6b5; }
   .m-radio.m-radio--primary.m-radio--disabled {
     opacity: 0.8 ;
     filter: alpha(opacity=80) ; }
@@ -19356,13 +19356,13 @@ body.m-portlet--fullscreen {
   .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus > span {
     border: 1px solid #bdc3d4; }
     .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus > span:after {
-      border: solid #7FBE00; }
+      border: solid #b5b6b5; }
   .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus > input:disabled ~ span:after {
-    border-color: #7FBE00; }
+    border-color: #b5b6b5; }
   .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus > input:disabled ~ span {
     opacity: 0.6 ;
     filter: alpha(opacity=60) ; }
@@ -19379,7 +19379,7 @@ body.m-portlet--fullscreen {
     .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus.m-checkbox--solid > input:focus ~ span {
       border: 1px solid transparent !important; }
     .m-checkbox.m-checkbox--skin-dark.m-checkbox--focus.m-checkbox--solid > input:checked ~ span {
-      background: #7FBE00; }
+      background: #b5b6b5; }
   .m-checkbox.m-checkbox--skin-dark.m-checkbox--primary.m-checkbox--disabled {
     opacity: 0.8 ;
     filter: alpha(opacity=80) ; }
@@ -19694,13 +19694,13 @@ body.m-portlet--fullscreen {
   .m-radio.m-radio--skin-dark.m-radio--focus > span {
     border: 1px solid #bdc3d4; }
     .m-radio.m-radio--skin-dark.m-radio--focus > span:after {
-      border: solid #7FBE00; }
+      border: solid #b5b6b5; }
   .m-radio.m-radio--skin-dark.m-radio--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-radio.m-radio--skin-dark.m-radio--focus > input:disabled ~ span:after {
-    border-color: #7FBE00; }
+    border-color: #b5b6b5; }
   .m-radio.m-radio--skin-dark.m-radio--focus > input:checked ~ span {
-    border: 1px solid #7FBE00; }
+    border: 1px solid #b5b6b5; }
   .m-radio.m-radio--skin-dark.m-radio--focus > input:disabled ~ span {
     opacity: 0.6 ;
     filter: alpha(opacity=60) ; }
@@ -19717,7 +19717,7 @@ body.m-portlet--fullscreen {
     .m-radio.m-radio--skin-dark.m-radio--focus.m-radio--solid > input:focus ~ span {
       border: 1px solid transparent !important; }
     .m-radio.m-radio--skin-dark.m-radio--focus.m-radio--solid > input:checked ~ span {
-      background: #7FBE00; }
+      background: #b5b6b5; }
   .m-radio.m-radio--skin-dark.m-radio--primary.m-radio--disabled {
     opacity: 0.8 ;
     filter: alpha(opacity=80) ; }
@@ -20182,18 +20182,18 @@ body.m-portlet--fullscreen {
   filter: alpha(opacity=80) ; }
 
 .m-checkbox.m-checkbox--state-focus > span {
-  border: 1px solid #7FBE00; }
+  border: 1px solid #b5b6b5; }
   .m-checkbox.m-checkbox--state-focus > span:after {
-    border: solid #7FBE00; }
+    border: solid #b5b6b5; }
 
 .m-checkbox.m-checkbox--state-focus > input:checked ~ span {
-  border: 1px solid #7FBE00; }
+  border: 1px solid #b5b6b5; }
 
 .m-checkbox.m-checkbox--state-focus > input:disabled ~ span:after {
-  border-color: #7FBE00; }
+  border-color: #b5b6b5; }
 
 .m-checkbox.m-checkbox--state-focus > input:checked ~ span {
-  border: 1px solid #7FBE00; }
+  border: 1px solid #b5b6b5; }
 
 .m-checkbox.m-checkbox--state-focus > input:disabled ~ span {
   opacity: 0.6 ;
@@ -20206,32 +20206,32 @@ body.m-portlet--fullscreen {
         }
         */ }
   .m-checkbox.m-checkbox--state-focus.m-checkbox--solid > span {
-    background: #7FBE00;
+    background: #b5b6b5;
     border: 1px solid transparent !important; }
     .m-checkbox.m-checkbox--state-focus.m-checkbox--solid > span:after {
       border: solid #ffffff; }
   .m-checkbox.m-checkbox--state-focus.m-checkbox--solid > input:focus ~ span {
     border: 1px solid transparent !important; }
   .m-checkbox.m-checkbox--state-focus.m-checkbox--solid > input:checked ~ span {
-    background: #7FBE00; }
+    background: #b5b6b5; }
 
 .m-radio.m-radio--state-focus.m-radio--disabled {
   opacity: 0.8 ;
   filter: alpha(opacity=80) ; }
 
 .m-radio.m-radio--state-focus > span {
-  border: 1px solid #7FBE00; }
+  border: 1px solid #b5b6b5; }
   .m-radio.m-radio--state-focus > span:after {
-    border: solid #7FBE00; }
+    border: solid #b5b6b5; }
 
 .m-radio.m-radio--state-focus > input:checked ~ span {
-  border: 1px solid #7FBE00; }
+  border: 1px solid #b5b6b5; }
 
 .m-radio.m-radio--state-focus > input:disabled ~ span:after {
-  border-color: #7FBE00; }
+  border-color: #b5b6b5; }
 
 .m-radio.m-radio--state-focus > input:checked ~ span {
-  border: 1px solid #7FBE00; }
+  border: 1px solid #b5b6b5; }
 
 .m-radio.m-radio--state-focus > input:disabled ~ span {
   opacity: 0.6 ;
@@ -20244,14 +20244,14 @@ body.m-portlet--fullscreen {
         }
         */ }
   .m-radio.m-radio--state-focus.m-radio--solid > span {
-    background: #7FBE00;
+    background: #b5b6b5;
     border: 1px solid transparent !important; }
     .m-radio.m-radio--state-focus.m-radio--solid > span:after {
       border: solid #ffffff; }
   .m-radio.m-radio--state-focus.m-radio--solid > input:focus ~ span {
     border: 1px solid transparent !important; }
   .m-radio.m-radio--state-focus.m-radio--solid > input:checked ~ span {
-    background: #7FBE00; }
+    background: #b5b6b5; }
 
 .m-checkbox.m-checkbox--state-primary.m-checkbox--disabled {
   opacity: 0.8 ;
@@ -21382,16 +21382,16 @@ body.m-portlet--fullscreen {
   filter: alpha(opacity=100) ; }
 
 .m-switch.m-switch--focus:not(.m-switch--outline) input:empty ~ span:before {
-  background-color: #7FBE00; }
+  background-color: #b5b6b5; }
 
 .m-switch.m-switch--focus:not(.m-switch--outline) input:empty ~ span:after {
-  color: #7FBE00;
+  color: #b5b6b5;
   background-color: #ffffff;
   opacity: 0.4 ;
   filter: alpha(opacity=40) ; }
 
 .m-switch.m-switch--focus:not(.m-switch--outline) input:checked ~ span:before {
-  background-color: #7FBE00; }
+  background-color: #b5b6b5; }
 
 .m-switch.m-switch--focus:not(.m-switch--outline) input:checked ~ span:after {
   opacity: 1 ;
@@ -21408,7 +21408,7 @@ body.m-portlet--fullscreen {
   background-color: #ffffff; }
 
 .m-switch.m-switch--outline.m-switch--focus input:checked ~ span:after {
-  background-color: #7FBE00;
+  background-color: #b5b6b5;
   opacity: 1 ;
   filter: alpha(opacity=100) ; }
 
@@ -21720,16 +21720,16 @@ body.m-portlet--fullscreen {
   filter: alpha(opacity=100) ; }
 
 .m-switch.m-switch--skin-dark.m-switch--focus:not(.m-switch--outline) input:empty ~ span:before {
-  background-color: #7FBE00; }
+  background-color: #b5b6b5; }
 
 .m-switch.m-switch--skin-dark.m-switch--focus:not(.m-switch--outline) input:empty ~ span:after {
-  color: #7FBE00;
+  color: #b5b6b5;
   background-color: #ffffff;
   opacity: 0.4 ;
   filter: alpha(opacity=40) ; }
 
 .m-switch.m-switch--skin-dark.m-switch--focus:not(.m-switch--outline) input:checked ~ span:before {
-  background-color: #7FBE00; }
+  background-color: #b5b6b5; }
 
 .m-switch.m-switch--skin-dark.m-switch--focus:not(.m-switch--outline) input:checked ~ span:after {
   opacity: 1 ;
@@ -21746,7 +21746,7 @@ body.m-portlet--fullscreen {
   background-color: #ffffff; }
 
 .m-switch.m-switch--skin-dark.m-switch--outline.m-switch--focus input:checked ~ span:after {
-  background-color: #7FBE00;
+  background-color: #b5b6b5;
   opacity: 1 ;
   filter: alpha(opacity=100) ; }
 
@@ -22275,24 +22275,24 @@ body.m-portlet--fullscreen {
   border-color: #507255; }
 
 .m-table.m-table--head-bg-focus thead th {
-  background: #7FBE00;
+  background: #b5b6b5;
   color: #ffffff;
   border-bottom: 0;
   border-top: 0; }
 
 .m-table.m-table--head-separator-focus thead th {
   border-top: 0;
-  border-bottom: 1px solid #7FBE00; }
+  border-bottom: 1px solid #b5b6b5; }
 
 .m-table tr.m-table__row--focus th, .m-table tr.m-table__row--focus td {
-  background: #7FBE00;
+  background: #b5b6b5;
   color: #ffffff;
   border-bottom: 0;
   border-top: 0; }
 
 .m-table.m-table--border-focus,
 .m-table.m-table--border-focus th, .m-table.m-table--border-focus td {
-  border-color: #7FBE00; }
+  border-color: #b5b6b5; }
 
 .m-table.m-table--head-bg-primary thead th {
   background: white;
@@ -23323,8 +23323,8 @@ body.m-portlet--fullscreen {
     color: #ffffff; }
   .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-focus,
   .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-focus {
-    background-color: #7FBE00;
-    border-color: #7FBE00;
+    background-color: #b5b6b5;
+    border-color: #b5b6b5;
     color: #ffffff; }
   .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
   .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
@@ -23956,14 +23956,14 @@ select.m-select2 {
   box-shadow: 0 3px 6px -3px #507255; }
 
 .noUi-target.m-nouislider.m-nouislider--connect-focus .noUi-connect {
-  background: #7FBE00; }
+  background: #b5b6b5; }
 
 .noUi-target.m-nouislider.m-nouislider--handle-focus .noUi-handle {
   border: 0;
-  background: #7FBE00;
-  -webkit-box-shadow: 0 3px 6px -3px #7FBE00;
-  -moz-box-shadow: 0 3px 6px -3px #7FBE00;
-  box-shadow: 0 3px 6px -3px #7FBE00; }
+  background: #b5b6b5;
+  -webkit-box-shadow: 0 3px 6px -3px #b5b6b5;
+  -moz-box-shadow: 0 3px 6px -3px #b5b6b5;
+  box-shadow: 0 3px 6px -3px #b5b6b5; }
 
 .noUi-target.m-nouislider.m-nouislider--connect-primary .noUi-connect {
   background: white; }
@@ -24067,7 +24067,7 @@ select.m-select2 {
   .m-dropzone.m-dropzone--accent {
     border-color: #507255; }
   .m-dropzone.m-dropzone--focus {
-    border-color: #7FBE00; }
+    border-color: #b5b6b5; }
   .m-dropzone.m-dropzone--primary {
     border-color: white; }
   .m-dropzone.m-dropzone--success {
@@ -24639,13 +24639,13 @@ select.m-select2 {
 
 .fc-unthemed .fc-event.fc-start.m-fc-event--focus .fc-content:before,
 .fc-unthemed .fc-event-dot.fc-start.m-fc-event--focus .fc-content:before {
-  background: #7FBE00; }
+  background: #b5b6b5; }
 
 .fc-unthemed .fc-event.fc-not-start.fc-end.m-fc-event--solid-focus, .fc-unthemed .fc-event.fc-not-start.fc-not-end.m-fc-event--solid-focus, .fc-unthemed .fc-event.fc-start.m-fc-event--solid-focus,
 .fc-unthemed .fc-event-dot.fc-not-start.fc-end.m-fc-event--solid-focus,
 .fc-unthemed .fc-event-dot.fc-not-start.fc-not-end.m-fc-event--solid-focus,
 .fc-unthemed .fc-event-dot.fc-start.m-fc-event--solid-focus {
-  background: #7FBE00; }
+  background: #b5b6b5; }
   .fc-unthemed .fc-event.fc-not-start.fc-end.m-fc-event--solid-focus .fc-title, .fc-unthemed .fc-event.fc-not-start.fc-not-end.m-fc-event--solid-focus .fc-title, .fc-unthemed .fc-event.fc-start.m-fc-event--solid-focus .fc-title,
   .fc-unthemed .fc-event-dot.fc-not-start.fc-end.m-fc-event--solid-focus .fc-title,
   .fc-unthemed .fc-event-dot.fc-not-start.fc-not-end.m-fc-event--solid-focus .fc-title,
@@ -24871,10 +24871,10 @@ select.m-select2 {
       color: #ffffff; }
   .fc-unthemed .fc-popover .fc-body .fc-event.fc-not-start.fc-not-end.m-fc-event--focus .fc-content:before,
   .fc-unthemed .fc-popover .fc-body .fc-event-dot.fc-not-start.fc-not-end.m-fc-event--focus .fc-content:before {
-    background: #7FBE00; }
+    background: #b5b6b5; }
   .fc-unthemed .fc-popover .fc-body .fc-event.fc-not-start.fc-not-end.m-fc-event--solid-focus,
   .fc-unthemed .fc-popover .fc-body .fc-event-dot.fc-not-start.fc-not-end.m-fc-event--solid-focus {
-    background: #7FBE00; }
+    background: #b5b6b5; }
     .fc-unthemed .fc-popover .fc-body .fc-event.fc-not-start.fc-not-end.m-fc-event--solid-focus .fc-title,
     .fc-unthemed .fc-popover .fc-body .fc-event-dot.fc-not-start.fc-not-end.m-fc-event--solid-focus .fc-title {
       color: #ffffff; }
@@ -24998,8 +24998,8 @@ select.m-select2 {
   border-color: #507255; }
 
 .fc-unthemed .fc-list-item.m-fc-event--solid-focus .fc-event-dot, .fc-unthemed .fc-list-item.m-fc-event--focus .fc-event-dot {
-  background: #7FBE00;
-  border-color: #7FBE00; }
+  background: #b5b6b5;
+  border-color: #b5b6b5; }
 
 .fc-unthemed .fc-list-item.m-fc-event--solid-primary .fc-event-dot, .fc-unthemed .fc-list-item.m-fc-event--primary .fc-event-dot {
   background: white;
@@ -26071,16 +26071,16 @@ select.m-select2 {
     background: rgba(67, 34, 167, 0.8); } }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__head .m-login__title {
-  color: #9e97aa; }
+  color: #fdfeff; }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__head .m-login__desc {
-  color: #aba5b6; }
+  color: #fdfeff; }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form {
-  color: #aba5b6; }
+  color: #fdfeff; }
   .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form .form-control {
     color: #91899f;
-    background: #f7f6f9; }
+    background: #f8f9fc; }
     .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form .form-control::-moz-placeholder {
       color: #9e97aa;
       opacity: 1; }
@@ -26098,25 +26098,25 @@ select.m-select2 {
       .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form .form-control:focus::-webkit-input-placeholder {
         color: #91899f; }
   .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form .m-login__form-sub .m-checkbox {
-    color: #aba5b6; }
+    color: #b5b6b5; }
   .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form .m-login__form-sub .m-link {
-    color: #aba5b6; }
+    color: #b5b6b5; }
     .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form .m-login__form-sub .m-link:hover {
-      color: #776e87; }
+      color: #fdfeff; }
       .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__form .m-login__form-sub .m-link:hover:after {
-        border-bottom: 1px solid #776e87;
+        border-bottom: 1px solid #fdfeff;
         opacity: 0.3 ;
         filter: alpha(opacity=30) ; }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__account .m-login__account-msg {
-  color: #aba5b6; }
+  color: #fdfeff; }
 
 .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__account .m-login__account-link {
-  color: #847b93; }
+  color: #b5b6b5; }
   .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__account .m-login__account-link:hover {
-    color: #6a6279; }
+    color: #fdfeff; }
     .m-login.m-login--2.m-login-2--skin-2 .m-login__container .m-login__account .m-login__account-link:hover:after {
-      border-bottom: 1px solid #6a6279;
+      border-bottom: 1px solid #fdfeff;
       opacity: 0.3 ;
       filter: alpha(opacity=30) ; }
 
@@ -27145,8 +27145,8 @@ body.m-content--skin-light2 {
           .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon > i {
             font-size: 1.5rem; }
             .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon > i:before {
-                background: -webkit-linear-gradient(180deg, #7FBE00 25%, #96C92E 50%, #ADD55C 75%, #D0E7A2 100%);
-                background: linear-gradient(180deg, #7FBE00 25%, #96C92E 50%, #ADD55C 75%, #D0E7A2 100%);
+                background: -webkit-linear-gradient(180deg, #b5b6b5 25%, #96C92E 50%, #ADD55C 75%, #D0E7A2 100%);
+                background: linear-gradient(180deg, #b5b6b5 25%, #96C92E 50%, #ADD55C 75%, #D0E7A2 100%);
               background-clip: text;
               text-fill-color: transparent;
               -webkit-background-clip: text;
@@ -27179,11 +27179,11 @@ body.m-content--skin-light2 {
             max-width: 41px !important;
             margin: 0 0 0 5px; }
       .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-topbar__notifications.m-topbar__notifications--img.m-dropdown--arrow .m-dropdown__arrow {
-        color: #7FBE00; }
+        color: #b5b6b5; }
       .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-topbar__quick-actions.m-topbar__quick-actions--img.m-dropdown--arrow .m-dropdown__arrow {
-        color: #7FBE00; }
+        color: #b5b6b5; }
       .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-topbar__user-profile.m-topbar__user-profile--img.m-dropdown--arrow .m-dropdown__arrow {
-        color: #7FBE00; }
+        color: #b5b6b5; }
       .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-dropdown.m-dropdown--offcanvas.m-dropdown--header-bg-fil.m-dropdown--arrow.m-dropdown--arrow .m-dropdown__arrow {
         color: #fff; }
 

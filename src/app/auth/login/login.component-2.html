@@ -1,4 +1,4 @@
-<div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--singin m-login--2 m-login-2--skin-2" id="m_login" style="background-color: #666">
+<div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--singin m-login--2 m-login-2--skin-2" id="m_login" style="background-color: #1e1111">
 	<div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
 		<div class="m-login__container">
 			<div class="m-login__logo">
@@ -33,7 +33,7 @@
 					</div>
 					<div class="row m-login__form-sub">
 						<div class="col m--align-left">
-							<label class="m-checkbox m-checkbox--focus" style="color: #eee">
+							<label class="m-checkbox m-checkbox--focus" style="color: #b5b6b5">
 								<input type="checkbox" name="remember" [(ngModel)]="model.remember" #remember="ngModel">
 								Recordarme
 								<span></span>
@@ -68,7 +68,7 @@
 					</div>
 					<div class="m-login__form-action">
 						<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
-								id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom">
+								id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom" style="margin-right: 5px;">
 							Resetear
 						</button>
 						<button [disabled]="loading"  id="m_login_forget_password_cancel"
