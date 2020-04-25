@@ -785,7 +785,7 @@ var amChartsMapsDemo = function() {
             },
 
             "areasSettings": {
-                "rollOverOutlineColor": "#FFFFFF",
+                "rollOverOutlineColor": "#fdfeff",
                 "rollOverColor": "#CC0000",
                 "alpha": 0.8,
                 "unlistedAreasAlpha": 0.1,
@@ -799,8 +799,8 @@ var amChartsMapsDemo = function() {
                 "marginLeft": 27,
                 "equalWidths": false,
                 "backgroundAlpha": 0.5,
-                "backgroundColor": "#FFFFFF",
-                "borderColor": "#ffffff",
+                "backgroundColor": "#fdfeff",
+                "borderColor": "#fdfeff",
                 "borderAlpha": 1,
                 "top": 450,
                 "left": 0,

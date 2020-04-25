@@ -465,7 +465,7 @@ var mUtil = function() {
     var colors = {
         brand:      '#716aca',
         metal:      '#c4c5d6',
-        light:      '#ffffff',
+        light:      '#fdfeff',
         accent:     '#00c5dc',
         primary:    '#5867dd',
         success:    '#34bfa3',
