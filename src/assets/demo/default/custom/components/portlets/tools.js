@@ -52,7 +52,7 @@ var PortletTools = function () {
             toastr.info('Leload event fired!');
 
             mApp.block(portlet.getSelf(), {
-                overlayColor: '#ffffff',
+                overlayColor: '#fdfeff',
                 type: 'loader',
                 state: 'accent',
                 opacity: 0.3,

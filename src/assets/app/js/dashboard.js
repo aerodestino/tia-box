@@ -465,8 +465,8 @@ var Dashboard = function() {
                     backgroundColor: gradient, // Put the gradient here as a fill color
                     borderColor: '#0dc8de',
 
-                    pointBackgroundColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
-                    pointBorderColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                    pointBackgroundColor: Chart.helpers.color('#fdfeff').alpha(0).rgbString(),
+                    pointBorderColor: Chart.helpers.color('#fdfeff').alpha(0).rgbString(),
                     pointHoverBackgroundColor: mUtil.getColor('danger'),
                     pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
 
@@ -565,8 +565,8 @@ var Dashboard = function() {
                     backgroundColor: '#d2f5f9', // Put the gradient here as a fill color
                     borderColor: mUtil.getColor('brand'),
 
-                    pointBackgroundColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
-                    pointBorderColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                    pointBackgroundColor: Chart.helpers.color('#fdfeff').alpha(0).rgbString(),
+                    pointBorderColor: Chart.helpers.color('#fdfeff').alpha(0).rgbString(),
                     pointHoverBackgroundColor: mUtil.getColor('danger'),
                     pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
 
@@ -827,7 +827,7 @@ var Dashboard = function() {
                     pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointHoverBackgroundColor: mUtil.getColor('light'),
-                    pointHoverBorderColor: Chart.helpers.color('#ffffff').alpha(0.1).rgbString(),
+                    pointHoverBorderColor: Chart.helpers.color('#fdfeff').alpha(0.1).rgbString(),
 
                     //fill: 'start',
                     data: [

@@ -82,11 +82,11 @@ body .fc {
 */
 .fc-state-default {
   background-color: #f5f5f5;
-  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
-  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-image: -moz-linear-gradient(top, #fdfeff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfeff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #fdfeff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #fdfeff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #fdfeff, #e6e6e6);
   background-repeat: repeat-x;
   border-color: #e6e6e6 #e6e6e6 #bfbfbf;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -346,7 +346,7 @@ temporary rendered events).
 
 .fc-event,
 .fc-event:hover {
-  color: #fff;
+  color: #fdfeff;
   /* default TEXT color */
   text-decoration: none;
   /* if <a> has an href */ }
@@ -364,7 +364,7 @@ temporary rendered events).
 .fc-event .fc-bg {
   /* the generic .fc-bg already does position */
   z-index: 1;
-  background: #fff;
+  background: #fdfeff;
   opacity: .25; }
 
 .fc-event .fc-content {
@@ -473,7 +473,7 @@ temporary rendered events).
   height: 6px;
   border-style: solid;
   border-color: inherit;
-  background: #fff;
+  background: #fdfeff;
   /* vertically center */
   top: 50%;
   margin-top: -4px; }
@@ -602,7 +602,7 @@ TODO: more distinction between this file and common.css
   border-color: #ddd; }
 
 .fc-unthemed .fc-popover {
-  background-color: #fff; }
+  background-color: #fdfeff; }
 
 .fc-unthemed .fc-divider,
 .fc-unthemed .fc-popover .fc-header,
@@ -719,7 +719,7 @@ NOTE: use percentage font sizes or else old IE chokes
 --------------------------------------------------------------------------------------------------*/
 .ui-widget .fc-event {
   /* overpower jqui's styles on <a> tags. TODO: more DRY */
-  color: #fff;
+  color: #fdfeff;
   /* default TEXT color */
   text-decoration: none;
   /* if <a> has an href */
@@ -1134,7 +1134,7 @@ be a descendant of the grid when it is being dragged.
   height: 8px;
   border-style: solid;
   border-color: inherit;
-  background: #fff;
+  background: #fdfeff;
   /* horizontally center */
   left: 50%;
   margin-left: -5px;

@@ -227,7 +227,7 @@ var FlotchartsDemo = function() {
                 left: x + 15,
                 border: '1px solid #333',
                 padding: '4px',
-                color: '#fff',
+                color: '#fdfeff',
                 'border-radius': '3px',
                 'background-color': '#333',
                 opacity: 0.80
