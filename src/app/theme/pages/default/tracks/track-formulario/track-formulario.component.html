@@ -1,12 +1,14 @@
+
 <div class="m-subheader">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
-            <h3 class="m-subheader__title">
+            <h3 class="page-title">
                 {{appService.title}}
             </h3>
         </div>
     </div>
 </div>
+<hr>
 <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #trackForm="ngForm"
       (submit)="onSubmit(trackForm.value)">
     <div class="m-portlet__body">
