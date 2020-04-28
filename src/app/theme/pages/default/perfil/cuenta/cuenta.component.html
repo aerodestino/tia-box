@@ -79,7 +79,7 @@
                 </div>
                 <select *ngIf="paises" class="form-control m-input" placeholder="País"
                         (change)="getProvincias(pais_id.value)"
-                        [(ngModel)]="usuario.pais.id" #pais_id="ngModel" name="pais_id" required>
+                        [ngModel]="usuario.pais ? usuario.pais.id: '' " #pais_id="ngModel" name="pais_id" required>
                     <option *ngFor="let pais of paises" [value]="pais.id">
                         {{pais.nombre}}
                     </option>
@@ -92,7 +92,7 @@
             </label>
             <div class="col-lg-3">
                 <select class="form-control m-input" placeholder="Provincia" (change)="getCiudades(provincia_id.value)"
-                        [(ngModel)]="usuario.provincia.id" #provincia_id="ngModel" name="provincia_id" required>
+                [ngModel]="usuario.provincia ? usuario.provincia.id: '' " #provincia_id="ngModel" name="provincia_id" required>
                     <option *ngFor="let provincia of provincias" [value]="provincia.id">
                         {{provincia.nombre}}
                     </option>
@@ -103,7 +103,7 @@
             </label>
             <div class="col-lg-3">
                 <select  class="form-control m-input" placeholder="Ciudad"
-                        [(ngModel)]="usuario.ciudad.id" #ciudad_id="ngModel" name="ciudad_id" required>
+                [ngModel]="usuario.ciudad ? usuario.ciudad.id: '' " #ciudad_id="ngModel" name="ciudad_id" required>
                     <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
                         {{ciudad.nombre}}
                     </option>
