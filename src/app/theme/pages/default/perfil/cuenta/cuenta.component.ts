@@ -8,7 +8,7 @@ import { CiudadesService } from "../../../../../shared/services/api/ciudades.ser
 import { AppService } from "../../../../../app.service";
 import { Helpers } from "../../../../../helpers";
 import { Province } from "../../../../../shared/model/province.model";
-
+import { City } from "../../../../../shared/model/city.model";
 @Component({
     selector: "app-cuenta",
     templateUrl: './cuenta.component.html',
@@ -33,6 +33,7 @@ export class CuentaComponent implements OnInit {
 
     ngOnInit() {
         if (!this.usuario.provincia) this.usuario.provincia = new Province();
+        if (!this.usuario.ciudad) this.usuario.ciudad = new City();
         this.getPaises();
         this.getProvincias(this.usuario.pais.id);
         this.getCiudades(this.usuario.provincia.id);
