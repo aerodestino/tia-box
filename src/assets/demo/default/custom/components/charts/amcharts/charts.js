@@ -47,7 +47,7 @@ var amChartsChartsDemo = function() {
                 "visits": 395
             }],
             "valueAxes": [{
-                "gridColor": "#FFFFFF",
+                "gridColor": "#fdfeff",
                 "gridAlpha": 0.2,
                 "dashLength": 0
             }],
@@ -93,7 +93,7 @@ var amChartsChartsDemo = function() {
                 "adjustBorderColor": false,
                 "horizontalPadding": 10,
                 "verticalPadding": 8,
-                "color": "#ffffff"
+                "color": "#fdfeff"
             },
 
             "dataProvider": [{
@@ -145,7 +145,7 @@ var amChartsChartsDemo = function() {
                 "lineThickness": 3,
                 "bulletSize": 7,
                 "bulletBorderAlpha": 1,
-                "bulletColor": "#FFFFFF",
+                "bulletColor": "#fdfeff",
                 "useLineColorForBulletBorder": true,
                 "bulletBorderThickness": 3,
                 "fillAlphas": 0,
@@ -357,7 +357,7 @@ var amChartsChartsDemo = function() {
                 "balloonText": "<span style='font-size:13px;'>[[title]] in [[category]]:<b>[[value]]</b></span>",
                 "bullet": "round",
                 "bulletBorderAlpha": 1,
-                "bulletColor": "#FFFFFF",
+                "bulletColor": "#fdfeff",
                 "useLineColorForBulletBorder": true,
                 "fillAlphas": 0,
                 "lineThickness": 2,
@@ -402,11 +402,11 @@ var amChartsChartsDemo = function() {
                 "balloon": {
                     "drop": true,
                     "adjustBorderColor": false,
-                    "color": "#ffffff"
+                    "color": "#fdfeff"
                 },
                 "bullet": "round",
                 "bulletBorderAlpha": 1,
-                "bulletColor": "#FFFFFF",
+                "bulletColor": "#fdfeff",
                 "bulletSize": 5,
                 "hideBulletsCount": 50,
                 "lineThickness": 2,
@@ -1050,7 +1050,7 @@ var amChartsChartsDemo = function() {
                 "balloonText": "[[value]]",
                 "bullet": "round",
                 "bulletBorderAlpha": 1,
-                "bulletColor": "#FFFFFF",
+                "bulletColor": "#fdfeff",
                 "hideBulletsCount": 50,
                 "title": "red line",
                 "valueField": "visits",
@@ -1278,7 +1278,7 @@ var amChartsChartsDemo = function() {
                 "bullet": "round",
                 "bulletBorderAlpha": 1,
                 "useLineColorForBulletBorder": true,
-                "bulletColor": "#FFFFFF",
+                "bulletColor": "#fdfeff",
                 "bulletSizeField": "townSize",
                 "dashLengthField": "dashLength",
                 "descriptionField": "townName",
@@ -1328,7 +1328,7 @@ var amChartsChartsDemo = function() {
                 "autoGridCount": false,
                 "axisColor": "#555555",
                 "gridAlpha": 0.1,
-                "gridColor": "#FFFFFF",
+                "gridColor": "#fdfeff",
                 "gridCount": 50
             },
             "export": {
@@ -1414,7 +1414,7 @@ var amChartsChartsDemo = function() {
                 "autoGridCount": false,
                 "axisAlpha": 0.2,
                 "fillAlpha": 0.05,
-                "fillColor": "#FFFFFF",
+                "fillColor": "#fdfeff",
                 "gridAlpha": 0.08,
                 "guides": [{
                     "angle": 225,

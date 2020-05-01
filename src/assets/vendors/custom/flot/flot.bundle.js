@@ -18,7 +18,7 @@ Licensed under the MIT license.
  *
  * Examples:
  *
- *   $.color.parse("#fff").scale('rgb', 0.25).add('a', -0.5).toString()
+ *   $.color.parse("#fdfeff").scale('rgb', 0.25).add('a', -0.5).toString()
  *   var c = $.color.extract($("#mydiv"), 'background-color');
  *   console.log(c.r, c.g, c.b, c.a);
  *   $.color.make(100, 50, 25, 0.4).toString() // returns "rgba(100,50,25,0.4)"
@@ -562,7 +562,7 @@ Licensed under the MIT license.
                         radius: 3,
                         lineWidth: 2, // in pixels
                         fill: true,
-                        fillColor: "#ffffff",
+                        fillColor: "#fdfeff",
                         symbol: "circle" // or callback
                     },
                     lines: {
@@ -3447,7 +3447,7 @@ The plugin supports these options:
 				left: integer value to move the pie left or right, or 'auto'
 			},
 			stroke: {
-				color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#FFF')
+				color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#fdfeff')
 				width: integer pixel width of the stroke
 			},
 			label: {
@@ -4202,7 +4202,7 @@ More detail and specific examples can be found in the included HTML file.
 					left: "auto"
 				},
 				stroke: {
-					color: "#fff",
+					color: "#fdfeff",
 					width: 1
 				},
 				label: {
@@ -4223,7 +4223,7 @@ More detail and specific examples can be found in the included HTML file.
 					label: "Other"	// label to give the new slice
 				},
 				highlight: {
-					//color: "#fff",		// will add this functionality once parseColor is available
+					//color: "#fdfeff",		// will add this functionality once parseColor is available
 					opacity: 0.5
 				}
 			}

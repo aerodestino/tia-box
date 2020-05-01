@@ -225,7 +225,7 @@ var amChartsStockChartsDemo = function() {
                 }, {
                     "date": new Date(2010, 10, 19),
                     "type": "flag",
-                    "backgroundColor": "#FFFFFF",
+                    "backgroundColor": "#fdfeff",
                     "backgroundAlpha": 0.5,
                     "graph": "g1",
                     "text": "F",

@@ -1,17 +1,14 @@
 <div class="row align-items-center">
     <div class="col-12 m--align-right">
-        <button class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
-                (click)="onEmbarcar()"
-        >
+        <button [disabled]="totalEnBodega <= 0" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onEmbarcar()" >
             <i class="fa fa-plane"></i>
             Embarcar
         </button>
-        <button class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
-                (click)="onConsolidar()"
-        >
+        <button [disabled]="totalEnBodega <= 0" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onConsolidar()" >
             <i class="fa fa-dropbox"></i>
             Consolidar
         </button>
-
     </div>
 </div>

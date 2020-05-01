@@ -15,7 +15,7 @@ import { SocketService } from "../shared/services/socket/socket.service";
 
 @Component({
     selector: ".m-grid.m-grid--hor.m-grid--root.m-page",
-    templateUrl: './login/login.component.html',
+    templateUrl: './login/login.component-2.html',
     encapsulation: ViewEncapsulation.None
 })
 
@@ -64,7 +64,7 @@ export class AuthComponent implements OnInit {
                 localStorage.setItem('user', this.model.email);
                 localStorage.setItem('access_token', res.access_token);
                 localStorage.setItem('expires_date', this.calculateTokenExpiresDateTime(res.expires_in).toString());
-                this.appService.message = "Bienvenido a Enkarga";
+                this.appService.message = "Bienvenido a BOX593";
                 this._router.navigate([this.returnUrl]);
                 this.getProfile();
             },

@@ -11,7 +11,6 @@ export class PaisesService extends ApiService {
     }
 
     getAllWithoutAuth(params?: any): Observable<any> {
-        console.log("asd asd asd");
         if (!params)
             return this.http.getWithoutAuthHeader(`${this.url}todos`);
         params = this.serialize(params);

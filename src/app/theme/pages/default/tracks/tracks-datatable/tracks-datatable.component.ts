@@ -21,8 +21,8 @@ export class TracksDatatableComponent extends BaseDatatableComponent implements 
     }
 
     ngAfterViewInit() {
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/demo/default/custom/components/datatables/base/html-table.js');
+        // this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
+        //     'assets/demo/default/custom/components/datatables/base/html-table.js');
     }
 
 }

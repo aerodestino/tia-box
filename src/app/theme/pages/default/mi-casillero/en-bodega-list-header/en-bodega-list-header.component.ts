@@ -8,6 +8,7 @@ import { EmpresasEnvioService } from "../../../../../shared/services/api/empresa
     styles: []
 })
 export class EnBodegaListHeaderComponent implements OnInit {
+    @Input() totalEnBodega;
     @Output() consolidar: EventEmitter<any> = new EventEmitter();
     @Output() embarcar: EventEmitter<any> = new EventEmitter();
     constructor(public ngbModal: NgbModal) { }
