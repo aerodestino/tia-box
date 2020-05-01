@@ -174,7 +174,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6 m--align-left">
-                            <span>Arancel</span>
+                            <span>Arancel ({{resultado.porcentaje_arancel}}%) </span>
                         </div>
                         <div class="col-6 m--align-right">
                             <span>{{resultado.impuesto_arancel}}</span>
@@ -190,7 +190,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6 m--align-left">
-                            <span>Impuesto Extra 2</span>
+                            <span>Fodinfa</span>
                         </div>
                         <div class="col-6 m--align-right">
                             <span>{{resultado.fodinfa}}</span>
@@ -206,10 +206,18 @@
                     </div>
                     <div class="row">
                         <div class="col-6 m--align-left">
-                            <span>I.V.A</span>
+                            <span>I.V.A ({{resultado.porcentaje_iva}}%)</span>
                         </div>
                         <div class="col-6 m--align-right">
                             <span>{{resultado.impuesto_iva}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 m--align-left">
+                            <span>Trámite</span>
+                        </div>
+                        <div class="col-6 m--align-right">
+                            <span>{{resultado.tramite}}</span>
                         </div>
                     </div>
                 </div>
