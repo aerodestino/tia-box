@@ -19,8 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="m-portlet__body" *ngIf="pregunta.selected">
-            {{pregunta.respuesta}}
+        <div class="m-portlet__body" [innerHTML]="pregunta.respuesta" *ngIf="pregunta.selected">
         </div>
 
     </div>

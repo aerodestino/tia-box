@@ -79,7 +79,7 @@
                 </div>
                 <select *ngIf="paises" class="form-control m-input" placeholder="País"
                         (change)="getProvincias(pais_id.value)"
-                        [ngModel]="usuario.pais ? usuario.pais.id: '' " #pais_id="ngModel" name="pais_id" required>
+                        [ngModel]="usuario.pais ? usuario.pais.id: default " #pais_id="ngModel" name="pais_id" required>
                     <option *ngFor="let pais of paises" [value]="pais.id">
                         {{pais.nombre}}
                     </option>
