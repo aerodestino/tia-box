@@ -23,9 +23,9 @@ import { UserService } from "./_services/user.service";
     //local
     { provide: "API_URL", useValue: environment.API_URL },
     //prod
-    //{ provide: 'API_URL', useValue: 'https://api-casillero.enkarga.com/' },
+    //{ provide: 'API_URL', useValue: 'https://api-dev.box593.com/app_dev.php/' },
     //dev
-    //{ provide: 'API_URL', useValue: 'https://api-casillero-dev.enkarga.com/app_dev.php/' },
+    //{ provide: 'API_URL', useValue: 'https://api-dev.box593.com/app_dev.php/' },
     AuthGuard,
     AlertService,
     UserService,

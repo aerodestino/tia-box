@@ -18,6 +18,7 @@ export class RegistroUsuarioComponent implements OnInit {
   tipo_registro = 1;
   provincias: any[] = [];
   ciudades: any[] = [];
+  default= 8;
   constructor(
     public usuariosService: UsuariosService,
     public paisesService: PaisesService,
@@ -33,6 +34,7 @@ export class RegistroUsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.getPaises();
+    this.getProvincias(8);
   }
 
   getPaises() {
