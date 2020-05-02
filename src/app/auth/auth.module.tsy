@@ -28,8 +28,8 @@ import {HttpService} from "../shared/services/http/http.service";
     ],
     providers: [
         // API url constant
-     //   {provide: 'API_URL', useValue: 'http://api-marketplace.enkarka.com/'},
-         {provide: 'API_URL', useValue: 'http://api-marketplace.enkarga.com/'},
+     //   {provide: 'API_URL', useValue: 'https://api-dev.box593.com/'},
+         {provide: 'API_URL', useValue: 'https://api-dev.box593.com/'},
         AuthGuard,
         AlertService,
         UserService,

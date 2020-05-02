@@ -18,6 +18,7 @@ export class CuentaComponent implements OnInit {
     paises: any[];
     provincias: any[] = [];
     ciudades: any[] = [];
+    default= 8;
     @Input() usuario: any;
     @Output() verCupos: EventEmitter<any> = new EventEmitter();
     constructor(public usuariosService: UsuariosService,
@@ -35,7 +36,10 @@ export class CuentaComponent implements OnInit {
         if (!this.usuario.provincia) this.usuario.provincia = new Province();
         if (!this.usuario.ciudad) this.usuario.ciudad = new City();
         this.getPaises();
-        this.getProvincias(this.usuario.pais.id);
+        if(this.usuario.pais.id)
+             this.getProvincias(this.usuario.pais.id);
+        else
+            this.getProvincias(8);     
         this.getCiudades(this.usuario.provincia.id);
     }
 

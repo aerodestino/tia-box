@@ -118,8 +118,8 @@
                     <input type="text" class="form-control"/>
                 </div>
                 <select *ngIf="paises" class="form-control m-input" placeholder="País" (change)="getProvincias(pais_id.value)"
-                       ngModel  #pais_id="ngModel" name="pais_id" required>
-                    <option *ngFor="let pais of paises" [value]="pais.id" >
+                [(ngModel)]='default'  #pais_id="ngModel" name="pais_id" required>
+                    <option *ngFor="let pais of paises" [value]="pais.id">
                         {{pais.nombre}}
                     </option>
                 </select>
