@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, Input, OnInit,EventEmitter,Output, ViewContainerRef } from '@angular/core';
 import { Router } from "@angular/router";
 import { ToastsManager } from "ng2-toastr";
 import { UsuariosService } from "../../../../../shared/services/api/usuarios.service";
@@ -19,6 +19,7 @@ export class PasswordComponent implements OnInit {
     paises: any[];
     provincias: any[] = [];
     ciudades: any[] = [];
+    @Output() message: EventEmitter<any> = new EventEmitter();
     constructor(public usuariosService: UsuariosService,
         public toastr: ToastsManager,
         public appService: AppService,
@@ -31,13 +32,16 @@ export class PasswordComponent implements OnInit {
 
     onSubmit(datosUsuario) {
         Helpers.setLoading(true);
-        console.log("aaaaaaaa", datosUsuario);
         this.usuariosService.cambiarPassword(datosUsuario).subscribe(() => {
+            this.appService.loadingMessage = "Cargando";
+            Helpers.setLoading(false);
             this.toastr.success("Contraseña cambiada con éxito");
-            Helpers.setLoading(false);
         }, error => {
-            this.toastr.error(error.json().error.message);
+            this.appService.loadingMessage = "Cargando";
             Helpers.setLoading(false);
+            this.message.emit(error.json().error.message);
+            console.log(this.toastr.error(error.json().error.message));
+            this.toastr.error(error.json().error.message);
         });
     }
 

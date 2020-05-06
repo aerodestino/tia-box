@@ -43,7 +43,7 @@
                 <input type="text" class="form-control m-input" placeholder="ID"
                        ngModel #numero_identidad="ngModel" name="numero_identidad" required>
                 <section *ngIf="numero_identidad.invalid && numero_identidad.dirty" class="bs">
-                    <p class="m--font-danger" *ngIf="numero_identidad.hasError('required')">El ID es requerido</p>
+                    <p class="m--font-danger" *ngIf="numero_identidad.hasError('required')">La Cédula es requerida</p>
                 </section>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">

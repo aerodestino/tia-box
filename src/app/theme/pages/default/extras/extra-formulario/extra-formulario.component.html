@@ -35,13 +35,13 @@
                 </section>
             </div>
             <label class="col-lg-2 col-form-label">
-                Identificación:
+                Cédula:
             </label>
             <div class="col-lg-3">
-                <input type="number" class="form-control m-input" placeholder="Identificación"
-                       [ngModel]="extra.identificacion" #identificacion="ngModel" name="identificacion" required min="0">
+                <input type="text" class="form-control m-input" placeholder="Identificación"
+                       [ngModel]="extra.identificacion" #identificacion="ngModel" name="identificacion" required>
                 <section *ngIf="identificacion.invalid && identificacion.dirty" class="bs">
-                    <p class="m--font-danger" *ngIf="identificacion.hasError('required')">El identificacion es requerida</p>
+                    <p class="m--font-danger" *ngIf="identificacion.hasError('required')">El cédula es requerida</p>
                 </section>
             </div>
         </div>

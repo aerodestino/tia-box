@@ -2,7 +2,9 @@ import {
   Component,
   OnInit,
   ViewContainerRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  EventEmitter,
+  Output
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -26,7 +28,7 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
   imagenNueva = null;
   imagenVieja = null;
   inputFile = null;
-  
+
   constructor(
     public router: Router,
     public ngbModal: NgbModal,
@@ -118,4 +120,10 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
     this.extra = usuario;
     this.ngbModal.open(modal);
   }
+
+  verMensaje(mensaje) {
+    console.log(mensaje);
+    this.toastr.error(mensaje);
+  }
+  
 }

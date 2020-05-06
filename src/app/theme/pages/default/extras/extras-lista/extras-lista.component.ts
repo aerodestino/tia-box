@@ -34,7 +34,6 @@ export class ExtrasListaComponent extends BaseListComponent implements OnInit {
     super(router, toastr, vcr, appService);
     this.url = "/extras";
     this.resourceService = extrasService;
-    this.appService.title = "Listado";
     this.filters.user_id = this.appService.user.id;
   }
 
