@@ -198,7 +198,8 @@
     <div class="tab-pane" id="passwordTab" role="tabpanel">
       <div class="m-portlet m-portlet--mobile">
         <div class="m-portlet__body">
-          <app-password></app-password>
+          <app-password
+          (message)="verMensaje($event)"></app-password>
         </div>
       </div>
     </div>
