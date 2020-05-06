@@ -25,14 +25,24 @@
                                 ngModel #peso="ngModel" name="peso">
                         </div>
                         <label class="col-md-2 col-form-label">
+                            Unidad de medida del Peso
+                        </label>
+                        <div class="col-md-2">
+                            <input type="radio" class="radio-inline" id="Kg" name="tipopeso" value="0" ngModel #tipopeso="ngModel" required> <label for="Kg" style="margin-right:30px;"><span></span>Kg</label>
+                            <input type="radio" class="radio-inline" id="lb" name="tipopeso" value="1" checked ngModel #tipopeso="ngModel" required> <label for="lb" style="margin-right:30px;"><span></span>lb</label>      
+                        </div>
+                        <section *ngIf="tipopeso.invalid && tipopeso.dirty" class="bs">
+                            <p class="m--font-danger" *ngIf="tipopeso.hasError('required')">La unidad de medidas es requerida</p>
+                        </section>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-md-2 col-form-label">
                             Ancho
                         </label>
                         <div class="col-md-2">
                             <input type="number" min="0" class="form-control m-input" placeholder="Ancho"
                                 ngModel #ancho="ngModel" name="ancho">
                         </div>
-                    </div>
-                    <div class="form-group m-form__group row">
                         <label class="col-md-2 col-form-label">
                             Largo
                         </label>
@@ -40,12 +50,24 @@
                             <input type="number" min="0" class="form-control m-input" placeholder="Largo"
                                 ngModel #largo="ngModel" name="largo">
                         </div>
+                    </div>
+                    <div class="form-group m-form__group row">
                         <label class="col-md-2 col-form-label">
                             Alto
                         </label>
                         <div class="col-md-2">
                             <input type="number" min="0" class="form-control m-input" placeholder="Alto"
                                 ngModel #alto="ngModel" name="alto">
+                        </div>
+                        <label class="col-md-2 col-form-label">
+                            Unidad de medidas de Dimensiones
+                        </label>
+                        <div class="col-md-2">
+                            <input type="radio" class="radio-inline" id="cms" name="tipodimension" value="0" ngModel #tipodimension="ngModel" required> <label for="cms" style="margin-right:30px;"><span></span>cms</label>
+                            <input type="radio" class="radio-inline" id="pulg" name="tipodimension" value="1" ngModel #tipodimension="ngModel" required> <label for="pulg" style="margin-right:30px;"><span></span>pulgadas</label>      
+                            <section *ngIf="tipodimension.invalid && tipodimension.dirty" class="bs">
+                                <p class="m--font-danger" *ngIf="tipodimension.hasError('required')">La unidad de medidas es requerida</p>
+                            </section>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
@@ -211,10 +233,10 @@
                         <div class="col-6 m--align-right">
                             <span>{{resultado.impuesto_iva}}</span>
                         </div>
-                    </div>
+                    </div><br/>
                     <div class="row">
                         <div class="col-6 m--align-left">
-                            <span>Trámite</span>
+                            <h4>Trámite</h4>
                         </div>
                         <div class="col-6 m--align-right">
                             <span>{{resultado.tramite}}</span>
