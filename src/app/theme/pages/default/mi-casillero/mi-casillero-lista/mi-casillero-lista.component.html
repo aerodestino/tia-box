@@ -24,7 +24,7 @@
                         <i class="fa fa-location-arrow"></i>
                         <strong>Provincia/Departamento: </strong> {{appService.user.provincia.nombre}}
                     </span><br>
-                    <span style="font-size: 14px">
+                    <span style="font-size: 14px" *ngIf="appService.user.ciudad">
                         <i class="fa fa-location-arrow"></i>
                         <strong>Ciudad: </strong> {{appService.user.ciudad.nombre}}
                     </span><br>
