@@ -39,8 +39,10 @@ export class CuentaComponent implements OnInit {
         if(this.usuario.pais.id)
              this.getProvincias(this.usuario.pais.id);
         else
-            this.getProvincias(8);     
-        this.getCiudades(this.usuario.provincia.id);
+            this.getProvincias(8);   
+            
+        if(this.usuario.provincia && this.usuario.provincia.id ) 
+            this.getCiudades(this.usuario.provincia.id);
     }
 
     getPaises() {
