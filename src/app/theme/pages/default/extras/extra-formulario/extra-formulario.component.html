@@ -31,14 +31,14 @@
                 <input type="text" class="form-control m-input" placeholder="Dirección"
                        [ngModel]="extra.direccion" #direccion="ngModel" name="direccion" required>
                 <section *ngIf="direccion.invalid && direccion.dirty" class="bs">
-                    <p class="m--font-danger" *ngIf="nota.hasError('required')">La direccion es requerida</p>
+                    <p class="m--font-danger" *ngIf="nota.hasError('required')">La dirección es requerida</p>
                 </section>
             </div>
             <label class="col-lg-2 col-form-label">
                 Cédula:
             </label>
             <div class="col-lg-3">
-                <input type="text" class="form-control m-input" placeholder="Identificación"
+                <input type="text" class="form-control m-input" placeholder="Cédula"
                        [ngModel]="extra.identificacion" #identificacion="ngModel" name="identificacion" required>
                 <section *ngIf="identificacion.invalid && identificacion.dirty" class="bs">
                     <p class="m--font-danger" *ngIf="identificacion.hasError('required')">El cédula es requerida</p>
