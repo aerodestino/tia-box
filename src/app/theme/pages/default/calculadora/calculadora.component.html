@@ -28,8 +28,8 @@
                             Unidad de medida del Peso
                         </label>
                         <div class="col-md-2">
-                            <input type="radio" class="radio-inline" id="Kg" name="tipopeso" value="0" ngModel #tipopeso="ngModel" required> <label for="Kg" style="margin-right:30px;"><span></span>Kg</label>
-                            <input type="radio" class="radio-inline" id="lb" name="tipopeso" value="1" checked ngModel #tipopeso="ngModel" required> <label for="lb" style="margin-right:30px;"><span></span>lb</label>      
+                            <input type="radio" class="radio-inline" id="Kg" name="tipopeso" value="1" ngModel #tipopeso="ngModel" required> <label for="Kg" style="margin-right:30px;"><span></span>Kg</label>
+                            <input type="radio" class="radio-inline" id="lb" name="tipopeso" value="0" checked ngModel #tipopeso="ngModel" required> <label for="lb" style="margin-right:30px;"><span></span>Lb</label>      
                         </div>
                         <section *ngIf="tipopeso.invalid && tipopeso.dirty" class="bs">
                             <p class="m--font-danger" *ngIf="tipopeso.hasError('required')">La unidad de medidas es requerida</p>
@@ -63,8 +63,8 @@
                             Unidad de medidas de Dimensiones
                         </label>
                         <div class="col-md-2">
-                            <input type="radio" class="radio-inline" id="cms" name="tipodimension" value="0" ngModel #tipodimension="ngModel" required> <label for="cms" style="margin-right:30px;"><span></span>cms</label>
-                            <input type="radio" class="radio-inline" id="pulg" name="tipodimension" value="1" ngModel #tipodimension="ngModel" required> <label for="pulg" style="margin-right:30px;"><span></span>pulgadas</label>      
+                            <input type="radio" class="radio-inline" id="cms" name="tipodimension" value="0" ngModel #tipodimension="ngModel" required> <label for="cms" style="margin-right:30px;"><span></span>Cms</label>
+                            <input type="radio" class="radio-inline" id="pulg" name="tipodimension" value="1" ngModel #tipodimension="ngModel" required> <label for="pulg" style="margin-right:30px;"><span></span>Pulgadas</label>      
                             <section *ngIf="tipodimension.invalid && tipodimension.dirty" class="bs">
                                 <p class="m--font-danger" *ngIf="tipodimension.hasError('required')">La unidad de medidas es requerida</p>
                             </section>
