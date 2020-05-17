@@ -121,9 +121,9 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
     this.ngbModal.open(modal);
   }
 
-  verMensaje(mensaje) {
-    console.log(mensaje);
-    this.toastr.error(mensaje);
+  cambiarPass(message) {
+    console.log(message);
+    this.toastr.error(message);
   }
   
 }
