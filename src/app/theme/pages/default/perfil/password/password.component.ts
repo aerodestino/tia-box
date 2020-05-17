@@ -19,7 +19,8 @@ export class PasswordComponent implements OnInit {
     paises: any[];
     provincias: any[] = [];
     ciudades: any[] = [];
-    @Output() message: EventEmitter<any> = new EventEmitter();
+    message: any;
+    @Output() cambiarPass: EventEmitter<any> = new EventEmitter();
     constructor(public usuariosService: UsuariosService,
         public toastr: ToastsManager,
         public appService: AppService,
@@ -35,13 +36,13 @@ export class PasswordComponent implements OnInit {
         this.usuariosService.cambiarPassword(datosUsuario).subscribe(() => {
             this.appService.loadingMessage = "Cargando";
             Helpers.setLoading(false);
-            this.toastr.success("Contraseña cambiada con éxito");
+            this.message="Contraseña cambiada con éxito";
+            this.cambiarPass.emit(this.message);
         }, error => {
             this.appService.loadingMessage = "Cargando";
             Helpers.setLoading(false);
-            this.message.emit(error.json().error.message);
-            console.log(this.toastr.error(error.json().error.message));
-            this.toastr.error(error.json().error.message);
+            this.message=error.json().error.message;
+            this.cambiarPass.emit(this.message);
         });
     }
 
@@ -49,5 +50,7 @@ export class PasswordComponent implements OnInit {
 
     }
 
-
+    onCambiarPass() {
+        this.cambiarPass.emit(this.message);
+    }
 }
