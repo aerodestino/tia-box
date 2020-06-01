@@ -26,9 +26,9 @@ export class AppComponent implements OnInit {
       !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
     if (!ios) {
-      Notification.requestPermission().then(result => {
-        this.notificationService.setPermission(result == "granted");
-      });
+    //  Notification.requestPermission().then(result => {
+    //    this.notificationService.setPermission(result == "granted");
+    //  });
     }
   }
 
