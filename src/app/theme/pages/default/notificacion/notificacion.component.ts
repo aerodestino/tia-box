@@ -20,7 +20,7 @@ export class NotificacionComponent extends BaseDetallesComponent implements OnIn
         super(activatedRoute, toastr, vcr, appService, router, ngbModal);
         this.toastr.setRootViewContainerRef(vcr);
         this.resource = this.notificacionesService;
-        this.appService.title = "Detalles";
+        this.appService.title = "DETALLES";
         activatedRoute.params.subscribe(params => {
             this.id = params['id'];
             super.getElement();

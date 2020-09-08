@@ -39,7 +39,7 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-perfil";
-    this.appService.title = "Perfil de Usuario";
+    this.appService.title = "PERFIL DE USUARIO";
     this.defaultAvatar = "./../../../../../../assets/img/sin-imagen.jpg";
   }
 

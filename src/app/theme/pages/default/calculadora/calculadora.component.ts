@@ -25,7 +25,8 @@ export class CalculadoraComponent implements OnInit {
 
     tarifarios: Tarifario[] = [];
     aranceles: Arancel[] = [];
-
+    tpeso: number;
+    tdimension: number;
     constructor(public tarifariosService: TarifariosService, public arancelesService: ArancelesService,
                 public calculadoraService: CalculadoraService, public ngbModal: NgbModal,
                 public toastr: ToastsManager,
@@ -37,6 +38,8 @@ export class CalculadoraComponent implements OnInit {
     ngOnInit() {
         this.getTarifarios();
         this.getAranceles();
+        this.tpeso = 0;
+        this.tdimension= 1;
     }
 
     getTarifarios() {
