@@ -27155,7 +27155,7 @@ body.m-content--skin-light2 {
               background-clip: text;
               text-fill-color: transparent;
               -webkit-background-clip: text;
-              /* -webkit-text-fill-color: transparent;  */
+               -webkit-text-fill-color: transparent;  
               }
               @media screen\0 {
                 .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon > i:before {
