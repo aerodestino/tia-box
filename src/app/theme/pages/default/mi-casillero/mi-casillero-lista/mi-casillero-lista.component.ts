@@ -83,7 +83,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
-    this.appService.title = "MI CASILLERO";
+    this.appService.title = "CASILLERO";
   }
 
   ngOnInit() {
