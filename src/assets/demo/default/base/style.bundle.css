@@ -27146,7 +27146,7 @@ body.m-content--skin-light2 {
           line-height: 0;
           vertical-align: middle;
           padding: 0;
-          color: #1e1111; }
+         }
           .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon > i {
             font-size: 1.5rem; }
             .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon > i:before {
@@ -27202,6 +27202,11 @@ body.m-content--skin-light2 {
         padding: 0 6px; } }
 
 @media (max-width: 992px) {
+
+  .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon {
+    color: #1e1111;
+   }
+
   .m-topbar {
     width: 100% !important;
     -webkit-transition: all 0.3s ease;
