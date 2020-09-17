@@ -28,7 +28,7 @@ export class CrearExtraComponent implements OnInit {
     public router: Router
   ) {
     this.toastr.setRootViewContainerRef(vcr);
-    this.appService.title = "Crear Extra";
+    this.appService.title = "CREAR EXTRA";
   }
   ngOnInit() {
     this.returnUrl =

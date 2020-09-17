@@ -1,9 +1,9 @@
 <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
     <thead>
     <tr>
+       
         <th>
         </th>
-
         <th>Fecha</th>
         <th>Código</th>
         <th>Tracking</th>
@@ -14,6 +14,8 @@
         <th>Vol</th>
         <th>Valor</th>
         <th>Documento</th>
+        <th>
+        </th>
         <th>Cargo</th>
 
     </tr>
@@ -30,10 +32,7 @@
             </label>
             <i class="fa fa-dropbox" *ngIf="articulo.consolidado"></i>
             <i class="fa fa-plane" *ngIf="articulo.enviar"></i>
-            <i class="fa fa-save m--font-success" title="Actualizar" *ngIf="articulo.facturaExcel" style="cursor: pointer;"
-               (click)="subirFactura(articulo)">
-
-            </i>
+           
         </td>
         <td>
             {{articulo.fecha_bodega | date: "shortDate"}}
@@ -75,6 +74,13 @@
             >
             <i class="fa fa-folder-open m--font-success" style="cursor: pointer" title="Subir Factura" (click)="fileInput.click()" *ngIf="!articulo.factura"></i>
             <span *ngIf="articulo.facturaExcel">{{articulo.facturaExcel.name}}</span>
+        </td>
+        <td>
+           
+            <i class="fa fa-save m--font-success" title="Actualizar" *ngIf="articulo.facturaExcel" style="cursor: pointer;"
+               (click)="subirFactura(articulo)">
+
+            </i>
         </td>
         <td>
             {{articulo.precio_final}}

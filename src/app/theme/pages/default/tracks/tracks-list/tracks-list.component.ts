@@ -23,7 +23,7 @@ export class TracksListComponent extends BaseListComponent implements OnInit {
         super(router, toastr, vcr, appService);
         this.url = '/tracks';
         this.resourceService = tracksService;
-        this.appService.title = "Lista";
+        this.appService.title = "LISTA";
         this.filters.status = 1;
         this.filters.usuario_id = localStorage.getItem('user_id');
     }

@@ -26,7 +26,7 @@ export class FacturacionesListaComponent extends BaseListComponent implements On
         super(router, toastr, vcr, appService);
         this.url = '/facturaciones';
         this.resourceService = facturacionesService;
-        this.appService.title = "Listado";
+        this.appService.title = "LISTADO";
         this.filters.user_id = this.appService.user.id;
     }
 

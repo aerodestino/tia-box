@@ -20,7 +20,7 @@ export class ActualizarExtraComponent implements OnInit {
                 public extrasService: ExtrasService, public toastr: ToastsManager,
                 public vcr: ViewContainerRef, public router: Router) {
         this.toastr.setRootViewContainerRef(vcr);
-        this.appService.title = "Actualizar Extra";
+        this.appService.title = "ACTUALIZAR EXTRA";
     }
     ngOnInit() {
         this.getElement();

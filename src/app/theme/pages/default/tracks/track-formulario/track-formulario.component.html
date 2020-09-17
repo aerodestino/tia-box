@@ -14,13 +14,13 @@
     <div class="m-portlet__body">
         <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
-                Código:
+                # Rastreo:
             </label>
             <div class="col-lg-3">
                 <input type="text" class="form-control m-input" placeholder="Codigo"
                        ngModel #codigo="ngModel" name="codigo" required>
                 <section *ngIf="codigo.invalid && codigo.dirty" class="bs">
-                    <p class="m--font-danger" *ngIf="codigo.hasError('required')">El codigo es requerido</p>
+                    <p class="m--font-danger" *ngIf="codigo.hasError('required')">El # rastreo es requerido</p>
                 </section>
             </div>
             <label class="col-lg-2 col-form-label">

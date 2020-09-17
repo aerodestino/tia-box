@@ -22,7 +22,7 @@ export class CrearTrackComponent implements OnInit {
         public router: Router
     ) {
         this.toastr.setRootViewContainerRef(vcr);
-        this.appService.title = "Crear";
+        this.appService.title = "CREAR";
     }
     ngOnInit() {
         this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
