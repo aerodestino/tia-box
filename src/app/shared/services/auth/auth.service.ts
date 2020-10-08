@@ -20,7 +20,8 @@ export class AuthService {
       client_id: "1_interface",
       client_secret: "4ok2x70rlfokc8g0wws8c8kwcokw80k44sg48goc0ok4w0so0k",
       username: user,
-      password: password
+      password: password,
+      path: window.location.href
     };
     return this.http.post("oauth/v2/token", body);
   }

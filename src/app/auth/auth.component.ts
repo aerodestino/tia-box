@@ -69,8 +69,10 @@ export class AuthComponent implements OnInit {
                 this.getProfile();
             },
             error => {
-                console.log(error.json());
-                this.toastr.error("Usuario o contraseña incorrectos")
+               if(error._body == '{"error":"invalid_interfaz","error_description":"No tiene acceso a la interfaz"}')
+                    this.toastr.error('No tiene acceso a la interfaz')                    
+                else
+                    this.toastr.error("Usuario o contraseña incorrectos")
                 this.loading = false;
             });
     }
