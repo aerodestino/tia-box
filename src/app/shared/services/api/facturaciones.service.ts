@@ -16,4 +16,14 @@ export class FacturacionesService extends ApiService {
         params = this.serialize(params);
         return this.http.get(`${this.url}mine`, { params: this.object2Params(params), responseType: responseType });
     }
+
+     getArticulos(params: any): Observable<any> {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}articulos`, { params: this.object2Params(params) });
+    }
+
+    getFormasPago(params: any): Observable<any> {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}formaspago`, { params: this.object2Params(params) });
+    }
 }

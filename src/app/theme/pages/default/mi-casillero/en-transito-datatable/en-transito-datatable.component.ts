@@ -2,9 +2,10 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 import { BaseDatatableComponent } from "../../../../../shared/prototypes/base-datatable";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { TrackingsService } from "../../../../../shared/services/api/trackings.service";
+import { EnviosService } from "../../../../../shared/services/api/envios.service";
 import { Tracking } from "../../../../../shared/model/tracking.model";
-
+import { Helpers } from "../../../../../helpers";
+import { ToastsManager } from "ng2-toastr";
 @Component({
     selector: 'app-en-transito-datatable',
     templateUrl: './en-transito-datatable.component.html',
@@ -13,7 +14,8 @@ import { Tracking } from "../../../../../shared/model/tracking.model";
 export class EnTransitoDatatableComponent extends BaseDatatableComponent implements OnInit, AfterViewInit {
     @Output() ver: EventEmitter<any> = new EventEmitter();
     envio: any;
-    constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal) {
+    constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, public enviosService: EnviosService,
+        public toastr: ToastsManager) {
         super(ngbModal);
     }
 
@@ -31,8 +33,20 @@ export class EnTransitoDatatableComponent extends BaseDatatableComponent impleme
     }
 
     onVer(articulo, modal) {
-        this.envio = articulo;
-        this.ngbModal.open(modal, {size: "lg"});
+        Helpers.setLoading(true);
+        this.enviosService
+          .getArticulos({ id: articulo })
+          .subscribe(
+            (dato) => {
+              Helpers.setLoading(false);
+             this.envio= dato.json().data;
+             this.ngbModal.open(modal, { size: "lg" });
+            },
+            error => {
+              Helpers.setLoading(false);
+              this.toastr.error('Ocurrió un error cargando los detalles');
+            }
+          );
     }
 
     onVerImagenes(articulo) {

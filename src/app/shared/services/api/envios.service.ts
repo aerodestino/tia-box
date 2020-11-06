@@ -9,4 +9,10 @@ export class EnviosService extends ApiService {
         super(http);
         this.url = 'api/envios/'
     }
+
+    getArticulos(params: any): Observable<any> {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}articulos`, { params: this.object2Params(params) });
+    }
+
 }

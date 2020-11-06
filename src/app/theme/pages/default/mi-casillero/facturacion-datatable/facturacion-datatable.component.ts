@@ -2,9 +2,10 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 import { BaseDatatableComponent } from "../../../../../shared/prototypes/base-datatable";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { TrackingsService } from "../../../../../shared/services/api/trackings.service";
+import { FacturacionesService } from "../../../../../shared/services/api/facturaciones.service";
 import { Tracking } from "../../../../../shared/model/tracking.model";
-
+import { Helpers } from "../../../../../helpers";
+import { ToastsManager } from "ng2-toastr";
 @Component({
     selector: 'app-facturacion-datatable',
     templateUrl: './facturacion-datatable.component.html',
@@ -13,7 +14,9 @@ import { Tracking } from "../../../../../shared/model/tracking.model";
 export class FacturacionDatatableComponent extends BaseDatatableComponent implements OnInit, AfterViewInit {
     @Output() ver: EventEmitter<any> = new EventEmitter();
     envio: any;
-    constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal) {
+    pago: any;
+    constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal,public facturacionesService: FacturacionesService,
+        public toastr: ToastsManager) {
         super(ngbModal);
     }
 
@@ -31,12 +34,41 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
     }
 
     onVer(articulo, modal) {
-        this.envio = articulo;
-        this.ngbModal.open(modal, {size: "lg"});
+        Helpers.setLoading(true);
+        this.facturacionesService
+          .getArticulos({ id: articulo })
+          .subscribe(
+            (dato) => {
+              Helpers.setLoading(false);
+             this.envio= dato.json().data;
+             this.ngbModal.open(modal, { size: "lg" });
+            },
+            error => {
+              Helpers.setLoading(false);
+              this.toastr.error('Ocurrió un error cargando los detalles');
+            }
+          );
     }
 
     openModal(modal) {
         this.ngbModal.open(modal);
+    }
+
+    onFormasPago(articulo, modal) {
+        Helpers.setLoading(true);
+        this.facturacionesService
+          .getFormasPago({ id: articulo })
+          .subscribe(
+            (dato) => {
+              Helpers.setLoading(false);
+             this.pago= dato.json().data;
+             this.ngbModal.open(modal, { size: "lg" });
+            },
+            error => {
+              Helpers.setLoading(false);
+              this.toastr.error('Ocurrió un error cargando los detalles');
+            }
+          );
     }
 
     onVerImagenes(articulo) {

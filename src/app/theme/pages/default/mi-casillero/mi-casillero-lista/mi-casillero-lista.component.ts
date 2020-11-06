@@ -268,7 +268,20 @@ export class MiCasilleroListaComponent extends BaseListComponent
   }
 
   verImagenes(articulo, modal) {
-    this.articulo = articulo;
-    this.ngbModal.open(modal, { size: "lg" });
+    Helpers.setLoading(true);
+    this.articulosService
+      .getImagenes({ id: articulo })
+      .subscribe(
+        (dato) => {
+          Helpers.setLoading(false);
+         this.articulo= dato.json().data;
+         this.ngbModal.open(modal, { size: "lg" });
+        },
+        error => {
+          Helpers.setLoading(false);
+          this.toastr.error('Ocurrió un error cargando las imágenes');
+        }
+      );
+    
   }
 }

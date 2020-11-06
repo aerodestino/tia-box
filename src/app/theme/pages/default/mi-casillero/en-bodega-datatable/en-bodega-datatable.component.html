@@ -35,7 +35,7 @@
            
         </td>
         <td>
-            {{articulo.fecha_bodega | date: "shortDate"}}
+            {{articulo.fechaBodega | date: "shortDate"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -44,8 +44,8 @@
            {{articulo.tracking}}
         </td>
         <td>
-            <span *ngIf="!articulo.media || !articulo.media[0]">{{articulo.descripcion}}</span>
-            <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media && articulo.media[0]" (click)="onVerImagenes(articulo)">{{articulo.descripcion}}</span>
+            <span *ngIf="articulo.media == 0">{{articulo.descripcion}}</span>
+            <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media > 0" (click)="onVerImagenes(articulo.id)">{{articulo.descripcion}}</span>
         </td>
         <td>
             {{articulo.tienda}}
@@ -83,7 +83,7 @@
             </i>
         </td>
         <td>
-            {{articulo.precio_final}}
+            {{articulo.precio_final ? articulo.precio_final : 0}}
         </td>
     </tr>
     </tbody>
