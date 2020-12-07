@@ -28,6 +28,7 @@ export class FacturacionesListaComponent extends BaseListComponent implements On
         this.resourceService = facturacionesService;
         this.appService.title = "LISTADO";
         this.filters.user_id = this.appService.user.id;
+        this.filters.web = true;
     }
 
     ngOnInit() {

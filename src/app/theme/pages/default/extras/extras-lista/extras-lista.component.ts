@@ -35,6 +35,7 @@ export class ExtrasListaComponent extends BaseListComponent implements OnInit {
     this.url = "/extras";
     this.resourceService = extrasService;
     this.filters.user_id = this.appService.user.id;
+    this.filters.web = true;
   }
 
   ngOnInit() {
