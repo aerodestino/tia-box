@@ -19,11 +19,11 @@
         <td>
             <span *ngIf="facturacion.fecha_notificacion"> {{ facturacion.fecha_notificacion | date: "shortDate" }}</span>
         </td>
-        <td>{{facturacion.costo}}</td>
+        <td>{{facturacion.costo ? facturacion.costo : 0 }}</td>
         <td>
-            {{facturacion.arancel?.descripcion}}
+            {{facturacion.arancel ?  facturacion.arancel.descripcion : '-' }}
         </td>
-        <td>{{facturacion.tarifario?.nombre}}</td>
+        <td>{{facturacion.tarifario ? facturacion.tarifario.nombre : '-' }}</td>
 
         <td>
             <div class="col-md-3 col-sm-6">
