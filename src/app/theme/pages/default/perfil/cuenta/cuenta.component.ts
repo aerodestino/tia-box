@@ -19,6 +19,7 @@ export class CuentaComponent implements OnInit {
     provincias: any[] = [];
     ciudades: any[] = [];
     default= 8;
+    message: any='';
     @Input() usuario: any;
     @Output() verCupos: EventEmitter<any> = new EventEmitter();
     constructor(public usuariosService: UsuariosService,
@@ -69,10 +70,11 @@ export class CuentaComponent implements OnInit {
         datosUsuario.numero_identidad = this.usuario.numero_identidad;
         Helpers.setLoading(true);
         this.usuariosService.editarPerfil(datosUsuario).subscribe(() => {
-            Helpers.setLoading(false);
             this.appService.loadingMessage = "Cargando";
-            this.toastr.success("Datos Actualizados");
+            Helpers.setLoading(false);
+            this.message="Datos Actualizados";
         }, error => {
+            this.message= error.json().error.message;
             this.toastr.error(error.json().error.message);
             Helpers.setLoading(false);
             this.appService.loadingMessage = "Cargando";
