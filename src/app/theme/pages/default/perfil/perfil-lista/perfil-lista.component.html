@@ -95,6 +95,12 @@
                 <i class="fa fa-close"></i>
                 Cancelar
               </button>
+              <section *ngIf="message && (message == 'Imagen Cambiada' || message=='Documento Guardado')" class="bs">
+                <h4 class="m--font-success" style="color: #4cc22f !important; margin-top:10px">{{message}}</h4>
+            </section><br/>
+            <section *ngIf="message && (message != 'Imagen Cambiada' && message!='Documento Guardado')" class="bs">
+                <h4 class="m--font-danger">{{message}}</h4>
+            </section><br/>
             </div>
             <div class="col-md-7 col-lg-7 col-sm-12">
               <div class="row">

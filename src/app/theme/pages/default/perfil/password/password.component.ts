@@ -19,7 +19,7 @@ export class PasswordComponent implements OnInit {
     paises: any[];
     provincias: any[] = [];
     ciudades: any[] = [];
-    message: any;
+    message: any='';
     @Output() cambiarPass: EventEmitter<any> = new EventEmitter();
     constructor(public usuariosService: UsuariosService,
         public toastr: ToastsManager,

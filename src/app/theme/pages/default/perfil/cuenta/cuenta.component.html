@@ -153,6 +153,12 @@
             <div class="row">
                 <div class="col-lg-2"></div>
                 <div class="col-lg-10">
+                    <section *ngIf="message && message == 'Datos Actualizados'" class="bs">
+                        <h4 class="m--font-success" style="color: #4cc22f !important;">{{message}}</h4>
+                    </section><br/>
+                    <section *ngIf="message && message != 'Datos Actualizados'" class="bs">
+                        <h4 class="m--font-danger">{{message}}</h4>
+                    </section><br/>
                     <button type="submit" class="btn btn-success" [disabled]="cuentaForm.invalid">
                         Guardar Cambios
                     </button>

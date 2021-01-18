@@ -28,7 +28,7 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
   imagenNueva = null;
   imagenVieja = null;
   inputFile = null;
-
+  message:any='';
   constructor(
     public router: Router,
     public ngbModal: NgbModal,
@@ -86,12 +86,14 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
     this.usuariosService.cambiarImagen(formData).subscribe(
       res => {
         this.toastr.success("Imagen Cambiada");
+        this.message="Imagen Cambiada";
         this.imagenNueva = this.imagenVieja = null;
         Helpers.setLoading(false);
       },
       error => {
         Helpers.setLoading(false);
         this.toastr.error(error.json().error.message);
+        this.message=error.json().error.message;
       }
     );
   }
@@ -107,10 +109,13 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
         res => {
           Helpers.setLoading(false);
           this.toastr.success("Documento Guardado");
+          this.message="Documento Guardado";
         },
         error => {
           Helpers.setLoading(false);
           this.toastr.error(error.json().error.message);
+          this.message=error.json().error.message;
+
         }
       );
     }
