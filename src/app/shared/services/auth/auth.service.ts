@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   resetPassword(email) {
-    let params = { email: email };
+    let params = { email: email, path:window.location.href };
     return this.http.getWithoutAuthHeader("api/password/recuperar", {
       params: params
     });
