@@ -22,6 +22,7 @@
             <input class="form-control m-input" [(ngModel)]="correo.subject" placeholder="Asunto" style="margin: 5px">
             <input class="form-control m-input" [(ngModel)]="correo.nombre" disabled style="margin: 5px">
             <input class="form-control m-input" [(ngModel)]="correo.from" disabled style="margin: 5px">
+            <input class="form-control m-input" hidden [(ngModel)]="correo.to" disabled style="margin: 5px">
             <input class="form-control m-input" [(ngModel)]="correo.telefono" placeholder="Teléfono" style="margin: 5px">
             <textarea class="form-control m-input" [(ngModel)]="correo.body" placeholder="Mensaje" style="margin: 5px">
             </textarea>

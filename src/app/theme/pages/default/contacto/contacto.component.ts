@@ -39,6 +39,7 @@ export class ContactoComponent implements OnInit {
            this.usuario = usuario.json().data;
            this.correo.nombre = this.usuario.full_name;
            this.correo.from = this.usuario.email;
+           this.correo.to = 'info@box593.com';
         });
     }
 
