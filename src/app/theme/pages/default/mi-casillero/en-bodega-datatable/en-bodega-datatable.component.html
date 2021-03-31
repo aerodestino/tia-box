@@ -26,7 +26,7 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            <label class="m-checkbox" *ngIf="articulo.factura && !articulo.enviar && !articulo.consolidado">
+            <label class="m-checkbox" *ngIf="!articulo.enviar && !articulo.consolidado">
                 <input type="checkbox" [(ngModel)]="articulo.selected" (change)="changeAllState()">
                 <span></span>
             </label>
@@ -61,11 +61,15 @@
             {{articulo.volumen}}
         </td>
         <td>
-            <input class="form-control m-input" *ngIf="!articulo.factura" [(ngModel)]="articulo.precio">
-            <span *ngIf="articulo.factura">{{articulo.precio}}</span>
+            <input class="form-control m-input" style="float: left; width:50px; margin-right: 5px; padding:5px" *ngIf="!articulo.editarprecio" [(ngModel)]="articulo.precio">
+            <span *ngIf="articulo.editarprecio">{{articulo.precio}}</span>
+            <i class="fa fa-save m--font-success" title="Actualizar"  style="cursor: pointer; margin-top:10px;"
+            (click)="guardarPrecio(articulo.id,articulo.precio)"  *ngIf="!articulo.editarprecio"></i>
         </td>
         <td>
-            <i class="fa fa-check m--font-success" title="Presenta Factura" *ngIf="articulo.factura"></i>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Declaración de Valores" style="color: white; background-color: #4f9e35" target="_blank" *ngIf="articulo.factura_file && articulo.facDV && !articulo.consolidadoFactura">Si</a>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_file && !articulo.facDV && !articulo.consolidadoFactura">Si</a>
+            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_file && articulo.consolidadoFactura">Si</a>            
             <input
                     name="archivo"
                     type="file"
@@ -73,7 +77,7 @@
                     #fileInput
                     (change)="onSubirFactura($event, articulo)"
             >
-            <i class="fa fa-folder-open m--font-success" style="cursor: pointer" title="Subir Factura" (click)="fileInput.click()" *ngIf="!articulo.factura"></i>
+            <i class="fa fa-folder-open m--font-success" style="cursor: pointer" title="Subir Factura" (click)="fileInput.click()" *ngIf="!articulo.factura_file"></i>
             <span *ngIf="articulo.facturaExcel">{{articulo.facturaExcel.name}}</span>
         </td>
         <td>

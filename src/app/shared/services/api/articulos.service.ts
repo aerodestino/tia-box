@@ -31,4 +31,12 @@ export class ArticulosService extends ApiService {
         return this.http.put(`${this.url}consolidar`, resource);
     }
 
+    subirFacturaMasiva(resource: any): Observable<any> {
+        return this.http.post(`${this.url}facturamasiva`, resource);
+    }
+
+    guardarPrecio(id, precio:any): Observable<any> {
+        return this.http.put(`${this.url}${id}/costo`, super.serialize(precio));
+    }
+
 }

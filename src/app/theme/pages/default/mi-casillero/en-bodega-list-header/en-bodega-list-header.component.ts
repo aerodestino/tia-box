@@ -9,8 +9,11 @@ import { EmpresasEnvioService } from "../../../../../shared/services/api/empresa
 })
 export class EnBodegaListHeaderComponent implements OnInit {
     @Input() totalEnBodega;
+    @Input() selection;
+    @Input() puedeFactura;
     @Output() consolidar: EventEmitter<any> = new EventEmitter();
     @Output() embarcar: EventEmitter<any> = new EventEmitter();
+    @Output() facturaMasiva: EventEmitter<any> = new EventEmitter();
     constructor(public ngbModal: NgbModal) { }
 
     ngOnInit() {
@@ -24,4 +27,7 @@ export class EnBodegaListHeaderComponent implements OnInit {
         this.consolidar.emit();
     }
 
+    onFactura() {
+        this.facturaMasiva.emit();
+    }
 }
