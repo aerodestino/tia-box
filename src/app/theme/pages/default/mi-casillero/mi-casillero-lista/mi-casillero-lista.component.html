@@ -90,6 +90,7 @@
                             (consolidar)="onConsolidar()"
                             (embarcar)="onEmbarcar()"
                             [puedeFactura]="puedeFactura"
+                            [totalFactura]="totalFactura"
                             (facturaMasiva)="OnModalFactura(facturaMasivaModal)"
                         ></app-en-bodega-list-header>
                     </div>
@@ -112,6 +113,7 @@
                             (datosSelection)= "onDatos($event)"
                             (preciosSelection)= "onSelectionPrecios($event)"
                             (facturaSelection)= "onPuedeFactura($event)"
+                            (totalfacturaSelection)= "onTotalFactura($event)"
                     ></app-en-bodega-datatable>
                 </div>
                 <!--end: Datatable -->

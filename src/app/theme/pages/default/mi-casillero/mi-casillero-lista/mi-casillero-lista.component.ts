@@ -34,6 +34,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   entregados: any[];
   articulo: any;
   puedeFactura: boolean = true;
+  totalFactura: boolean = true;
   urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
@@ -247,15 +248,20 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onConsolidar() {
     let existe=false;
+    
     for (let i in this.datos){
-        if(this.datos == null ||this.datos <= 0 )
+        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
             existe= true;    
     }
-    if(existe){
+    if(existe || this.selectionPrecios){
+      if(this.selectionPrecios){
+        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
+          Helpers.setLoading(false);
+      }else{
         this.toastr.error('El costo debe ser mayor que cero');
         Helpers.setLoading(false);
+      }
     }else{
-   
     this.articulosService
       .consolidar({ articulos: this.enBodegaSeleccion })
       .subscribe(
@@ -274,15 +280,20 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onEmbarcar() {
     let existe=false;
+    
     for (let i in this.datos){
-        if(this.datos == null ||this.datos <= 0 )
+        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
             existe= true;    
     }
-    if(existe){
+    if(existe || this.selectionPrecios){
+      if(this.selectionPrecios){
+        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
+          Helpers.setLoading(false);
+      }else{
         this.toastr.error('El costo debe ser mayor que cero');
         Helpers.setLoading(false);
+      }
     }else{
-   
     this.articulosService
       .embarcar({ articulos: this.enBodegaSeleccion })
       .subscribe(
@@ -348,6 +359,10 @@ onDatos(element) {
 
 onPuedeFactura(element) {
   this.puedeFactura = element;
+}
+
+onTotalFactura(element) {
+  this.totalFactura = element;
 }
 
 OnModalFactura(content){

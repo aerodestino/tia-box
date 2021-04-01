@@ -31,6 +31,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   @Output() datosSelection: EventEmitter<any> = new EventEmitter();
   @Output() facturaSelection: EventEmitter<any> = new EventEmitter();
   @Output() preciosSelection: EventEmitter<any> = new EventEmitter();
+  @Output() totalfacturaSelection: EventEmitter<any> = new EventEmitter();
   selectionIds: string[];
   precios: any[];
   constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, 
@@ -111,6 +112,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     this.selectionChange.emit(this.selectionIds);
     this.datosSelection.emit(this.costo);
     (existeFactura > 0) ? this.facturaSelection.emit(false) : this.facturaSelection.emit(true);
+    (existeFactura == this.selectionIds.length) ? this.totalfacturaSelection.emit(false) : this.totalfacturaSelection.emit(true);
     (existePrecio > 0) ? this.preciosSelection.emit(true) : this.preciosSelection.emit(false);
   }
 
@@ -128,6 +130,9 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
         window.location.reload();
         Helpers.setLoading(false);
     }, error => {
+      if(error.json().error && error.json().error.message)
+          this.toastr.error(error.json().error.message);
+      else
         this.toastr.error('Ocurrió un error al editar el costo');
         Helpers.setLoading(false);
     });

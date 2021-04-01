@@ -5,12 +5,12 @@
             <i class="fa fa-folder-open"></i>
             Factura
         </button>
-        <button [disabled]="totalEnBodega <= 0" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+        <button [disabled]="totalFactura || totalEnBodega < 1" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
                 (click)="onEmbarcar()" >
             <i class="fa fa-plane"></i>
             Embarcar
         </button>
-        <button [disabled]="totalEnBodega <= 0" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+        <button [disabled]="totalFactura || totalEnBodega < 1" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
                 (click)="onConsolidar()" >
             <i class="fa fa-dropbox"></i>
             Consolidar

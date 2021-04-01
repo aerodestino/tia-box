@@ -11,6 +11,7 @@ export class EnBodegaListHeaderComponent implements OnInit {
     @Input() totalEnBodega;
     @Input() selection;
     @Input() puedeFactura;
+    @Input() totalFactura;
     @Output() consolidar: EventEmitter<any> = new EventEmitter();
     @Output() embarcar: EventEmitter<any> = new EventEmitter();
     @Output() facturaMasiva: EventEmitter<any> = new EventEmitter();
