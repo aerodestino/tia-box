@@ -5,18 +5,19 @@
         <th>
         </th>
         <th>Fecha</th>
-        <th>Código</th>
+        <th>Código Almacén</th>
         <th>Tracking</th>
         <th>Descripción</th>
         <th>Remitente</th>
         <th>Peso(Lb)</th>
+        <th>Piezas</th>
         <th>Dim(In)</th>
         <th>Vol(Vlb)</th>
         <th>Valor(USD)</th>
         <th>Documento</th>
         <th>
         </th>
-        <th>Cargo</th>
+        
 
     </tr>
     </thead>
@@ -55,6 +56,9 @@
             {{articulo.peso}}
         </td>
         <td>
+            {{articulo.piezas}}
+        </td>
+        <td>
             {{articulo.largo}}x{{articulo.ancho}}x{{articulo.alto}}
         </td>
         <td>
@@ -87,9 +91,7 @@
 
             </i>
         </td>
-        <td>
-            {{articulo.precio_final ? articulo.precio_final : 0}}
-        </td>
+      
     </tr>
     </tbody>
 </table>
