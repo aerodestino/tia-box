@@ -14,10 +14,10 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            {{articulo.fechaIngreso | date: "shortDate"}}
+            {{articulo.fechaIngreso | date: "dd/MM/y"}}
         </td>
         <td>
-            {{articulo.fechaNotificacion | date: "shortDate"}}
+            {{articulo.fechaNotificacion | date: "dd/MM/y"}}
         </td>
         <td>
             {{articulo.costo}}
