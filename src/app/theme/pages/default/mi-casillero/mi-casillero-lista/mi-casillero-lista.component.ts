@@ -21,6 +21,11 @@ import { UsuariosService } from "../../../../../shared/services/api/usuarios.ser
 })
 export class MiCasilleroListaComponent extends BaseListComponent
   implements OnInit {
+    datos: any;
+    file:any;
+    nombreTrackbox: any = '';
+    modalRef = null;
+    selectionPrecios: any;
   usuario: any;
   enBodega: any[];
   enTransito: any[];
@@ -28,14 +33,17 @@ export class MiCasilleroListaComponent extends BaseListComponent
   rutaNacional: any[];
   entregados: any[];
   articulo: any;
-
+  puedeFactura: boolean = true;
+  consolidarPaquete: boolean = true;
+  enviarPaquete: boolean = true;
+  urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
 
-  enBodegaSeleccion: any[];
+  enBodegaSeleccion: any;
 
   totalEnBodega = 0;
   totalEnTransito = 0;
@@ -116,8 +124,9 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.enBodegaSeleccion = [];
     this.articulosService.getPorEstado(this.enBodegaFilters).subscribe(
       articulos => {
-        this.enBodega = articulos.json().data.results;
-        this.totalEnBodega = articulos.json().data.paging.total;
+        this.enBodega = articulos.json().data[0].results;
+        this.totalEnBodega = articulos.json().data[0].paging.total;
+        this.urlfactura = articulos.json().data[1];
       },
       error => {
         this.toastr.error(error.json().error.message);
@@ -129,8 +138,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.enTransito = null;
     this.articulosService.getPorEstado(this.enTransitoFilters).subscribe(
       articulos => {
-        this.enTransito = articulos.json().data.results;
-        this.totalEnTransito = articulos.json().data.paging.total;
+        this.enTransito = articulos.json().data[0].results;
+        this.totalEnTransito = articulos.json().data[0].paging.total;
       },
       error => {
         this.toastr.error(error.json().error.message);
@@ -142,8 +151,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.facturacion = null;
     this.articulosService.getPorEstado(this.facturacionFilters).subscribe(
       articulos => {
-        this.facturacion = articulos.json().data.results;
-        this.totalFacturacion = articulos.json().data.paging.total;
+        this.facturacion = articulos.json().data[0].results;
+        this.totalFacturacion = articulos.json().data[0].paging.total;
       },
       error => {
         this.toastr.error(error.json().error.message);
@@ -155,8 +164,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.rutaNacional = null;
     this.articulosService.getPorEstado(this.rutaNacionalFilters).subscribe(
       articulos => {
-        this.rutaNacional = articulos.json().data.results;
-        this.totalRutaNacional = articulos.json().data.paging.total;
+        this.rutaNacional = articulos.json().data[0].results;
+        this.totalRutaNacional = articulos.json().data[0].paging.total;
       },
       error => {
         this.toastr.error(error.json().error.message);
@@ -168,8 +177,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.entregados = null;
     this.articulosService.getPorEstado(this.entregadosFilters).subscribe(
       articulos => {
-        this.entregados = articulos.json().data.results;
-        this.totalEntregados = articulos.json().data.paging.total;
+        this.entregados = articulos.json().data[0].results;
+        this.totalEntregados = articulos.json().data[0].paging.total;
       },
       error => {
         this.toastr.error(error.json().error.message);
@@ -212,7 +221,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
   }
 
   onSubirFactura(articulo) {
-    const formData: FormData = new FormData();
+    if( articulo.precio <= 0 || articulo.precio <= 0.00 ){
+      this.toastr.error('El costo debe ser mayor que cero');
+      Helpers.setLoading(false);
+    }else{
+ const formData: FormData = new FormData();
     formData.append(
       "factura",
       articulo.facturaExcel,
@@ -231,10 +244,25 @@ export class MiCasilleroListaComponent extends BaseListComponent
         this.toastr.error(error.json().error.message);
       }
     );
+    }
   }
 
   onConsolidar() {
-    Helpers.setLoading(true);
+    let existe=false;
+    
+    for (let i in this.datos){
+        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+            existe= true;    
+    }
+    if(existe || this.selectionPrecios){
+      if(this.selectionPrecios){
+        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
+          Helpers.setLoading(false);
+      }else{
+        this.toastr.error('El costo debe ser mayor que cero');
+        Helpers.setLoading(false);
+      }
+    }else{
     this.articulosService
       .consolidar({ articulos: this.enBodegaSeleccion })
       .subscribe(
@@ -248,10 +276,25 @@ export class MiCasilleroListaComponent extends BaseListComponent
           this.toastr.error(error.json().error.message);
         }
       );
+    }
   }
 
   onEmbarcar() {
-    Helpers.setLoading(true);
+    let existe=false;
+    
+    for (let i in this.datos){
+        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+            existe= true;    
+    }
+    if(existe || this.selectionPrecios){
+      if(this.selectionPrecios){
+        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
+          Helpers.setLoading(false);
+      }else{
+        this.toastr.error('El costo debe ser mayor que cero');
+        Helpers.setLoading(false);
+      }
+    }else{
     this.articulosService
       .embarcar({ articulos: this.enBodegaSeleccion })
       .subscribe(
@@ -265,6 +308,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
           this.toastr.error(error.json().error.message);
         }
       );
+    }
   }
 
   verImagenes(articulo, modal) {
@@ -284,4 +328,77 @@ export class MiCasilleroListaComponent extends BaseListComponent
       );
     
   }
+
+  onSubirFacturaInput(event) {
+    if (event.target.files && event.target.files[0]) {
+        this.file = event.target.files[0];
+    }
+}
+
+
+onSubmitFactura() {
+    Helpers.setLoading(true);
+    const formData: FormData = new FormData();
+    console.log(this.file.name);
+    formData.append('factura', this.file, this.file.name);
+    formData.append('articulos', this.enBodegaSeleccion);
+    formData.append('nombre', this.nombreTrackbox);
+     this.articulosService.subirFacturaMasiva(formData).subscribe(() => {
+        this.toastr.success("Factura Agregada");
+        Helpers.setLoading(false);
+        window.location.reload();
+
+    }, error => {
+        Helpers.setLoading(false);
+        this.toastr.error(error.json().error.message);
+    });  
+}
+
+onDatos(element) {
+  this.datos = element;
+}
+
+onPuedeFactura(element) {
+  this.puedeFactura = element;
+}
+
+onConsolidarPaquete(element) {
+  this.consolidarPaquete = element;
+}
+onEnviarPaquete(element) {
+  this.enviarPaquete = element;
+}
+
+OnModalFactura(content){
+    let existe=false;
+    
+    for (let i in this.datos){
+        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+            existe= true;    
+    }
+    if(existe || this.selectionPrecios){
+      if(this.selectionPrecios){
+        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
+          Helpers.setLoading(false);
+      }else{
+        this.toastr.error('El costo debe ser mayor que cero');
+        Helpers.setLoading(false);
+      }
+    }else{
+    this.modalRef = this.ngbModal.open(content, {size: "lg"});
+    }
+}
+
+close(){
+  this.modalRef.close();
+}
+
+onTrackbox(element) {
+  this.nombreTrackbox = element;
+}
+
+onSelectionPrecios(element) {
+  this.selectionPrecios = element;
+}
+
 }

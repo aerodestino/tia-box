@@ -15,7 +15,7 @@ import { EnTransitoDatatableComponent } from "../en-transito-datatable/en-transi
 import { FacturacionDatatableComponent } from "../facturacion-datatable/facturacion-datatable.component";
 import { RutaNacionalDatatableComponent } from "../ruta-nacional-datatable/ruta-nacional-datatable.component";
 import { EntregadosDatatableComponent } from "../entregados-datatable/entregados-datatable.component";
-
+import { ReplacePipe } from '../../../../../shared/pipes/replace.pipes';
 const routes: Routes = [
     {
         "path": "",
@@ -42,6 +42,7 @@ const routes: Routes = [
         FacturacionDatatableComponent,
         RutaNacionalDatatableComponent,
         EntregadosDatatableComponent,
+        ReplacePipe
     ]
 })
 export class MiCasilleroListaModule {

@@ -65,7 +65,7 @@
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('facturacionSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#facturacionTab" role="tab">
-                Facturación <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
+                En el País <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
             </a>
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('rutaNacionalSeleccionadas')">
@@ -86,9 +86,13 @@
 
                     <!--begin: Search Form -->
                     <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-                        <app-en-bodega-list-header [totalEnBodega]="totalEnBodega"
+                        <app-en-bodega-list-header [totalEnBodega]="enBodegaSeleccion.length" [selection]="enBodegaSeleccion"
                             (consolidar)="onConsolidar()"
                             (embarcar)="onEmbarcar()"
+                            [puedeFactura]="puedeFactura"
+                            [consolidarPaquete]="consolidarPaquete"
+                            [enviarPaquete]="enviarPaquete"
+                            (facturaMasiva)="OnModalFactura(facturaMasivaModal)"
                         ></app-en-bodega-list-header>
                     </div>
                     <!--end: Search Form -->        <!--begin: Datatable -->
@@ -102,9 +106,16 @@
                             (ver)="verImagenes($event, imagenesModal)"
                             [totalItems]="totalEnBodega"
                             [filters]="enBodegaFilters"
+                            [url]="urlfactura"
+                            (trackboxOutput)= "onTrackbox($event)"
                             (addFactura)="onSubirFactura($event)"
                             (filtersChange)="onEnBodegaFiltersChange($event)"
                             (selectionChange)="onEnBodegaSelectionChange($event)"
+                            (datosSelection)= "onDatos($event)"
+                            (preciosSelection)= "onSelectionPrecios($event)"
+                            (facturaSelection)= "onPuedeFactura($event)"
+                            (consolidarSelection)= "onConsolidarPaquete($event)"
+                            (enviarSelection)= "onEnviarPaquete($event)"
                     ></app-en-bodega-datatable>
                 </div>
                 <!--end: Datatable -->
@@ -215,3 +226,66 @@
 </ng-template>
 <!--end::Modal-->  <!--begin::Modal-->
 
+
+<!--begin::View  Modal-->
+<ng-template #facturaMasivaModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Factura masiva</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+                      #facturaForm="ngForm" (submit)="onSubmitFactura(facturaForm.value)">
+                    <div class="m-portlet__body">
+        
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Factura*:
+                            </label>
+                            <div class="input-group col-lg-6" style="padding-top: 10px;">
+                                <input required
+                                name="archivo"
+                                type="file"
+                                hidden
+                                #fileInput
+                                (change)="onSubirFacturaInput($event)"
+                        >
+                    <i class="fa fa-folder-open m--font-success" style="cursor: pointer" title="Subir Factura" (click)="fileInput.click()" ></i>
+                    <span *ngIf="file">{{ file.name }}</span>      
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-3">
+                        <input type="text" class="form-control m-input" 
+                        [(ngModel)]="nombreTrackbox" #nombre="ngModel"
+                        name="nombre" hidden placeholder="Nombre Factura"
+                        required>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
+                                    <button type="submit"
+                                            [disabled]="!fileInput.value && !nombre.value"
+                                            [class]="(facturaForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->

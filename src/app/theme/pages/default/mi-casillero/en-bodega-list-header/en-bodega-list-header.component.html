@@ -1,12 +1,17 @@
 <div class="row align-items-center">
     <div class="col-12 m--align-right">
-        <button [disabled]="totalEnBodega <= 0" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
-                (click)="onEmbarcar()" >
+        <button [disabled]="!puedeFactura || totalEnBodega < 2" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onFactura()" style="font-size: 1.2rem;">
+            <i class="fa fa-folder-open"></i>
+            Facturas consolidadas
+        </button>
+        <button [disabled]="enviarPaquete || totalEnBodega < 1" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onEmbarcar()" style="font-size: 1.2rem;" >
             <i class="fa fa-plane"></i>
             Embarcar
         </button>
-        <button [disabled]="totalEnBodega <= 0" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
-                (click)="onConsolidar()" >
+        <button [disabled]="consolidarPaquete || totalEnBodega < 1" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onConsolidar()" style="font-size: 1.2rem;">
             <i class="fa fa-dropbox"></i>
             Consolidar
         </button>

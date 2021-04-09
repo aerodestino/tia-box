@@ -56,7 +56,7 @@ const routes: Routes = [
                 "canActivate": [AuthGuard],
             },
             {
-                "path": "facturaciones",
+                "path": "facturas",
                 "loadChildren": ".\/pages\/default\/facturaciones\/facturaciones-lista/facturaciones-lista.module#FacturacionesListaModule",
                 "canActivate": [AuthGuard],
             },
