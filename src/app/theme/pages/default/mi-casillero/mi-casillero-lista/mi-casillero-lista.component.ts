@@ -34,7 +34,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   entregados: any[];
   articulo: any;
   puedeFactura: boolean = true;
-  totalFactura: boolean = true;
+  consolidarPaquete: boolean = true;
+  enviarPaquete: boolean = true;
   urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
@@ -361,8 +362,11 @@ onPuedeFactura(element) {
   this.puedeFactura = element;
 }
 
-onTotalFactura(element) {
-  this.totalFactura = element;
+onConsolidarPaquete(element) {
+  this.consolidarPaquete = element;
+}
+onEnviarPaquete(element) {
+  this.enviarPaquete = element;
 }
 
 OnModalFactura(content){

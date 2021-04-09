@@ -27,12 +27,12 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            <label class="m-checkbox" *ngIf="!articulo.enviar && !articulo.consolidado">
+            <label class="m-checkbox" *ngIf="!articulo.enviar || !articulo.consolidado">
                 <input type="checkbox" [(ngModel)]="articulo.selected" (change)="changeAllState()">
                 <span></span>
             </label>
-            <i class="fa fa-dropbox" *ngIf="articulo.consolidado"></i>
-            <i class="fa fa-plane" *ngIf="articulo.enviar"></i>
+            <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigoConsolidado}}</i>
+            <i class="fa fa-plane" style="font-size: 10px" *ngIf="articulo.enviar"></i>
            
         </td>
         <td>

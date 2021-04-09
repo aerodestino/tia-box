@@ -31,7 +31,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   @Output() datosSelection: EventEmitter<any> = new EventEmitter();
   @Output() facturaSelection: EventEmitter<any> = new EventEmitter();
   @Output() preciosSelection: EventEmitter<any> = new EventEmitter();
-  @Output() totalfacturaSelection: EventEmitter<any> = new EventEmitter();
+  @Output() consolidarSelection: EventEmitter<any> = new EventEmitter();
+  @Output() enviarSelection: EventEmitter<any> = new EventEmitter();
   selectionIds: string[];
   precios: any[];
   constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, 
@@ -96,6 +97,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     this.selectionIds = [];
     this.costo = [];
     let existeFactura = 0;
+    let existeConsolidado = 0;
+    let existeEmbarcado = 0;
     let existePrecio = 0;
     this.data.forEach(item => {
       if (item.selected){
@@ -104,6 +107,10 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
         this.costo.push(item.precio);
         if(item.factura_file)
           existeFactura ++;
+        if(item.consolidado)
+          existeConsolidado ++;
+        if(item.enviar)
+          existeEmbarcado ++;
         if(!item.editarprecio)
           existePrecio ++;
       } 
@@ -112,7 +119,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     this.selectionChange.emit(this.selectionIds);
     this.datosSelection.emit(this.costo);
     (existeFactura > 0) ? this.facturaSelection.emit(false) : this.facturaSelection.emit(true);
-    (existeFactura == this.selectionIds.length) ? this.totalfacturaSelection.emit(false) : this.totalfacturaSelection.emit(true);
+    (existeFactura == this.selectionIds.length && existeConsolidado == 0) ? this.consolidarSelection.emit(false) : this.consolidarSelection.emit(true);
+    (existeFactura == this.selectionIds.length && existeEmbarcado == 0) ? this.enviarSelection.emit(false) : this.enviarSelection.emit(true);
     (existePrecio > 0) ? this.preciosSelection.emit(true) : this.preciosSelection.emit(false);
   }
 
