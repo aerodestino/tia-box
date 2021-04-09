@@ -24,7 +24,7 @@ export class FacturacionesListaComponent extends BaseListComponent implements On
         public appService: AppService
     ) {
         super(router, toastr, vcr, appService);
-        this.url = '/facturaciones';
+        this.url = '/facturas';
         this.resourceService = facturacionesService;
         this.appService.title = "LISTADO";
         this.filters.user_id = this.appService.user.id;
