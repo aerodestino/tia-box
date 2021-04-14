@@ -33,7 +33,10 @@ export class CrearTrackComponent implements OnInit {
             this.toastr.success("Track creado");
             this.router.navigate([this.returnUrl]);
         }, (error) => {
-            this.toastr.error(error.json().message);
+            if(error.json().error && error.json().error.message)
+                this.toastr.error(error.json().error.message);
+            else
+                this.toastr.error('Ocurrió un error');
         })
     }
 

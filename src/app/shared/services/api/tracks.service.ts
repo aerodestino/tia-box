@@ -15,4 +15,12 @@ export class TracksService extends ApiService {
         return this.http.post(`${this.url}informar-compra`, resource);
     }
 
+    list(params?: any, responseType?: any): Observable<any> {
+        if (!params) return this.http.get(this.url);
+        params = this.serialize(params);
+        return this.http.get(`${this.url}web`, {
+          params: this.object2Params(params),
+          responseType: responseType
+        });
+      }
 }
