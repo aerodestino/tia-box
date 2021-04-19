@@ -4,6 +4,7 @@ import { LOCALE_ID, NgModule } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { DataTableColumnCellDirective, DataTableColumnDirective, DataTableColumnHeaderDirective } from "@swimlane/ngx-datatable/release/components/columns";
 import { PushNotificationsModule } from "ng-push";
 import { ToastModule, ToastOptions } from "ng2-toastr/ng2-toastr";
 import { AppRoutingModule } from "./app-routing.module";
@@ -171,7 +172,10 @@ registerLocaleData(localeES, "es-CU");
     ExtrasService,
     NotificationService,
     NotificationsService,
-    FacturacionesService
+    FacturacionesService,
+    DataTableColumnDirective,
+    DataTableColumnHeaderDirective,
+    DataTableColumnCellDirective
   ],
   bootstrap: [AppComponent]
 })
