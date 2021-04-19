@@ -100,7 +100,10 @@ registerLocaleData(localeES, "es-CU");
     ThemeRoutingModule,
     AuthModule,
     ToastModule.forRoot(),
-    PushNotificationsModule
+    PushNotificationsModule,
+    DataTableColumnDirective,
+    DataTableColumnHeaderDirective,
+    DataTableColumnCellDirective
   ],
   providers: [
     { provide: ToastOptions, useClass: CustomToastrOption },
