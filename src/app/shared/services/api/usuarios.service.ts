@@ -39,4 +39,11 @@ export class UsuariosService extends ApiService {
   getPermissions(): Observable<any> {
     return this.http.get(`${this.url}permissions`);
   }
+
+  allUsuarios(params?): Observable<any> {
+    if (!params)
+    return this.http.get(`${this.url}all_usuarios`);
+return this.http.get(`${this.url}all_usuarios`, {params: this.object2Params(this.serialize(params))});
+}
+
 }

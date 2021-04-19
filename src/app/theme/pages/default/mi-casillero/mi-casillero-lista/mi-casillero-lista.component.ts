@@ -6,6 +6,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { isNullOrUndefined } from "@swimlane/ngx-datatable/release/utils";
 import { ToastsManager } from "ng2-toastr";
 import { AppService } from "../../../../../app.service";
 import { Helpers } from "../../../../../helpers";
@@ -42,7 +43,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
-
+  validar= false;
+  ids:any[] = [];
   enBodegaSeleccion: any;
 
   totalEnBodega = 0;
@@ -80,6 +82,14 @@ export class MiCasilleroListaComponent extends BaseListComponent
     offset: 0,
     estado_articulo_id: 6
   };
+  importer_usuario = null;
+  remitente_usuario = null;
+  existeImporter:boolean = false;
+  existeRemitente:boolean = false;
+  text = '';
+  articulos: any[]= [];
+  usuarios: any[]= [];
+  usuarios_importer: any[]= [];
   constructor(
     public router: Router,
     public articulosService: ArticulosService,
@@ -95,7 +105,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   }
 
   ngOnInit() {
-    // this.getUsuario();
+    this.getUsuarios();
     this.getEnBodega();
     this.getEnTransito();
     this.getFacturacion();
@@ -225,7 +235,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
       this.toastr.error('El costo debe ser mayor que cero');
       Helpers.setLoading(false);
     }else{
- const formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append(
       "factura",
       articulo.facturaExcel,
@@ -279,9 +289,41 @@ export class MiCasilleroListaComponent extends BaseListComponent
     }
   }
 
-  onEmbarcar() {
+  onSubmitEmbarcar() {
+    Helpers.setLoading(true);
+    this.articulosService
+      .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text})
+      .subscribe(
+        () => {
+          Helpers.setLoading(false);
+          this.toastr.success("Artículos enviados a embarcar");
+          this.getEnBodega();
+          this.modalRef.close();
+        },
+        error => {
+          Helpers.setLoading(false);
+          this.toastr.error(error.json().error.message);
+        }
+      );
+  }
+
+  validarForm(){
+    this.validar = false;
+    if((this.existeRemitente && this.text =='' && isNullOrUndefined(this.remitente_usuario)) || 
+    (this.existeImporter && isNullOrUndefined(this.importer_usuario))){
+      this.validar = true;
+    }
+        
+  }
+
+  onEmbarcar(content) {
     let existe=false;
-    
+    this.remitente_usuario = null;
+    this.importer_usuario = null;
+    this.text = '';
+    this.existeRemitente = false;
+    this.existeImporter = false;
+    Helpers.setLoading(true);
     for (let i in this.datos){
         if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
             existe= true;    
@@ -296,12 +338,19 @@ export class MiCasilleroListaComponent extends BaseListComponent
       }
     }else{
     this.articulosService
-      .embarcar({ articulos: this.enBodegaSeleccion })
+      .embarcarModal({ articulos: this.enBodegaSeleccion })
       .subscribe(
-        () => {
+        (datos) => {
           Helpers.setLoading(false);
-          this.toastr.success("Articulos enviados a embarcar");
-          this.getEnBodega();
+          this.articulos = datos.json().data[0];
+          if(datos.json().data[3] != datos.json().data[1])
+            this.remitente_usuario = datos.json().data[1];
+          this.importer_usuario = datos.json().data[2];
+          this.text = datos.json().data[3];
+          this.existeRemitente = datos.json().data[4];
+          this.existeImporter = datos.json().data[5];
+          this.ids = datos.json().data[6];
+          this.modalRef = this.ngbModal.open(content, {size: "lg"});
         },
         error => {
           Helpers.setLoading(false);
@@ -310,6 +359,17 @@ export class MiCasilleroListaComponent extends BaseListComponent
       );
     }
   }
+
+  getUsuarios() {
+    this.usuarios = null;
+    this.usuarios_importer= null;
+    this.usuariosService.allUsuarios().subscribe((data) => {
+        this.usuarios = data.json().data.results;
+        this.usuarios_importer = data.json().data.results;
+    }, (error) => {
+        this.toastr.error(error.json().error.message);
+    });
+}
 
   verImagenes(articulo, modal) {
     Helpers.setLoading(true);
@@ -339,7 +399,6 @@ export class MiCasilleroListaComponent extends BaseListComponent
 onSubmitFactura() {
     Helpers.setLoading(true);
     const formData: FormData = new FormData();
-    console.log(this.file.name);
     formData.append('factura', this.file, this.file.name);
     formData.append('articulos', this.enBodegaSeleccion);
     formData.append('nombre', this.nombreTrackbox);

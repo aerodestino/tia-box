@@ -20,6 +20,10 @@ export class ArticulosService extends ApiService {
         return this.http.get(`${this.url}imagen`, { params: this.object2Params(params) });
     }
 
+    embarcarModal(params: any): Observable<any> {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}datosEmbarcar`, { params: this.object2Params(params) });
+    }
 
     subirFactura(id, resource: any): Observable<any> {
         return this.http.post(`${this.url}${id}/factura`, resource);

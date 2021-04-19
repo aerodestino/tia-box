@@ -88,7 +88,7 @@
                     <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
                         <app-en-bodega-list-header [totalEnBodega]="enBodegaSeleccion.length" [selection]="enBodegaSeleccion"
                             (consolidar)="onConsolidar()"
-                            (embarcar)="onEmbarcar()"
+                            (embarcar)="onEmbarcar(embarcar)"
                             [puedeFactura]="puedeFactura"
                             [consolidarPaquete]="consolidarPaquete"
                             [enviarPaquete]="enviarPaquete"
@@ -275,6 +275,163 @@
                                     <button type="submit"
                                             [disabled]="!fileInput.value && !nombre.value"
                                             [class]="(facturaForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #embarcar let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Embarcar</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <div class="row" style="margin: 5px">
+                    <h3>Se embarcarán estos artículos</h3>
+                </div>
+                <div class="table-responsive" style="width: 740px; overflow: auto;">
+                <table class="table table-responsive table-bordered ">
+                    <thead>
+                    <tr>
+                        <th>
+                            TRACKBOX
+                        </th>
+                        <th>
+                            Track Remitente
+                        </th>
+                        <th>
+                            Peso(Lb)
+                        </th>
+                        <th>
+                            Dimensiones(In)
+                        </th>
+                        <th>
+                            Costo(USD)
+                        </th>
+                        <th>
+                            Piezas
+                        </th>
+                        <th>Descripción </th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let articulo of articulos">
+                        
+                        <td>
+                            <p *ngIf="articulo.trackbox">{{ articulo.trackbox }}</p>
+                            <i class="fa fa-warning" *ngIf="!articulo.trackbox"></i>
+                        </td>
+                         <td>
+                            {{ articulo.tracking }}
+                        </td>
+                        <td>
+                            {{ articulo.peso | number:'1.2-2' }}
+                        </td>
+                        <td>
+                            {{ articulo.largo }}x{{articulo.ancho}}x{{articulo.alto}}
+                        </td>
+                        <td>
+                            {{ articulo.precio }}
+                        </td>
+                        <td>
+                            {{ articulo.piezas }}
+                        </td>
+                        <td>{{ articulo.descripcion }}</td>
+                       
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div *ngIf="existeRemitente"
+                class="col-12"
+                style="background-color: #676c7bd8; color: white; margin: 3px"
+                >
+                    <span>Debe seleccionar Remitente porque no coinciden los artículos seleccionados.</span>
+                </div>
+                <div *ngIf="existeImporter"
+                class="col-12"
+                style="background-color: #676c7bd8; color: white; margin: 3px"
+                >
+                    <span>Debe seleccionar Importer porque no coinciden los artículos seleccionados.</span>
+                </div>
+                <div class="row" style="margin: 5px">
+                    <h3>Si desea cambiar los datos del embarque</h3>
+                </div>
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+                      #embarcarForm="ngForm" (submit)="onSubmitEmbarcar(embarcarForm.value)">
+                    <div class="m-portlet__body">
+                     
+                    <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Remitente:
+                            </label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-input" placeholder="Tienda o Usuario NO REGISTRADO"
+                                [(ngModel)]="text"  #remitente_text="ngModel"
+                                name="remitente_text" (keyup)= "validarForm()"
+                                >
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios">
+                                    <input type="text" class="form-control"/>
+                                </div>
+                                <app-auto-complete *ngIf="usuarios" placeholder="USUARIO REGISTRADO"
+                                                    [(ngModel)]="remitente_usuario" #remitente_id="ngModel"
+                                                    name="remitente_id"  [items]="usuarios"
+                                                    [textField]="'numero_identidad'"
+                                                    textField1="nombre"
+                                                    textField2="apellido"
+                                                    valueField="numero_identidad"
+                                                    (change)= "validarForm()"
+                                ></app-auto-complete>
+                            </div>
+                         
+                        </div>
+                        <div class="form-group m-form__group row">
+                           
+                            <label class="col-lg-3 col-form-label">
+                                Consignatario*:
+                            </label>
+                            <div class="col-lg-4">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios_importer">
+                                    <input type="text" class="form-control"/>
+                                </div>
+                                <app-auto-complete *ngIf="usuarios_importer" placeholder="Seleccione"
+                                                    [(ngModel)]="importer_usuario" #importer="ngModel"
+                                                    name="importer" [items]="usuarios_importer"
+                                                    [textField]="'numero_identidad'"
+                                                    textField1="nombre"
+                                                    textField2="apellido"
+                                                    valueField="numero_identidad"
+                                                    (change)= "validarForm()"
+                                ></app-auto-complete>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
+                                    <button type="submit"
+                                            [disabled]="validar"
+                                            [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                     >
                                         Guardar
                                     </button>

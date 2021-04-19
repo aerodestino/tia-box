@@ -22,17 +22,19 @@ export class AutoCompleteComponent implements OnInit, ControlValueAccessor {
     //items to select
     @Input() items: any[] = [];
     @Input() placeholder: string = '';
+    @Input() disabled: boolean = false;
     //selected value
     selected: any;
     //the value of the select
     @Input() valueField: string = '';
     //the text field for showing
     @Input() textField: string = '';
+    @Input() textField1: string = '';
+    @Input() textField2: string = '';
     constructor(public renderer: Renderer2) {
     }
 
     ngOnInit() {
-        console.log(this.items);
         if (this.inputText) {
             this.showing = true;
             const element = this.renderer.selectRootElement('#inputFilter');
@@ -64,7 +66,9 @@ export class AutoCompleteComponent implements OnInit, ControlValueAccessor {
         this.items.forEach(it => {
             if (it[this.valueField] === value) {
                 this.selected = value;
-                this.inputText = it[this.textField];
+                this.inputText = it[this.textField] + ' ' + it[this.textField1];
+                if(it[this.textField2])
+                   this.inputText = this.inputText + ' ' + it[this.textField2];
             }
         });
     }
@@ -76,24 +80,28 @@ export class AutoCompleteComponent implements OnInit, ControlValueAccessor {
     }
 
     selectItem(item) {
+        this.selected=null;
         this.selected = item[this.valueField];
-        this.inputText = item[this.textField];
+        this.inputText = item[this.textField] + ' ' + item[this.textField1];
+        if(item[this.textField2])
+            this.inputText = this.inputText + ' ' + item[this.textField2];
         this.onTextChange();
         this.propagateChange(this.selected);
-        this.change.emit(item);
+        this.change.emit(this.selected);
     }
     onTextChange() {
         this.itemsShowing = [];
         this.items.forEach(item => {
-            if (item[this.textField].toLowerCase().includes(this.inputText.toLowerCase())) {
+            if(!item[this.textField2]) item[this.textField2] = '';
+            if (item[this.textField].toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField1].toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField2].toLowerCase().includes(this.inputText.toLowerCase())) {
                 this.itemsShowing.push(item);
             }
         });
+        this.propagateChange(null);
         this.inputTextChange.emit(this.inputText);
     }
 
     hideDropdown() {
-        console.log(this.selected);
         setTimeout((time) => {
             this.showing = false;
         }, 100);
