@@ -90,7 +90,10 @@ registerLocaleData(localeES, "es-CU");
     ThemeComponent,
     AppComponent,
     PageLoaderComponent,
-    PageLoaderComponent
+    PageLoaderComponent,
+    DataTableColumnDirective,
+    DataTableColumnHeaderDirective,
+    DataTableColumnCellDirective
   ],
   imports: [
     LayoutModule,
@@ -100,10 +103,7 @@ registerLocaleData(localeES, "es-CU");
     ThemeRoutingModule,
     AuthModule,
     ToastModule.forRoot(),
-    PushNotificationsModule,
-    DataTableColumnDirective,
-    DataTableColumnHeaderDirective,
-    DataTableColumnCellDirective
+    PushNotificationsModule
   ],
   providers: [
     { provide: ToastOptions, useClass: CustomToastrOption },
