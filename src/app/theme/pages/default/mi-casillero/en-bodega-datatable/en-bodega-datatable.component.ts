@@ -23,6 +23,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   selectedAll = false;
   text:string = '';
   costo:any[]=[] ;
+  datoEmbarque=null;
+  modalRef=null;
   @Input() url: any;
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
   @Output() addFactura: EventEmitter<any> = new EventEmitter();
@@ -153,4 +155,16 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   onVerImagenes(articulo) {
     this.ver.emit(articulo);
   }
+
+  modalEmbarque(content, articulo) {
+    Helpers.setLoading(true);
+    this.datoEmbarque = articulo;
+    this.modalRef = this.ngbModal.open(content);
+    Helpers.setLoading(false);
+}
+
+close(){
+  this.modalRef.close();
+}
+
 }
