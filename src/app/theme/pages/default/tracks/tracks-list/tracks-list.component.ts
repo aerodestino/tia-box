@@ -31,8 +31,7 @@ export class TracksListComponent extends BaseListComponent implements OnInit {
     ngOnInit() {
         this.getData();
     }
-
-     /**
+  /**
    * Gets the data.
    */
   getData() {
@@ -53,5 +52,4 @@ export class TracksListComponent extends BaseListComponent implements OnInit {
       }
     );
   }
-
 }
