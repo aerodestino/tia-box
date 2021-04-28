@@ -363,7 +363,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   getUsuarios() {
     this.usuarios = null;
     this.usuarios_importer= null;
-    this.usuariosService.allUsuarios().subscribe((data) => {
+    this.usuariosService.allUsuarios({usuario_id : (this.appService.user) ? this.appService.user.id : null }).subscribe((data) => {
         this.usuarios = data.json().data.results;
         this.usuarios_importer = data.json().data.results;
     }, (error) => {
