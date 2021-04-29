@@ -30,6 +30,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   usuario: any;
   enBodega: any[];
   enTransito: any[];
+  embarcados: any[];
   facturacion: any[];
   rutaNacional: any[];
   entregados: any[];
@@ -43,6 +44,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
+  embarcadosSeleccionadas = false;
   validar= false;
   ids:any[] = [];
   enBodegaSeleccion: any;
@@ -52,6 +54,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   totalFacturacion = 0;
   totalRutaNacional = 0;
   totalEntregados = 0;
+  totalEmbarcados = 0;
 
   enBodegaFilters = {
     limit: 5,
@@ -63,6 +66,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
     limit: 5,
     offset: 0,
     estado_articulo_id: 3
+  };
+
+  embarcadosFilters = {
+    limit: 5,
+    offset: 0
   };
 
   facturacionFilters = {
@@ -108,6 +116,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getUsuarios();
     this.getEnBodega();
     this.getEnTransito();
+    this.getEmbarcados();
     this.getFacturacion();
     this.getRutaNacional();
     this.getEntregados();
@@ -136,6 +145,20 @@ export class MiCasilleroListaComponent extends BaseListComponent
       articulos => {
         this.enBodega = articulos.json().data[0].results;
         this.totalEnBodega = articulos.json().data[0].paging.total;
+        this.urlfactura = articulos.json().data[1];
+      },
+      error => {
+        this.toastr.error(error.json().error.message);
+      }
+    );
+  }
+
+  getEmbarcados() {
+    this.embarcados = null;
+    this.articulosService.listEmbaque(this.filters).subscribe(
+      articulos => {
+        this.embarcados = articulos.json().data[0].results;
+        this.totalEmbarcados = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
       error => {
@@ -202,6 +225,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.facturacionSeleccionadas = false;
     this.rutaNacionalSeleccionadas = false;
     this.entregadosSeleccionadas = false;
+    this.embarcadosSeleccionadas = false;
     this[tab] = true;
   }
 

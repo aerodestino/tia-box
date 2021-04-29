@@ -58,11 +58,16 @@
                 En Bodega <span class="m-badge m-badge--success" *ngIf="totalEnBodega">{{totalEnBodega}}</span>
             </a>
         </li>
-        <li class="nav-item m-tabs__item" (click)="seleccionarTab('enTransitoSeleccionadas')">
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('embarcadosSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#embarcadosTab" role="tab">
+                Embarcado <span class="m-badge m-badge--success" *ngIf="totalEmbarcados">{{totalEmbarcados}}</span>
+            </a>
+        </li>
+        <!-- <li class="nav-item m-tabs__item" (click)="seleccionarTab('enTransitoSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#enTransitoTab" role="tab">
                 En Tránsito <span class="m-badge m-badge--success" *ngIf="totalEnTransito">{{totalEnTransito}}</span>
             </a>
-        </li>
+        </li> -->
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('facturacionSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#facturacionTab" role="tab">
                 En el País <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
@@ -121,7 +126,25 @@
                 <!--end: Datatable -->
             </div>
         </div>
+        <div class="tab-pane" id="embarcadosTab" role="tabpanel" [class.active]="embarcadosSeleccionadas">
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
 
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;" *ngIf="!embarcados && embarcadosSeleccionadas"></div>
+                    </div>
+                    <app-embarcados-datatable
+                            *ngIf="embarcados && embarcadosSeleccionadas"
+                            [data]="embarcados"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalEmbarcados"
+                            [filters]="embarcadosFilters"
+                            [url]="urlfactura"
+                    ></app-embarcados-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
         <div class="tab-pane" id="enTransitoTab" role="tabpanel" [class.active]="enTransitoSeleccionadas">
 
             <div class="m-portlet m-portlet--mobile">
