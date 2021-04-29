@@ -15,7 +15,7 @@
         <th>Vol(Vlb)</th>
         <th>Valor(USD)</th>
         <th>Documento</th>
-    
+        <th>TRK</th>
     </tr>
     </thead>
     <tbody>
@@ -24,16 +24,12 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            <label class="m-checkbox" *ngIf="!articulo.enviar || !articulo.consolidado">
-                <input type="checkbox" [(ngModel)]="articulo.selected" (change)="changeAllState()">
-                <span></span>
-            </label>
             <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigoConsolidado}}</i>
             <a style="cursor: pointer;"  *ngIf="articulo.enviar" title="Instrucciones de Embarque"  (click)="modalEmbarque(embarqueModal,articulo )"> <i class="fa fa-plane" style="font-size: 10px"></i></a>
            
         </td>
         <td>
-            {{articulo.fechaBodega | date: "dd/MM/y"}}
+            {{articulo.fecha_embarque | date: "dd/MM/y"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -65,14 +61,15 @@
             {{articulo.precio}}
         </td>
         <td>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Declaración de Valores" style="color: white; background-color: #4f9e35" target="_blank" *ngIf="articulo.factura_file && articulo.facDV && !articulo.consolidadoFactura">Si</a>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_file && !articulo.facDV && !articulo.consolidadoFactura">Si</a>
-            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_file && articulo.consolidadoFactura">Si</a>            
-            <a  class="m-badge m-badge--info m-badge--wide"  title="Factura" style="color: white; background-color: #1e1111" *ngIf="!articulo.factura_file">No</a>            
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Declaración de Valores" style="color: white; background-color: #4f9e35" target="_blank" *ngIf="articulo.factura_url && articulo.facDV && !articulo.consolidadoFactura">Si</a>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_url && !articulo.facDV && !articulo.consolidadoFactura">Si</a>
+            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && articulo.consolidadoFactura">Si</a>            
+            <a  class="m-badge m-badge--info m-badge--wide"  title="Factura" style="color: white; background-color: #1e1111" *ngIf="!articulo.factura_url">No</a>            
 
         </td>
-      
-      
+      <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id == 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #4f9e35"></i></td>
+      <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id != 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #1e1111"></i></td>
+
     </tr>
     </tbody>
 </table>

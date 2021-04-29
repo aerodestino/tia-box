@@ -239,6 +239,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getEnTransito();
   }
 
+  onEmbarcadosFiltersChange(filters) {
+    this.embarcadosFilters = filters;
+    this.getEmbarcados();
+  }
+
   onFacturacionFiltersChange(filters) {
     this.facturacionFilters = filters;
     this.getFacturacion();
@@ -322,6 +327,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
           Helpers.setLoading(false);
           this.toastr.success("Artículos enviados a embarcar");
           this.getEnBodega();
+          this.getEmbarcados();
           this.modalRef.close();
         },
         error => {

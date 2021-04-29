@@ -137,6 +137,7 @@
                             *ngIf="embarcados && embarcadosSeleccionadas"
                             [data]="embarcados"
                             (ver)="verImagenes($event, imagenesModal)"
+                            (filtersChange)="onEmbarcadosFiltersChange($event)"
                             [totalItems]="totalEmbarcados"
                             [filters]="embarcadosFilters"
                             [url]="urlfactura"
