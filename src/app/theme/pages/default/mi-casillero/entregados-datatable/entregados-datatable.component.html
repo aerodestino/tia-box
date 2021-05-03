@@ -18,10 +18,10 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            {{articulo.fechaIngreso | date: "dd/MM/y"}}
+            {{articulo.fechaIngreso ? (articulo.fechaIngreso | date: "dd/MM/y") : '-'}}
         </td>
         <td>
-            {{articulo.warehouse }}
+            {{articulo.warehouse ? articulo.warehouse : '-'}}
         </td>
         <td>
             {{articulo.tracking}}
