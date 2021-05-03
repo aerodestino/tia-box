@@ -98,6 +98,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   articulos: any[]= [];
   usuarios: any[]= [];
   usuarios_importer: any[]= [];
+  notaembarque:string = '';
+  descripcionembarque: string= '';
   constructor(
     public router: Router,
     public articulosService: ArticulosService,
@@ -321,7 +323,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   onSubmitEmbarcar() {
     Helpers.setLoading(true);
     this.articulosService
-      .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text})
+      .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
+        nota: this.notaembarque, descripcion:this.descripcionembarque})
       .subscribe(
         () => {
           Helpers.setLoading(false);
@@ -372,6 +375,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
       .subscribe(
         (datos) => {
           Helpers.setLoading(false);
+          this.notaembarque = '';
+          this.descripcionembarque = '';
           this.articulos = datos.json().data[0];
           if(datos.json().data[3] != datos.json().data[1])
             this.remitente_usuario = datos.json().data[1];

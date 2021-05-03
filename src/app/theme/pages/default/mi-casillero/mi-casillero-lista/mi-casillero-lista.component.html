@@ -447,6 +447,29 @@
                                 ></app-auto-complete>
                             </div>
                         </div>
+                        <div class="form-group m-form__group row">
+                        <label class="col-lg-3 col-form-label">
+                            Descripción:
+                         </label>
+                         <div class="col-lg-9">
+                             <input type="text" class="form-control m-input" placeholder="Descripción"
+                             [(ngModel)]="descripcionembarque"  #descripcion="ngModel"
+                             name="descripcion"
+                             > 
+                         </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                           
+                            <label class="col-lg-3 col-form-label">
+                                Categoría o partida arancelaria:
+                            </label>
+                            <div class="col-lg-9">
+                                <input type="text" maxlength="255" class="form-control m-input" placeholder="Categoría o partida arancelaria"
+                                [(ngModel)]="notaembarque"  #nota="ngModel"
+                                name="nota"
+                                > 
+                            </div>
+                        </div>
                     </div>
                     <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid">
