@@ -1107,6 +1107,13 @@ pre {
     .table-responsive.table-bordered {
       border: 0; } }
 
+       
+.table-responsive {
+  /* display: block; */
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; }
+
 .form-control {
   display: block;
   width: 100%;

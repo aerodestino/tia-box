@@ -12,6 +12,7 @@ import { MiCasilleroListaComponent } from "./mi-casillero-lista.component";
 import { EnBodegaDatatableComponent } from "../en-bodega-datatable/en-bodega-datatable.component";
 import { EnBodegaListHeaderComponent } from "../en-bodega-list-header/en-bodega-list-header.component";
 import { EnTransitoDatatableComponent } from "../en-transito-datatable/en-transito-datatable.component";
+import { EmbarcadoDatatableComponent } from "../embarcado-datatable/embarcado-datatable.component";
 import { FacturacionDatatableComponent } from "../facturacion-datatable/facturacion-datatable.component";
 import { RutaNacionalDatatableComponent } from "../ruta-nacional-datatable/ruta-nacional-datatable.component";
 import { EntregadosDatatableComponent } from "../entregados-datatable/entregados-datatable.component";
@@ -42,6 +43,7 @@ const routes: Routes = [
         FacturacionDatatableComponent,
         RutaNacionalDatatableComponent,
         EntregadosDatatableComponent,
+        EmbarcadoDatatableComponent,
         ReplacePipe
     ]
 })

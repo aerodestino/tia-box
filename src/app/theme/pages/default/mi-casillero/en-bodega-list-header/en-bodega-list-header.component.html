@@ -5,7 +5,7 @@
             <i class="fa fa-folder-open"></i>
             Facturas consolidadas
         </button>
-        <button [disabled]="enviarPaquete || totalEnBodega < 1" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+        <button [disabled]="enviarPaquete || totalEnBodega != 1" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
                 (click)="onEmbarcar()" style="font-size: 1.2rem;" >
             <i class="fa fa-plane"></i>
             Embarcar

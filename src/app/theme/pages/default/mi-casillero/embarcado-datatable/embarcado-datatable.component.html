@@ -1,0 +1,273 @@
+<table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+    <thead>
+    <tr>
+       
+        <th>
+        </th>
+        <th>Fecha</th>
+        <th>Código Almacén</th>
+        <th>Tracking</th>
+        <th>Descripción</th>
+        <th>Remitente</th>
+        <th>Peso(Lb)</th>
+        <th>Piezas</th>
+        <th>Dim(In)</th>
+        <th>Vol(Vlb)</th>
+        <th>Valor(USD)</th>
+        <th>Documento</th>
+        <th>TRK</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="!data.length">
+        No se encontraron resultados
+    </tr>
+    <tr *ngFor="let articulo of data">
+        <td>
+            <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigoConsolidado}}</i>
+            <a style="cursor: pointer;"  *ngIf="articulo.enviar" title="Instrucciones de Embarque"  (click)="modalEmbarque(embarqueModal,articulo )"> <i class="fa fa-plane" style="font-size: 10px"></i></a>
+           
+        </td>
+        <td>
+            {{articulo.fecha_embarque | date: "dd/MM/y"}}
+        </td>
+        <td>
+            {{articulo.trackbox}}
+        </td>
+        <td>
+           {{articulo.tracking}}
+        </td>
+        <td>
+            <span *ngIf="articulo.media == 0">{{articulo.descripcion}}</span>
+            <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media > 0" (click)="onVerImagenes(articulo.id)">{{articulo.descripcion}}</span>
+            <span *ngIf="articulo.extranombre">({{articulo.extranombre}} {{articulo.extraapellidos}})</span>
+        </td>
+        <td>
+            {{articulo.tienda}}
+        </td>
+        <td>
+            {{articulo.peso}}
+        </td>
+        <td>
+            {{articulo.piezas}}
+        </td>
+        <td>
+            {{articulo.largo}}x{{articulo.ancho}}x{{articulo.alto}}
+        </td>
+        <td>
+            {{articulo.volumen}}
+        </td>
+        <td>
+            {{articulo.precio}}
+        </td>
+        <td>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Declaración de Valores" style="color: white; background-color: #4f9e35" target="_blank" *ngIf="articulo.factura_url && articulo.facDV && !articulo.consolidadoFactura">Si</a>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_url && !articulo.facDV && !articulo.consolidadoFactura">Si</a>
+            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && articulo.consolidadoFactura">Si</a>            
+            <a  class="m-badge m-badge--info m-badge--wide"  title="Factura" style="color: white; background-color: #1e1111" *ngIf="!articulo.factura_url">No</a>            
+
+        </td>
+      <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id == 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #4f9e35"></i></td>
+      <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id != 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #1e1111"></i></td>
+
+    </tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <ngb-pagination [collectionSize]="totalItems" [pageSize]="filters.limit" [(page)]="page"
+                        aria-label="Default pagination" (pageChange)="onPageChange()"
+                        [maxSize]="5"></ngb-pagination>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
+        <div class="m--align-right" style="justify-content: flex-end">
+            <select class="form-control m-input m-input--pill m-input--solid m-input--fixed-small" title="Warning"
+                    data-style="btn-warning"
+                    [(ngModel)]="filters.limit"
+                    name="limit" style="width: auto" (change)="onLimitChange()">
+                <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
+                    {{numPerPage}}
+                </option>
+            </select>
+        </div>
+        <div class="m--align-right">
+            <span>Mostrando {{registroInicialPagina}}-{{registroFinalPagina}} de {{totalItems}} registros</span>
+        </div>
+    </div>
+
+</div>
+
+<!--begin::Delete Confirmation Modal-->
+<ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar Eliminación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el recurso?</p><br>
+        <span class="m--font-danger">Esta acción es irreversible!!</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger m-btn--air" (click)="c('aceptar')">Aceptar</button>
+    </div>
+</ng-template>
+<!--end::Modal-->  <!--begin::Modal-->
+
+
+<!--begin::View  Modal-->
+<ng-template #embarqueModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Instrucciones de Embarque</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            
+            <div class="m-list-settings">
+                <div *ngIf="datoEmbarque" class="m-list-settings__group">
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            WHBOX
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.warehouse">
+                          <i class="fa fa-warning" ></i>
+                         </span>
+                         <span class="m-list-settings__item-control" *ngIf="datoEmbarque.warehouse">
+                            {{ datoEmbarque.warehouse }}
+                           </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Trackbox
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.trackbox }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Código Consolidado
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.codigo_consolidado ? datoEmbarque.codigo_consolidado : '-' }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Descripción
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.descripcion }}
+                         </span>
+                    </div>
+                  
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Remitente Embarque
+                        </span>
+                        <span class="m-list-settings__item-control " *ngIf="datoEmbarque.usuario_embarque_remitente"
+                              >
+                              {{datoEmbarque.usuario_embarque_remitente.codigo}} {{ datoEmbarque.usuario_embarque_remitente.full_name }}
+                         </span>
+                         <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && datoEmbarque.extra_embarque_remitente"
+                         >
+                         {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente && datoEmbarque.tienda_embarque "
+                       >
+                         {{ datoEmbarque.tienda_embarque }}
+                       </span>
+                        <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
+                        !datoEmbarque.tienda_embarque && datoEmbarque.usuario_carrier"
+                              >
+                              {{datoEmbarque.usuario_carrier.codigo}} {{ datoEmbarque.usuario_carrier.full_name }}
+                         </span>
+                         <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
+                         !datoEmbarque.tienda_embarque && !datoEmbarque.usuario_carrier && datoEmbarque.extra_carrier"
+                         >
+                         {{ datoEmbarque.extra_carrier.nombre }} {{resourceData.extra_carrier.apellidos }}
+                    </span>
+                    <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
+                    !datoEmbarque.tienda_embarque && !datoEmbarque.extra_carrier && !datoEmbarque.usuario_carrier"
+                    >
+                      {{ datoEmbarque.tienda }}
+                     </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Consignatario Embarque
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="datoEmbarque.usuario_importer"
+                        >
+                        {{ datoEmbarque.usuario_importer.codigo }} {{ datoEmbarque.usuario_importer.full_name}}
+                   </span>
+                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && datoEmbarque.extra_importer"
+                   >
+                   {{ datoEmbarque.extra_importer.nombre }} {{datoEmbarque.extra_importer.apellidos}}
+                  </span>
+                
+                  <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && !datoEmbarque.extra_importer &&
+                  datoEmbarque.usuario"
+                        >
+                        {{datoEmbarque.usuario.codigo}} {{ datoEmbarque.usuario.nombre }} {{datoEmbarque.usuario.apellido}}
+                   </span>
+                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && !datoEmbarque.extra_importer &&
+                    datoEmbarque.extra && !datoEmbarque.usuario"
+                   >
+                   {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/> ({{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/> ({{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
+              </span>
+             
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Peso(Lb)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.peso | number:'1.2-2' }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Volumen(Vlb)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.volumen | number:'1.2-2' }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Costo(USD)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.precio }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Piezas
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.piezas }}
+                         </span>
+                    </div>
+					 <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Categoría o partida arancelaria
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.nota ? datoEmbarque.nota : '-' }}
+                         </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</ng-template>
+<!--end::Modal-->
+
