@@ -71,9 +71,10 @@
             (click)="guardarPrecio(articulo.id,articulo.precio)"  *ngIf="!articulo.editarprecio"></i>
         </td>
         <td>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Declaración de Valores" style="color: white; background-color: #4f9e35" target="_blank" *ngIf="articulo.factura_file && articulo.facDV && !articulo.consolidadoFactura">Si</a>
+            <span class="m-badge m-badge--info m-badge--wide" title="Declaración de Valores" style="color: white; background-color: #4f9e35"  *ngIf="articulo.factura_file && articulo.facDV && !articulo.consolidadoFactura">Si</span>
             <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_file && !articulo.facDV && !articulo.consolidadoFactura">Si</a>
-            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_file && articulo.consolidadoFactura">Si</a>            
+            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_file && !articulo.facDV && articulo.consolidadoFactura">Si</a>            
+            <span  class="m-badge m-badge--info m-badge--wide" title="Factura" style="color: white; background-color: #4660d1"  *ngIf="articulo.factura_file && articulo.facDV && articulo.consolidadoFactura">Si</span>   
             <input
                     name="archivo"
                     type="file"

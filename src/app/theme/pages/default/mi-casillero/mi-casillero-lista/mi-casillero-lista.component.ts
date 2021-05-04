@@ -157,7 +157,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   getEmbarcados() {
     this.embarcados = null;
-    this.articulosService.listEmbaque(this.filters).subscribe(
+    this.articulosService.listEmbaque(this.embarcadosFilters).subscribe(
       articulos => {
         this.embarcados = articulos.json().data[0].results;
         this.totalEmbarcados = articulos.json().data[0].paging.total;
