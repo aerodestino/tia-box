@@ -9,7 +9,7 @@
         <th>Remitente</th>
         <th>Peso(Lb)</th>
         <th>Valor(USD)</th>
-        <th>Acciones</th>
+        <th>Detalles</th>
     </tr>
     </thead>
     <tbody>
@@ -18,10 +18,10 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            {{articulo.fechaIngreso ? (articulo.fechaIngreso | date: "dd/MM/y") : '-'}}
+            {{articulo.fechaGuia ? (articulo.fechaGuia | date: "dd/MM/y") : '-'}}
         </td>
         <td>
-            {{articulo.warehouse ? articulo.warehouse : '-'}}
+            {{ articulo.trackbox }}
         </td>
         <td>
             {{articulo.tracking}}
