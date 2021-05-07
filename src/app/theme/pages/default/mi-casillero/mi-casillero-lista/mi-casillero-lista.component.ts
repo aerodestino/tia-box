@@ -56,6 +56,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   totalEntregados = 0;
   totalEmbarcados = 0;
 
+  totalPeso = 0;
+  totalPrecio = 0;
   enBodegaFilters = {
     limit: 5,
     offset: 0,
@@ -378,6 +380,16 @@ export class MiCasilleroListaComponent extends BaseListComponent
           this.notaembarque = '';
           this.descripcionembarque = '';
           this.articulos = datos.json().data[0];
+          this.totalPeso = 0;
+          this.totalPrecio = 0;
+          let sumPrecio = 0;
+          let sumPeso = 0;
+          for(let i in this.articulos){
+              sumPrecio = sumPrecio + this.articulos[i].precio;
+              sumPeso = sumPeso + this.articulos[i].peso;
+          }
+           this.totalPrecio = sumPrecio;
+           this.totalPeso = sumPeso;
           if(datos.json().data[3] != datos.json().data[1])
             this.remitente_usuario = datos.json().data[1];
           this.importer_usuario = datos.json().data[2];

@@ -2,12 +2,12 @@
     <thead>
     <tr>
         <th>Fecha</th>
-        <th>Valor Total(USD)</th>
-        <th>Arancel</th>
+        <th>Recibo</th>
+        <th>Valor Total(USD)</th>  
         <th>Tarifario</th>
 
         <th>
-            Acciones
+            Detalles
         </th>
     </tr>
     </thead>
@@ -19,10 +19,9 @@
         <td>
             <span *ngIf="facturacion.fecha_notificacion"> {{ facturacion.fecha_notificacion | date: "dd/MM/y" }}</span>
         </td>
+        <td>{{facturacion.recibo ? facturacion.recibo : '-' }}</td>
         <td>{{facturacion.costo ? facturacion.costo : 0 }}</td>
-        <td>
-            {{facturacion.arancel ?  facturacion.arancel.descripcion : '-' }}
-        </td>
+        
         <td>{{facturacion.tarifario ? facturacion.tarifario.nombre : '-' }}</td>
 
         <td>
