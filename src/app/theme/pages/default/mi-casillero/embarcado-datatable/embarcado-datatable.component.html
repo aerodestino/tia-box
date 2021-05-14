@@ -263,6 +263,14 @@
                           {{ datoEmbarque.nota ? datoEmbarque.nota : '-' }}
                          </span>
                     </div>
+                    <div class="m-list-settings__item" *ngIf="datoEmbarque.descripcion_embarque">
+                        <span class="m-list-settings__item-label">
+                            Nueva Descripción
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.descripcion_embarque ? datoEmbarque.descripcion_embarque : '-' }}
+                         </span>
+                    </div>
                 </div>
             </div>
 
