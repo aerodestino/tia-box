@@ -48,7 +48,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   validar= false;
   ids:any[] = [];
   enBodegaSeleccion: any;
-
+  estaConsolidado = false;
   totalEnBodega = 0;
   totalEnTransito = 0;
   totalFacturacion = 0;
@@ -358,6 +358,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.text = '';
     this.existeRemitente = false;
     this.existeImporter = false;
+    this.estaConsolidado = false;
     Helpers.setLoading(true);
     for (let i in this.datos){
         if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
@@ -387,6 +388,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
           for(let i in this.articulos){
               sumPrecio = sumPrecio + this.articulos[i].precio;
               sumPeso = sumPeso + this.articulos[i].peso;
+              if(this.articulos[i].consolidado)
+                this.estaConsolidado = true;
           }
            this.totalPrecio = sumPrecio;
            this.totalPeso = sumPeso;
