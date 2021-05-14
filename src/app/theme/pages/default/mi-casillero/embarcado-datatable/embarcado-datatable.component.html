@@ -63,8 +63,8 @@
         <td>
             <span class="m-badge m-badge--info m-badge--wide"  title="Declaración de Valores" style="color: white; background-color: #4f9e35" *ngIf="articulo.factura_url && articulo.fac_d_v && !articulo.consolidado_factura">Si</span>
             <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_url && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
-            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && !articulo.fac_d_v && articulo.consolidado_factura">Si</a>     
-            <span class="m-badge m-badge--info m-badge--wide"  title="Factura" style="color: white; background-color: #4660d1" *ngIf="articulo.factura_url && articulo.fac_d_v && articulo.consolidado_factura">Si</span>        
+            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura Consolidada" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && !articulo.fac_d_v && articulo.consolidado_factura">Si</a>     
+            <span class="m-badge m-badge--info m-badge--wide"  title="Factura Consolidada" style="color: white; background-color: #4660d1" *ngIf="articulo.factura_url && articulo.fac_d_v && articulo.consolidado_factura">Si</span>        
             <span class="m-badge m-badge--info m-badge--wide"  title="Factura" style="color: white; background-color: #1e1111" *ngIf="!articulo.factura_url">No</span>            
 
         </td>
