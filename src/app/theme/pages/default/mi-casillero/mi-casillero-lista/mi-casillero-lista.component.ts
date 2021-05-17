@@ -13,6 +13,7 @@ import { Helpers } from "../../../../../helpers";
 import { BaseListComponent } from "../../../../../shared/prototypes/base-list";
 import { ArticulosService } from "../../../../../shared/services/api/articulos.service";
 import { UsuariosService } from "../../../../../shared/services/api/usuarios.service";
+import { NotificacionesService } from "../../../../../shared/services/api/notificaciones.service";
 
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -109,7 +110,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public usuariosService: UsuariosService,
     public ngbModal: NgbModal,
     public vcr: ViewContainerRef,
-    public appService: AppService
+    public appService: AppService,
+    public notificacionService: NotificacionesService
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -510,4 +512,28 @@ onSelectionPrecios(element) {
   this.selectionPrecios = element;
 }
 
+onNoticias(content){
+  this.modalRef = this.ngbModal.open(content, {size: "lg"});
+}
+
+leidas(){
+    Helpers.setLoading(true);
+    this.notificacionService.leidas().subscribe(() => {
+      this.toastr.success("Noticias leídas");
+      this.appService.notificacionesSinLeer = 0;
+      this.appService.noticiasSinLeer = 0;
+      this.notificacionService
+        .noticias()
+        .subscribe(notificaciones => {
+              this.appService.noticias = notificaciones.json().data;
+              this.appService.noticiasSinLeer = notificaciones.json().data.length;
+         
+        });
+        this.modalRef.close();
+        Helpers.setLoading(false);
+  }, error => {
+      Helpers.setLoading(false);
+      this.toastr.error(error.json().error.message);
+  });
+}
 }

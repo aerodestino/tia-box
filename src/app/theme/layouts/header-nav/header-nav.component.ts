@@ -18,6 +18,7 @@ declare let mLayout: any;
 export class HeaderNavComponent implements OnInit, AfterViewInit {
   offset = 0;
   notificaciones: any;
+  noticias: any;
   loadingNotifications = false;
   defaultAvatar: any;
 
@@ -32,6 +33,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getProfile();
+    this.getNoticias();
   }
   ngAfterViewInit() {
     mLayout.initHeader();
@@ -62,11 +64,22 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
         this.offset++;
       });
   }
+  getNoticias(){
+    this.appService.notificacionesSinLeer = 0;
+    this.appService.noticiasSinLeer = 0;
+    this.notificacionesService
+      .noticias()
+      .subscribe(notificaciones => {
+            this.appService.noticias = notificaciones.json().data;
+            this.appService.noticiasSinLeer = notificaciones.json().data.length;
+       
+      });
+  }
   onGetNotificaciones() {
     if (!this.loadingNotifications) {
       this.offset = 0;
-      this.appService.notificacionesSinLeer = 0;
       this.notificaciones = [];
+      this.noticias = [];
       this.getNotificaciones();
     }
   }
