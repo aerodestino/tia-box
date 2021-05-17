@@ -79,7 +79,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     if (!this.loadingNotifications) {
       this.offset = 0;
       this.notificaciones = [];
-      this.noticias = [];
+      this.appService.notificacionesSinLeer = 0;
       this.getNotificaciones();
     }
   }
