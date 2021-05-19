@@ -41,7 +41,7 @@
                 <input type="text" class="form-control m-input" placeholder="Teléfono"
                        [ngModel]="extra.celular" #celular="ngModel" name="celular" required>
                 <section *ngIf="celular.invalid && celular.dirty" class="bs">
-                    <p class="m--font-danger" *ngIf="identificacion.hasError('required')">El celular es requerida</p>
+                    <p class="m--font-danger" *ngIf="identificacion.hasError('required')">El celular es requerido</p>
                 </section>
             </div>
         </div>
