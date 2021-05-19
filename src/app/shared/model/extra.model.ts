@@ -15,6 +15,7 @@ export class Extra extends Model {
         public apellidos?: string,
         public direccion?: string,
         public identificacion?: string,
+        public celular?: string
     ) {
         super();
     }
