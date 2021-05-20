@@ -65,7 +65,7 @@
             {{articulo.volumen}}
         </td>
         <td>
-            <input class="form-control m-input" style="float: left; width:50px; margin-right: 5px; padding:5px" *ngIf="!articulo.editarprecio" [(ngModel)]="articulo.precio">
+            <input class="form-control m-input" type="number" style="float: left; width:50px; margin-right: 5px; padding:5px" *ngIf="!articulo.editarprecio" [(ngModel)]="articulo.precio">
             <span *ngIf="articulo.editarprecio">{{articulo.precio}}</span>
             <i class="fa fa-save m--font-success" title="Actualizar"  style="cursor: pointer; margin-top:10px;"
             (click)="guardarPrecio(articulo.id,articulo.precio)"  *ngIf="!articulo.editarprecio"></i>
