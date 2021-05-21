@@ -62,36 +62,42 @@ export class MiCasilleroListaComponent extends BaseListComponent
   enBodegaFilters = {
     limit: 5,
     offset: 0,
-    estado_articulo_id: 2
+    estado_articulo_id: 2,
+    q: ''
   };
 
   enTransitoFilters = {
     limit: 5,
     offset: 0,
-    estado_articulo_id: 3
+    estado_articulo_id: 3,
+    q: ''
   };
 
   embarcadosFilters = {
     limit: 5,
-    offset: 0
+    offset: 0,
+    q: ''
   };
 
   facturacionFilters = {
     limit: 5,
     offset: 0,
-    estado_articulo_id: 4
+    estado_articulo_id: 4,
+    q: ''
   };
 
   rutaNacionalFilters = {
     limit: 5,
     offset: 0,
-    estado_articulo_id: 5
+    estado_articulo_id: 5,
+    q: ''
   };
 
   entregadosFilters = {
     limit: 5,
     offset: 0,
-    estado_articulo_id: 6
+    estado_articulo_id: 6,
+    q: ''
   };
   importer_usuario = null;
   remitente_usuario = null;
@@ -457,7 +463,7 @@ onSubmitFactura() {
      this.articulosService.subirFacturaMasiva(formData).subscribe(() => {
         this.toastr.success("Factura Agregada");
         Helpers.setLoading(false);
-        window.location.reload();
+        this.getEnBodega();
 
     }, error => {
         Helpers.setLoading(false);

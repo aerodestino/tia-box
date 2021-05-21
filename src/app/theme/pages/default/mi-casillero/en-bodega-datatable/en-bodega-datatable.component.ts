@@ -27,6 +27,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   modalRef=null;
   @Input() url: any;
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
+  @Output() cargar: EventEmitter<any> = new EventEmitter();
   @Output() addFactura: EventEmitter<any> = new EventEmitter();
   @Output() ver: EventEmitter<any> = new EventEmitter();
   @Output() trackboxOutput: EventEmitter<any> = new EventEmitter();
@@ -137,8 +138,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     Helpers.setLoading(true);
     this.articuloService.guardarPrecio(id, {precio:precio }).subscribe(resource => {
         this.toastr.success('Artículo editado correctamente.');
-        window.location.reload();
         Helpers.setLoading(false);
+        this.cargar.emit();
     }, error => {
       if(error.json().error && error.json().error.message)
           this.toastr.error(error.json().error.message);

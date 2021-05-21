@@ -58,6 +58,31 @@
     </div>
 </div>
 <div class="m-content">
+    <div class="form-group m-form__group row align-items-center">
+        <div class="col-md-3">
+            <div class="m-input-icon m-input-icon--left">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                       [(ngModel)]="enBodegaFilters.q" name="search" *ngIf="enBodegaSeleccionadas"  (keyup.enter)="getEnBodega()">
+                
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="embarcadosFilters.q" name="search" (keyup.enter)="getEmbarcados()" *ngIf="embarcadosSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="enTransitoFilters.q" name="search" (keyup.enter)="getEnTransito()" *ngIf="enTransitoSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="facturacionFilters.q" name="search" (keyup.enter)="getFacturacion()" *ngIf="facturacionSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="rutaNacionalFilters.q" name="search" (keyup.enter)="getRutaNacional()" *ngIf="rutaNacionalSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="entregadosFilters.q" name="search" (keyup.enter)="getEntregados()" *ngIf="entregadosSeleccionadas">
+                
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                    <span>
+                        <i class="fa fa-search"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
     <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('enBodegaSeleccionadas')">
             <a class="nav-link m-tabs__link active" data-toggle="tab" href="#enBodegaTab" role="tab">
@@ -118,6 +143,7 @@
                             [totalItems]="totalEnBodega"
                             [filters]="enBodegaFilters"
                             [url]="urlfactura"
+                            (cargar)= "getEnBodega($event)"
                             (trackboxOutput)= "onTrackbox($event)"
                             (addFactura)="onSubirFactura($event)"
                             (filtersChange)="onEnBodegaFiltersChange($event)"
