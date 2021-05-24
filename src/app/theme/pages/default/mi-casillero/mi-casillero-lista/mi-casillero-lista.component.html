@@ -1,4 +1,10 @@
 <div class="m-subheader">
+    <button (click)="onNoticias(noticiaModal)"
+    [disabled]="appService.noticiasSinLeer == 0"
+    class="btn btn-success text-right"
+    style="float:right; top:15px">
+       {{ appService.noticiasSinLeer }} Noticias
+    </button>
     <div class="d-flex align-items-center">
         <div class="mr-auto">
             <h3 class="page-title">
@@ -52,6 +58,31 @@
     </div>
 </div>
 <div class="m-content">
+    <div class="form-group m-form__group row align-items-center">
+        <div class="col-md-3">
+            <div class="m-input-icon m-input-icon--left">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                       [(ngModel)]="enBodegaFilters.q" name="search" *ngIf="enBodegaSeleccionadas"  (keyup.enter)="getEnBodega()">
+                
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="embarcadosFilters.q" name="search" (keyup.enter)="getEmbarcados()" *ngIf="embarcadosSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="enTransitoFilters.q" name="search" (keyup.enter)="getEnTransito()" *ngIf="enTransitoSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="facturacionFilters.q" name="search" (keyup.enter)="getFacturacion()" *ngIf="facturacionSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="rutaNacionalFilters.q" name="search" (keyup.enter)="getRutaNacional()" *ngIf="rutaNacionalSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="entregadosFilters.q" name="search" (keyup.enter)="getEntregados()" *ngIf="entregadosSeleccionadas">
+                
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                    <span>
+                        <i class="fa fa-search"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
     <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('enBodegaSeleccionadas')">
             <a class="nav-link m-tabs__link active" data-toggle="tab" href="#enBodegaTab" role="tab">
@@ -112,6 +143,7 @@
                             [totalItems]="totalEnBodega"
                             [filters]="enBodegaFilters"
                             [url]="urlfactura"
+                            (cargar)= "getEnBodega($event)"
                             (trackboxOutput)= "onTrackbox($event)"
                             (addFactura)="onSubirFactura($event)"
                             (filtersChange)="onEnBodegaFiltersChange($event)"
@@ -498,6 +530,49 @@
             </div>
 
         </div>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #noticiaModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Noticias</h4>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            
+            <div class="m-list-settings">
+                <div class="m-dropdown__content">
+                    <div class="m-list-timeline m-list-timeline--skin-light">
+                        <div class="m-list-timeline__items">
+                            <div class="m-list-timeline__item"
+                                 *ngFor="let noticia of appService.noticias">
+                                <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                <span class="m-list-timeline__text" style="font-size: 1.2rem !important; color:#1e1111 !important">
+                                    {{noticia.fecha}} -- {{noticia.texto}}
+                            </span>
+                               
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row mb-10">
+                                <div class="col-lg-12 text-right">
+                                    <button (click)="leidas()"
+                                            class="btn btn-success">
+                                        Leídas
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
     </div>
 </ng-template>
 <!--end::Modal-->

@@ -4,7 +4,9 @@ import { EstadisticasService } from "./shared/services/api/estadisticas.service"
 @Injectable()
 export class AppService {
   notificaciones: any[] = [];
+  noticias: any[] = [];
   notificacionesSinLeer: number = 0;
+  noticiasSinLeer: number = 0;
   categoriaSeleccionada: any;
   procesosEjecutandose: string[] = [];
   message: string;
