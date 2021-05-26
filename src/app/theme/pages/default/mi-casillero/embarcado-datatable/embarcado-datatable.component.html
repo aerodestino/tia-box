@@ -172,11 +172,11 @@
                         </span>
                         <span class="m-list-settings__item-control " *ngIf="datoEmbarque.usuario_embarque_remitente"
                               >
-                              {{datoEmbarque.usuario_embarque_remitente.codigo}} {{ datoEmbarque.usuario_embarque_remitente.full_name }}
+                              {{datoEmbarque.usuario_embarque_remitente.numero_identidad}} - {{datoEmbarque.usuario_embarque_remitente.codigo}} {{ datoEmbarque.usuario_embarque_remitente.full_name }}
                          </span>
                          <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && datoEmbarque.extra_embarque_remitente"
                          >
-                         {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
+                         {{ datoEmbarque.extra_embarque_remitente.identificacion }} - {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente && datoEmbarque.tienda_embarque "
                        >
@@ -185,12 +185,12 @@
                         <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
                         !datoEmbarque.tienda_embarque && datoEmbarque.usuario_carrier"
                               >
-                              {{datoEmbarque.usuario_carrier.codigo}} {{ datoEmbarque.usuario_carrier.full_name }}
+                              {{datoEmbarque.usuario_carrier.numero_identidad}} - {{datoEmbarque.usuario_carrier.codigo}} {{ datoEmbarque.usuario_carrier.full_name }}
                          </span>
                          <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
                          !datoEmbarque.tienda_embarque && !datoEmbarque.usuario_carrier && datoEmbarque.extra_carrier"
                          >
-                         {{ datoEmbarque.extra_carrier.nombre }} {{resourceData.extra_carrier.apellidos }}
+                         {{ datoEmbarque.extra_carrier.identificacion }} - {{ datoEmbarque.extra_carrier.nombre }} {{resourceData.extra_carrier.apellidos }}
                     </span>
                     <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
                     !datoEmbarque.tienda_embarque && !datoEmbarque.extra_carrier && !datoEmbarque.usuario_carrier"
@@ -204,22 +204,22 @@
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="datoEmbarque.usuario_importer"
                         >
-                        {{ datoEmbarque.usuario_importer.codigo }} {{ datoEmbarque.usuario_importer.full_name}}
+                        {{ datoEmbarque.usuario_importer.numero_identidad }} - {{ datoEmbarque.usuario_importer.codigo }} {{ datoEmbarque.usuario_importer.full_name}}
                    </span>
                    <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && datoEmbarque.extra_importer"
                    >
-                   {{ datoEmbarque.extra_importer.nombre }} {{datoEmbarque.extra_importer.apellidos}}
+                   {{ datoEmbarque.extra_importer.identificacion }} - {{ datoEmbarque.extra_importer.nombre }} {{datoEmbarque.extra_importer.apellidos}}
                   </span>
                 
                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && !datoEmbarque.extra_importer &&
                   datoEmbarque.usuario"
                         >
-                        {{datoEmbarque.usuario.codigo}} {{ datoEmbarque.usuario.nombre }} {{datoEmbarque.usuario.apellido}}
+                        {{datoEmbarque.usuario.numero_identidad}} - {{datoEmbarque.usuario.codigo}} {{ datoEmbarque.usuario.nombre }} {{datoEmbarque.usuario.apellido}}
                    </span>
                    <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && !datoEmbarque.extra_importer &&
                     datoEmbarque.extra && !datoEmbarque.usuario"
                    >
-                   {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/> ({{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/> ({{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
+                   {{datoEmbarque.extra.usuario?.numero_identidad}} - {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/>  ({{ datoEmbarque.extra.identificacion }} - {{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
               </span>
              
                     </div>
