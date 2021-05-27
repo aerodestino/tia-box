@@ -332,6 +332,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onSubmitEmbarcar() {
     Helpers.setLoading(true);
+    this.modalRef.close();
     this.articulosService
       .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
         nota: this.notaembarque, descripcion:this.descripcionembarque})
@@ -340,8 +341,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
           Helpers.setLoading(false);
           this.toastr.success("Artículos enviados a embarcar");
           this.getEnBodega();
-          this.getEmbarcados();
-          this.modalRef.close();
+          this.getEmbarcados();  
         },
         error => {
           Helpers.setLoading(false);
