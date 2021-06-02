@@ -463,6 +463,7 @@
                                                     textField2="apellido"
                                                     valueField="numero_identidad"
                                                     (change)= "validarForm()"
+                                                    [isModal]="true"
                                 ></app-auto-complete>
                             </div>
                          
@@ -484,6 +485,7 @@
                                                     textField2="apellido"
                                                     valueField="numero_identidad"
                                                     (change)= "validarForm()"
+                                                    [isModal]="true"
                                 ></app-auto-complete>
                             </div>
                         </div>
@@ -492,7 +494,7 @@
                             Descripción:
                          </label>
                          <div class="col-lg-9">
-                             <input type="text" class="form-control m-input" placeholder="Descripción"
+                             <input type="text" class="form-control m-input" placeholder="Dejar en blanco si es la misma del artículo"
                              [(ngModel)]="descripcionembarque"  #descripcion="ngModel"
                              name="descripcion"
                              > 

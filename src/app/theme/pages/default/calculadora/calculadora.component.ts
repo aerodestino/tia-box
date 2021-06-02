@@ -69,8 +69,9 @@ export class CalculadoraComponent implements OnInit {
         }, error => {
             this.appService.loadingMessage = "Cargando";
             Helpers.setLoading(false);
+             this.toastr.error('Ocurrió un error');
             console.log(this.toastr.error(error.json().error.message));
-            this.toastr.error(error.json().error.message);
+           // this.toastr.error(error.json().error.message);
         });
     }
 
