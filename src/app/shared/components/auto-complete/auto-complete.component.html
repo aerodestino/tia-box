@@ -1,10 +1,23 @@
 <div class="auto-complete-container col-12">
+    <input *ngIf="!isModal" class="form-control m-input col-12" (focus)="showDropdown()" (blur)="hideDropdown()" id="inputFilter" autocomplete="off"
+    [(ngModel)]="inputText" (keyup)="onTextChange()" placeholder="Buscar" type="text" style="width: 100%;" placeholder="Buscar" [disabled]="disabled">
+   
+    <input *ngIf="isModal" class="form-control m-input col-12" (click)="hideModalDropdown()" id="inputFilter" autocomplete="off"
+    [(ngModel)]="inputText" (keyup)="onTextChange()" placeholder="Buscar" type="text" style="width: 100%;" placeholder="Buscar" [disabled]="disabled">
+   
+ <!--   <select class="form-control auto-complete-dropdown"  [(ngModel)]="selected" #item="ngModel" style="width: 90%;" name="item" (change)="selectItem(item.value)"  [disabled]="disabled">  
+   <option value="">{{ placeholder }}</option>
+        <option *ngFor="let item of itemsShowing" value="{{item[valueField]}}">
+            {{item[textField]}}- {{item[textField1]}} {{item[textField2]}}
+        </option>
+   </select>
+   <a (click)="mostrarInputClick()" style="cursor: pointer; float:right; margin-top: 10px" title="Buscador del listado"><i class="fa fa-search"></i></a>
 
-    <input class="form-control m-input col-12" (focus)="showDropdown()" (blur)="hideDropdown()" id="inputFilter" autocomplete="off"
-           [(ngModel)]="inputText" (keyup)="onTextChange()" type="text" style="width: 100%" [placeholder]="placeholder" [disabled]="disabled">
-    <div class="auto-complete-dropdown" *ngIf="showing" >
-        <a *ngFor="let item of itemsShowing" (click)="selectItem(item)">{{item[textField]}} {{item[textField1]}} {{item[textField2]}}</a>
-    </div>
+ -->
+     <span class="auto-complete-dropdown" *ngIf="showing">
+         <a *ngFor="let item of itemsShowing" (click)="selectItem(item)">{{item[textField]}}- {{item[textField1]}} {{item[textField2]}}</a>
+     </span> 
+   
 </div>
 
 
