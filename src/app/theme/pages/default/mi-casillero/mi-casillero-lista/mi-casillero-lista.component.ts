@@ -56,7 +56,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   totalRutaNacional = 0;
   totalEntregados = 0;
   totalEmbarcados = 0;
-
+  confirmar: boolean = false;
+  mensaje: boolean = false;
   totalPeso = 0;
   totalPrecio = 0;
   enBodegaFilters = {
@@ -298,6 +299,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
     }
   }
 
+  negadaConfirmacion(){
+    this.mensaje = false;
+    this.confirmar= false;
+}
+
   onConsolidar() {
     let existe=false;
     
@@ -331,6 +337,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   }
 
   onSubmitEmbarcar() {
+    if(this.confirmar){
     Helpers.setLoading(true);
     this.modalRef.close();
     this.articulosService
@@ -348,6 +355,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
           this.toastr.error(error.json().error.message);
         }
       );
+    }else{
+      this.mensaje = true;
+      this.confirmar= true;
+    }
   }
 
   validarForm(){

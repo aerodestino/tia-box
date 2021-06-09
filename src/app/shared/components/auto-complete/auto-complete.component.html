@@ -1,9 +1,9 @@
 <div class="auto-complete-container col-12">
     <input *ngIf="!isModal" class="form-control m-input col-12" (focus)="showDropdown()" (blur)="hideDropdown()" id="inputFilter" autocomplete="off"
-    [(ngModel)]="inputText" (keyup)="onTextChange()" placeholder="Buscar" type="text" style="width: 100%;" placeholder="Buscar" [disabled]="disabled">
+    [(ngModel)]="inputText" (keyup)="onTextChange()" [placeholder]="placeholder" type="text" style="width: 100%;" [disabled]="disabled">
    
     <input *ngIf="isModal" class="form-control m-input col-12" (click)="hideModalDropdown()" id="inputFilter" autocomplete="off"
-    [(ngModel)]="inputText" (keyup)="onTextChange()" placeholder="Buscar" type="text" style="width: 100%;" placeholder="Buscar" [disabled]="disabled">
+    [(ngModel)]="inputText" (keyup)="onTextChange()" [placeholder]="placeholder" type="text" style="width: 100%;" [disabled]="disabled">
    
  <!--   <select class="form-control auto-complete-dropdown"  [(ngModel)]="selected" #item="ngModel" style="width: 90%;" name="item" (change)="selectItem(item.value)"  [disabled]="disabled">  
    <option value="">{{ placeholder }}</option>
