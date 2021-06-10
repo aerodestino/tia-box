@@ -515,14 +515,30 @@
                     </div>
                     <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid">
+                            <div class="row" *ngIf="mensaje">
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-11">
+                                   <h4>¿Está seguro de embarcar?</h4>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
-                                    <button type="submit"
+                                    <button *ngIf="!confirmar"
                                             [disabled]="validar"
                                             [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
-                                    >
+                                            >
                                         Guardar
+                                    </button>
+                                    <button *ngIf="confirmar"
+                                        [disabled]="validar"
+                                        [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
+                                        type="submit">
+                                        SI
+                                    </button> 
+                                    <button *ngIf="confirmar" class="btn btn-secondary"
+                                    (click)="negadaConfirmacion()">
+                                        NO
                                     </button>
                                 </div>
                             </div>
