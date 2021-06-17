@@ -134,19 +134,22 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   }
 
   guardarPrecio(id,precio) {
-      
-    Helpers.setLoading(true);
-    this.articuloService.guardarPrecio(id, {precio:precio }).subscribe(resource => {
-        this.toastr.success('Artículo editado correctamente.');
-        Helpers.setLoading(false);
-        this.cargar.emit();
-    }, error => {
-      if(error.json().error && error.json().error.message)
-          this.toastr.error(error.json().error.message);
-      else
-        this.toastr.error('Ocurrió un error al editar el costo');
-        Helpers.setLoading(false);
-    });
+      if(precio > 0){
+        Helpers.setLoading(true);
+        this.articuloService.guardarPrecio(id, {precio:precio }).subscribe(resource => {
+            this.toastr.success('Artículo editado correctamente.');
+            Helpers.setLoading(false);
+            this.cargar.emit();
+        }, error => {
+          if(error.json().error && error.json().error.message)
+              this.toastr.error(error.json().error.message);
+          else
+            this.toastr.error('Ocurrió un error al editar el costo');
+            Helpers.setLoading(false);
+        });
+      }else{
+        this.toastr.error('El valor debe ser mayor que cero');
+      } 
 }
 
   subirFactura(articulo) {
