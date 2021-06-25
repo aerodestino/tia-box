@@ -5,7 +5,7 @@
         <th>Recibo</th>
         <th>Valor Total(USD)</th>  
         <th>Tarifario</th>
-
+         <th>Estado</th>
         <th>
             Detalles
         </th>
@@ -23,7 +23,7 @@
         <td>{{facturacion.costo ? facturacion.costo : 0 }}</td>
         
         <td>{{facturacion.tarifario ? facturacion.tarifario.nombre : '-' }}</td>
-
+<td>{{ facturacion.estado_facturacion ? facturacion.estado_facturacion.nombre : 'Pendiente' }} </td>
         <td>
             <div class="col-md-3 col-sm-6">
                 <i class="fa fa-eye m--font-info" title="Detalles" style="cursor: pointer"
