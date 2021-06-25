@@ -202,21 +202,21 @@
                         <span class="m-list-settings__item-label">
                             Consignatario Embarque
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="datoEmbarque.usuario_importer"
+                        <span class="m-list-settings__item-control" *ngIf="datoEmbarque.usuario_embarque_importer"
                         >
-                        {{ datoEmbarque.usuario_importer.numero_identidad }} - {{ datoEmbarque.usuario_importer.codigo }} {{ datoEmbarque.usuario_importer.full_name}}
+                        {{ datoEmbarque.usuario_embarque_importer.numero_identidad }} - {{ datoEmbarque.usuario_embarque_importer.codigo }} {{ datoEmbarque.usuario_embarque_importer.full_name}}
                    </span>
-                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && datoEmbarque.extra_importer"
+                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && datoEmbarque.extra_embarque_importer"
                    >
-                   {{ datoEmbarque.extra_importer.identificacion }} - {{ datoEmbarque.extra_importer.nombre }} {{datoEmbarque.extra_importer.apellidos}}
+                   {{ datoEmbarque.extra_embarque_importer.identificacion }} - {{ datoEmbarque.extra_embarque_importer.nombre }} {{datoEmbarque.extra_embarque_importer.apellidos}}
                   </span>
                 
-                  <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && !datoEmbarque.extra_importer &&
+                  <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && !datoEmbarque.extra_embarque_importer &&
                   datoEmbarque.usuario"
                         >
                         {{datoEmbarque.usuario.numero_identidad}} - {{datoEmbarque.usuario.codigo}} {{ datoEmbarque.usuario.nombre }} {{datoEmbarque.usuario.apellido}}
                    </span>
-                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_importer && !datoEmbarque.extra_importer &&
+                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && !datoEmbarque.extra_embarque_importer &&
                     datoEmbarque.extra && !datoEmbarque.usuario"
                    >
                    {{datoEmbarque.extra.usuario?.numero_identidad}} - {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/>  ({{ datoEmbarque.extra.identificacion }} - {{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
