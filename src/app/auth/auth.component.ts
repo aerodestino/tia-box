@@ -79,9 +79,9 @@ export class AuthComponent implements OnInit {
 
     calculateTokenExpiresDateTime(expires_in) {
         let now = new Date();
-        console.log(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getDay());
+        console.log(now.getFullYear(), now.getMonth()+1, now.getDate(), now.getHours(), now.getMinutes(), now.getDay());
         let year = now.getFullYear();
-        let month = now.getMonth();
+        let month = now.getMonth()+1;
         let day = now.getDate();
         let hours = now.getHours();
         let minutes = now.getMinutes();
