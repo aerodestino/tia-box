@@ -13,6 +13,7 @@ export class EnBodegaListHeaderComponent implements OnInit {
     @Input() puedeFactura;
     @Input() consolidarPaquete;
     @Input() enviarPaquete;
+    @Output() exportar: EventEmitter<any> = new EventEmitter();
     @Output() consolidar: EventEmitter<any> = new EventEmitter();
     @Output() embarcar: EventEmitter<any> = new EventEmitter();
     @Output() facturaMasiva: EventEmitter<any> = new EventEmitter();
@@ -31,5 +32,9 @@ export class EnBodegaListHeaderComponent implements OnInit {
 
     onFactura() {
         this.facturaMasiva.emit();
+    }
+
+    onExportar() {
+        this.exportar.emit();
     }
 }

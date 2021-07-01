@@ -14,7 +14,8 @@ import { BaseListComponent } from "../../../../../shared/prototypes/base-list";
 import { ArticulosService } from "../../../../../shared/services/api/articulos.service";
 import { UsuariosService } from "../../../../../shared/services/api/usuarios.service";
 import { NotificacionesService } from "../../../../../shared/services/api/notificaciones.service";
-
+import {ResponseContentType} from "@angular/http";
+import {ExcelWorkService} from "../../../../../shared/services/excel/excel-work.service";
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./mi-casillero-lista.component.html",
@@ -118,7 +119,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public ngbModal: NgbModal,
     public vcr: ViewContainerRef,
     public appService: AppService,
-    public notificacionService: NotificacionesService
+    public notificacionService: NotificacionesService,
+    public excelWorkService: ExcelWorkService
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -551,6 +553,22 @@ leidas(){
   }, error => {
       Helpers.setLoading(false);
       this.toastr.error(error.json().error.message);
+  });
+}
+
+onExportar() {
+  Helpers.setLoading(true);
+  let filters = {
+    web: true,
+    articulos: this.enBodegaSeleccion,
+    q: this.enBodegaFilters.q
+  };
+  this.articulosService.exportar(filters, ResponseContentType.Blob).subscribe(excel => {
+      this.excelWorkService.downloadXLS('Paquetes.xlsx', excel);
+      Helpers.setLoading(false);
+  }, error => {
+      this.toastr.error(error.json().error.message);
+      Helpers.setLoading(false);
   });
 }
 }
