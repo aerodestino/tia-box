@@ -43,7 +43,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
       this.appService.user = user.json().data;
       this.appService.canShowSideNav = true;
       localStorage.setItem("user_id", this.appService.user.id);
-      this.chatService.initChat();
+    //  this.chatService.initChat();
     });
   }
   getEstadisticas() {
