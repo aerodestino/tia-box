@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
         // console.log(now, expiresDate);
         // console.log(tokenStillValid);
 
-        if (isLoggedIn && tokenStillValid)
+        if (isLoggedIn)
             return isLoggedIn;
         else {
             // not logged in so redirect to login page with the return url
