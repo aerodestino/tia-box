@@ -68,13 +68,17 @@
 						Introduzca su correo para resetear su contraseña:
 					</div>
 				</div>
-				<form (ngSubmit)="f.form.valid && forgotPass()" #f="ngForm" class="m-login__form m-form" action="">
+				<form (ngSubmit)="f.form.valid && forgotPass(email.value)" #f="ngForm" class="m-login__form m-form" action="">
 					<ng-template #alertForgotPass></ng-template>
 					<div class="form-group m-form__group">
-						<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" id="m_email" autocomplete="off">
+						<input  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" id="m_email" autocomplete="off">
+						<section *ngIf="email.invalid && email.dirty" class="bs">
+                            <p class="m--font-danger" *ngIf="email.value==''">El email es requerido</p>
+                            <p class="m--font-danger" *ngIf="email.hasError('pattern')">Introduzca un email válido</p>
+                        </section>
 					</div>
 					<div class="m-login__form-action">
-						<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
+						<button [disabled]="loading || email.value==''" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
 								id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom" style="margin-right: 5px;">
 							Resetear
 						</button>

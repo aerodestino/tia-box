@@ -130,9 +130,9 @@ export class AuthComponent implements OnInit {
         });
     }
 
-    forgotPass() {
+    forgotPass(value) {
         this.loading = true;
-        this._authService.resetPassword(this.model.email).subscribe( () => {
+        this._authService.resetPassword(value).subscribe( () => {
             this.loading = false;
             this.toastr.success("Listo, le hemos enviado un correo con un link para resetear su contraseña");
         }, error => {
