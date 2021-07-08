@@ -82,7 +82,8 @@ import { LayoutModule } from "./theme/layouts/layout.module";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { ThemeComponent } from "./theme/theme.component";
 import { ScriptLoaderService } from "./_services/script-loader.service";
-
+import { NoCacheHeadersInterceptor } from "./shared/services/auth/cache.service";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 registerLocaleData(localeES, "es-CU");
 
 @NgModule({
@@ -106,6 +107,7 @@ registerLocaleData(localeES, "es-CU");
     PushNotificationsModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS,useClass: NoCacheHeadersInterceptor,multi: true},
     { provide: ToastOptions, useClass: CustomToastrOption },
     { provide: LOCALE_ID, useValue: "es-CU" },
     ScriptLoaderService,

@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "dev": "ng build --aot=true --build-optimizer",
-    "prod": "ng build --prod --build-optimizer",
+    "dev": "ng build --output-hashing=all",
+    "prod": "ng build --prod --output-hashing=all",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
