@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private usuariosService: UsuariosService
   ) {
-    this.getProfile();
+    //this.getProfile();
     const ios =
       !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 

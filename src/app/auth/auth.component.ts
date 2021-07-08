@@ -66,7 +66,7 @@ export class AuthComponent implements OnInit {
                 localStorage.setItem('expires_date', this.calculateTokenExpiresDateTime(res.expires_in).toString());
                 this.appService.message = "Bienvenido a BOX593";
                 this._router.navigate([this.returnUrl]);
-                this.getProfile();
+             //   this.getProfile();
             },
             error => {
                if(error._body == '{"error":"invalid_interfaz","error_description":"No tiene acceso a la interfaz"}')
@@ -133,17 +133,24 @@ export class AuthComponent implements OnInit {
     forgotPass(value) {
         this.loading = true;
         let valor = this.cleanUnnecessaryWhiteSpaces(value);
-        this._authService.resetPassword(valor).subscribe( () => {
+        if(valor == ''){
             this.loading = false;
-            this.toastr.success("Listo, le hemos enviado un correo con un link para resetear su contraseña");
-        }, error => {
-            this.loading = false;
-            this.toastr.error(error.json().error.message);
-        });
+            this.toastr.error('El email es obligatorio');
+        }else{ 
+            this._authService.resetPassword(valor).subscribe( () => {
+                this.loading = false;
+                this.toastr.success("Listo, le hemos enviado un correo con un link para resetear su contraseña");
+            }, error => {
+                this.loading = false;
+                this.toastr.error(error.json().error.message);
+            });
+        }
     }
 
      cleanUnnecessaryWhiteSpaces(cadena: string){
-        let cleanString = cadena.trim();
+        let cleanString = '';
+        if(cadena !='')
+            cleanString = cadena.trim();
         return cleanString;
      }
 }

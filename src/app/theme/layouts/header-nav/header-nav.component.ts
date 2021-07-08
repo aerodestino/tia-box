@@ -8,7 +8,7 @@ import { AppService } from "../../../app.service";
 import { NotificacionesService } from "../../../shared/services/api/notificaciones.service";
 import { UsuariosService } from "../../../shared/services/api/usuarios.service";
 import { ChatService } from "../../../shared/services/socket/chat.service";
-
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
 declare let mLayout: any;
 @Component({
   selector: "app-header-nav",
@@ -26,7 +26,8 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     public appService: AppService,
     public usuariosService: UsuariosService,
     public notificacionesService: NotificacionesService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    protected router: Router
   ) {
     this.defaultAvatar = "./../../../../assets/img/sin-imagen.jpg";
   }
@@ -44,6 +45,10 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
       this.appService.canShowSideNav = true;
       localStorage.setItem("user_id", this.appService.user.id);
     //  this.chatService.initChat();
+    },
+    error => {
+      localStorage.removeItem("user");
+      this.router.navigate(['login']);
     });
   }
   getEstadisticas() {
@@ -73,7 +78,10 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
             this.appService.noticias = notificaciones.json().data;
             this.appService.noticiasSinLeer = notificaciones.json().data.length;
        
-      });
+          },
+          error => {
+           console.log(error);
+          });
   }
   onGetNotificaciones() {
     if (!this.loadingNotifications) {
