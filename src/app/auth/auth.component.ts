@@ -132,7 +132,8 @@ export class AuthComponent implements OnInit {
 
     forgotPass(value) {
         this.loading = true;
-        this._authService.resetPassword(value).subscribe( () => {
+        let valor = this.cleanUnnecessaryWhiteSpaces(value);
+        this._authService.resetPassword(valor).subscribe( () => {
             this.loading = false;
             this.toastr.success("Listo, le hemos enviado un correo con un link para resetear su contraseña");
         }, error => {
@@ -140,4 +141,9 @@ export class AuthComponent implements OnInit {
             this.toastr.error(error.json().error.message);
         });
     }
+
+     cleanUnnecessaryWhiteSpaces(cadena: string){
+        let cleanString = cadena.trim();
+        return cleanString;
+     }
 }
