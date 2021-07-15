@@ -1,10 +1,4 @@
 <div class="m-subheader">
-    <button (click)="onNoticias(noticiaModal)"
-    [disabled]="appService.noticiasSinLeer == 0"
-    class="btn btn-success text-right"
-    style="float:right; top:15px">
-       {{ appService.noticiasSinLeer }} Noticias
-    </button>
     <div class="d-flex align-items-center">
         <div class="mr-auto">
             <h3 class="page-title">
@@ -17,22 +11,42 @@
 <div class="m-subheader" *ngIf="appService.user">
     <div class="d-flex align-items-center">
         <div class="profile-info col-12">
-            <h1 class="col-12">
-                {{appService.user.nombre}} {{appService.user.apellido}}
-            </h1>
+            <div class="row" >
+            <div class="col-10">
+                <h1 >
+                    {{appService.user.nombre}} {{appService.user.apellido}}
+                </h1>
+            </div>
+            <div class="col-2">
+            <button (click)="onNoticias(noticiaModal)"
+            [disabled]="appService.noticiasSinLeer == 0"
+            class="btn btn-success text-right"
+            style="background-color:#FFC44A ; border-color:#FFC44A;top:15px">
+               {{ appService.noticiasSinLeer }} Noticias
+            </button>
+            </div>
+            </div>
             <div class="row">
                 <div class="col-md-5 col-lg-5 col-sm-12">
                     <span style="font-size: 14px">
                         <i class="fa fa-briefcase"></i>
-                        <strong>Dirección de Entrega: </strong> {{appService.user.direccion}}
-                    </span><br>
-                    <span style="font-size: 14px" *ngIf="appService.user.provincia">
-                        <i class="fa fa-location-arrow"></i>
-                        <strong>Provincia/Departamento: </strong> {{appService.user.provincia.nombre}}
+                        <strong>Dirección: </strong> {{appService.user.direccion}}
                     </span><br>
                     <span style="font-size: 14px" *ngIf="appService.user.ciudad">
                         <i class="fa fa-location-arrow"></i>
                         <strong>Ciudad: </strong> {{appService.user.ciudad.nombre}}
+                    </span><br>
+                    <span style="font-size: 14px" *ngIf="appService.user.provincia">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Provincia: </strong> {{appService.user.provincia.nombre}}
+                    </span><br>
+                    <span style="font-size: 14px" *ngIf="appService.user.codigo_postal">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Código Postal: </strong> {{appService.user.codigo_postal}}
+                    </span><br>
+                    <span style="font-size: 14px" *ngIf="appService.user.telefono1">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Teléfono: </strong> {{appService.user.telefono1}}
                     </span><br>
                 </div>
                 <div class="col-md-7 col-lg-7 col-sm-12">
@@ -74,7 +88,19 @@
                 [(ngModel)]="rutaNacionalFilters.q" name="search" (keyup.enter)="getRutaNacional()" *ngIf="rutaNacionalSeleccionadas">
                 <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
                 [(ngModel)]="entregadosFilters.q" name="search" (keyup.enter)="getEntregados()" *ngIf="entregadosSeleccionadas">
-                
+              <!--   <div class="form-group m-form__group col-md-3 col-lg-3 col-sm-12">
+                    <label for="exampleSelect1">
+                        Estado
+                    </label>
+                    <select class="form-control m-input" id="exampleSelect1"  *ngIf="entregadosSeleccionadas" [(ngModel)]="entregadosFilters.estado" (change)="getEntregados()" name="estado">
+                        <option [ngValue]="-1">
+                            Todos
+                        </option>
+                        <option *ngFor="let estado of estadosArticulo" [value]="estado.id">
+                            {{estado.nombre}}
+                        </option>
+                    </select>
+                </div> -->
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                     <span>
                         <i class="fa fa-search"></i>
@@ -91,7 +117,7 @@
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('embarcadosSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#embarcadosTab" role="tab">
-                Embarcado <span class="m-badge m-badge--success" *ngIf="totalEmbarcados">{{totalEmbarcados}}</span>
+                Por Embarcar <span class="m-badge m-badge--success" *ngIf="totalEmbarcados">{{totalEmbarcados}}</span>
             </a>
         </li>
         <!-- <li class="nav-item m-tabs__item" (click)="seleccionarTab('enTransitoSeleccionadas')">
@@ -106,12 +132,12 @@
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('rutaNacionalSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#rutaNacionalTab" role="tab">
-                Ruta Nacional <span class="m-badge m-badge--success" *ngIf="totalRutaNacional">{{totalRutaNacional}}</span>
+                Por Entregar <span class="m-badge m-badge--success" *ngIf="totalRutaNacional">{{totalRutaNacional}}</span>
             </a>
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('entregadosSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#entregadosTab" role="tab">
-                Entregados <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
+                Estatus <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
             </a>
         </li>
     </ul>

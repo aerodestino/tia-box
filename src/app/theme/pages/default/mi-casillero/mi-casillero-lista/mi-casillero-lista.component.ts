@@ -61,6 +61,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   mensaje: boolean = false;
   totalPeso = 0;
   totalPrecio = 0;
+  estadosArticulo : any;
   enBodegaFilters = {
     limit: 5,
     offset: 0,
@@ -569,6 +570,14 @@ onExportar() {
   }, error => {
       this.toastr.error(error.json().error.message);
       Helpers.setLoading(false);
+  });
+}
+
+getEstados() {
+  this.articulosService.getAll().subscribe((data) => {
+      this.estadosArticulo = data.json().data;
+  }, (error) => {
+      this.toastr.error(error.json().message);
   });
 }
 }

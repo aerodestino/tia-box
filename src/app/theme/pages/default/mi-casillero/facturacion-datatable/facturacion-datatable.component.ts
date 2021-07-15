@@ -6,6 +6,7 @@ import { FacturacionesService } from "../../../../../shared/services/api/factura
 import { Tracking } from "../../../../../shared/model/tracking.model";
 import { Helpers } from "../../../../../helpers";
 import { ToastsManager } from "ng2-toastr";
+import {Big} from 'big.js';
 @Component({
     selector: 'app-facturacion-datatable',
     templateUrl: './facturacion-datatable.component.html',
@@ -15,6 +16,8 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
     @Output() ver: EventEmitter<any> = new EventEmitter();
     envio: any;
     pago: any;
+    totalPrecio = 0;
+    totalPeso = 0;
     constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal,public facturacionesService: FacturacionesService,
         public toastr: ToastsManager) {
         super(ngbModal);
@@ -34,6 +37,8 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
     }
 
     onVer(articulo, modal) {
+      this.totalPrecio = 0;
+      this.totalPeso = 0;
         Helpers.setLoading(true);
         this.facturacionesService
           .getArticulos({ id: articulo })
@@ -41,6 +46,12 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
             (dato) => {
               Helpers.setLoading(false);
              this.envio= dato.json().data;
+             for(let i in this.envio){
+              let peso = Big(this.envio[i].peso);
+              let precio = Big(this.envio[i].precio);
+              this.totalPeso = peso.plus(this.totalPeso);
+              this.totalPrecio = precio.plus(this.totalPrecio);
+             }
              this.ngbModal.open(modal, { size: "lg" });
             },
             error => {

@@ -1,12 +1,10 @@
 <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
     <thead>
     <tr>
-        <th>Embarcado</th>
-        <th>Facturado</th>
-        <th>Enviado</th>
+       
+        <th>Notificado</th>
         <th># Guía</th>
-        <th>Empresa</th>
-        <th>Cargo</th>
+        <th>Forma de entrega</th>
         <th>Detalles</th>
     </tr>
     </thead>
@@ -15,12 +13,6 @@
         No se encontraron resultados
     </tr>
     <tr *ngFor="let articulo of data">
-       <td>
-           {{articulo.fechaIngreso | date: "dd/MM/y"}}
-        </td>
-        <td>
-           {{articulo.fechaNotificacion | date: "dd/MM/y"}}
-        </td>
         <td>
             {{articulo.fechaGuia | date: "dd/MM/y"}}
         </td>
@@ -29,9 +21,6 @@
         </td>
         <td>
             {{articulo.courier}}
-        </td>
-        <td>
-            {{articulo.costo}}
         </td>
         <td>
             <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo.id, articuloDetallesModal)"></i>
@@ -94,6 +83,7 @@
                 <td>
                     <span *ngIf="articulo.media == 0">{{articulo.descripcion}}</span>
                     <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media > 0" (click)="onVerImagenes(articulo.id)">{{articulo.descripcion}}</span>
+                    <span *ngIf="articulo.extranombre">({{articulo.extranombre}} {{articulo.extraapellidos}})</span>
                 </td>
                 <td>
                     {{articulo.tienda}}
@@ -104,6 +94,11 @@
                 <td>
                     {{articulo.precio}}
                 </td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-center" style="font-weight: bold;">TOTAL</td>
+                <td>{{ totalPeso }}</td>
+                <td>{{ totalPrecio }}</td>
             </tr>
             </tbody>
         </table>
