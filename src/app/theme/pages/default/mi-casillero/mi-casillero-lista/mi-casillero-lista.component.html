@@ -21,7 +21,7 @@
             <button (click)="onNoticias(noticiaModal)"
             [disabled]="appService.noticiasSinLeer == 0"
             class="btn btn-success text-right"
-            style="background-color:#FFC44A ; border-color:#FFC44A;top:15px">
+            style="background-color:#fa3030 ; border-color:#fa3030;top:15px">
                {{ appService.noticiasSinLeer }} Noticias
             </button>
             </div>
@@ -152,9 +152,11 @@
                             (consolidar)="onConsolidar()"
                             (embarcar)="onEmbarcar(embarcar)"
                             (exportar)="onExportar()"
+                            [puedeDV]="puedeDV"
                             [puedeFactura]="puedeFactura"
                             [consolidarPaquete]="consolidarPaquete"
                             [enviarPaquete]="enviarPaquete"
+                            (DVMasiva)="OnModalDV(declaracionModal)"
                             (facturaMasiva)="OnModalFactura(facturaMasivaModal)"
                         ></app-en-bodega-list-header>
                     </div>
@@ -170,6 +172,7 @@
                             [totalItems]="totalEnBodega"
                             [filters]="enBodegaFilters"
                             [url]="urlfactura"
+                            (dvSelection)= "onPuedeDV($event)"
                             (cargar)= "getEnBodega($event)"
                             (trackboxOutput)= "onTrackbox($event)"
                             (addFactura)="onSubirFactura($event)"
@@ -515,6 +518,16 @@
                                                     [isModal]="true"
                                 ></app-auto-complete>
                             </div>
+                            <label class="col-lg-3 col-form-label">
+                                Unidades Físicas:
+                             </label>
+                             <div class="col-lg-2">
+                                 <h5 *ngIf="dv" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
+                                 <input type="number" *ngIf="!dv" class="form-control m-input" placeholder="Unidades"
+                                 [(ngModel)]="unidades"  #unidad="ngModel"
+                                 name="unidad"
+                                 > 
+                             </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf="!estaConsolidado">
                         <label class="col-lg-3 col-form-label">
@@ -621,3 +634,207 @@
     </div>
 </ng-template>
 <!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #declaracionModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Declaración de valores masiva</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+                      #declaracionForm="ngForm" (submit)="onSubmit(declaracionForm.value)">
+                    <div class="m-portlet__body">
+                        <input type="text" class="form-control m-input" 
+                        [(ngModel)]="enBodegaSeleccion" #ids="ngModel"
+                        name="ids"
+                        required hidden>
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Fecha de Expiración*:
+                            </label>
+                            <div class="input-group col-lg-3">
+                                <input class="form-control" placeholder="yyyy-mm-dd"
+                                    name="fecha_expiracion" #fecha_expiracion="ngModel" [(ngModel)]="articulodv.fecha_expiracion_d_v"
+                                    ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" 
+                                        style="color: #575962; background-color: white; line-height: initial; margin-left: -1px;"
+                                        (click)="d.toggle()" type="button">
+                                        <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                                    </button>
+                                </div>
+                                
+                            </div>
+                            <label class="col-lg-2 col-form-label">
+                                AWB*:
+                            </label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input" 
+                                       [(ngModel)]="articulodv.trackbox" #awb="ngModel"
+                                       name="awb"
+                                       required >
+                            </div>
+                            </div>
+                             <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Remitente:
+                            </label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-input" placeholder="Tienda o Usuario NO REGISTRADO"
+                                [ngModel]="articulodv.tienda_d_v"  #remitente_text="ngModel"
+                                name="remitente_text"
+                                >
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios">
+                                    <input type="text" class="form-control"/>
+                                </div>
+                                <app-auto-complete *ngIf="usuarios" placeholder="USUARIO REGISTRADO"
+                                                    [ngModel]="remitente_usuario_DV" #remitente_id="ngModel"
+                                                    name="remitente_id"  [items]="usuarios"
+                                                    [textField]="'numero_identidad'"
+                                                    textField1="nombre"
+                                                    textField2="apellido"
+                                                    valueField="numero_identidad"
+                                ></app-auto-complete>
+                            </div>
+                         
+                        </div>
+                        <div class="form-group m-form__group row">
+                           
+                            <label class="col-lg-3 col-form-label">
+                                Importer*:
+                            </label>
+                            <div class="col-lg-4">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios_importer">
+                                    <input type="text" class="form-control"/>
+                                </div>
+                                <app-auto-complete *ngIf="usuarios_importer" placeholder="Seleccione"
+                                                    [ngModel]="importer_usuario_DV" #importer="ngModel"
+                                                    name="importer" required [items]="usuarios_importer"
+                                                    [textField]="'numero_identidad'"
+                                                    textField1="nombre"
+                                                    textField2="apellido"
+                                                    valueField="numero_identidad"
+                                ></app-auto-complete>
+                            </div>
+                          
+                        </div>
+
+                          
+                        <div class="form-group m-form__group row">
+                            
+                            <label class="col-lg-3 col-form-label">
+                                País origen*:
+                            </label>
+                            <div class="col-lg-3">
+                                <select type="text" class="form-control m-input"
+                                [(ngModel)]="pais_origen_d_v_id" #pais_origen="ngModel" name="pais_origen" required>
+                                <option *ngFor="let pais of paises" [ngValue]="pais.id">
+                                    {{pais.nombre}}
+                                </option>
+                                </select>
+                                <section *ngIf="pais_origen.invalid && pais_origen.dirty" class="bs">
+                                    <p class="m--font-danger" *ngIf="pais_origen.hasError('required')">El pais origen es requerido</p>
+                                </section>
+                            </div>
+                            <label class="col-lg-2 col-form-label">
+                                País destino*:
+                            </label>
+                            <div class="col-lg-3">
+                                <select type="text" class="form-control m-input"
+                                [(ngModel)]="pais_destino_d_v_id" #pais_destino="ngModel" name="pais_destino" required>
+                                <option *ngFor="let pais of paises" [ngValue]="pais.id">
+                                    {{pais.nombre}}
+                                </option>
+                                </select>
+                                <section *ngIf="pais_destino.invalid && pais_destino.dirty" class="bs">
+                                    <p class="m--font-danger" *ngIf="pais_destino.hasError('required')">El pais destino es requerido</p>
+                                </section>
+                            </div>
+
+                        </div>
+
+                        <!-- Editable table -->
+                        <div class="form-group m-form__group row">  
+                            <div class="card col-lg-12">
+                                <div class="card-body">
+                                <div id="table" class="table-editable">
+                                   <span class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" style="float: right; width: 120px; margin-bottom:10px;font-size: 1.0rem !important;" (click)="add()">
+                                        <i class="fa fa-plus" style="float: left; padding: 2.5px;"></i>
+                                        <span>
+                                            Agregar
+                                        </span>
+                                    </span> 
+                                   
+                                    <table class="table table-bordered table-responsive-md  table-responsive table-striped text-center table-description">
+                                    <tr>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Descripción</th>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Cantidad</th>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Valor unitario</th>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Valor total</th>
+                                         <th class="text-center" style="font-size: 1.1em !important;">Acciones</th> 
+                                    </tr>
+                                    <tr *ngFor="let person of paqueteList[0]; let id = index">
+                                      
+                                        <td  style="font-size: 1.1em !important;">
+                                        <span contenteditable="true" (keyup)="changeValue(id, 'descripcion', $event);" (blur)="updateList(id, 'descripcion', $event)"  style="padding:5px; text-align:center;">{{person.descripcion}}</span>
+                                        </td>
+                                        <td style="font-size: 1.1em !important;">
+                                        <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);" (blur)="updateList(id, 'cantidad', $event)"  style="padding:5px; text-align:center;">{{person.cantidad}}</span>
+                                        </td>
+                                        <td style="font-size: 1.1em !important;">
+                                        <span contenteditable="true" (keyup)="changeValue(id, 'vunitario', $event);" (blur)="updateList(id, 'vunitario', $event)"  style="padding:5px; text-align:center;">{{person.vunitario}}</span>
+                                        </td>
+                                        <td style="font-size: 1.1em !important;">{{(person.total) ? person.total : 0}}</td>
+                                        <td style="font-size: 1.1em !important;"> <span class="table-remove">
+                                            <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer" 
+                                            (click)="remove(id)"></i>
+                                        </span>
+                                        </td> 
+                                    </tr>  
+                                   <!--  <tr *ngFor="let person of paqueteList; let id = index">
+                                        <td>{{person.numero}}</td>
+                                        <td>{{person.descripcion}}</td>
+                                        <td>{{person.peso}}</td>
+                                        <td>
+                                            <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);changeValue(id, 'total', person.cantidad * person.vunitario)" (blur)="updateList(id, 'cantidad', $event);updateList(id, 'total',  person.cantidad * person.vunitario)"  style="padding:5px; text-align:center;">Ingrese Cantidad</span>
+                                            </td>
+                                        <td>{{person.vunitario}}</td>
+                                        <td>{{(person.cantidad * person.vunitario) ? person.cantidad * person.vunitario : 0}}</td>
+                                    </tr> -->
+                                    </table>
+                                </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- Editable table -->
+                    <input type="text"  [ngModel]="paqueteList" #descripciones="ngModel"
+                    name="descripciones" style="display: none;">
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
+                                    <button type="submit"
+                                            [disabled]="declaracionForm.invalid || totalDescripciones == 0"
+                                            [class]="(declaracionForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</ng-template>

@@ -7,12 +7,18 @@ import {
   Input
 } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { AppService } from "../../../../../app.service";
 import { BaseDatatableComponent } from "../../../../../shared/prototypes/base-datatable";
 import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
 import { ArticulosService } from "../../../../../shared/services/api/articulos.service";
 import { Helpers } from "../../../../../helpers";
 import { ToastsManager } from "ng2-toastr";
-
+import {UsuariosService} from "../../../../../shared/services/api/usuarios.service";
+import {User} from "../../../../../shared/model/user.model";
+import {PaisesService} from "../../../../../shared/services/api/paises.service";
+import {Country} from "../../../../../shared/model/country.model";
+import {Declaracion} from "../../../../../shared/model/declaracion.model";
+import {Big} from 'big.js';
 @Component({
   selector: "app-en-bodega-datatable",
   templateUrl: "./en-bodega-datatable.component.html",
@@ -24,7 +30,23 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   text:string = '';
   costo:any[]=[] ;
   datoEmbarque=null;
-  modalRef=null;
+  usuario: User;
+  declaracion: Declaracion;
+  trackbox: any;
+  public usuarios: User[];
+  public usuarios_importer: User[];
+  public paises: Country[];
+  articulodv: any;
+  public totalDescripciones:number = 0;
+  public pais_destino_d_v_id: any;
+  public pais_origen_d_v_id: any;
+  public remitente_usuario: any = null;
+  public importer_usuario: any = null;
+  editField: string;
+  modalRef = null;
+  ocultar = true;
+  paqueteList: Array<any> = [];
+  idlist:number;
   @Input() url: any;
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
   @Output() cargar: EventEmitter<any> = new EventEmitter();
@@ -32,6 +54,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   @Output() ver: EventEmitter<any> = new EventEmitter();
   @Output() trackboxOutput: EventEmitter<any> = new EventEmitter();
   @Output() datosSelection: EventEmitter<any> = new EventEmitter();
+  @Output() dvSelection: EventEmitter<any> = new EventEmitter();
   @Output() facturaSelection: EventEmitter<any> = new EventEmitter();
   @Output() preciosSelection: EventEmitter<any> = new EventEmitter();
   @Output() consolidarSelection: EventEmitter<any> = new EventEmitter();
@@ -39,7 +62,10 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   selectionIds: string[];
   precios: any[];
   constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, 
-    public articuloService: ArticulosService,public toastr: ToastsManager,) {
+    public articuloService: ArticulosService,public toastr: ToastsManager,
+    public usuariosService: UsuariosService,
+    public paisService: PaisesService,
+    public appService: AppService) {
     super(ngbModal);
   }
 
@@ -110,9 +136,9 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
         this.costo.push(item.precio);
         if(item.factura_file)
           existeFactura ++;
-        if(item.consolidado)
+        if(item.editar_consolidacion)
           existeConsolidado ++;
-        if(item.enviar)
+        if(item.editar_embarque)
           existeEmbarcado ++;
         if(!item.editarprecio)
           existePrecio ++;
@@ -122,6 +148,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     this.selectionChange.emit(this.selectionIds);
     this.datosSelection.emit(this.costo);
     (existeFactura > 0) ? this.facturaSelection.emit(false) : this.facturaSelection.emit(true);
+    (existeFactura > 0) ? this.dvSelection.emit(false) : this.dvSelection.emit(true);
     (existeFactura == this.selectionIds.length && existeConsolidado == 0) ? this.consolidarSelection.emit(false) : this.consolidarSelection.emit(true);
     (existeFactura == this.selectionIds.length && existeEmbarcado == 0) ? this.enviarSelection.emit(false) : this.enviarSelection.emit(true);
     (existePrecio > 0) ? this.preciosSelection.emit(true) : this.preciosSelection.emit(false);
@@ -131,6 +158,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     if (event.target.files && event.target.files[0]) {
       articulo.facturaExcel = event.target.files[0];
     }
+    articulo.tipo = false;
   }
 
   guardarPrecio(id,precio) {
@@ -169,6 +197,140 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
 
 close(){
   this.modalRef.close();
+}
+
+declaracionValores(content,iddato,articulo) {
+  Helpers.setLoading(true);
+  let person = [];
+  this.totalDescripciones = 0;
+  this.importer_usuario=null;
+  this.remitente_usuario =null;
+  this.paqueteList=[];
+  this.getUsuarios();
+  this.getPaises();
+  this.articuloService.dv({id: iddato}).subscribe((data) => {
+    this.articulodv = data.json().data;
+    console.log(this.articulodv);
+    this.declaracion = new Declaracion;
+    this.trackbox= articulo.trackbox;
+    let fecha = new Date(this.articulodv.fecha_expiracion_d_v);
+    this.articulodv.fecha_expiracion_d_v = {
+        "year": fecha.getFullYear(),
+        "month": fecha.getMonth() + 1,
+        "day": fecha.getDate()
+    };
+    if(this.articulodv.descripciones_d_v){
+        for(let i in this.articulodv.descripciones_d_v ){
+            person.push({ id: articulo.id , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 
+            vunitario: this.articulodv.descripciones_d_v[i]['vunitario'], total: this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario'] });
+            this.totalDescripciones = this.totalDescripciones + (this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario']);
+        }
+        this.paqueteList.push(person);
+        console.log(this.paqueteList);
+    }else{
+        const person =  [{ id: articulo.id , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+        this.paqueteList.push(person);
+    }
+  
+    if(!this.articulodv.pais_origen_d_v)
+        this.pais_origen_d_v_id = 8;
+    else    
+        this.pais_origen_d_v_id = this.articulodv.pais_origen_d_v.id;
+    if(!this.articulodv.pais_destino_d_v)
+        this.pais_destino_d_v_id = 8;
+    else
+        this.pais_destino_d_v_id = this.articulodv.pais_destino_d_v.id;
+    if(this.articulodv.usuario_carrier_d_v || this.articulodv.extra_carrier_d_v)
+        this.remitente_usuario = (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : (this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null;
+        if(this.articulodv.usuario_importer_d_v || this.articulodv.extra_importer_d_v)
+        this.importer_usuario = (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : (this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : null;
+    
+    this.declaracion.articulo_id = iddato;
+    this.modalRef = this.ngbModal.open(content, {size: "lg"});
+    Helpers.setLoading(false);
+}, (error) => {
+    this.toastr.error(error.json().error.message);
+});
+ 
+}
+
+onSubmit(value) {
+Helpers.setLoading(true);
+this.modalRef.close();
+if(this.totalDescripciones > 0){
+    this.declaracion.awb= this.articulodv.trackbox;
+    this.articuloService.declaracionValores(this.declaracion.articulo_id, value).subscribe( (pdf) => {
+      //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
+        
+        Helpers.setLoading(false);
+        this.toastr.success("Declaración de valores creada");
+        this.cargar.emit();
+    }, error => {
+        Helpers.setLoading(false);
+       this.toastr.error(error.json().error.message);
+    });
+}else{
+    Helpers.setLoading(false);
+       this.toastr.error('El valor total debe ser mayor que cero'); 
+}
+
+}
+
+getUsuarios() {
+this.usuarios = null;
+this.usuarios_importer= null;
+this.usuariosService.allUsuarios({usuario_id : (this.appService.user) ? this.appService.user.id : null }).subscribe((data) => {
+    this.usuarios = data.json().data.results;
+    this.usuarios_importer = data.json().data.results;
+}, (error) => {
+    this.toastr.error(error.json().error.message);
+});
+}
+
+getPaises() {
+this.paises = null;
+this.paisService.getAll().subscribe((data) => {
+    this.paises = data.json().data;
+}, (error) => {
+    this.toastr.error(error.json().error.message);
+});
+}
+
+
+updateList(id: number, property: string, event: any) {
+
+this.paqueteList[0][id][property] = event.target.textContent;
+let c = Big(this.paqueteList[0][id]['cantidad']);
+let v = Big(this.paqueteList[0][id]['vunitario']);
+this.paqueteList[0][id]['total'] = c.mul(v);
+let t = Big(this.paqueteList[0][id]['total']);
+let td = Big(this.totalDescripciones);
+this.totalDescripciones = t.plus(td);
+}
+
+remove(id: any) {
+let t = Big(this.totalDescripciones);
+this.totalDescripciones = t.sub(this.paqueteList[0][id]['total'])
+this.paqueteList[0].splice(id, 1);
+}
+
+add() {
+  this.idlist= this.paqueteList[0].length;
+  const person =  { id: this.idlist ,  descripcion: 'N/A',  cantidad:0, vunitario: 0, total: 0 };
+  this.paqueteList[0].push(person);
+
+}
+
+changeValue(id: number, property: string, event: any) {
+  this.editField = event.target.textContent;
+}
+
+onSubirFacturaMasiva(event, articulo) {
+if (event.target.files && event.target.files[0]) {
+    articulo.facturaExcel = event.target.files[0];
+}
+articulo.tipo = true;
+
 }
 
 }

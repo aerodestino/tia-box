@@ -54,4 +54,19 @@ export class ArticulosService extends ApiService {
         params = this.serialize(params);
         return this.http.get(`${this.url}download`, {params: this.object2Params(params),responseType: responseType});
     }
+
+    dv(params: any, responseType?: any) {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}dv`, {params: this.object2Params(params),responseType: responseType});
+    }
+
+    declaracionValores(id,resource: any) {
+        resource = this.serialize(resource);
+        return this.http.post(`${this.url}${id}/declaracion`, resource);
+        }
+
+    declaracionValoresMasiva(resource: any) {
+        resource = this.serialize(resource);
+        return this.http.post(`${this.url}declaracionmasiva`, resource);
+        }
 }

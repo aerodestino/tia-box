@@ -16,6 +16,11 @@ import { UsuariosService } from "../../../../../shared/services/api/usuarios.ser
 import { NotificacionesService } from "../../../../../shared/services/api/notificaciones.service";
 import {ResponseContentType} from "@angular/http";
 import {ExcelWorkService} from "../../../../../shared/services/excel/excel-work.service";
+import {Declaracion} from "../../../../../shared/model/declaracion.model";
+import {Articulo} from "../../../../../shared/model/articulo.model";
+import {PaisesService} from "../../../../../shared/services/api/paises.service";
+import {Country} from "../../../../../shared/model/country.model";
+import {Big} from 'big.js';
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./mi-casillero-lista.component.html",
@@ -26,6 +31,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   implements OnInit {
     datos: any;
     file:any;
+    unidades:number = 0;
+    dv = false;
     nombreTrackbox: any = '';
     modalRef = null;
     selectionPrecios: any;
@@ -112,6 +119,22 @@ export class MiCasilleroListaComponent extends BaseListComponent
   usuarios_importer: any[]= [];
   notaembarque:string = '';
   descripcionembarque: string= '';
+  articulosLista: any[] = [];
+  existeprecio: boolean = true;
+  total:number= 0;
+  public pais_destino_d_v_id: any;
+  public pais_origen_d_v_id: any;
+  paqueteList: Array<any> = [];
+  declaracion: Declaracion;
+  trackbox:string = '';
+  public totalDescripciones:number = 0;
+  importer_usuario_DV = null;
+  remitente_usuario_DV = null;
+  articulodv: Articulo;
+  paises:Country[]=[];
+  idlist:number;
+  editField: string;
+  puedeDV: boolean = true;
   constructor(
     public router: Router,
     public articulosService: ArticulosService,
@@ -121,7 +144,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public vcr: ViewContainerRef,
     public appService: AppService,
     public notificacionService: NotificacionesService,
-    public excelWorkService: ExcelWorkService
+    public excelWorkService: ExcelWorkService,
+    public paisesService: PaisesService,
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -287,6 +311,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
       articulo.facturaExcel.name
     );
     formData.append("precio", articulo.precio);
+    formData.append('tipo', articulo.tipo);
     Helpers.setLoading(true);
     this.articulosService.subirFactura(articulo.id, formData).subscribe(
       () => {
@@ -345,7 +370,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.modalRef.close();
     this.articulosService
       .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
-        nota: this.notaembarque, descripcion:this.descripcionembarque})
+        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades})
       .subscribe(
         () => {
           Helpers.setLoading(false);
@@ -378,6 +403,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.remitente_usuario = null;
     this.importer_usuario = null;
     this.text = '';
+    this.dv = false;
     this.existeRemitente = false;
     this.existeImporter = false;
     this.estaConsolidado = false;
@@ -400,16 +426,20 @@ export class MiCasilleroListaComponent extends BaseListComponent
       .subscribe(
         (datos) => {
           Helpers.setLoading(false);
-          this.notaembarque = '';
-          this.descripcionembarque = '';
+          this.unidades = 0;
           this.articulos = datos.json().data[0];
           this.totalPeso = 0;
           this.totalPrecio = 0;
           let sumPrecio = 0;
           let sumPeso = 0;
           for(let i in this.articulos){
+            this.dv = this.articulos[i].fac_d_v;
+            this.unidades = this.articulos[i].unidades ? this.articulos[i].unidades : 0;
               sumPrecio = sumPrecio + this.articulos[i].precio;
               sumPeso = sumPeso + this.articulos[i].peso;
+              this.notaembarque = this.articulos[i].nota ? this.articulos[i].nota : '';
+              this.descripcionembarque = this.articulos[i].descripcion_embarque ? this.articulos[i].descripcion_embarque : '';
+              this.text = this.articulos[i].tienda_embarque ? this.articulos[i].tienda_embarque : '' ;
               if(this.articulos[i].consolidado)
                 this.estaConsolidado = true;
           }
@@ -469,6 +499,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
 
 onSubmitFactura() {
+  this.modalRef.close();
     Helpers.setLoading(true);
     const formData: FormData = new FormData();
     formData.append('factura', this.file, this.file.name);
@@ -498,6 +529,10 @@ onConsolidarPaquete(element) {
 }
 onEnviarPaquete(element) {
   this.enviarPaquete = element;
+}
+
+onPuedeDV(element) {
+  this.puedeDV = element;
 }
 
 OnModalFactura(content){
