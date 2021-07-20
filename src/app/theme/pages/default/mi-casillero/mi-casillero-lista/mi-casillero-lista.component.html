@@ -563,7 +563,7 @@
                              </label>
                              <div class="col-lg-2">
                                  <h5 *ngIf="dv" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
-                                 <input type="number" *ngIf="!dv" class="form-control m-input" placeholder="Unidades"
+                                 <input type="number" min="0" *ngIf="!dv" class="form-control m-input" placeholder="Unidades"
                                  [(ngModel)]="unidades"  #unidad="ngModel"
                                  name="unidad" required
                                  > 
@@ -605,13 +605,13 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button *ngIf="!confirmar"
-                                            [disabled]="validar"
+                                            [disabled]="validar || unidades == 0"
                                             [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                             >
                                         Guardar
                                     </button>
                                     <button *ngIf="confirmar"
-                                        [disabled]="validar"
+                                        [disabled]="validar || unidades == 0"
                                         [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                         type="submit">
                                         SI
