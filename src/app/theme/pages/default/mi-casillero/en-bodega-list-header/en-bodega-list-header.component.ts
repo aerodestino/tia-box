@@ -10,9 +10,11 @@ import { EmpresasEnvioService } from "../../../../../shared/services/api/empresa
 export class EnBodegaListHeaderComponent implements OnInit {
     @Input() totalEnBodega;
     @Input() selection;
+    @Input() puedeDV;
     @Input() puedeFactura;
     @Input() consolidarPaquete;
     @Input() enviarPaquete;
+    @Output() DVMasiva: EventEmitter<any> = new EventEmitter();
     @Output() exportar: EventEmitter<any> = new EventEmitter();
     @Output() consolidar: EventEmitter<any> = new EventEmitter();
     @Output() embarcar: EventEmitter<any> = new EventEmitter();
@@ -36,5 +38,9 @@ export class EnBodegaListHeaderComponent implements OnInit {
 
     onExportar() {
         this.exportar.emit();
+    }
+
+    onDV() {
+        this.DVMasiva.emit();
     }
 }

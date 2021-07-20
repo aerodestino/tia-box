@@ -12,10 +12,16 @@ import { AppService } from "../../../../../app.service";
 import { Helpers } from "../../../../../helpers";
 import { BaseListComponent } from "../../../../../shared/prototypes/base-list";
 import { ArticulosService } from "../../../../../shared/services/api/articulos.service";
+import { EstadoArticuloService } from "../../../../../shared/services/api/estado-articulo.service";
 import { UsuariosService } from "../../../../../shared/services/api/usuarios.service";
 import { NotificacionesService } from "../../../../../shared/services/api/notificaciones.service";
 import {ResponseContentType} from "@angular/http";
 import {ExcelWorkService} from "../../../../../shared/services/excel/excel-work.service";
+import {Declaracion} from "../../../../../shared/model/declaracion.model";
+import {Articulo} from "../../../../../shared/model/articulo.model";
+import {PaisesService} from "../../../../../shared/services/api/paises.service";
+import {Country} from "../../../../../shared/model/country.model";
+import {Big} from 'big.js';
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./mi-casillero-lista.component.html",
@@ -26,11 +32,14 @@ export class MiCasilleroListaComponent extends BaseListComponent
   implements OnInit {
     datos: any;
     file:any;
+    unidades:number = 0;
+    dv = false;
     nombreTrackbox: any = '';
     modalRef = null;
     selectionPrecios: any;
   usuario: any;
   enBodega: any[];
+  estatus: any[];
   enTransito: any[];
   embarcados: any[];
   facturacion: any[];
@@ -47,9 +56,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
   embarcadosSeleccionadas = false;
+  estatusSeleccionadas = false;
   validar= false;
   ids:any[] = [];
   enBodegaSeleccion: any;
+  estatusSeleccion: any;
   estaConsolidado = false;
   totalEnBodega = 0;
   totalEnTransito = 0;
@@ -57,10 +68,12 @@ export class MiCasilleroListaComponent extends BaseListComponent
   totalRutaNacional = 0;
   totalEntregados = 0;
   totalEmbarcados = 0;
+  totalEstatus = 0;
   confirmar: boolean = false;
   mensaje: boolean = false;
   totalPeso = 0;
   totalPrecio = 0;
+  estadosArticulo : any;
   enBodegaFilters = {
     limit: 5,
     offset: 0,
@@ -101,6 +114,15 @@ export class MiCasilleroListaComponent extends BaseListComponent
     estado_articulo_id: 6,
     q: ''
   };
+
+  estatusFilters = {
+    limit: 5,
+    offset: 0,
+    estado_articulo_id: 0,
+    estado: -1,
+    q: ''
+  };
+
   importer_usuario = null;
   remitente_usuario = null;
   existeImporter:boolean = false;
@@ -111,6 +133,22 @@ export class MiCasilleroListaComponent extends BaseListComponent
   usuarios_importer: any[]= [];
   notaembarque:string = '';
   descripcionembarque: string= '';
+  articulosLista: any[] = [];
+  existeprecio: boolean = true;
+  total:number= 0;
+  public pais_destino_d_v_id: any;
+  public pais_origen_d_v_id: any;
+  paqueteList: Array<any> = [];
+  declaracion: Declaracion;
+  trackbox:string = '';
+  public totalDescripciones:number = 0;
+  importer_usuario_DV = null;
+  remitente_usuario_DV = null;
+  articulodv: Articulo;
+  paises:Country[]=[];
+  idlist:number;
+  editField: string;
+  puedeDV: boolean = true;
   constructor(
     public router: Router,
     public articulosService: ArticulosService,
@@ -120,7 +158,9 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public vcr: ViewContainerRef,
     public appService: AppService,
     public notificacionService: NotificacionesService,
-    public excelWorkService: ExcelWorkService
+    public excelWorkService: ExcelWorkService,
+    public paisesService: PaisesService,
+    public estadosService: EstadoArticuloService,
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -135,6 +175,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getFacturacion();
     this.getRutaNacional();
     this.getEntregados();
+    this.getEstatus();
   }
 
   getUsuario() {
@@ -153,6 +194,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.enBodegaSeleccion = selection;
   }
 
+  onEstatusSelectionChange(selection) {
+    this.estatusSeleccion = selection;
+  }
+
   getEnBodega() {
     this.enBodega = null;
     this.enBodegaSeleccion = [];
@@ -160,6 +205,22 @@ export class MiCasilleroListaComponent extends BaseListComponent
       articulos => {
         this.enBodega = articulos.json().data[0].results;
         this.totalEnBodega = articulos.json().data[0].paging.total;
+        this.urlfactura = articulos.json().data[1];
+      },
+      error => {
+        this.toastr.error(error.json().error.message);
+      }
+    );
+  }
+
+  getEstatus() {
+    this.estatus = null;
+    this.estatusSeleccion = [];
+    this.articulosService.getPorEstado(this.estatusFilters).subscribe(
+      articulos => {
+        this.getEstados();
+        this.estatus = articulos.json().data[0].results;
+        this.totalEstatus = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
       error => {
@@ -241,12 +302,18 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.rutaNacionalSeleccionadas = false;
     this.entregadosSeleccionadas = false;
     this.embarcadosSeleccionadas = false;
+    this.estatusSeleccionadas = false;
     this[tab] = true;
   }
 
   onEnBodegaFiltersChange(filters) {
     this.enBodegaFilters = filters;
     this.getEnBodega();
+  }
+
+  onEstatusFiltersChange(filters) {
+    this.estatusFilters = filters;
+    this.getEstatus();
   }
 
   onEnTransitoFiltersChange(filters) {
@@ -286,6 +353,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
       articulo.facturaExcel.name
     );
     formData.append("precio", articulo.precio);
+    formData.append('tipo', articulo.tipo);
     Helpers.setLoading(true);
     this.articulosService.subirFactura(articulo.id, formData).subscribe(
       () => {
@@ -344,7 +412,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.modalRef.close();
     this.articulosService
       .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
-        nota: this.notaembarque, descripcion:this.descripcionembarque})
+        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades})
       .subscribe(
         () => {
           Helpers.setLoading(false);
@@ -377,6 +445,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.remitente_usuario = null;
     this.importer_usuario = null;
     this.text = '';
+    this.dv = false;
     this.existeRemitente = false;
     this.existeImporter = false;
     this.estaConsolidado = false;
@@ -399,16 +468,20 @@ export class MiCasilleroListaComponent extends BaseListComponent
       .subscribe(
         (datos) => {
           Helpers.setLoading(false);
-          this.notaembarque = '';
-          this.descripcionembarque = '';
+          this.unidades = 0;
           this.articulos = datos.json().data[0];
           this.totalPeso = 0;
           this.totalPrecio = 0;
           let sumPrecio = 0;
           let sumPeso = 0;
           for(let i in this.articulos){
+            this.dv = this.articulos[i].fac_d_v;
+            this.unidades = this.articulos[i].unidades ? this.articulos[i].unidades : 0;
               sumPrecio = sumPrecio + this.articulos[i].precio;
               sumPeso = sumPeso + this.articulos[i].peso;
+              this.notaembarque = this.articulos[i].nota ? this.articulos[i].nota : '';
+              this.descripcionembarque = this.articulos[i].descripcion_embarque ? this.articulos[i].descripcion_embarque : '';
+              this.text = this.articulos[i].tienda_embarque ? this.articulos[i].tienda_embarque : '' ;
               if(this.articulos[i].consolidado)
                 this.estaConsolidado = true;
           }
@@ -468,6 +541,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
 
 onSubmitFactura() {
+  this.modalRef.close();
     Helpers.setLoading(true);
     const formData: FormData = new FormData();
     formData.append('factura', this.file, this.file.name);
@@ -497,6 +571,10 @@ onConsolidarPaquete(element) {
 }
 onEnviarPaquete(element) {
   this.enviarPaquete = element;
+}
+
+onPuedeDV(element) {
+  this.puedeDV = element;
 }
 
 OnModalFactura(content){
@@ -564,6 +642,31 @@ onExportar() {
     q: this.enBodegaFilters.q
   };
   this.articulosService.exportar(filters, ResponseContentType.Blob).subscribe(excel => {
+      this.excelWorkService.downloadXLS('Paquetes.xlsx', excel);
+      Helpers.setLoading(false);
+  }, error => {
+      this.toastr.error(error.json().error.message);
+      Helpers.setLoading(false);
+  });
+}
+
+getEstados() {
+  this.estadosService.getAll().subscribe((data) => {
+      this.estadosArticulo = data.json().data;
+  }, (error) => {
+      this.toastr.error(error.json().message);
+  });
+}
+
+
+onExportarEstatus() {
+  Helpers.setLoading(true);
+  let filters = {
+    articulos: this.estatusSeleccion,
+    q: this.estatusFilters.q,
+    estado: this.estatusFilters.estado
+  };
+  this.articulosService.exportarEstatus(filters, ResponseContentType.Blob).subscribe(excel => {
       this.excelWorkService.downloadXLS('Paquetes.xlsx', excel);
       Helpers.setLoading(false);
   }, error => {

@@ -6,7 +6,7 @@ import { FacturacionesService } from "../../../../../shared/services/api/factura
 import { Tracking } from "../../../../../shared/model/tracking.model";
 import { Helpers } from "../../../../../helpers";
 import { ToastsManager } from "ng2-toastr";
-
+import {Big} from 'big.js';
 @Component({
     selector: 'app-ruta-nacional-datatable',
     templateUrl: './ruta-nacional-datatable.component.html',
@@ -15,6 +15,8 @@ import { ToastsManager } from "ng2-toastr";
 export class RutaNacionalDatatableComponent extends BaseDatatableComponent implements OnInit, AfterViewInit {
     @Output() ver: EventEmitter<any> = new EventEmitter();
     envio: any;
+    totalPrecio = 0;
+    totalPeso = 0;
     constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal,public facturacionesService: FacturacionesService,
         public toastr: ToastsManager) {
         super(ngbModal);
@@ -34,6 +36,8 @@ export class RutaNacionalDatatableComponent extends BaseDatatableComponent imple
     }
 
     onVer(articulo, modal) {
+      this.totalPrecio = 0;
+      this.totalPeso = 0;
         Helpers.setLoading(true);
         this.facturacionesService
           .getArticulos({ id: articulo })
@@ -41,6 +45,12 @@ export class RutaNacionalDatatableComponent extends BaseDatatableComponent imple
             (dato) => {
               Helpers.setLoading(false);
              this.envio= dato.json().data;
+             for(let i in this.envio){
+              let peso = Big(this.envio[i].peso);
+              let precio = Big(this.envio[i].precio);
+              this.totalPeso = peso.plus(this.totalPeso);
+              this.totalPrecio = precio.plus(this.totalPrecio);
+             }
              this.ngbModal.open(modal, { size: "lg" });
             },
             error => {

@@ -4,7 +4,7 @@
        
         <th>
         </th>
-        <th>Fecha</th>
+        <th>Fecha en Bodega</th>
         <th>Código Almacén</th>
         <th>Tracking</th>
         <th>Descripción</th>
@@ -14,8 +14,8 @@
         <th>Dim(In)</th>
         <th>Vol(Vlb)</th>
         <th>Valor(USD)</th>
-        <th>Documento</th>
-        <th>TRK</th>
+        <th>Estatus</th>
+        <th>Detalle</th>
     </tr>
     </thead>
     <tbody>
@@ -24,12 +24,16 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
+            <label class="m-checkbox">
+                <input type="checkbox" [(ngModel)]="articulo.selected" (change)="changeAllState()">
+                <span></span>
+            </label>
             <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigo_consolidado}}</i>
             <a style="cursor: pointer; color:#ee1111"  *ngIf="articulo.enviar" title="Instrucciones de Embarque"  (click)="modalEmbarque(embarqueModal,articulo )"> <i class="fa fa-plane" style="font-size: 10px"></i></a>
            
         </td>
         <td>
-            {{articulo.fecha_embarque | date: "dd/MM/y"}}
+            {{articulo.fechaBodega | date: "dd/MM/y"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -40,7 +44,7 @@
         <td>
             <span *ngIf="articulo.media == 0">{{articulo.descripcion}}</span>
             <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media > 0" (click)="onVerImagenes(articulo.id)">{{articulo.descripcion}}</span>
-            <span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
+            <span *ngIf="articulo.extranombre">({{articulo.extranombre}} {{articulo.extraapellidos}})</span>
         </td>
         <td>
             {{articulo.tienda}}
@@ -58,19 +62,14 @@
             {{articulo.volumen}}
         </td>
         <td>
-            {{articulo.precio}}
+            {{ articulo.precio }}
         </td>
         <td>
-            <span class="m-badge m-badge--info m-badge--wide"  title="Declaración de Valores" style="color: white; background-color: #4f9e35" *ngIf="articulo.factura_url && articulo.fac_d_v && !articulo.consolidado_factura">Si</span>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura" style="color: white; background-color: #1e1111" target="_blank" *ngIf="articulo.factura_url && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
-            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url | replice" title="Factura Consolidada" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && !articulo.fac_d_v && articulo.consolidado_factura">Si</a>     
-            <span class="m-badge m-badge--info m-badge--wide"  title="Factura Consolidada" style="color: white; background-color: #4660d1" *ngIf="articulo.factura_url && articulo.fac_d_v && articulo.consolidado_factura">Si</span>        
-            <span class="m-badge m-badge--info m-badge--wide"  title="Factura" style="color: white; background-color: #1e1111" *ngIf="!articulo.factura_url">No</span>            
-
+            {{ articulo.estado }}
         </td>
-      <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id == 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #4f9e35"></i></td>
-      <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id != 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #1e1111"></i></td>
-
+       <td>
+        <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>
+       </td>
     </tr>
     </tbody>
 </table>
@@ -98,21 +97,47 @@
 
 </div>
 
-<!--begin::Delete Confirmation Modal-->
-<ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+<!--begin::Articulo Detalles Modal-->
+<ng-template #articuloDetallesModal let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title">Confirmar Eliminación</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <h4 class="modal-title">Detalles</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p>¿Está seguro que desea eliminar el recurso?</p><br>
-        <span class="m--font-danger">Esta acción es irreversible!!</span>
+        <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+            <thead>
+            <tr>
+                <th>Guía de Envío</th>
+                <th>Recibo</th>
+                <th>Forma de Entrega</th>
+                <th>Guía de Entrega</th>
+                <th>Fecha de Entrega</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    {{detalles.codigoPedido }}
+                </td>
+                <td>
+                    {{detalles.recibo}}
+                </td>
+                <td>
+                    {{detalles.nombre}}
+                </td>
+                <td>
+                    {{detalles.guia}}
+                </td>
+                <td>
+                    {{detalles.fechaGuia | date: "dd/MM/y"}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger m-btn--air" (click)="c('aceptar')">Aceptar</button>
-    </div>
+
 </ng-template>
 <!--end::Modal-->  <!--begin::Modal-->
 
@@ -287,4 +312,3 @@
     </div>
 </ng-template>
 <!--end::Modal-->
-

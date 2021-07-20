@@ -1,10 +1,4 @@
 <div class="m-subheader">
-    <button (click)="onNoticias(noticiaModal)"
-    [disabled]="appService.noticiasSinLeer == 0"
-    class="btn btn-success text-right"
-    style="float:right; top:15px">
-       {{ appService.noticiasSinLeer }} Noticias
-    </button>
     <div class="d-flex align-items-center">
         <div class="mr-auto">
             <h3 class="page-title">
@@ -17,22 +11,42 @@
 <div class="m-subheader" *ngIf="appService.user">
     <div class="d-flex align-items-center">
         <div class="profile-info col-12">
-            <h1 class="col-12">
-                {{appService.user.nombre}} {{appService.user.apellido}}
-            </h1>
+            <div class="row" >
+            <div class="col-10">
+                <h1 >
+                    {{appService.user.nombre}} {{appService.user.apellido}}
+                </h1>
+            </div>
+            <div class="col-2">
+            <button (click)="onNoticias(noticiaModal)"
+            [disabled]="appService.noticiasSinLeer == 0"
+            class="btn btn-success text-right"
+            style="background-color:#fa3030 ; border-color:#fa3030;top:15px">
+               {{ appService.noticiasSinLeer }} Noticias
+            </button>
+            </div>
+            </div>
             <div class="row">
                 <div class="col-md-5 col-lg-5 col-sm-12">
                     <span style="font-size: 14px">
                         <i class="fa fa-briefcase"></i>
-                        <strong>Dirección de Entrega: </strong> {{appService.user.direccion}}
-                    </span><br>
-                    <span style="font-size: 14px" *ngIf="appService.user.provincia">
-                        <i class="fa fa-location-arrow"></i>
-                        <strong>Provincia/Departamento: </strong> {{appService.user.provincia.nombre}}
+                        <strong>Dirección: </strong> {{appService.user.direccion}}
                     </span><br>
                     <span style="font-size: 14px" *ngIf="appService.user.ciudad">
                         <i class="fa fa-location-arrow"></i>
                         <strong>Ciudad: </strong> {{appService.user.ciudad.nombre}}
+                    </span><br>
+                    <span style="font-size: 14px" *ngIf="appService.user.provincia">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Provincia: </strong> {{appService.user.provincia.nombre}}
+                    </span><br>
+                    <span style="font-size: 14px" *ngIf="appService.user.codigo_postal">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Código Postal: </strong> {{appService.user.codigo_postal}}
+                    </span><br>
+                    <span style="font-size: 14px" *ngIf="appService.user.telefono1">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Teléfono: </strong> {{appService.user.telefono1}}
                     </span><br>
                 </div>
                 <div class="col-md-7 col-lg-7 col-sm-12">
@@ -74,13 +88,30 @@
                 [(ngModel)]="rutaNacionalFilters.q" name="search" (keyup.enter)="getRutaNacional()" *ngIf="rutaNacionalSeleccionadas">
                 <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
                 [(ngModel)]="entregadosFilters.q" name="search" (keyup.enter)="getEntregados()" *ngIf="entregadosSeleccionadas">
-                
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="estatusFilters.q" name="search" (keyup.enter)="getEstatus()" *ngIf="estatusSeleccionadas">
+              
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                     <span>
                         <i class="fa fa-search"></i>
                     </span>
                 </span>
             </div>
+        </div>
+        <div class="form-group m-form__group col-md-1 col-lg-1 col-sm-1" style="text-align: right;" *ngIf="estatusSeleccionadas">
+            <label for="exampleSelect1">
+                Estado
+            </label>
+            </div>
+            <div class="form-group m-form__group col-md-3 col-lg-3 col-sm-11" *ngIf="estatusSeleccionadas">
+            <select class="form-control m-input" id="exampleSelect1"   [(ngModel)]="estatusFilters.estado" (change)="getEstatus()" name="estado">
+                <option [ngValue]="-1">
+                    Todos
+                </option>
+                <option *ngFor="let estado of estadosArticulo" [value]="estado.id">
+                    {{estado.nombre}}
+                </option>
+            </select>
         </div>
     </div>
     <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
@@ -91,7 +122,7 @@
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('embarcadosSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#embarcadosTab" role="tab">
-                Embarcado <span class="m-badge m-badge--success" *ngIf="totalEmbarcados">{{totalEmbarcados}}</span>
+                Por Embarcar <span class="m-badge m-badge--success" *ngIf="totalEmbarcados">{{totalEmbarcados}}</span>
             </a>
         </li>
         <!-- <li class="nav-item m-tabs__item" (click)="seleccionarTab('enTransitoSeleccionadas')">
@@ -106,12 +137,17 @@
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('rutaNacionalSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#rutaNacionalTab" role="tab">
-                Ruta Nacional <span class="m-badge m-badge--success" *ngIf="totalRutaNacional">{{totalRutaNacional}}</span>
+                Por Entregar <span class="m-badge m-badge--success" *ngIf="totalRutaNacional">{{totalRutaNacional}}</span>
             </a>
         </li>
-        <li class="nav-item m-tabs__item" (click)="seleccionarTab('entregadosSeleccionadas')">
+        <li class="nav-item m-tabs__item" hidden (click)="seleccionarTab('entregadosSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#entregadosTab" role="tab">
-                Entregados <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
+                Entegados <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('estatusSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#estatusTab" role="tab">
+                Estatus <span class="m-badge m-badge--success" *ngIf="totalEstatus">{{totalEstatus}}</span>
             </a>
         </li>
     </ul>
@@ -126,14 +162,15 @@
                             (consolidar)="onConsolidar()"
                             (embarcar)="onEmbarcar(embarcar)"
                             (exportar)="onExportar()"
+                            [puedeDV]="puedeDV"
                             [puedeFactura]="puedeFactura"
                             [consolidarPaquete]="consolidarPaquete"
                             [enviarPaquete]="enviarPaquete"
+                            (DVMasiva)="OnModalDV(declaracionModal)"
                             (facturaMasiva)="OnModalFactura(facturaMasivaModal)"
                         ></app-en-bodega-list-header>
                     </div>
                     <!--end: Search Form -->        <!--begin: Datatable -->
-
                     <div class="row" style="justify-content: center">
                         <div class="m-loader" style="width: 30px;" *ngIf="!enBodega && enBodegaSeleccionadas"></div>
                     </div>
@@ -144,6 +181,7 @@
                             [totalItems]="totalEnBodega"
                             [filters]="enBodegaFilters"
                             [url]="urlfactura"
+                            (dvSelection)= "onPuedeDV($event)"
                             (cargar)= "getEnBodega($event)"
                             (trackboxOutput)= "onTrackbox($event)"
                             (addFactura)="onSubirFactura($event)"
@@ -243,7 +281,7 @@
             </div>
         </div>
 
-        <div class="tab-pane" id="entregadosTab" role="tabpanel" [class.active]="entregadosSeleccionadas">
+        <div class="tab-pane" id="entregadosTab" hidden role="tabpanel" [class.active]="entregadosSeleccionadas">
 
             <div class="m-portlet m-portlet--mobile">
                 <div class="m-portlet__body">
@@ -260,6 +298,37 @@
 
                             (filtersChange)="onEntregadosFiltersChange($event)"
                     ></app-entregados-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+       
+        <div class="tab-pane" id="estatusTab" role="tabpanel" [class.active]="estatusSeleccionadas">
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+
+                    <!--begin: Search Form -->
+                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <app-estatus-list-header [totalEstatus]="estatusSeleccion.length" [selection]="estatusSeleccion"
+                            (exportar)="onExportarEstatus()"
+                        ></app-estatus-list-header>
+                    </div>
+                    <!--end: Search Form -->        <!--begin: Datatable -->
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;" *ngIf="!estatus && estatusSeleccionadas"></div>
+                    </div>
+                    <app-estatus-datatable
+                            *ngIf="estatus && estatusSeleccionadas"
+                            [data]="estatus"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalEstatus"
+                            [filters]="estatusFilters"
+                            [url]="urlfactura"
+                            (dvSelection)= "onPuedeDV($event)"
+                            (cargar)= "getEstatus($event)"
+                            (filtersChange)="onEstatusFiltersChange($event)"
+                            (selectionChange)="onEstatusSelectionChange($event)"
+                    ></app-estatus-datatable>
                 </div>
                 <!--end: Datatable -->
             </div>
@@ -489,6 +558,16 @@
                                                     [isModal]="true"
                                 ></app-auto-complete>
                             </div>
+                            <label class="col-lg-3 col-form-label">
+                                Unidades Físicas:
+                             </label>
+                             <div class="col-lg-2">
+                                 <h5 *ngIf="dv" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
+                                 <input type="number" min="0" *ngIf="!dv" class="form-control m-input" placeholder="Unidades"
+                                 [(ngModel)]="unidades"  #unidad="ngModel"
+                                 name="unidad" required
+                                 > 
+                             </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf="!estaConsolidado">
                         <label class="col-lg-3 col-form-label">
@@ -526,13 +605,13 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button *ngIf="!confirmar"
-                                            [disabled]="validar"
+                                            [disabled]="validar || unidades == 0"
                                             [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                             >
                                         Guardar
                                     </button>
                                     <button *ngIf="confirmar"
-                                        [disabled]="validar"
+                                        [disabled]="validar || unidades == 0"
                                         [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                         type="submit">
                                         SI
@@ -595,3 +674,207 @@
     </div>
 </ng-template>
 <!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #declaracionModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Declaración de valores masiva</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+                      #declaracionForm="ngForm" (submit)="onSubmit(declaracionForm.value)">
+                    <div class="m-portlet__body">
+                        <input type="text" class="form-control m-input" 
+                        [(ngModel)]="enBodegaSeleccion" #ids="ngModel"
+                        name="ids"
+                        required hidden>
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Fecha de Expiración*:
+                            </label>
+                            <div class="input-group col-lg-3">
+                                <input class="form-control" placeholder="yyyy-mm-dd"
+                                    name="fecha_expiracion" #fecha_expiracion="ngModel" [(ngModel)]="articulodv.fecha_expiracion_d_v"
+                                    ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" 
+                                        style="color: #575962; background-color: white; line-height: initial; margin-left: -1px;"
+                                        (click)="d.toggle()" type="button">
+                                        <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                                    </button>
+                                </div>
+                                
+                            </div>
+                            <label class="col-lg-2 col-form-label">
+                                AWB*:
+                            </label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input" 
+                                       [(ngModel)]="articulodv.trackbox" #awb="ngModel"
+                                       name="awb"
+                                       required >
+                            </div>
+                            </div>
+                             <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Remitente:
+                            </label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-input" placeholder="Tienda o Usuario NO REGISTRADO"
+                                [ngModel]="articulodv.tienda_d_v"  #remitente_text="ngModel"
+                                name="remitente_text"
+                                >
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios">
+                                    <input type="text" class="form-control"/>
+                                </div>
+                                <app-auto-complete *ngIf="usuarios" placeholder="USUARIO REGISTRADO"
+                                                    [ngModel]="remitente_usuario_DV" #remitente_id="ngModel"
+                                                    name="remitente_id"  [items]="usuarios"
+                                                    [textField]="'numero_identidad'"
+                                                    textField1="nombre"
+                                                    textField2="apellido"
+                                                    valueField="numero_identidad"
+                                ></app-auto-complete>
+                            </div>
+                         
+                        </div>
+                        <div class="form-group m-form__group row">
+                           
+                            <label class="col-lg-3 col-form-label">
+                                Importer*:
+                            </label>
+                            <div class="col-lg-4">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios_importer">
+                                    <input type="text" class="form-control"/>
+                                </div>
+                                <app-auto-complete *ngIf="usuarios_importer" placeholder="Seleccione"
+                                                    [ngModel]="importer_usuario_DV" #importer="ngModel"
+                                                    name="importer" required [items]="usuarios_importer"
+                                                    [textField]="'numero_identidad'"
+                                                    textField1="nombre"
+                                                    textField2="apellido"
+                                                    valueField="numero_identidad"
+                                ></app-auto-complete>
+                            </div>
+                          
+                        </div>
+
+                          
+                        <div class="form-group m-form__group row">
+                            
+                            <label class="col-lg-3 col-form-label">
+                                País origen*:
+                            </label>
+                            <div class="col-lg-3">
+                                <select type="text" class="form-control m-input"
+                                [(ngModel)]="pais_origen_d_v_id" #pais_origen="ngModel" name="pais_origen" required>
+                                <option *ngFor="let pais of paises" [ngValue]="pais.id">
+                                    {{pais.nombre}}
+                                </option>
+                                </select>
+                                <section *ngIf="pais_origen.invalid && pais_origen.dirty" class="bs">
+                                    <p class="m--font-danger" *ngIf="pais_origen.hasError('required')">El pais origen es requerido</p>
+                                </section>
+                            </div>
+                            <label class="col-lg-2 col-form-label">
+                                País destino*:
+                            </label>
+                            <div class="col-lg-3">
+                                <select type="text" class="form-control m-input"
+                                [(ngModel)]="pais_destino_d_v_id" #pais_destino="ngModel" name="pais_destino" required>
+                                <option *ngFor="let pais of paises" [ngValue]="pais.id">
+                                    {{pais.nombre}}
+                                </option>
+                                </select>
+                                <section *ngIf="pais_destino.invalid && pais_destino.dirty" class="bs">
+                                    <p class="m--font-danger" *ngIf="pais_destino.hasError('required')">El pais destino es requerido</p>
+                                </section>
+                            </div>
+
+                        </div>
+
+                        <!-- Editable table -->
+                        <div class="form-group m-form__group row">  
+                            <div class="card col-lg-12">
+                                <div class="card-body">
+                                <div id="table" class="table-editable">
+                                   <span class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" style="float: right; width: 120px; margin-bottom:10px;font-size: 1.0rem !important;" (click)="add()">
+                                        <i class="fa fa-plus" style="float: left; padding: 2.5px;"></i>
+                                        <span>
+                                            Agregar
+                                        </span>
+                                    </span> 
+                                   
+                                    <table class="table table-bordered table-responsive-md  table-responsive table-striped text-center table-description">
+                                    <tr>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Descripción</th>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Cantidad</th>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Valor unitario</th>
+                                        <th class="text-center" style="font-size: 1.1em !important;">Valor total</th>
+                                         <th class="text-center" style="font-size: 1.1em !important;">Acciones</th> 
+                                    </tr>
+                                    <tr *ngFor="let person of paqueteList[0]; let id = index">
+                                      
+                                        <td  style="font-size: 1.1em !important;">
+                                        <span contenteditable="true" (keyup)="changeValue(id, 'descripcion', $event);" (blur)="updateList(id, 'descripcion', $event)"  style="padding:5px; text-align:center;">{{person.descripcion}}</span>
+                                        </td>
+                                        <td style="font-size: 1.1em !important;">
+                                        <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);" (blur)="updateList(id, 'cantidad', $event)"  style="padding:5px; text-align:center;">{{person.cantidad}}</span>
+                                        </td>
+                                        <td style="font-size: 1.1em !important;">
+                                        <span contenteditable="true" (keyup)="changeValue(id, 'vunitario', $event);" (blur)="updateList(id, 'vunitario', $event)"  style="padding:5px; text-align:center;">{{person.vunitario}}</span>
+                                        </td>
+                                        <td style="font-size: 1.1em !important;">{{(person.total) ? person.total : 0}}</td>
+                                        <td style="font-size: 1.1em !important;"> <span class="table-remove">
+                                            <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer" 
+                                            (click)="remove(id)"></i>
+                                        </span>
+                                        </td> 
+                                    </tr>  
+                                   <!--  <tr *ngFor="let person of paqueteList; let id = index">
+                                        <td>{{person.numero}}</td>
+                                        <td>{{person.descripcion}}</td>
+                                        <td>{{person.peso}}</td>
+                                        <td>
+                                            <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);changeValue(id, 'total', person.cantidad * person.vunitario)" (blur)="updateList(id, 'cantidad', $event);updateList(id, 'total',  person.cantidad * person.vunitario)"  style="padding:5px; text-align:center;">Ingrese Cantidad</span>
+                                            </td>
+                                        <td>{{person.vunitario}}</td>
+                                        <td>{{(person.cantidad * person.vunitario) ? person.cantidad * person.vunitario : 0}}</td>
+                                    </tr> -->
+                                    </table>
+                                </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- Editable table -->
+                    <input type="text"  [ngModel]="paqueteList" #descripciones="ngModel"
+                    name="descripciones" style="display: none;">
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
+                                    <button type="submit"
+                                            [disabled]="declaracionForm.invalid || totalDescripciones == 0"
+                                            [class]="(declaracionForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</ng-template>

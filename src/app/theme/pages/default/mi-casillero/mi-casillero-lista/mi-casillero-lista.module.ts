@@ -10,7 +10,9 @@ import { AutoCompleteModule } from "../../../../../shared/components/auto-comple
 import { CustomPipesModule } from "../../../../../shared/pipes/custom-pipes.module";
 import { MiCasilleroListaComponent } from "./mi-casillero-lista.component";
 import { EnBodegaDatatableComponent } from "../en-bodega-datatable/en-bodega-datatable.component";
+import { EstatusDatatableComponent } from "../estatus-datatable/estatus-datatable.component";
 import { EnBodegaListHeaderComponent } from "../en-bodega-list-header/en-bodega-list-header.component";
+import { EstatusListHeaderComponent } from "../estatus-list-header/estatus-list-header.component";
 import { EnTransitoDatatableComponent } from "../en-transito-datatable/en-transito-datatable.component";
 import { EmbarcadoDatatableComponent } from "../embarcado-datatable/embarcado-datatable.component";
 import { FacturacionDatatableComponent } from "../facturacion-datatable/facturacion-datatable.component";
@@ -44,6 +46,8 @@ const routes: Routes = [
         RutaNacionalDatatableComponent,
         EntregadosDatatableComponent,
         EmbarcadoDatatableComponent,
+        EstatusDatatableComponent,
+        EstatusListHeaderComponent,
         ReplacePipe
     ]
 })

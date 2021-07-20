@@ -1,5 +1,10 @@
 <div class="row align-items-center">
     <div class="col-12 m--align-right">
+        <button [disabled]="!puedeDV || totalEnBodega < 2" style="font-size: 1.2rem;" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onDV()" >
+            <i class="fa fa-folder-open"></i>
+            Declaración Consolidadas
+        </button>
         <button [disabled]="!puedeFactura || totalEnBodega < 2" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
                 (click)="onFactura()" style="font-size: 1.2rem;">
             <i class="fa fa-folder-open"></i>

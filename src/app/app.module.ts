@@ -37,6 +37,7 @@ import { EmpresasEnvioService } from "./shared/services/api/empresas-envio.servi
 import { EnviosService } from "./shared/services/api/envios.service";
 import { ErroresPublicacionService } from "./shared/services/api/errores-publicacion.service";
 import { EstadisticasService } from "./shared/services/api/estadisticas.service";
+import { EstadoArticuloService } from "./shared/services/api/estado-articulo.service";
 import { ExtrasService } from "./shared/services/api/extras.service";
 import { FacturacionesService } from "./shared/services/api/facturaciones.service";
 import { FirstAidService } from "./shared/services/api/first-aid.service";
@@ -129,6 +130,7 @@ registerLocaleData(localeES, "es-CU");
     PasarelasService,
     TiposPlataformaService,
     EmpresasEnvioService,
+    EstadoArticuloService,
     CajasService,
     TarifariosService,
     DetallesTarifarioService,
