@@ -2,17 +2,13 @@
 <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
     <thead>
     <tr>
-        <th>Fecha En Bodega</th>
-        <th>Código Almacén</th>
+        <th>Fecha</th>
+        <th>Articulo/WR</th>
         <th>Tracking</th>
         <th>Descripción</th>
         <th>Remitente</th>
         <th>Peso(Lb)</th>
-        <th>Piezas</th>
-        <th>Dim(In)</th>
-        <th>Vol(Vlb)</th>
         <th>Valor(USD)</th>
-        <th>Estatus</th>
         <th>Detalles</th>
     </tr>
     </thead>
@@ -42,19 +38,7 @@
             {{articulo.peso}}
         </td>
         <td>
-            {{articulo.piezas}}
-        </td>
-        <td>
-            {{articulo.largo +'X'+ articulo.ancho +'X'+ articulo.alto}}
-        </td>
-        <td>
-            {{articulo.volumen ? articulo.volumen : '0.00' }}
-        </td>
-        <td>
             {{articulo.precio}}
-        </td>
-        <td>
-            {{articulo.estado ? articulo.estado : '-' }}
         </td>
         <td>
             <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>

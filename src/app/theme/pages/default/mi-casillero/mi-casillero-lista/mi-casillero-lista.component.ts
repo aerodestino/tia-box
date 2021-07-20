@@ -12,6 +12,7 @@ import { AppService } from "../../../../../app.service";
 import { Helpers } from "../../../../../helpers";
 import { BaseListComponent } from "../../../../../shared/prototypes/base-list";
 import { ArticulosService } from "../../../../../shared/services/api/articulos.service";
+import { EstadoArticuloService } from "../../../../../shared/services/api/estado-articulo.service";
 import { UsuariosService } from "../../../../../shared/services/api/usuarios.service";
 import { NotificacionesService } from "../../../../../shared/services/api/notificaciones.service";
 import {ResponseContentType} from "@angular/http";
@@ -38,6 +39,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     selectionPrecios: any;
   usuario: any;
   enBodega: any[];
+  estatus: any[];
   enTransito: any[];
   embarcados: any[];
   facturacion: any[];
@@ -54,9 +56,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
   embarcadosSeleccionadas = false;
+  estatusSeleccionadas = false;
   validar= false;
   ids:any[] = [];
   enBodegaSeleccion: any;
+  estatusSeleccion: any;
   estaConsolidado = false;
   totalEnBodega = 0;
   totalEnTransito = 0;
@@ -64,6 +68,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   totalRutaNacional = 0;
   totalEntregados = 0;
   totalEmbarcados = 0;
+  totalEstatus = 0;
   confirmar: boolean = false;
   mensaje: boolean = false;
   totalPeso = 0;
@@ -109,6 +114,15 @@ export class MiCasilleroListaComponent extends BaseListComponent
     estado_articulo_id: 6,
     q: ''
   };
+
+  estatusFilters = {
+    limit: 5,
+    offset: 0,
+    estado_articulo_id: 0,
+    estado: -1,
+    q: ''
+  };
+
   importer_usuario = null;
   remitente_usuario = null;
   existeImporter:boolean = false;
@@ -146,6 +160,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public notificacionService: NotificacionesService,
     public excelWorkService: ExcelWorkService,
     public paisesService: PaisesService,
+    public estadosService: EstadoArticuloService,
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -160,6 +175,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getFacturacion();
     this.getRutaNacional();
     this.getEntregados();
+    this.getEstatus();
   }
 
   getUsuario() {
@@ -178,6 +194,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.enBodegaSeleccion = selection;
   }
 
+  onEstatusSelectionChange(selection) {
+    this.estatusSeleccion = selection;
+  }
+
   getEnBodega() {
     this.enBodega = null;
     this.enBodegaSeleccion = [];
@@ -185,6 +205,22 @@ export class MiCasilleroListaComponent extends BaseListComponent
       articulos => {
         this.enBodega = articulos.json().data[0].results;
         this.totalEnBodega = articulos.json().data[0].paging.total;
+        this.urlfactura = articulos.json().data[1];
+      },
+      error => {
+        this.toastr.error(error.json().error.message);
+      }
+    );
+  }
+
+  getEstatus() {
+    this.estatus = null;
+    this.estatusSeleccion = [];
+    this.articulosService.getPorEstado(this.estatusFilters).subscribe(
+      articulos => {
+        this.getEstados();
+        this.estatus = articulos.json().data[0].results;
+        this.totalEstatus = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
       error => {
@@ -266,12 +302,18 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.rutaNacionalSeleccionadas = false;
     this.entregadosSeleccionadas = false;
     this.embarcadosSeleccionadas = false;
+    this.estatusSeleccionadas = false;
     this[tab] = true;
   }
 
   onEnBodegaFiltersChange(filters) {
     this.enBodegaFilters = filters;
     this.getEnBodega();
+  }
+
+  onEstatusFiltersChange(filters) {
+    this.estatusFilters = filters;
+    this.getEstatus();
   }
 
   onEnTransitoFiltersChange(filters) {
@@ -609,10 +651,27 @@ onExportar() {
 }
 
 getEstados() {
-  this.articulosService.getAll().subscribe((data) => {
+  this.estadosService.getAll().subscribe((data) => {
       this.estadosArticulo = data.json().data;
   }, (error) => {
       this.toastr.error(error.json().message);
+  });
+}
+
+
+onExportarEstatus() {
+  Helpers.setLoading(true);
+  let filters = {
+    articulos: this.estatusSeleccion,
+    q: this.estatusFilters.q,
+    estado: this.estatusFilters.estado
+  };
+  this.articulosService.exportarEstatus(filters, ResponseContentType.Blob).subscribe(excel => {
+      this.excelWorkService.downloadXLS('Paquetes.xlsx', excel);
+      Helpers.setLoading(false);
+  }, error => {
+      this.toastr.error(error.json().error.message);
+      Helpers.setLoading(false);
   });
 }
 }

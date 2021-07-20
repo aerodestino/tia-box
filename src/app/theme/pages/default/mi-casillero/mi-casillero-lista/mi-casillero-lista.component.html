@@ -88,25 +88,30 @@
                 [(ngModel)]="rutaNacionalFilters.q" name="search" (keyup.enter)="getRutaNacional()" *ngIf="rutaNacionalSeleccionadas">
                 <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
                 [(ngModel)]="entregadosFilters.q" name="search" (keyup.enter)="getEntregados()" *ngIf="entregadosSeleccionadas">
-              <!--   <div class="form-group m-form__group col-md-3 col-lg-3 col-sm-12">
-                    <label for="exampleSelect1">
-                        Estado
-                    </label>
-                    <select class="form-control m-input" id="exampleSelect1"  *ngIf="entregadosSeleccionadas" [(ngModel)]="entregadosFilters.estado" (change)="getEntregados()" name="estado">
-                        <option [ngValue]="-1">
-                            Todos
-                        </option>
-                        <option *ngFor="let estado of estadosArticulo" [value]="estado.id">
-                            {{estado.nombre}}
-                        </option>
-                    </select>
-                </div> -->
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="estatusFilters.q" name="search" (keyup.enter)="getEstatus()" *ngIf="estatusSeleccionadas">
+              
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                     <span>
                         <i class="fa fa-search"></i>
                     </span>
                 </span>
             </div>
+        </div>
+        <div class="form-group m-form__group col-md-1 col-lg-1 col-sm-1" style="text-align: right;" *ngIf="estatusSeleccionadas">
+            <label for="exampleSelect1">
+                Estado
+            </label>
+            </div>
+            <div class="form-group m-form__group col-md-3 col-lg-3 col-sm-11" *ngIf="estatusSeleccionadas">
+            <select class="form-control m-input" id="exampleSelect1"   [(ngModel)]="estatusFilters.estado" (change)="getEstatus()" name="estado">
+                <option [ngValue]="-1">
+                    Todos
+                </option>
+                <option *ngFor="let estado of estadosArticulo" [value]="estado.id">
+                    {{estado.nombre}}
+                </option>
+            </select>
         </div>
     </div>
     <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
@@ -135,9 +140,14 @@
                 Por Entregar <span class="m-badge m-badge--success" *ngIf="totalRutaNacional">{{totalRutaNacional}}</span>
             </a>
         </li>
-        <li class="nav-item m-tabs__item" (click)="seleccionarTab('entregadosSeleccionadas')">
+        <li class="nav-item m-tabs__item" hidden (click)="seleccionarTab('entregadosSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#entregadosTab" role="tab">
-                Estatus <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
+                Entegados <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('estatusSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#estatusTab" role="tab">
+                Estatus <span class="m-badge m-badge--success" *ngIf="totalEstatus">{{totalEstatus}}</span>
             </a>
         </li>
     </ul>
@@ -161,7 +171,6 @@
                         ></app-en-bodega-list-header>
                     </div>
                     <!--end: Search Form -->        <!--begin: Datatable -->
-
                     <div class="row" style="justify-content: center">
                         <div class="m-loader" style="width: 30px;" *ngIf="!enBodega && enBodegaSeleccionadas"></div>
                     </div>
@@ -272,7 +281,7 @@
             </div>
         </div>
 
-        <div class="tab-pane" id="entregadosTab" role="tabpanel" [class.active]="entregadosSeleccionadas">
+        <div class="tab-pane" id="entregadosTab" hidden role="tabpanel" [class.active]="entregadosSeleccionadas">
 
             <div class="m-portlet m-portlet--mobile">
                 <div class="m-portlet__body">
@@ -289,6 +298,37 @@
 
                             (filtersChange)="onEntregadosFiltersChange($event)"
                     ></app-entregados-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+       
+        <div class="tab-pane" id="estatusTab" role="tabpanel" [class.active]="estatusSeleccionadas">
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+
+                    <!--begin: Search Form -->
+                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <app-estatus-list-header [totalEstatus]="estatusSeleccion.length" [selection]="estatusSeleccion"
+                            (exportar)="onExportarEstatus()"
+                        ></app-estatus-list-header>
+                    </div>
+                    <!--end: Search Form -->        <!--begin: Datatable -->
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;" *ngIf="!estatus && estatusSeleccionadas"></div>
+                    </div>
+                    <app-estatus-datatable
+                            *ngIf="estatus && estatusSeleccionadas"
+                            [data]="estatus"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalEstatus"
+                            [filters]="estatusFilters"
+                            [url]="urlfactura"
+                            (dvSelection)= "onPuedeDV($event)"
+                            (cargar)= "getEstatus($event)"
+                            (filtersChange)="onEstatusFiltersChange($event)"
+                            (selectionChange)="onEstatusSelectionChange($event)"
+                    ></app-estatus-datatable>
                 </div>
                 <!--end: Datatable -->
             </div>
@@ -525,7 +565,7 @@
                                  <h5 *ngIf="dv" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
                                  <input type="number" *ngIf="!dv" class="form-control m-input" placeholder="Unidades"
                                  [(ngModel)]="unidades"  #unidad="ngModel"
-                                 name="unidad"
+                                 name="unidad" required
                                  > 
                              </div>
                         </div>
