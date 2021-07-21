@@ -674,4 +674,94 @@ onExportarEstatus() {
       Helpers.setLoading(false);
   });
 }
+
+OnModalDV(content) {
+  this.totalDescripciones = 0;
+  this.importer_usuario_DV=null;
+  this.remitente_usuario_DV =null;
+  this.paqueteList=[];
+  let existe=false;
+    
+  for (let i in this.datos){
+    if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+        existe= true;    
+}   
+    if(existe || this.selectionPrecios){
+      if(this.selectionPrecios){
+        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
+          Helpers.setLoading(false);
+      }else{
+        this.toastr.error('El costo debe ser mayor que cero');
+        Helpers.setLoading(false);
+      }
+    }else{
+      this.getPaises();
+  
+      this.declaracion = new Declaracion;
+      this.articulodv= new Articulo;
+      
+      this.pais_origen_d_v_id = 8;
+      this.pais_destino_d_v_id = 8;
+      const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+      this.paqueteList.push(person);
+      this.modalRef = this.ngbModal.open(content, {size: "lg"});
+  }
+}
+
+getPaises() {
+this.paises = null;
+this.paisesService.getAll().subscribe((data) => {
+    this.paises = data.json().data;
+}, (error) => {
+    this.toastr.error(error.json().error.message);
+});
+}
+
+updateList(id: number, property: string, event: any) {
+this.paqueteList[0][id][property] = event.target.textContent;
+
+  let c = Big(this.paqueteList[0][id]['cantidad']);
+  let v = Big(this.paqueteList[0][id]['vunitario']);
+  this.paqueteList[0][id]['total'] = c.mul(v);
+  let t = Big(this.paqueteList[0][id]['total']);
+  let td = Big(this.totalDescripciones);
+  this.totalDescripciones = t.plus(td);
+}
+
+remove(id: any) {
+let t = Big(this.totalDescripciones);
+this.totalDescripciones = t.sub(this.paqueteList[0][id]['total'])
+this.paqueteList[0].splice(id, 1);
+}
+
+add() {
+  this.idlist= this.paqueteList[0].length;
+  const person =  { id: this.idlist ,  descripcion: 'N/A',  cantidad:0, vunitario: 0, total: 0 };
+  this.paqueteList[0].push(person);
+
+}
+
+changeValue(id: number, property: string, event: any) {
+  this.editField = event.target.textContent;
+}
+
+onSubmit(value) {
+if(this.totalDescripciones > 0){
+Helpers.setLoading(true);
+this.modalRef.close();
+this.articulosService.declaracionValoresMasiva(value).subscribe( (pdf) => {
+  //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
+    Helpers.setLoading(false);
+    this.toastr.success("Declaración de valores masiva creada");
+    this.getEnBodega();
+}, error => {
+    Helpers.setLoading(false);
+   this.toastr.error(error.json().error.message);
+});
+}else{
+Helpers.setLoading(false);
+   this.toastr.error('El valor total debe ser mayor que cero'); 
+}
+}
+
 }
