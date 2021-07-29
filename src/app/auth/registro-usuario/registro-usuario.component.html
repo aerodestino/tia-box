@@ -40,10 +40,12 @@
                 Cédula:
             </label>
             <div class="col-lg-3">
-                <input type="text" class="form-control m-input" placeholder="Cédula"
+                <input type="text" pattern="^[a-zA-Z0-9]+$" class="form-control m-input" placeholder="Cédula"
                        ngModel #numero_identidad="ngModel" name="numero_identidad" required>
                 <section *ngIf="numero_identidad.invalid && numero_identidad.dirty" class="bs">
                     <p class="m--font-danger" *ngIf="numero_identidad.hasError('required')">La Cédula es requerida</p>
+                    <p class="m--font-danger" *ngIf="numero_identidad.hasError('pattern')">Introduzca una cédula válida</p>
+
                 </section>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
