@@ -22,6 +22,13 @@ import {Articulo} from "../../../../../shared/model/articulo.model";
 import {PaisesService} from "../../../../../shared/services/api/paises.service";
 import {Country} from "../../../../../shared/model/country.model";
 import {Big} from 'big.js';
+import { Entrega } from "../../../../../shared/model/entrega.model";
+import { EntregaService } from "../../../../../shared/services/api/entrega.service";
+import { City } from "../../../../../shared/model/city.model";
+import { Province } from "../../../../../shared/model/province.model";
+import { ProvinciasService } from "../../../../../shared/services/api/provincias.service";
+import { CiudadesService } from "../../../../../shared/services/api/ciudades.service";
+import { AuthRoutingModule } from "../../../../../auth/auth-routing.routing";
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./mi-casillero-lista.component.html",
@@ -50,13 +57,13 @@ export class MiCasilleroListaComponent extends BaseListComponent
   consolidarPaquete: boolean = true;
   enviarPaquete: boolean = true;
   urlfactura: any;
-  enBodegaSeleccionadas = true;
+  enBodegaSeleccionadas = false;
   enTransitoSeleccionadas = false;
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
   embarcadosSeleccionadas = false;
-  estatusSeleccionadas = false;
+  estatusSeleccionadas = true;
   validar= false;
   ids:any[] = [];
   enBodegaSeleccion: any;
@@ -74,6 +81,14 @@ export class MiCasilleroListaComponent extends BaseListComponent
   totalPeso = 0;
   totalPrecio = 0;
   estadosArticulo : any;
+  entrega:Entrega;
+  provincias:Province[];
+  ciudades:City[];
+  provinciasR:Province[];
+  ciudadesR:City[];
+  paisesEntrega:Country[];
+  articulosDatos:any[];
+  public selectUsuario: any =1;
   enBodegaFilters = {
     limit: 5,
     offset: 0,
@@ -149,6 +164,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   idlist:number;
   editField: string;
   puedeDV: boolean = true;
+  puedeEntrega: boolean = true;
+  usuarioRetirar:string;
   constructor(
     public router: Router,
     public articulosService: ArticulosService,
@@ -161,6 +178,9 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public excelWorkService: ExcelWorkService,
     public paisesService: PaisesService,
     public estadosService: EstadoArticuloService,
+    public entregaService: EntregaService,
+    public provinciaService: ProvinciasService,
+    public ciudadService: CiudadesService,
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -176,6 +196,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getRutaNacional();
     this.getEntregados();
     this.getEstatus();
+    this.getPaisesE();
   }
 
   getUsuario() {
@@ -196,6 +217,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onEstatusSelectionChange(selection) {
     this.estatusSeleccion = selection;
+  }
+
+  onArticuloChange(selection) {
+    this.articulosDatos = selection;
   }
 
   getEnBodega() {
@@ -577,6 +602,10 @@ onPuedeDV(element) {
   this.puedeDV = element;
 }
 
+onPuedeEntrega(element) {
+  this.puedeEntrega = element;
+}
+
 OnModalFactura(content){
     let existe=false;
     
@@ -595,6 +624,29 @@ OnModalFactura(content){
     }else{
     this.modalRef = this.ngbModal.open(content, {size: "lg"});
     }
+}
+
+onEntrega(content){
+    this.entrega = new Entrega();
+    this.entrega.ciudad = new City;
+    this.entrega.ciudad_retiro = new City;
+    this.entrega.ciudad.provincia = new Province;
+    this.entrega.ciudad_retiro.provincia = new Province;
+    this.entrega.ciudad.provincia.pais = new Country;
+    this.entrega.ciudad_retiro.provincia.pais = new Country;
+    this.entrega.domicilio = 1;
+    this.entrega.articulos= this.articulosDatos;
+
+  this.modalRef = this.ngbModal.open(content, {size: "lg"});
+ 
+}
+
+domicilioValue(value){
+  this.entrega.domicilio = value;
+}
+
+selectedValue(value){
+    this.selectUsuario = value;
 }
 
 close(){
@@ -762,6 +814,72 @@ this.articulosService.declaracionValoresMasiva(value).subscribe( (pdf) => {
 Helpers.setLoading(false);
    this.toastr.error('El valor total debe ser mayor que cero'); 
 }
+}
+
+getPaisesE() {
+  this.paisesService.getAll().subscribe((data) => {
+      this.paisesEntrega = data.json().data;
+    
+  }, (error) => {
+      console.log(error.json());
+  });
+}
+
+onSubmitEntrega(entrega) {
+  this.modalRef.close();
+  Helpers.setLoading(true);
+  this.entregaService.create(entrega).subscribe( () => {
+      Helpers.setLoading(false);
+      this.toastr.success("Entrega creada");
+       // this.envioUpdated.emit();
+       this.getEstatus();
+  }, error => {
+      Helpers.setLoading(false);
+      if(error.json().data)
+          this.toastr.error(error.json().data.error);
+      if(error.json().error)
+          this.toastr.error(error.json().error.message);
+      
+  });
+}
+
+getProvincias(pais_id) {
+this.provincias = null;
+this.ciudades = null;
+this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
+    this.provincias = data.json().data;
+}, (error) => {
+    console.log(error.json());
+});
+}
+
+getProvinciasR(pais_id) {
+this.provincias = null;
+this.ciudades = null;
+this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
+  this.provinciasR = data.json().data;
+}, (error) => {
+  console.log(error.json());
+});
+}
+
+getCiudades(provincia_id) {
+this.ciudades = null;
+this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
+    this.ciudades = data.json().data;
+}, (error) => {
+    console.log(error.json());
+});
+}
+
+getCiudadesR(provincia_id) {
+this.ciudadesR = null;
+this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
+  this.ciudadesR = data.json().data;
+ 
+}, (error) => {
+  console.log(error.json());
+});
 }
 
 }

@@ -10,7 +10,9 @@ import { EmpresasEnvioService } from "../../../../../shared/services/api/empresa
 export class EstatusListHeaderComponent implements OnInit {
     @Input() totalEstatus;
     @Input() selection;
+    @Input() puedeEntrega;
     @Output() exportar: EventEmitter<any> = new EventEmitter();
+    @Output() entrega: EventEmitter<any> = new EventEmitter();
     constructor(public ngbModal: NgbModal) { }
 
     ngOnInit() {
@@ -19,6 +21,10 @@ export class EstatusListHeaderComponent implements OnInit {
    
     onExportar() {
         this.exportar.emit();
+    }
+
+    onEntrega() {
+        this.entrega.emit();
     }
 
 }

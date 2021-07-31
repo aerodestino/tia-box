@@ -10,6 +10,7 @@ export class User extends Model {
     constructor(public nombre?: string,
         public email?: string,
         public role_id?: number,
+        public numero_identidad?: any,
         public role?: Role,
         public sitio?: Site,
         public sitio_id?: number | string,
