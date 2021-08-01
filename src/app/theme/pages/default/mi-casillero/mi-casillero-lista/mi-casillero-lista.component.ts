@@ -57,13 +57,13 @@ export class MiCasilleroListaComponent extends BaseListComponent
   consolidarPaquete: boolean = true;
   enviarPaquete: boolean = true;
   urlfactura: any;
-  enBodegaSeleccionadas = false;
+  enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
   embarcadosSeleccionadas = false;
-  estatusSeleccionadas = true;
+  estatusSeleccionadas = false;
   validar= false;
   ids:any[] = [];
   enBodegaSeleccion: any;

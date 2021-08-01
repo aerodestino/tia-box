@@ -115,13 +115,9 @@
         </div>
     </div>
     <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
-        <li class="nav-item m-tabs__item" (click)="seleccionarTab('estatusSeleccionadas')">
-            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#estatusTab" role="tab">
-                Estatus <span class="m-badge m-badge--success" *ngIf="totalEstatus">{{totalEstatus}}</span>
-            </a>
-        </li>
+     
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('enBodegaSeleccionadas')">
-            <a class="nav-link m-tabs__link" data-toggle="tab" href="#enBodegaTab" role="tab">
+            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#enBodegaTab" role="tab">
                 En Bodega <span class="m-badge m-badge--success" *ngIf="totalEnBodega">{{totalEnBodega}}</span>
             </a>
         </li>
@@ -150,7 +146,11 @@
                 Entegados <span class="m-badge m-badge--success" *ngIf="totalEntregados">{{totalEntregados}}</span>
             </a>
         </li>
-      
+        <li class="nav-item m-tabs__item" (click)="seleccionarTab('estatusSeleccionadas')">
+            <a class="nav-link m-tabs__link " data-toggle="tab" href="#estatusTab" role="tab">
+                Estatus <span class="m-badge m-badge--success" *ngIf="totalEstatus">{{totalEstatus}}</span>
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" id="enBodegaTab" role="tabpanel" [class.active]="enBodegaSeleccionadas">

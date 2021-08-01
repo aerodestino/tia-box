@@ -79,7 +79,7 @@
         <td>
         <div class="row">
             <div class="col-md-1">
-            <i class="fa fa-edit m--font-info" *ngIf="articulo.entrega && !articulo.guiaEnt" title="Editar Entrega" style="cursor: pointer;" (click)="View(editarModal,articulo.entrega,0)"></i>
+            <i class="fa fa-edit m--font-info" *ngIf="articulo.entrega && !articulo.guiaEnt && (articulo.idestado == 3 || articulo.idestado == 4) " title="Editar Entrega" style="cursor: pointer;" (click)="View(editarModal,articulo.entrega,0)"></i>
             </div>
             <div class="col-md-1">
             <i class="fa fa-eye m--font-info" *ngIf="articulo.entrega" title="Visualizar Entrega" style="cursor: pointer;" (click)="View(detallesModal,articulo.entrega,1)"></i>
