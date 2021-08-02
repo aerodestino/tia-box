@@ -922,6 +922,7 @@
                                 País:
                             </label>
                             <div class="col-lg-3">
+                                
                                 <select  class="form-control m-input" placeholder="País" (change)="getProvinciasR(pais_id.value)"
                                         [(ngModel)]="entrega.ciudad_retiro.provincia.pais.id" #pais_id="ngModel" name="pais_id">
                                     <option [value]="" disabled>Seleccione un País</option>
@@ -934,13 +935,14 @@
                                 Provincia:
                             </label>
                             <div class="col-lg-3">
-                                <select  class="form-control m-input" placeholder="Provincia" (change)="getCiudadesR(provinciaRetiro_id.value)"
-                                        [(ngModel)]="entrega.ciudad_retiro.provincia.id" #provinciaRetiro_id="ngModel" name="provinciaRetiro_id" required>
-                                    <option [value]="" disabled>Seleccione una Provincia</option>
-                                    <option *ngFor="let provincia of provinciasR" [value]="provincia.id" >
-                                        {{provincia.nombre}}
-                                    </option>
-                                </select>
+                                <app-auto-complete *ngIf="provinciasR" placeholder="Seleccione"
+                                [(ngModel)]="entrega.ciudad_retiro.provincia.id" #provinciaRetiro_id="ngModel"
+                                name="provinciaRetiro_id" required [items]="provinciasR"
+                                [textField]="'nombre'"
+                                valueField="id"
+                                (change)="getCiudadesR(provinciaRetiro_id.value)"
+                                 ></app-auto-complete>
+                            
                             </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0">
@@ -948,13 +950,13 @@
                                 Ciudad:
                             </label>
                             <div class="col-lg-4">
-                                <select  class="form-control m-input" placeholder="Ciudad" 
-                                        [(ngModel)]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel" name="ciudadRetiro_id" required>
-                                    <option [value]="" disabled>Seleccione una Ciudad</option>
-                                    <option *ngFor="let ciudad of ciudadesR" [value]="ciudad.id" >
-                                        {{ciudad.nombre}}
-                                    </option>
-                                </select>
+                                <app-auto-complete *ngIf="ciudadesR" placeholder="Seleccione"
+                                [(ngModel)]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel"
+                                name="ciudadRetiro_id" required [items]="ciudadesR"
+                                [textField]="'nombre'"
+                                valueField="id"
+                                 ></app-auto-complete>
+                            
                             </div>
                             <div class="col-lg-5">
                                 <input type="text" class="form-control m-input" placeholder="Ciudad"
@@ -1092,13 +1094,13 @@
                                 Provincia:
                             </label>
                             <div class="col-lg-3">
-                                <select  class="form-control m-input" placeholder="Provincia" (change)="getCiudades(provincia_id.value)"
-                                        [(ngModel)]="entrega.ciudad.provincia.id" #provincia_id="ngModel" name="provincia_id" required>
-                                    <option [value]="" disabled>Seleccione una Provincia</option>
-                                    <option *ngFor="let provincia of provincias" [value]="provincia.id" >
-                                        {{provincia.nombre}}
-                                    </option>
-                                </select>
+                                <app-auto-complete *ngIf="provincias" placeholder="Seleccione"
+                                [(ngModel)]="entrega.ciudad.provincia.id" #provincia_id="ngModel"
+                                name="provincia_id" required [items]="provincias"
+                                (change)="getCiudades(provincia_id.value)"
+                                [textField]="'nombre'"
+                                valueField="id"
+                                 ></app-auto-complete>
                             </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf="selectUsuario == 0 && entrega.domicilio == 1">
@@ -1106,13 +1108,13 @@
                                 Ciudad:
                             </label>
                             <div class="col-lg-3">
-                                <select  class="form-control m-input" placeholder="Ciudad" 
-                                        [(ngModel)]="entrega.ciudad.id" #ciudad_id="ngModel" name="ciudad_id" required>
-                                    <option [value]="" disabled>Seleccione una Ciudad</option>
-                                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.id" >
-                                        {{ciudad.nombre}}
-                                    </option>
-                                </select>
+                                <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
+                                [(ngModel)]="entrega.ciudad.id" #ciudad_id="ngModel"
+                                name="ciudad_id" required [items]="ciudades"
+                                [textField]="'nombre'"
+                                valueField="id"
+                                 ></app-auto-complete>
+                              
                             </div>
                             <label class="col-lg-3 col-form-label">
                                 Código Postal:
@@ -1153,7 +1155,7 @@
                                             [disabled]="entregaForm.invalid && entrega.ciudad.id == '-1'"
                                             [class]="(entregaForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                     >
-                                        Actualizar
+                                        Aceptar
                                     </button>
                                 </div>
                             </div>

@@ -6,7 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { DefaultComponent } from "../default.component";
 import { LayoutModule } from "../../../layouts/layout.module";
-
+import {AutoCompleteModule} from "../../../../shared/components/auto-complete/auto-complete.module";
 const routes: Routes = [
     {
         "path": "",
@@ -21,7 +21,7 @@ const routes: Routes = [
 ];
 @NgModule({
     imports: [
-        CommonModule, RouterModule.forChild(routes), LayoutModule, FormsModule, NgbModule.forRoot()
+        CommonModule, RouterModule.forChild(routes), LayoutModule, FormsModule, NgbModule.forRoot(),AutoCompleteModule
     ], exports: [
         RouterModule
     ], declarations: [

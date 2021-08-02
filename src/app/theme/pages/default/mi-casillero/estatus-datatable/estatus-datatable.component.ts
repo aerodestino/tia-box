@@ -204,6 +204,10 @@ View(content, id,tipo) {
         if(this.entrega.ciudad){
           this.getProvincias(this.entrega.ciudad.provincia.pais.id);
           this.getCiudades(this.entrega.ciudad.provincia.id);
+        }else{
+          this.entrega.ciudad = new City();
+          this.entrega.ciudad.provincia = new Province();
+          this.entrega.ciudad.provincia.pais = new Country();
         }
         if(this.entrega.ciudad_retiro){
           this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
