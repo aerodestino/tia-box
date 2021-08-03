@@ -79,10 +79,14 @@
         <td>
         <div class="row">
             <div class="col-md-1">
-            <i class="fa fa-edit m--font-info" *ngIf="articulo.entrega && !articulo.guiaEnt && (articulo.idestado == 3 || articulo.idestado == 4) " title="Editar Entrega" style="cursor: pointer;" (click)="View(editarModal,articulo.entrega,0)"></i>
+            <i class="fa fa-edit m--font-info" *ngIf="articulo.entrega && !articulo.guiaEnviada && (articulo.idestado == 3 || articulo.idestado == 4) " title="Editar Entrega" style="cursor: pointer;" (click)="View(editarModal,articulo.entrega,0)"></i>
             </div>
             <div class="col-md-1">
             <i class="fa fa-eye m--font-info" *ngIf="articulo.entrega" title="Visualizar Entrega" style="cursor: pointer;" (click)="View(detallesModal,articulo.entrega,1)"></i>
+            </div>
+            <div class="col-md-1" *ngIf="articulo.entrega && !articulo.guiaEnviada && (articulo.idestado == 3 || articulo.idestado == 4) ">
+                <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer"
+                   (click)="onDelete(deleteConfirmation,articulo.entrega)"></i>
             </div>
         </div>
         </td>
@@ -113,6 +117,24 @@
 
 </div>
 
+<!--begin::Delete Confirmation Modal-->
+<ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar Eliminación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el recurso?</p><br>
+        <span class="m--font-danger">Esta acción es irreversible!!</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger m-btn--air" (click)="c('aceptar')">Aceptar</button>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
 <!--begin::Articulo Detalles Modal-->
 <ng-template #articuloDetallesModal let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -141,13 +163,13 @@
                     {{detalles.recibo}}
                 </td>
                 <td>
-                    {{detalles.nombreEnt ? detalles.nombreEnt : detalles.nombre }}
+                    {{(detalles.guiaEnviada && detalles.nombreEnt) ? detalles.nombreEnt : detalles.nombre }}
                 </td>
                 <td>
-                    {{detalles.guiaEnt ? detalles.guiaEnt : detalles.guia}}
+                    {{(detalles.guiaEnviada && detalles.guiaEnt) ? detalles.guiaEnt : detalles.guia}}
                 </td>
                 <td>
-                    {{detalles.fechaGuiaEnt ?  (detalles.fechaGuiaEnt | date: "dd/MM/y" : "-0500") : (detalles.fechaGuia | date: "dd/MM/y" : "-0500") }}
+                    {{(detalles.guiaEnviada && detalles.fechaGuiaEnt) ?  (detalles.fechaGuiaEnt | date: "dd/MM/y" : "-0500") : (detalles.fechaGuia | date: "dd/MM/y" : "-0500") }}
                 </td>
             </tr>
             </tbody>
@@ -611,7 +633,7 @@
                 <div class="row" style="margin: 5px">
                     <h3>Artículos</h3>
                 </div>
-                <div class="table-responsive" style="width: 740px; overflow: auto;">
+                <div class="table-responsive" style="overflow: auto;">
                 <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
                     <thead>
                     <tr>
@@ -882,7 +904,7 @@
                            </span>
                     </div>
                    
-                    <div class="table-responsive" style="width: 740px; overflow: auto;">
+                    <div class="table-responsive" style="overflow: auto;">
                     <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
                         <thead>
                         <tr>

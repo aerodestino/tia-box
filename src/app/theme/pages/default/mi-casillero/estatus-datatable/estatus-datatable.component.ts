@@ -322,4 +322,23 @@ getUsuarios() {
   });
 }
 
+onDelete(content, id) {
+  this.ngbModal.open(content).result.then((result) => {
+      if (result == 'aceptar') {
+        this.entregaService.delete(id).subscribe( () => {
+          Helpers.setLoading(false);
+          this.toastr.success("Entrega eliminada");
+           this.cargar.emit();
+      }, error => {
+          Helpers.setLoading(false);
+          if(error.json().data)
+              this.toastr.error(error.json().data.error);
+          if(error.json().error)
+              this.toastr.error(error.json().error.message);
+          
+      });
+      }
+  });
+}
+
 }
