@@ -122,238 +122,239 @@
                         </li>
                     </ul>
                 </div>
-                <!-- END: Horizontal Menu -->                                <!-- BEGIN: Topbar -->
-                <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
-                    <div class="m-stack__item m-topbar__nav-wrapper">
-                        <ul class="m-topbar__nav m-nav m-nav--inline">
-                            <!--<li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light"  	data-dropdown-toggle="click" data-dropdown-persistent="true" id="m_quicksearch" data-search-type="dropdown">
-                                <a href="#" class="m-nav__link m-dropdown__toggle">
-                                    <span class="m-nav__link-icon">
-                                        <i class="flaticon-search-1"></i>
-                                    </span>
-                                </a>
-                                <div class="m-dropdown__wrapper">
-                                    <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
-                                    <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__header">
-                                            <form  class="m-list-search__form">
-                                                <div class="m-list-search__form-wrapper">
-                                                    <span class="m-list-search__form-input-wrapper">
-                                                        <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
-                                                    </span>
-                                                    <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
-                                                        <i class="la la-remove"></i>
-                                                    </span>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="m-dropdown__body">
-                                            <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-max-height="300" data-mobile-max-height="200">
-                                                <div class="m-dropdown__content"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>-->
-                            <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width"
-                                data-dropdown-toggle="click" data-dropdown-persistent="true">
-                                <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-									<span class="m-nav__link-badge m-badge  m-badge--danger"
-                                          *ngIf="appService.notificacionesSinLeer"
-
-                                    >{{appService.notificacionesSinLeer}}</span>
-                                    <span class="m-nav__link-icon" (click)="onGetNotificaciones()">
-										<i class="flaticon-music-2"></i>
-									</span>
-                                </a>
-                                <div class="m-dropdown__wrapper" style="width: 300px">
-                                    <div data-max-height="250"
-                                         data-mobile-max-height="200">
-
-                                        <div class="m-dropdown__inner">
-                                            <div class="m-dropdown__header m--align-center"
-                                                 style="background-color: #1e1111; background-size: cover;">
-											<span class="m-dropdown__header-title">
-												{{appService.notificacionesSinLeer}} nuevas
-											</span>
-                                                <span class="m-dropdown__header-subtitle">
-												Notificaciones de usuario
-											</span>
-                                            </div>
-                                            <div class="m-dropdown__body" style="max-height: 400px; overflow: scroll">
-                                                <div class="m-dropdown__content" *ngIf="notificaciones">
-                                                    <div class="m-list-timeline m-list-timeline--skin-light">
-                                                        <div class="m-list-timeline__items">
-                                                            <div class="m-list-timeline__item"
-                                                                 *ngFor="let notificacion of notificaciones">
-                                                                <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
-                                                                <span class="m-list-timeline__text">
-																<a [routerLink]="'/notificaciones/' + notificacion.id"
-                                                                   [class]="notificacion.status? 'm-link m-link--danger': 'm-link m-link--accent'">
-																	{{notificacion.titulo}}
-																</a>
-															</span>
-                                                                <span class="m-list-timeline__time">
-																{{notificacion.fecha}}
-															</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <span class="m-badge m-badge--success m-badge--wide"
-                                                          style="align-self: center; cursor: pointer"
-                                                          (click)="getNotificaciones()">Ver Más</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!--<li class="m-nav__item m-topbar__quick-actions m-topbar__quick-actions--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push m-dropdown--mobile-full-width m-dropdown--skin-light"  data-dropdown-toggle="click">
-                                <a href="#" class="m-nav__link m-dropdown__toggle">
-                                    <span class="m-nav__link-badge m-badge m-badge--dot m-badge--info m--hide"></span>
-                                    <span class="m-nav__link-icon">
-                                        <i class="flaticon-share"></i>
-                                    </span>
-                                </a>
-                                <div class="m-dropdown__wrapper">
-                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                    <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__header m--align-center" style="background-color: #1e1111; background-size: cover;">
-                                            <span class="m-dropdown__header-title">
-                                                Quick Actions
+              
+            </div>
+        </div>
+          <!-- END: Horizontal Menu -->                                <!-- BEGIN: Topbar -->
+          <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+            <div class="m-stack__item m-topbar__nav-wrapper">
+                <ul class="m-topbar__nav m-nav m-nav--inline">
+                    <!--<li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light"  	data-dropdown-toggle="click" data-dropdown-persistent="true" id="m_quicksearch" data-search-type="dropdown">
+                        <a href="#" class="m-nav__link m-dropdown__toggle">
+                            <span class="m-nav__link-icon">
+                                <i class="flaticon-search-1"></i>
+                            </span>
+                        </a>
+                        <div class="m-dropdown__wrapper">
+                            <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__header">
+                                    <form  class="m-list-search__form">
+                                        <div class="m-list-search__form-wrapper">
+                                            <span class="m-list-search__form-input-wrapper">
+                                                <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
                                             </span>
-                                            <span class="m-dropdown__header-subtitle">
-                                                Shortcuts
+                                            <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+                                                <i class="la la-remove"></i>
                                             </span>
                                         </div>
-                                        <div class="m-dropdown__body m-dropdown__body--paddingless">
-                                            <div class="m-dropdown__content">
-                                                <div class="m-scrollable" data-scrollable="false" data-max-height="380" data-mobile-max-height="200">
-                                                    <div class="m-nav-grid m-nav-grid--skin-light">
-                                                        <div class="m-nav-grid__row">
-                                                            <a href="#" class="m-nav-grid__item">
-                                                                <i class="m-nav-grid__icon flaticon-file"></i>
-                                                                <span class="m-nav-grid__text">
-                                                                    Generate Report
-                                                                </span>
-                                                            </a>
-                                                            <a href="#" class="m-nav-grid__item">
-                                                                <i class="m-nav-grid__icon flaticon-time"></i>
-                                                                <span class="m-nav-grid__text">
-                                                                    Add New Event
-                                                                </span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="m-nav-grid__row">
-                                                            <a href="#" class="m-nav-grid__item">
-                                                                <i class="m-nav-grid__icon flaticon-folder"></i>
-                                                                <span class="m-nav-grid__text">
-                                                                    Create New Task
-                                                                </span>
-                                                            </a>
-                                                            <a href="#" class="m-nav-grid__item">
-                                                                <i class="m-nav-grid__icon flaticon-clipboard"></i>
-                                                                <span class="m-nav-grid__text">
-                                                                    Completed Tasks
-                                                                </span>
-                                                            </a>
-                                                        </div>
+                                    </form>
+                                </div>
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-max-height="300" data-mobile-max-height="200">
+                                        <div class="m-dropdown__content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>-->
+                    <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width"
+                        data-dropdown-toggle="click" data-dropdown-persistent="true">
+                        <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
+                            <span class="m-nav__link-badge m-badge  m-badge--danger"
+                                  *ngIf="appService.notificacionesSinLeer"
+
+                            >{{appService.notificacionesSinLeer}}</span>
+                            <span class="m-nav__link-icon" (click)="onGetNotificaciones()">
+                                <i class="flaticon-music-2"></i>
+                            </span>
+                        </a>
+                        <div class="m-dropdown__wrapper" style="width: 300px">
+                            <div data-max-height="250"
+                                 data-mobile-max-height="200">
+
+                                <div class="m-dropdown__inner">
+                                    <div class="m-dropdown__header m--align-center"
+                                         style="background-color: #1e1111; background-size: cover;">
+                                    <span class="m-dropdown__header-title">
+                                        {{appService.notificacionesSinLeer}} nuevas
+                                    </span>
+                                        <span class="m-dropdown__header-subtitle">
+                                        Notificaciones de usuario
+                                    </span>
+                                    </div>
+                                    <div class="m-dropdown__body" style="max-height: 400px; overflow: scroll">
+                                        <div class="m-dropdown__content" *ngIf="notificaciones">
+                                            <div class="m-list-timeline m-list-timeline--skin-light">
+                                                <div class="m-list-timeline__items">
+                                                    <div class="m-list-timeline__item"
+                                                         *ngFor="let notificacion of notificaciones">
+                                                        <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                                        <span class="m-list-timeline__text">
+                                                        <a [routerLink]="'/notificaciones/' + notificacion.id"
+                                                           [class]="notificacion.status? 'm-link m-link--danger': 'm-link m-link--accent'">
+                                                            {{notificacion.titulo}}
+                                                        </a>
+                                                    </span>
+                                                        <span class="m-list-timeline__time">
+                                                        {{notificacion.fecha}}
+                                                    </span>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <span class="m-badge m-badge--success m-badge--wide"
+                                                  style="align-self: center; cursor: pointer"
+                                                  (click)="getNotificaciones()">Ver Más</span>
                                         </div>
                                     </div>
                                 </div>
-                            </li>-->
-                            <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light"
-                                data-dropdown-toggle="click">
-                                <a href="#" class="m-nav__link m-dropdown__toggle">
-									<span class="m-topbar__userpic">
-										<img [src]="appService.user.avatar.web_url"
-                                             class="m--img-rounded m--marginless m--img-centered"
-                                             *ngIf="appService.user && appService.user.avatar.web_url" alt="{{appService.user.nombre}}"/>
-                                        <img [src]="defaultAvatar"
-                                             class="m--img-rounded m--marginless m--img-centered"
-                                             *ngIf="appService.user && !appService.user.avatar.web_url" alt="{{appService.user.nombre}}"/>
-									</span>
-                                    <span class="m-topbar__username m--hide" *ngIf="appService.user">
-										{{appService.user.nombre}}
-									</span>
-                                </a>
-                                <div class="m-dropdown__wrapper">
-                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                    <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__header m--align-center"
-                                             style="background-color:#1e1111; background-size: cover;">
-                                            <div class="m-card-user m-card-user--skin-dark">
-                                                <div class="m-card-user__pic">
-                                                    <img [src]="appService.user.avatar.web_url" 
-                                                        *ngIf="appService.user && appService.user.avatar.web_url"
-                                                         class="m--img-rounded m--marginless" 
-                                                         alt="{{appService.user.nombre}}"/>
-                                                    <img [src]="defaultAvatar" 
-                                                        *ngIf="appService.user && !appService.user.avatar.web_url"
-                                                         class="m--img-rounded m--marginless" 
-                                                         alt="{{appService.user.nombre}}"/>
+                            </div>
+                        </div>
+                    </li>
+                    <!--<li class="m-nav__item m-topbar__quick-actions m-topbar__quick-actions--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push m-dropdown--mobile-full-width m-dropdown--skin-light"  data-dropdown-toggle="click">
+                        <a href="#" class="m-nav__link m-dropdown__toggle">
+                            <span class="m-nav__link-badge m-badge m-badge--dot m-badge--info m--hide"></span>
+                            <span class="m-nav__link-icon">
+                                <i class="flaticon-share"></i>
+                            </span>
+                        </a>
+                        <div class="m-dropdown__wrapper">
+                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__header m--align-center" style="background-color: #1e1111; background-size: cover;">
+                                    <span class="m-dropdown__header-title">
+                                        Quick Actions
+                                    </span>
+                                    <span class="m-dropdown__header-subtitle">
+                                        Shortcuts
+                                    </span>
+                                </div>
+                                <div class="m-dropdown__body m-dropdown__body--paddingless">
+                                    <div class="m-dropdown__content">
+                                        <div class="m-scrollable" data-scrollable="false" data-max-height="380" data-mobile-max-height="200">
+                                            <div class="m-nav-grid m-nav-grid--skin-light">
+                                                <div class="m-nav-grid__row">
+                                                    <a href="#" class="m-nav-grid__item">
+                                                        <i class="m-nav-grid__icon flaticon-file"></i>
+                                                        <span class="m-nav-grid__text">
+                                                            Generate Report
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="m-nav-grid__item">
+                                                        <i class="m-nav-grid__icon flaticon-time"></i>
+                                                        <span class="m-nav-grid__text">
+                                                            Add New Event
+                                                        </span>
+                                                    </a>
                                                 </div>
-                                                <div class="m-card-user__details">
-													<span class="m-card-user__name m--font-weight-500"
-                                                          *ngIf="appService.user" style="color: white">
-														{{appService.user.nombre}}
-													</span>
-                                                    <a href="" class="m-card-user__email m--font-weight-300 m-link"
-                                                       *ngIf="appService.user" style="color: white">
-                                                        {{appService.user.email}}
+                                                <div class="m-nav-grid__row">
+                                                    <a href="#" class="m-nav-grid__item">
+                                                        <i class="m-nav-grid__icon flaticon-folder"></i>
+                                                        <span class="m-nav-grid__text">
+                                                            Create New Task
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="m-nav-grid__item">
+                                                        <i class="m-nav-grid__icon flaticon-clipboard"></i>
+                                                        <span class="m-nav-grid__text">
+                                                            Completed Tasks
+                                                        </span>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="m-dropdown__body">
-                                            <div class="m-dropdown__content">
-                                                <ul class="m-nav m-nav--skin-light">
-                                                    <li class="m-nav__section m--hide">
-														<span class="m-nav__section-text">
-															Section
-														</span>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a routerLink="/perfil" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
-                                                            <span class="m-nav__link-title">
-																<span class="m-nav__link-wrap">
-																	<span class="m-nav__link-text">
-																		Mi Perfil
-																	</span>
-																</span>
-															</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                                    <li class="m-nav__item">
-                                                        <a class="btn m-btn--pill btn-success m-btn m-btn--custom m-btn--label-brand m-btn--bolder logout"
-                                                           routerLink="/logout">
-                                                            Logout
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>-->
+                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light"
+                        data-dropdown-toggle="click">
+                        <a href="#" class="m-nav__link m-dropdown__toggle">
+                            <span class="m-topbar__userpic">
+                                <img [src]="appService.user.avatar.web_url"
+                                     class="m--img-rounded m--marginless m--img-centered"
+                                     *ngIf="appService.user && appService.user.avatar.web_url" alt="{{appService.user.nombre}}"/>
+                                <img [src]="defaultAvatar"
+                                     class="m--img-rounded m--marginless m--img-centered"
+                                     *ngIf="appService.user && !appService.user.avatar.web_url" alt="{{appService.user.nombre}}"/>
+                            </span>
+                            <span class="m-topbar__username m--hide" *ngIf="appService.user">
+                                {{appService.user.nombre}}
+                            </span>
+                        </a>
+                        <div class="m-dropdown__wrapper">
+                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__header m--align-center"
+                                     style="background-color:#1e1111; background-size: cover;">
+                                    <div class="m-card-user m-card-user--skin-dark">
+                                        <div class="m-card-user__pic">
+                                            <img [src]="appService.user.avatar.web_url" 
+                                                *ngIf="appService.user && appService.user.avatar.web_url"
+                                                 class="m--img-rounded m--marginless" 
+                                                 alt="{{appService.user.nombre}}"/>
+                                            <img [src]="defaultAvatar" 
+                                                *ngIf="appService.user && !appService.user.avatar.web_url"
+                                                 class="m--img-rounded m--marginless" 
+                                                 alt="{{appService.user.nombre}}"/>
+                                        </div>
+                                        <div class="m-card-user__details">
+                                            <span class="m-card-user__name m--font-weight-500"
+                                                  *ngIf="appService.user" style="color: white">
+                                                {{appService.user.nombre}}
+                                            </span>
+                                            <a href="" class="m-card-user__email m--font-weight-300 m-link"
+                                               *ngIf="appService.user" style="color: white">
+                                                {{appService.user.email}}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                            <li id="m_quick_sidebar_toggle" class="m-nav__item m--hide">
-                                <a href="#" class="m-nav__link m-dropdown__toggle" (click)="getEstadisticas()">
-									<span class="m-nav__link-icon">
-										<i class="flaticon-grid-menu"></i>
-									</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- END: Topbar -->
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                        <ul class="m-nav m-nav--skin-light">
+                                            <li class="m-nav__section m--hide">
+                                                <span class="m-nav__section-text">
+                                                    Section
+                                                </span>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a routerLink="/perfil" class="m-nav__link">
+                                                    <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                    <span class="m-nav__link-title">
+                                                        <span class="m-nav__link-wrap">
+                                                            <span class="m-nav__link-text">
+                                                                Mi Perfil
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__separator m-nav__separator--fit"></li>
+                                            <li class="m-nav__item">
+                                                <a class="btn m-btn--pill btn-success m-btn m-btn--custom m-btn--label-brand m-btn--bolder logout"
+                                                   routerLink="/logout">
+                                                    Logout
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li id="m_quick_sidebar_toggle" class="m-nav__item m--hide">
+                        <a href="#" class="m-nav__link m-dropdown__toggle" (click)="getEstadisticas()">
+                            <span class="m-nav__link-icon">
+                                <i class="flaticon-grid-menu"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+        <!-- END: Topbar -->
     </div>
 </header>
 <!-- END: Header -->

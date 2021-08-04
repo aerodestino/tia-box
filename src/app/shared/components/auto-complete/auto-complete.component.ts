@@ -73,9 +73,12 @@ export class AutoCompleteComponent implements OnInit, ControlValueAccessor {
         this.items.forEach(it => {
             if (it[this.valueField] === value) {
                 this.selected = it[this.valueField];
-                 this.inputText = it[this.textField] + '- ' + it[this.textField1];
+                this.inputText = it[this.textField] ;
+                
+                if(it[this.textField1])
+                    this.inputText = this.inputText + '-' + it[this.textField1];
                 if(it[this.textField2])
-                   this.inputText = this.inputText + ' ' + it[this.textField2]; 
+                    this.inputText = this.inputText + ' ' + it[this.textField2];
             }
         });
     }
@@ -100,9 +103,12 @@ export class AutoCompleteComponent implements OnInit, ControlValueAccessor {
             this.selected = item;
         else
             this.selected = ''; */
-        this.inputText = item[this.textField] + '- ' + item[this.textField1];
+        this.inputText = item[this.textField] ;
+            
+        if(item[this.textField1])
+            this.inputText = this.inputText + '-' + item[this.textField1];
         if(item[this.textField2])
-            this.inputText = this.inputText + ' ' + item[this.textField2]; 
+            this.inputText = this.inputText + ' ' + item[this.textField2];
         this.onTextChange();
         this.propagateChange(this.selected);
         this.change.emit(this.selected);
@@ -111,9 +117,17 @@ export class AutoCompleteComponent implements OnInit, ControlValueAccessor {
         this.itemsShowing = [];
         this.items.forEach(item => {
             if(!item[this.textField2]) item[this.textField2] = '';
-            if ((item[this.textField]+'-').toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField1].toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField2].toLowerCase().includes(this.inputText.toLowerCase())) {
-                this.itemsShowing.push(item);
+            if(!item[this.textField1]) item[this.textField1] = '';
+            if(item[this.textField1] != ''){
+                if ((item[this.textField]+'- ').toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField1].toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField2].toLowerCase().includes(this.inputText.toLowerCase())) {
+                    this.itemsShowing.push(item);
+                }
+            }else{
+                if ((item[this.textField]).toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField1].toLowerCase().includes(this.inputText.toLowerCase()) || item[this.textField2].toLowerCase().includes(this.inputText.toLowerCase())) {
+                    this.itemsShowing.push(item);
+                }
             }
+               
         });
         this.propagateChange(null);
         this.inputTextChange.emit(this.inputText);

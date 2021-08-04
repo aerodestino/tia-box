@@ -85,6 +85,7 @@ import { ThemeComponent } from "./theme/theme.component";
 import { ScriptLoaderService } from "./_services/script-loader.service";
 import { NoCacheHeadersInterceptor } from "./shared/services/auth/cache.service";
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { EntregaService } from "./shared/services/api/entrega.service";
 registerLocaleData(localeES, "es-CU");
 
 @NgModule({
@@ -182,7 +183,8 @@ registerLocaleData(localeES, "es-CU");
     FacturacionesService,
     DataTableColumnDirective,
     DataTableColumnHeaderDirective,
-    DataTableColumnCellDirective
+    DataTableColumnCellDirective,
+    EntregaService
   ],
   bootstrap: [AppComponent]
 })

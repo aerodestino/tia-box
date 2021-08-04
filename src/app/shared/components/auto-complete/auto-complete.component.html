@@ -15,7 +15,7 @@
 
  -->
      <span class="auto-complete-dropdown" *ngIf="showing">
-         <a *ngFor="let item of itemsShowing" (click)="selectItem(item)">{{item[textField]}}- {{item[textField1]}} {{item[textField2]}}</a>
+         <a *ngFor="let item of itemsShowing" (click)="selectItem(item)">{{item[textField1] ? ((item[textField2] ) ? item[textField] + '- ' + item[textField1] + ' ' + item[textField2] : item[textField] + '- ' + item[textField1]) : item[textField]}}</a>
      </span> 
    
 </div>

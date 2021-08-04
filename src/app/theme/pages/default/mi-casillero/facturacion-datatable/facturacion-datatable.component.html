@@ -14,7 +14,7 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            {{articulo.fechaNotificacion | date: "dd/MM/y"}}
+            {{articulo.fechaNotificacion | date: "dd/MM/y" : "-0500"}}
         </td>
         <td>
             {{articulo.recibo }}
