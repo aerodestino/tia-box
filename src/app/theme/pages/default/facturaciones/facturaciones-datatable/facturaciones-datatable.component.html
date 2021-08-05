@@ -104,7 +104,7 @@
                     <span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
                 </td>
                 <td>
-                    {{ articulo.peso }}
+                    {{ articulo.peso | number:'1.2-2'  }}
                 </td>
                 <td>
                     {{ articulo.precio_final }}
