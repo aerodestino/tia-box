@@ -39,7 +39,7 @@
            </div>
         </td>
         <td>
-            {{articulo.fechaBodega | date: "dd/MM/y" : "-0500"}}
+            {{articulo.fecha_bodega | date: "dd/MM/y" : "-0500"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -50,7 +50,7 @@
         <td>
             <span *ngIf="articulo.media == 0">{{articulo.descripcion}}</span>
             <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media > 0" (click)="onVerImagenes(articulo.id)">{{articulo.descripcion}}</span>
-            <span *ngIf="articulo.extranombre">({{articulo.extranombre}} {{articulo.extraapellidos}})</span>
+            <span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
         </td>
         <td>
             {{articulo.tienda}}
@@ -71,7 +71,7 @@
             {{ articulo.precio }}
         </td>
         <td>
-            {{ articulo.estado }}
+            {{ articulo.estado_articulo ? articulo.estado_articulo.nombre : '-' }}
         </td>
        <td>
             <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>   
@@ -79,12 +79,12 @@
         <td>
         <div class="row">
             <div class="col-md-1">
-            <i class="fa fa-edit m--font-info" *ngIf="articulo.entrega && !articulo.guiaEnviada && (articulo.idestado == 3 || articulo.idestado == 4) " title="Editar Entrega" style="cursor: pointer;" (click)="View(editarModal,articulo.entrega,0)"></i>
+            <i class="fa fa-edit m--font-info" *ngIf="articulo.entrega && !articulo.guia_enviada && (articulo.estado_articulo.id == 3 || articulo.estado_articulo.id == 4) " title="Editar Entrega" style="cursor: pointer;" (click)="View(editarModal,articulo.entrega,0)"></i>
             </div>
             <div class="col-md-1">
             <i class="fa fa-eye m--font-info" *ngIf="articulo.entrega" title="Visualizar Entrega" style="cursor: pointer;" (click)="View(detallesModal,articulo.entrega,1)"></i>
             </div>
-            <div class="col-md-1" *ngIf="articulo.entrega && !articulo.guiaEnviada && (articulo.idestado == 3 || articulo.idestado == 4) ">
+            <div class="col-md-1" *ngIf="articulo.entrega && !articulo.guia_enviada && (articulo.estado_articulo.id == 3 || articulo.estado_articulo.id == 4) ">
                 <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer"
                    (click)="onDelete(deleteConfirmation,articulo.entrega)"></i>
             </div>
@@ -157,19 +157,19 @@
             <tbody>
             <tr>
                 <td>
-                    {{detalles.codigoPedido }}
+                    {{detalles.codigo_pedido }}
                 </td>
                 <td>
-                    {{detalles.recibo}}
+                    {{detalles.facturacion ? detalles.facturacion.recibo : '-'}}
                 </td>
                 <td>
-                    {{(detalles.guiaEnviada && detalles.nombreEnt) ? detalles.nombreEnt : detalles.nombre }}
+                    {{(detalles.entrega && detalles.entrega.guia_enviada && detalles.entrega.courier) ? detalles.entrega.courier.nombre : ((detalles.facturacion && detalles.facturacion.courier) ? detalles.facturacion.courier.nombre : '-') }}
                 </td>
                 <td>
-                    {{(detalles.guiaEnviada && detalles.guiaEnt) ? detalles.guiaEnt : detalles.guia}}
+                    {{(detalles.entrega && detalles.entrega.guia_enviada) ? detalles.entrega.guia : ((detalles.facturacion && detalles.facturacion.guia) ? detalles.facturacion.guia : '-') }}
                 </td>
                 <td>
-                    {{(detalles.guiaEnviada && detalles.fechaGuiaEnt) ?  (detalles.fechaGuiaEnt | date: "dd/MM/y" : "-0500") : (detalles.fechaGuia | date: "dd/MM/y" : "-0500") }}
+                    {{(detalles.entrega && detalles.entrega.guia_enviada) ? (detalles.entrega.fecha_guia | date: "dd/MM/y" : "-0500") : ((detalles.facturacion && detalles.facturacion.fecha_guia) ? (detalles.facturacion.fecha_guia | date: "dd/MM/y" : "-0500") : '-') }}
                 </td>
             </tr>
             </tbody>
@@ -355,7 +355,7 @@
 <!--begin::View  Modal-->
 <ng-template #editarModal let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title">Crear Entrega</h4>
+        <h4 class="modal-title">{{titulo}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -372,26 +372,28 @@
                             </label>
                             <div class="col-lg-9">
                                 <select #domicilio_retiro="ngModel"  [(ngModel)]="entrega.domicilio" name="domicilio_retiro" class="form-control m-input" (change)="domicilioValue(domicilio_retiro.value)">
-                                    <option value= "1">Domicilio</option>
-                                    <option value= "0">Retiro</option>
+                                    <option value= "1">DOMICILIO</option>
+                                    <option value= "0">RETIRO PUNTO TRAMACO</option>
+                                    <option value= "2">RETIRO MATRIZ</option>
                                 </select>
                             </div>
                            
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0">
+                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
                                 <h5 >Dónde se retira:</h5>  
                             </label>
     
                         </div>
                         
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0">
+                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
                              <label class="col-lg-3 col-form-label">
                                 País:
                             </label>
                             <div class="col-lg-3">
                                 <select  class="form-control m-input" placeholder="País" (change)="getProvinciasR(pais_id.value)"
-                                        [(ngModel)]="entrega.ciudad_retiro.provincia.pais.id" #pais_id="ngModel" name="pais_id">
+                                        [(ngModel)]="entrega.ciudad_retiro.provincia.pais.id" #pais_id="ngModel" name="pais_id"
+                                        disabled={{disabled}}>
                                     <option [value]="" disabled>Seleccione un País</option>
                                     <option *ngFor="let pais of paisesEntrega" [value]="pais.id" >
                                         {{pais.nombre}}
@@ -402,7 +404,7 @@
                                 Provincia:
                             </label>
                             <div class="col-lg-3">
-                                <app-auto-complete *ngIf="provinciasR" placeholder="Seleccione"
+                                <app-auto-complete *ngIf="provinciasR" placeholder="Seleccione" [disabled]="disabled"
                                 [(ngModel)]="entrega.ciudad_retiro.provincia.id" #provinciaRetiro_id="ngModel"
                                 name="provinciaRetiro_id" required [items]="provinciasR"
                                 (change)="getCiudadesR(provinciaRetiro_id.value)"
@@ -412,12 +414,12 @@
                            
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0">
+                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
                                 Ciudad:
                             </label>
                             <div class="col-lg-4">
-                                <app-auto-complete *ngIf="ciudadesR" placeholder="Seleccione"
+                                <app-auto-complete *ngIf="ciudadesR" placeholder="Seleccione" [disabled]="disabled"
                                 [(ngModel)]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel"
                                 name="ciudadRetiro_id" required [items]="ciudadesR"
                                 [textField]="'nombre'"
@@ -426,24 +428,24 @@
                                
                             </div>
                             <div class="col-lg-5">
-                                <input type="text" class="form-control m-input" placeholder="Ciudad"
-                                [ngModel]="entrega.ciudad_retiro_text" #ciudadretirotext="ngModel" name="ciudadretirotext">
+                                <input type="text"  disabled={{disabled}} class="form-control m-input" placeholder="Ciudad Manual"
+                                [(ngModel)]="entrega.ciudad_retiro_text" #ciudadretirotext="ngModel" name="ciudadretirotext">
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0">
+                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
                                 Otra Información:
                             </label>
                             <div class="col-lg-9">
                                 <textarea class="form-control m-input" placeholder="Anotación"
-                                          [ngModel]="entrega.nota_retiro" #notaRetiro="ngModel"
+                                          [(ngModel)]="entrega.nota_retiro" #notaRetiro="ngModel"
                                           name="notaRetiro">
                                 </textarea>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <div class="col-lg-9">
-                                <h5 *ngIf= "entrega.domicilio == 0">Datos de la persona que retira:</h5> 
+                                <h5 *ngIf= "entrega.domicilio == 0 || domicilio == 2">Datos de la persona que retira:</h5> 
                                 <h5 *ngIf= "entrega.domicilio == 1">Datos del domicilio:</h5> 
                             </div>
                         </div>
@@ -473,7 +475,7 @@
                                                     [textField]="'numero_identidad'"
                                                     textField1="nombre"
                                                     textField2="apellido"
-                                                    valueField="numero_identidad"
+                                                    valueField="numero_identidad" (change)="getDireccion(usuario_retiro.value)"
                                 ></app-auto-complete>
                             </div>
                            
@@ -503,13 +505,13 @@
                                 </section>
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf="selectUsuario == 0">
+                        <div class="form-group m-form__group row" *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0)">
                             <label class="col-lg-3 col-form-label">
                                 Cédula:
                             </label>
                             <div class="col-lg-3">
                                 <input type="text" class="form-control m-input" placeholder="Cédula"
-                                       [ngModel]="entrega.cedula" #cedula="ngModel"
+                                       [ngModel]="entrega.cedula" #cedula="ngModel" disabled={{disabledDir}}
                                        name="cedula" required>
                                 <section *ngIf="cedula.invalid && cedula.dirty" class="bs">
                                 <p class="m--font-danger" *ngIf="cedula.hasError('required')">La cédula es
@@ -521,7 +523,7 @@
                             </label>
                             <div class="col-lg-3">
                                 <input type="text" class="form-control m-input" placeholder="Celular"
-                                       [ngModel]="entrega.celular" #celular="ngModel"
+                                       [ngModel]="entrega.celular" #celular="ngModel" disabled={{disabledDir}}
                                        name="celular" required>
                                 <section *ngIf="celular.invalid && celular.dirty" class="bs">
                                 <p class="m--font-danger" *ngIf="celular.hasError('required')">El celular es
@@ -529,13 +531,13 @@
                                 </section>
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf="selectUsuario == 0 && entrega.domicilio == 1">
+                        <div class="form-group m-form__group row" *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
                                 <label class="col-lg-3 col-form-label">
                                     Dirección:
                                 </label>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control m-input" placeholder="Dirección"
-                                    [ngModel]="entrega.direccion" #direccion="ngModel"
+                                    [ngModel]="entrega.direccion" #direccion="ngModel" disabled={{disabledDir}}
                                     name="direccion" required>
                                     <section *ngIf="direccion.invalid && direccion.dirty" class="bs">
                                     <p class="m--font-danger" *ngIf="direccion.hasError('required')">La dirección es
@@ -544,14 +546,14 @@
                                 </div>
                             
                         </div>
-                        <div class="form-group m-form__group row" *ngIf="selectUsuario == 0 && entrega.domicilio == 1">
+                        <div class="form-group m-form__group row"  *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
                             <label class="col-lg-3 col-form-label">
                                 País:
                             </label>
                             <div class="col-lg-3">
                                 <select  class="form-control m-input" placeholder="País" (change)="getProvincias(pais_id.value)"
-                                        [(ngModel)]="entrega.ciudad.provincia.pais.id" #pais_id="ngModel" name="pais_id" required>
-                                    <option [value]="" disabled>Seleccione un País</option>
+                                        [(ngModel)]="entrega.ciudad.provincia.pais.id"  disabled={{disabledDir}} #pais_id="ngModel" name="pais_id" required>
+                                    <option [value]="" disabled>Seleccione un País</option> 
                                     <option *ngFor="let pais of paisesEntrega" [value]="pais.id" >
                                         {{pais.nombre}}
                                     </option>
@@ -563,7 +565,7 @@
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="provincias" placeholder="Seleccione"
                                 [(ngModel)]="entrega.ciudad.provincia.id" #provincia_id="ngModel"
-                                name="provincia_id" required [items]="provincias"
+                                name="provincia_id" required [items]="provincias" [disabled]="disabledDir"
                                 (change)="getCiudades(provincia_id.value)"
                                 [textField]="'nombre'"
                                 valueField="id"
@@ -571,14 +573,14 @@
                             
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf="selectUsuario == 0 && entrega.domicilio == 1">
+                        <div class="form-group m-form__group row"  *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
                             <label class="col-lg-3 col-form-label">
                                 Ciudad:
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
                                 [(ngModel)]="entrega.ciudad.id" #ciudad_id="ngModel"
-                                name="ciudad_id" required [items]="ciudades"
+                                name="ciudad_id" required [items]="ciudades" [disabled]="disabledDir"
                                 [textField]="'nombre'"
                                 valueField="id"
                                  ></app-auto-complete>
@@ -589,10 +591,10 @@
                             </label>
                             <div class="col-lg-3">
                                 <input type="text" class="form-control m-input" placeholder="Código Postal"
-                                [ngModel]="entrega.codigo_postal" #codigoPostal="ngModel"
-                                name="codigoPostal" required>
-                                <section *ngIf="codigoPostal.invalid && codigoPostal.dirty" class="bs">
-                                <p class="m--font-danger" *ngIf="codigoPostal.hasError('required')">El código postal es
+                                [ngModel]="entrega.codigoPostal" #codigo_postal="ngModel"
+                                name="codigo_postal" required disabled = {{disabledDir}}>
+                                <section *ngIf="codigo_postal.invalid && codigo_postal.dirty" class="bs">
+                                <p class="m--font-danger" *ngIf="codigo_postal.hasError('required')">El código postal es
                                     requerido</p>
                                 </section>
                             </div>
@@ -648,6 +650,11 @@
                         </th>
                         <th>
                             Peso(Lb)
+                            <div style="float: right;">
+                                <input type="radio" class="radio-inline" id="Kg" name="tipopeso" value="1" [(ngModel)]="tpeso" #tipopeso="ngModel" required [checked]="tipopeso.value==1" (change)="onConversion(entrega.articulo)" > <label for="Kg" ><span></span>Kg</label>
+                            
+                                <input type="radio" class="radio-inline" id="lb" name="tipopeso" value="0"  [(ngModel)]="tpeso" #tipopeso="ngModel" required [checked]="tipopeso.value==0" (change)="onConversion(entrega.articulo)" > <label for="lb" ><span></span>Lb</label>      
+                            </div>
                         </th>
                         <th>
                             Dimensiones(In)
@@ -704,6 +711,14 @@
                         </td> 
                         
                     </tr>
+                    <tr style="font-weight: bold;">
+                        <td colspan="4" style="text-align: center;">TOTAL</td>
+                        <td>{{ totalPeso | number:'1.2-2' }}</td>
+                        <td>{{ totalPrecio }}</td>
+                        <td>{{ totalPiezas }}</td>
+                        
+                        <td colspan="3" ></td>
+                    </tr>
                     </tbody>
                 </table>
                 </div>
@@ -726,12 +741,27 @@
         <div class="m-portlet__head-caption">
             <div class="m-list-settings">
                 <div *ngIf="entrega" class="m-list-settings__group">
-                    <div class="m-list-settings__item" *ngIf="!entrega.domicilio">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                          <h5> TIPO : DOMICILIO </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 0">
+                        <span class="m-list-settings__item-label">
+                          <h5> TIPO : RETIRO PUNTO TRAMACO </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 2">
+                        <span class="m-list-settings__item-label">
+                          <h5> TIPO : RETIRO MATRIZ </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1">
                         <span class="m-list-settings__item-label">
                           <h5> Dónde se retira </h5> 
                         </span>
                     </div>
-                    <div class="m-list-settings__item" *ngIf="!entrega.domicilio && entrega.ciudad_retiro">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.ciudad_retiro">
                         <span class="m-list-settings__item-label">
                            País
                         </span>
@@ -740,7 +770,7 @@
                         </span>
             
                     </div>
-                    <div class="m-list-settings__item" *ngIf="!entrega.domicilio && entrega.ciudad_retiro">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.ciudad_retiro">
                         <span class="m-list-settings__item-label">
                            Provincia
                         </span>
@@ -749,7 +779,7 @@
                         </span>
             
                     </div>
-                    <div class="m-list-settings__item" *ngIf="!entrega.domicilio">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1">
                         <span class="m-list-settings__item-label">
                            Ciudad
                         </span>
@@ -769,10 +799,10 @@
                         </span>
                     </div>
                     <div class="m-list-settings__item">
-                        <span class="m-list-settings__item-label"  *ngIf="entrega.domicilio">
+                        <span class="m-list-settings__item-label"  *ngIf="entrega.domicilio == 1">
                            <h5>Datos del domicilio</h5> 
                         </span>
-                        <span class="m-list-settings__item-label"  *ngIf="!entrega.domicilio">
+                        <span class="m-list-settings__item-label"  *ngIf="entrega.domicilio != 1">
                            <h5> Datos de la persona que retira </h5> 
                         </span>
                     </div>
@@ -806,7 +836,7 @@
                         </span>
                     </div>
 
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                             Dirección
                         </span>
@@ -820,7 +850,7 @@
                             {{ entrega.extra.direccion }}
                         </span>
                     </div>
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                             Código Postal
                         </span>
@@ -850,7 +880,7 @@
                         </span>
                     </div>
 
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                             Ciudad
                         </span>
@@ -865,7 +895,7 @@
                         </span> 
                     </div>
 
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                             Provincia
                         </span>
@@ -880,7 +910,7 @@
                         </span>
                     </div>
 
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                             País
                         </span>
