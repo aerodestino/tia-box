@@ -248,6 +248,7 @@ View(content, entrega,tipo) {
   Helpers.setLoading(true);
 //  this.entregaService.getById(id).subscribe(resource => {
       this.entrega = entrega;
+      this.domicilio = entrega.domicilio;
       for(let i in entrega.articulo){
         let c = Big(entrega.articulo[i].precio);
         this.totalPrecio = c.plus(this.totalPrecio);
@@ -291,7 +292,7 @@ View(content, entrega,tipo) {
           this.entrega.ciudad_retiro.provincia.pais.id = 8;
           this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
         }
-        this.domicilioValue(this.entrega.domicilio);
+        this.domicilioValue(this.domicilio);
         this.titulo = 'Editar Entrega';
       }else{
         this.titulo = 'Crear Entrega';

@@ -26,8 +26,25 @@
     <tr *ngFor="let articulo of data">
         <td>
             <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigo_consolidado}}</i>
-            <a style="cursor: pointer; color:#ee1111"  *ngIf="articulo.enviar" title="Instrucciones de Embarque"  (click)="modalEmbarque(embarqueModal,articulo )"> <i class="fa fa-plane" style="font-size: 10px"></i></a>
-           
+            <a style="cursor: pointer;" *ngIf="articulo.enviar" (click)="modalEmbarque(embarqueModal,articulo )"> 
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                    padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35;" title="Instrucciones de Embarque por Administrativo"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque"  ></i>
+    
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                    padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35" title="Instrucciones de Embarque por Administrativo (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque (Bloqueada Edición)"  ></i>
+    
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                      padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35" title="Instrucciones de Embarque por Administrativo (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque (Bloqueada Edición)"  ></i>
+    
+                <i class="fa fa-ban" style="font-size: 8px !important;color:#ee1111;float: left;" *ngIf="(articulo.estado_articulo.id > 2 || articulo.editar_embarque) && ((articulo.embarque_por && articulo.embarque_por.is_client) || !articulo.embarque_por)"></i>
+                <i class="fa fa-ban" style="font-size: 8px !important;color:#4f9e35;float: left" *ngIf="(articulo.estado_articulo.id > 2 || articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client"></i>
+            </a>              
         </td>
         <td>
             {{articulo.fecha_embarque | date: "dd/MM/y" : "-0500"}}

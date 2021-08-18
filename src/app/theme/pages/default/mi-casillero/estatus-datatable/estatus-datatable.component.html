@@ -34,8 +34,25 @@
             </div>
             <div class="col-md-3">
             <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigo_consolidado}}</i>
-            <a style="cursor: pointer; color:#ee1111"  *ngIf="articulo.enviar" title="Instrucciones de Embarque"  (click)="modalEmbarque(embarqueModal,articulo )"> <i class="fa fa-plane" style="font-size: 10px"></i></a>
-           </div>
+            <a style="cursor: pointer;" *ngIf="articulo.enviar" (click)="modalEmbarque(embarqueModal,articulo )"> 
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                    padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35;" title="Instrucciones de Embarque por Administrativo"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque"  ></i>
+    
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                    padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35" title="Instrucciones de Embarque por Administrativo (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque (Bloqueada Edición)"  ></i>
+    
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                      padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35" title="Instrucciones de Embarque por Administrativo (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque (Bloqueada Edición)"  ></i>
+    
+                <i class="fa fa-ban" style="font-size: 8px !important;color:#ee1111;float: left;" *ngIf="(articulo.estado_articulo.id > 2 || articulo.editar_embarque) && ((articulo.embarque_por && articulo.embarque_por.is_client) || !articulo.embarque_por)"></i>
+                <i class="fa fa-ban" style="font-size: 8px !important;color:#4f9e35;float: left" *ngIf="(articulo.estado_articulo.id > 2 || articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client"></i>
+            </a>              </div>
            </div>
         </td>
         <td>
@@ -351,7 +368,6 @@
 </ng-template>
 <!--end::Modal-->
 
-
 <!--begin::View  Modal-->
 <ng-template #editarModal let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -371,7 +387,7 @@
                                 <h5> Tipo de entrega</h5>
                             </label>
                             <div class="col-lg-9">
-                                <select #domicilio_retiro="ngModel"  [(ngModel)]="entrega.domicilio" name="domicilio_retiro" class="form-control m-input" (change)="domicilioValue(domicilio_retiro.value)">
+                                <select #domicilio_retiro="ngModel"  [(ngModel)]="domicilio" name="domicilio_retiro" class="form-control m-input" (change)="domicilioValue(domicilio_retiro.value)">
                                     <option value= "1">DOMICILIO</option>
                                     <option value= "0">RETIRO PUNTO TRAMACO</option>
                                     <option value= "2">RETIRO MATRIZ</option>
@@ -379,20 +395,20 @@
                             </div>
                            
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
                                 <h5 >Dónde se retira:</h5>  
                             </label>
     
                         </div>
                         
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
                              <label class="col-lg-3 col-form-label">
                                 País:
                             </label>
                             <div class="col-lg-3">
                                 <select  class="form-control m-input" placeholder="País" (change)="getProvinciasR(pais_id.value)"
-                                        [(ngModel)]="entrega.ciudad_retiro.provincia.pais.id" #pais_id="ngModel" name="pais_id"
+                                        [ngModel]="entrega.ciudad_retiro.provincia.pais.id" #pais_id="ngModel" name="pais_id"
                                         disabled={{disabled}}>
                                     <option [value]="" disabled>Seleccione un País</option>
                                     <option *ngFor="let pais of paisesEntrega" [value]="pais.id" >
@@ -405,8 +421,8 @@
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="provinciasR" placeholder="Seleccione" [disabled]="disabled"
-                                [(ngModel)]="entrega.ciudad_retiro.provincia.id" #provinciaRetiro_id="ngModel"
-                                name="provinciaRetiro_id" required [items]="provinciasR"
+                                [ngModel]="entrega.ciudad_retiro.provincia.id" #provinciaRetiro_id="ngModel"
+                                name="provinciaRetiro_id" [items]="provinciasR"
                                 (change)="getCiudadesR(provinciaRetiro_id.value)"
                                 [textField]="'nombre'"
                                 valueField="id"
@@ -414,14 +430,14 @@
                            
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
                                 Ciudad:
                             </label>
                             <div class="col-lg-4">
                                 <app-auto-complete *ngIf="ciudadesR" placeholder="Seleccione" [disabled]="disabled"
-                                [(ngModel)]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel"
-                                name="ciudadRetiro_id" required [items]="ciudadesR"
+                                [ngModel]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel"
+                                name="ciudadRetiro_id" [items]="ciudadesR"
                                 [textField]="'nombre'"
                                 valueField="id"
                                  ></app-auto-complete>
@@ -429,24 +445,24 @@
                             </div>
                             <div class="col-lg-5">
                                 <input type="text"  disabled={{disabled}} class="form-control m-input" placeholder="Ciudad Manual"
-                                [(ngModel)]="entrega.ciudad_retiro_text" #ciudadretirotext="ngModel" name="ciudadretirotext">
+                                [ngModel]="entrega.ciudad_retiro_text" #ciudadretirotext="ngModel" name="ciudadretirotext">
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
                                 Otra Información:
                             </label>
                             <div class="col-lg-9">
                                 <textarea class="form-control m-input" placeholder="Anotación"
-                                          [(ngModel)]="entrega.nota_retiro" #notaRetiro="ngModel"
+                                          [ngModel]="entrega.nota_retiro" #notaRetiro="ngModel"
                                           name="notaRetiro">
                                 </textarea>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <div class="col-lg-9">
-                                <h5 *ngIf= "entrega.domicilio == 0 || domicilio == 2">Datos de la persona que retira:</h5> 
-                                <h5 *ngIf= "entrega.domicilio == 1">Datos del domicilio:</h5> 
+                                <h5 *ngIf= "domicilio == 0 || domicilio == 2">Datos de la persona que retira:</h5> 
+                                <h5 *ngIf= "domicilio == 1">Datos del domicilio:</h5> 
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
@@ -454,7 +470,7 @@
                                 <h5> Tipo de usuario</h5>
                             </label>
                             <div class="col-lg-9">
-                                <select class="form-control m-input" [(ngModel)]="selectUsuario" #selected="ngModel" name="selected" (change)="selectedValue(selected.value)">
+                                <select class="form-control m-input" [ngModel]="selectUsuario" #selected="ngModel" name="selected" (change)="selectedValue(selected.value)">
                                     <option value= "1">Usuario Existente en sistema</option>
                                     <option value= "0">Usuario no existente en sistema</option>
                                 </select>
@@ -552,7 +568,7 @@
                             </label>
                             <div class="col-lg-3">
                                 <select  class="form-control m-input" placeholder="País" (change)="getProvincias(pais_id.value)"
-                                        [(ngModel)]="entrega.ciudad.provincia.pais.id"  disabled={{disabledDir}} #pais_id="ngModel" name="pais_id" required>
+                                        [ngModel]="entrega.ciudad.provincia.pais.id"  disabled={{disabledDir}} #pais_id="ngModel" name="pais_id" required>
                                     <option [value]="" disabled>Seleccione un País</option> 
                                     <option *ngFor="let pais of paisesEntrega" [value]="pais.id" >
                                         {{pais.nombre}}
@@ -564,7 +580,7 @@
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="provincias" placeholder="Seleccione"
-                                [(ngModel)]="entrega.ciudad.provincia.id" #provincia_id="ngModel"
+                                [ngModel]="entrega.ciudad.provincia.id" #provincia_id="ngModel"
                                 name="provincia_id" required [items]="provincias" [disabled]="disabledDir"
                                 (change)="getCiudades(provincia_id.value)"
                                 [textField]="'nombre'"
@@ -579,7 +595,7 @@
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
-                                [(ngModel)]="entrega.ciudad.id" #ciudad_id="ngModel"
+                                [ngModel]="entrega.ciudad.id" #ciudad_id="ngModel"
                                 name="ciudad_id" required [items]="ciudades" [disabled]="disabledDir"
                                 [textField]="'nombre'"
                                 valueField="id"
