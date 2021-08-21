@@ -89,6 +89,14 @@ export class MiCasilleroListaComponent extends BaseListComponent
   paisesEntrega:Country[];
   articulosDatos:any[];
   public selectUsuario: any =1;
+  domicilio = 1;
+  disabled = false;
+  otroUsuario = false;
+  disabledDir = false;
+  totalPesoEnt = 0;
+  tpeso = 0;
+  totalPrecioEnt =0;
+  totalPiezas =0;
   enBodegaFilters = {
     limit: 5,
     offset: 0,
@@ -627,6 +635,9 @@ OnModalFactura(content){
 }
 
 onEntrega(content){
+  this.totalPrecioEnt = 0;
+  this.totalPesoEnt = 0;
+  this.totalPiezas = 0;
     this.entrega = new Entrega();
     this.entrega.ciudad = new City;
     this.entrega.ciudad_retiro = new City;
@@ -636,19 +647,59 @@ onEntrega(content){
     this.entrega.ciudad_retiro.provincia.pais = new Country;
     this.entrega.domicilio = 1;
     this.entrega.articulos= this.articulosDatos;
-
+    for(let i in this.entrega.articulos){
+      let c = Big(this.entrega.articulos[i].precio);
+      this.totalPrecioEnt = c.plus(this.totalPrecioEnt);
+      let peso = Big(this.entrega.articulos[i].peso);
+      this.totalPesoEnt = peso.plus(this.totalPesoEnt);
+      let piezas = Big(this.entrega.articulos[i].piezas);
+      this.totalPiezas = piezas.plus(this.totalPiezas);
+      
+      let pesolistado = Big(this.entrega.articulos[i].peso);
+      this.entrega.articulos[i].peso = pesolistado.toNumber(); 
+      let tpesolistado = Big( this.totalPesoEnt);
+      this.totalPesoEnt = tpesolistado.toNumber(); 
+  }
   this.modalRef = this.ngbModal.open(content, {size: "lg"});
  
 }
-
 domicilioValue(value){
-  this.entrega.domicilio = value;
+  this.domicilio = value;
+  this.disabled = false;
+ 
+  this.disabledDir = false;
+  if(this.domicilio == 2){
+    this.entrega.ciudad_retiro.id = 4813;
+      this.entrega.ciudad_retiro.provincia.pais.id = 8;
+      this.entrega.ciudad_retiro.provincia.id = 895;
+      this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+      
+      this.entrega.ciudad_retiro_text = 'Guayaquil';
+      this.disabled = true;
+  }
+  if(this.domicilio == 1 && this.selectUsuario == 1){
+      if(this.usuarioRetirar != '')
+          this.getDireccion(this.usuarioRetirar);
+  }
 }
 
 selectedValue(value){
-    this.selectUsuario = value;
+  this.selectUsuario = value;
+  if(this.selectUsuario == 0){
+      this.disabledDir = false;
+      this.entrega.direccion = '';
+      this.entrega.cedula = '';
+      this.entrega.celular = '';
+      this.entrega.codigoPostal = '';
+      this.entrega.ciudad = new City();
+      this.entrega.ciudad.provincia = new Province();
+      this.entrega.ciudad.provincia.pais = new Country();
+  }
+  if(this.domicilio == 1 && this.selectUsuario == 1){
+      if(this.usuarioRetirar != '')
+          this.getDireccion(this.usuarioRetirar);
+  }
 }
-
 close(){
   this.modalRef.close();
 }
@@ -881,5 +932,52 @@ this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
   console.log(error.json());
 });
 }
+
+onConversion(articulo){
+  this.totalPesoEnt = 0;
+  for(let i in articulo){
+      if(this.tpeso == 1){
+          let peso = Big(articulo[i]['peso']);
+          let conv = peso.div(2.2046);
+          articulo[i]['peso'] = conv.toNumber();
+      }else{
+          let peso = Big(articulo[i]['peso']);
+          let conv = peso.mul(2.2046);
+          articulo[i]['peso'] = conv.toNumber();
+      }
+      let pesoT = Big(articulo[i]['peso']);
+      this.totalPesoEnt = pesoT.plus(this.totalPesoEnt);
+      let t= Big(this.totalPesoEnt);
+      this.totalPesoEnt = t.toNumber();
+  }
+}
+
+getDireccion(id){
+  this.disabledDir = false;
+  this.entrega.direccion = '';
+  this.entrega.codigoPostal = '';
+  this.entrega.ciudad = new City();
+  this.entrega.ciudad.provincia = new Province();
+  this.entrega.ciudad.provincia.pais = new Country();
+  this.entrega.direccion = '';
+  this.entrega.celular = '';
+  this.entrega.cedula = '';
+  for(let i in this.usuarios){
+      if(this.usuarios[i].numero_identidad === id){
+          this.entrega.direccion = this.usuarios[i].direccion;
+          this.entrega.codigoPostal = this.usuarios[i].codigo_postal;
+          this.entrega.ciudad.id = this.usuarios[i].ciudad_id;
+          this.entrega.ciudad.provincia.id = this.usuarios[i].provincia_id;
+          this.entrega.ciudad.provincia.pais.id = this.usuarios[i].pais_id;
+          this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+          this.getCiudades(this.entrega.ciudad.provincia.id);
+          this.entrega.celular = this.usuarios[i].celular;
+          this.entrega.cedula = this.usuarios[i].numero_identidad;
+          this.disabledDir = true;
+      }
+         
+  }
+}
+
 
 }

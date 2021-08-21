@@ -14,6 +14,13 @@ export class User extends Model {
         public role?: Role,
         public sitio?: Site,
         public sitio_id?: number | string,
+        public direccion?: string,
+        public celular?: string,
+        public codigo_postal?: string,
+        public ciudad_id?: any,
+        public pais_id?: any,
+        public provincia_id?: any,
+        public cedula?: string,
         public status?: number) {
         super();
     }

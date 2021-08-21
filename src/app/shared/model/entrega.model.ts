@@ -14,8 +14,8 @@ export class Entrega extends Model {
         public usuario?: User,
         public extra?: Extra,
         public ciudadRetiro?: City,
-        public ciudad_retiro?: City,
-        public articulos?: number[],
+        public ciudad_retiro?: any,
+        public articulos?: any[],
         public fechIngreso?: any,
         public nombre?:string,
         public apellidos?:string,
@@ -28,7 +28,11 @@ export class Entrega extends Model {
         public nota?:any,
         public notaRetiro?:any,
         public domicilio?:any,
-        public codigoPostal?: string
+        public codigoPostal?: string,
+        public ciudad_retiro_text?: string,
+        public pais?:any,
+        public pais_retiro?:any,
+        public provincia_retiro?:any
     ) {
         super();
     }

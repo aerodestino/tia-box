@@ -61,13 +61,21 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
   usuarioRetirar:any;
   entrega:Entrega;
   paisesEntrega:Country[];
+  domicilio = 1;
+  disabled = false;
+  titulo = 'Crear Entrega';
   @Input() url: any;
   @Output() entregaSelection: EventEmitter<any> = new EventEmitter();
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
   @Output() articuloChange: EventEmitter<any> = new EventEmitter();
   @Output() cargar: EventEmitter<any> = new EventEmitter();
   @Output() ver: EventEmitter<any> = new EventEmitter();
-
+  otroUsuario = false;
+  disabledDir = false;
+  totalPeso = 0;
+  tpeso = 0;
+  totalPrecio=0;
+  totalPiezas =0;
   selectionIds: string[];
   selectionArticulo: any[];
   precios: any[];
@@ -83,6 +91,9 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
   }
 
   ngOnInit() {
+    this.getPaisesE(); 
+    this.getUsuarios();
+    this.domicilio = 1;
     this.page = this.filters.offset + 1;
     this.registroInicialPagina =
       this.totalItems > 0 ? this.filters.offset * this.filters.limit + 1 : 0;
@@ -99,12 +110,58 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
     // );
   }
 
+  onConversion(articulo){
+    this.totalPeso = 0;
+    for(let i in articulo){
+        if(this.tpeso == 1){
+            let peso = Big(articulo[i]['peso']);
+            let conv = peso.div(2.2046);
+            articulo[i]['peso'] = conv.toNumber();
+        }else{
+            let peso = Big(articulo[i]['peso']);
+            let conv = peso.mul(2.2046);
+            articulo[i]['peso'] = conv.toNumber();
+        }
+        let pesoT = Big(articulo[i]['peso']);
+        this.totalPeso = pesoT.plus(this.totalPeso);
+        let t= Big(this.totalPeso);
+        this.totalPeso = t.toNumber();
+    }
+}
+
   changeAllState() {
     this.selectedAll = true;
     this.data.forEach(skumaster => {
       if (!skumaster.selected) this.selectedAll = false;
     });
     this.emitSelectionChange();
+  }
+
+  getDireccion(id){
+    this.disabledDir = false;
+    this.entrega.direccion = '';
+    this.entrega.codigoPostal = '';
+    this.entrega.ciudad = new City();
+    this.entrega.ciudad.provincia = new Province();
+    this.entrega.ciudad.provincia.pais = new Country();
+    this.entrega.direccion = '';
+    this.entrega.celular = '';
+    this.entrega.cedula = '';
+    for(let i in this.usuarios){
+        if(this.usuarios[i].numero_identidad === id){
+            this.entrega.direccion = this.usuarios[i].direccion;
+            this.entrega.codigoPostal = this.usuarios[i].codigo_postal;
+            this.entrega.ciudad.id = this.usuarios[i].ciudad_id;
+            this.entrega.ciudad.provincia.id = this.usuarios[i].provincia_id;
+            this.entrega.ciudad.provincia.pais.id = this.usuarios[i].pais_id;
+            this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+            this.getCiudades(this.entrega.ciudad.provincia.id);
+            this.entrega.celular = this.usuarios[i].celular;
+            this.entrega.cedula = this.usuarios[i].numero_identidad;
+            this.disabledDir = true;
+        }
+           
+    }
   }
 
   descargar(file) {
@@ -143,7 +200,7 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
       if (item.selected){
         this.selectionIds.push(item.id);
         this.selectionArticulo.push(item);
-        if((item.idestado == 3 || item.idestado == 4) && !item.entrega)
+        if((item.estado_articulo.id == 3 || item.estado_articulo.id == 4) && !item.entrega)
           existe++;
       } 
     });
@@ -184,22 +241,37 @@ onVer(articulo, modal) {
 }
 
 
-View(content, id,tipo) {
-       
-  this.entrega = null;
+View(content, entrega,tipo) {
+  this.tpeso = 0;
+  this.totalPeso = 0;
+  this.totalPiezas = 0;
   Helpers.setLoading(true);
-  this.entregaService.getById(id).subscribe(resource => {
-      this.entrega = resource.json().data;
-      this.getPaisesE();
-
+//  this.entregaService.getById(id).subscribe(resource => {
+      this.entrega = entrega;
+      this.domicilio = entrega.domicilio;
+      for(let i in entrega.articulo){
+        let c = Big(entrega.articulo[i].precio);
+        this.totalPrecio = c.plus(this.totalPrecio);
+        let peso = Big(entrega.articulo[i].peso);
+        this.totalPeso = peso.plus(this.totalPeso);
+        let piezas = Big(entrega.articulo[i].piezas);
+        this.totalPiezas = piezas.plus(this.totalPiezas);
+        
+        let pesolistado = Big(entrega.articulo[i].peso);
+        entrega.articulo[i].peso = pesolistado.toNumber(); 
+        let tpesolistado = Big( this.totalPeso);
+        this.totalPeso = tpesolistado.toNumber(); 
+    }
+  
       if(tipo == 0){
         if(!this.entrega.usuario && !this.entrega.extra ){
           this.selectUsuario = 0;
         }else{
+          this.selectUsuario = 1;
           if(this.entrega.usuario)
-           this.usuarioRetirar = this.entrega.usuario.numero_identidad;
+            this.usuarioRetirar = this.entrega.usuario.numero_identidad;
           if(this.entrega.extra)
-           this.usuarioRetirar = this.entrega.extra.identificacion;
+             this.usuarioRetirar = this.entrega.extra.identificacion;
         }
         if(this.entrega.ciudad){
           this.getProvincias(this.entrega.ciudad.provincia.pais.id);
@@ -209,6 +281,7 @@ View(content, id,tipo) {
           this.entrega.ciudad.provincia = new Province();
           this.entrega.ciudad.provincia.pais = new Country();
         }
+
         if(this.entrega.ciudad_retiro){
           this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
           this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
@@ -216,33 +289,60 @@ View(content, id,tipo) {
           this.entrega.ciudad_retiro= new City();
           this.entrega.ciudad_retiro.provincia = new Province();
           this.entrega.ciudad_retiro.provincia.pais = new Country();
+          this.entrega.ciudad_retiro.provincia.pais.id = 8;
+          this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
         }
-
-        if(this.entrega.domicilio)
-          this.entrega.domicilio = 1;
-        else
-          this.entrega.domicilio = 0;
-       
-        this.getUsuarios();
-        
+        this.domicilioValue(this.domicilio);
+        this.titulo = 'Editar Entrega';
+      }else{
+        this.titulo = 'Crear Entrega';
       }
      
       Helpers.setLoading(false);
       this.modalRef = this.ngbModal.open(content, {size: "lg"});
 
-  }, (error) => {
+/*  }, (error) => {
       this.toastr.error(error.json().message);
       Helpers.setLoading(false);
-  });
+  }); */
 }
 
-
 domicilioValue(value){
-this.entrega.domicilio = value;
+  this.domicilio = value;
+  this.disabled = false;
+ 
+  this.disabledDir = false;
+  if(this.domicilio == 2){
+    this.entrega.ciudad_retiro.id = 4813;
+      this.entrega.ciudad_retiro.provincia.pais.id = 8;
+      this.entrega.ciudad_retiro.provincia.id = 895;
+      this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+      
+      this.entrega.ciudad_retiro_text = 'Guayaquil';
+      this.disabled = true;
+  }
+  if(this.domicilio == 1 && this.selectUsuario == 1){
+      if(this.usuarioRetirar != '')
+          this.getDireccion(this.usuarioRetirar);
+  }
 }
 
 selectedValue(value){
   this.selectUsuario = value;
+  if(this.selectUsuario == 0){
+      this.disabledDir = false;
+      this.entrega.direccion = '';
+      this.entrega.cedula = '';
+      this.entrega.celular = '';
+      this.entrega.codigoPostal = '';
+      this.entrega.ciudad = new City();
+      this.entrega.ciudad.provincia = new Province();
+      this.entrega.ciudad.provincia.pais = new Country();
+  }
+  if(this.domicilio == 1 && this.selectUsuario == 1){
+      if(this.usuarioRetirar != '')
+          this.getDireccion(this.usuarioRetirar);
+  }
 }
 
 getPaisesE() {
