@@ -645,8 +645,10 @@ onEntrega(content){
     this.entrega.ciudad_retiro.provincia = new Province;
     this.entrega.ciudad.provincia.pais = new Country;
     this.entrega.ciudad.provincia.pais.id= 8;
+    this.getProvincias(this.entrega.ciudad.provincia.pais.id);
     this.entrega.ciudad_retiro.provincia.pais = new Country;
     this.entrega.ciudad_retiro.provincia.pais.id= 8;
+    this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
     this.entrega.domicilio = 1;
     this.entrega.articulos= this.articulosDatos;
     for(let i in this.entrega.articulos){
@@ -683,6 +685,10 @@ domicilioValue(value){
       if(this.usuarioRetirar != '')
           this.getDireccion(this.usuarioRetirar);
   }
+  if(this.domicilio == 1 && this.selectUsuario == 0){
+      this.entrega.ciudad.provincia.pais.id= 8;
+      this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+}
 }
 
 selectedValue(value){
@@ -701,6 +707,10 @@ selectedValue(value){
       if(this.usuarioRetirar != '')
           this.getDireccion(this.usuarioRetirar);
   }
+  if(this.domicilio == 1 && this.selectUsuario == 0){
+    this.entrega.ciudad.provincia.pais.id= 8;
+    this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+}
 }
 close(){
   this.modalRef.close();

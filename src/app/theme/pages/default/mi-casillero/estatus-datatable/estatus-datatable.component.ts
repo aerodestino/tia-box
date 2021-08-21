@@ -325,6 +325,10 @@ domicilioValue(value){
       if(this.usuarioRetirar != '')
           this.getDireccion(this.usuarioRetirar);
   }
+  if(this.domicilio == 1 && this.selectUsuario == 0){
+    this.entrega.ciudad.provincia.pais.id= 8;
+    this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+}
 }
 
 selectedValue(value){
@@ -343,6 +347,10 @@ selectedValue(value){
       if(this.usuarioRetirar != '')
           this.getDireccion(this.usuarioRetirar);
   }
+  if(this.domicilio == 1 && this.selectUsuario == 0){
+    this.entrega.ciudad.provincia.pais.id= 8;
+    this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+}
 }
 
 getPaisesE() {
