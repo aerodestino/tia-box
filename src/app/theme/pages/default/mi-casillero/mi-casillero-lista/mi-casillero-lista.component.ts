@@ -644,7 +644,9 @@ onEntrega(content){
     this.entrega.ciudad.provincia = new Province;
     this.entrega.ciudad_retiro.provincia = new Province;
     this.entrega.ciudad.provincia.pais = new Country;
+    this.entrega.ciudad.provincia.pais.id= 8;
     this.entrega.ciudad_retiro.provincia.pais = new Country;
+    this.entrega.ciudad_retiro.provincia.pais.id= 8;
     this.entrega.domicilio = 1;
     this.entrega.articulos= this.articulosDatos;
     for(let i in this.entrega.articulos){
