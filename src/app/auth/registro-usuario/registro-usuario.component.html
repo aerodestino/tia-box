@@ -119,12 +119,12 @@
                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paises">
                     <input type="text" class="form-control"/>
                 </div>
-                <select *ngIf="paises" class="form-control m-input" placeholder="País" (change)="getProvincias(pais_id.value)"
-                [(ngModel)]='default'  #pais_id="ngModel" name="pais_id" required>
-                    <option *ngFor="let pais of paises" [value]="pais.id">
-                        {{pais.nombre}}
-                    </option>
-                </select>
+                <app-auto-complete *ngIf="paises" placeholder="País"
+                [(ngModel)]='default' #pais_id="ngModel"
+                name="pais_id" required [items]="paises" (change)="getProvincias(pais_id.value)"
+                [textField]="'nombre'"
+                valueField="id"
+                ></app-auto-complete>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
                 Provincia
@@ -133,12 +133,12 @@
                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!provincias">
                     <input type="text" class="form-control"/>
                 </div>
-                <select *ngIf="provincias" class="form-control m-input" placeholder="Provincia" (change)="getCiudades(provincia_id.value)"
-                         ngModel #provincia_id="ngModel" name="provincia_id" required>
-                    <option *ngFor="let provincia of provincias" [value]="provincia.id" >
-                        {{provincia.nombre}}
-                    </option>
-                </select>
+                <app-auto-complete *ngIf="provincias" placeholder="Provincia"
+                ngModel #provincia_id="ngModel"
+                name="provincia_id" required [items]="provincias"  (change)="getCiudades(provincia_id.value)"
+                [textField]="'nombre'"
+                valueField="id"
+                ></app-auto-complete>
             </div>
         </div>
         <div class="form-group m-form__group row">
@@ -149,12 +149,12 @@
                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!provincias">
                     <input type="text" class="form-control"/>
                 </div>
-                <select *ngIf="provincias"  class="form-control m-input" placeholder="Provincia" (change)="getCiudades(provincia_id.value)"
-                         ngModel #provincia_id="ngModel" name="provincia_id" required>
-                    <option *ngFor="let provincia of provincias" [value]="provincia.id" >
-                        {{provincia.nombre}}
-                    </option>
-                </select>
+                <app-auto-complete *ngIf="provincias" placeholder="Provincia"
+                ngModel #provincia_id="ngModel"
+                name="provincia_id" required [items]="provincias"  (change)="getCiudades(provincia_id.value)"
+                [textField]="'nombre'"
+                valueField="id"
+                ></app-auto-complete>
             </div>
             <label class="col-lg-2 col-form-label" >
                 Ciudad
@@ -163,12 +163,12 @@
                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!ciudades">
                     <input type="text" class="form-control"/>
                 </div>
-                <select *ngIf="ciudades" ngModel class="form-control m-input" placeholder="Ciudad"
-                        #ciudad_id="ngModel" name="ciudad_id" required>
-                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.id" >
-                        {{ciudad.nombre}}
-                    </option>
-                </select>
+                <app-auto-complete *ngIf="ciudades" placeholder="Ciudad"
+                ngModel #ciudad_id="ngModel"
+                name="ciudad_id" required [items]="ciudades"  
+                [textField]="'nombre'"
+                valueField="id"
+                ></app-auto-complete>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
                 Código Postal:
