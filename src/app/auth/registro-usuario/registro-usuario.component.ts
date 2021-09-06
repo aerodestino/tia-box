@@ -38,13 +38,14 @@ export class RegistroUsuarioComponent implements OnInit {
   }
 
   getPaises() {
+    this.paises = null;
     this.paisesService.getAllWithoutAuth({ status: 1 }).subscribe(paises => {
       this.paises = paises.json().data;
     });
   }
 
   getProvincias(pais_id) {
-    this.ciudades = [];
+    this.ciudades = null;
     this.provincias = null;
     this.provinciasService
       .getAll({ pais_id: pais_id })

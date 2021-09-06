@@ -82,12 +82,13 @@
                             Arancel
                         </label>
                         <div class="col-md-2">
-                            <select class="form-control m-input" placeholder="Arancel"
-                                    ngModel #arancel_id="ngModel" name="arancel_id" required>
-                                <option *ngFor="let arancel of aranceles" [ngValue]="arancel.id">
-                                    {{arancel.descripcion}}
-                                </option>
-                            </select>
+                            <app-auto-complete *ngIf="aranceles" placeholder="Arancel"
+                            ngModel #arancel_id="ngModel"
+                            name="arancel_id" required [items]="aranceles"
+                            [textField]="'codigo'"
+                            textField1="descripcion"
+                            valueField="id"
+                            ></app-auto-complete>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
@@ -95,12 +96,12 @@
                             Tarifario
                         </label>
                         <div class="col-md-2">
-                            <select class="form-control m-input" placeholder="Tarifario"
-                                    ngModel #tarifario_id="ngModel" name="tarifario_id" required>
-                                <option *ngFor="let tarifario of tarifarios" [ngValue]="tarifario.id">
-                                    {{tarifario.nombre}}
-                                </option>
-                            </select>
+                            <app-auto-complete *ngIf="tarifarios" placeholder="Tarifario"
+                            ngModel #tarifario_id="ngModel"
+                            name="tarifario_id" required [items]="tarifarios"
+                            [textField]="'nombre'"
+                            valueField="id"
+                            ></app-auto-complete>
                         </div>
                     </div>
 

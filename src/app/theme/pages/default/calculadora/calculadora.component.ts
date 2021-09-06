@@ -43,13 +43,14 @@ export class CalculadoraComponent implements OnInit {
     }
 
     getTarifarios() {
+        this.tarifarios = null;
         this.tarifariosService.getAll({pais_id: this.appService.user.pais.id,web:true}).subscribe(tarifarios => {
             this.tarifarios = tarifarios.json().data;
-            console.log(this.tarifarios);
         });
     }
 
     getAranceles() {
+        this.aranceles = null;
         this.arancelesService.getAll({pais_id: this.appService.user.pais.id,web:true}).subscribe(aranceles => {
             this.aranceles = aranceles.json().data;
         });

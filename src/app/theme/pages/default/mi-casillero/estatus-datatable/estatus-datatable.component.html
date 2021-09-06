@@ -103,7 +103,7 @@
             </div>
             <div class="col-md-1" *ngIf="articulo.entrega && !articulo.guia_enviada && (articulo.estado_articulo.id == 3 || articulo.estado_articulo.id == 4) ">
                 <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer"
-                   (click)="onDelete(deleteConfirmation,articulo.entrega)"></i>
+                   (click)="onDelete(deleteConfirmation,articulo.entrega.id)"></i>
             </div>
         </div>
         </td>
