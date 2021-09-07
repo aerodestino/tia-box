@@ -53,7 +53,4 @@ export class CrearExtraComponent implements OnInit {
     );
   }
 
-  cancel() {
-    this.router.navigate([this.returnUrl]);
-  }
 }
