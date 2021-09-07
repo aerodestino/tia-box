@@ -37,7 +37,5 @@ export class ExtraFormularioComponent implements OnInit {
         this.submitForm.emit(extra);
     }
 
-    onCancel() {
-        this.cancel.emit();
-    }
+  
 }
