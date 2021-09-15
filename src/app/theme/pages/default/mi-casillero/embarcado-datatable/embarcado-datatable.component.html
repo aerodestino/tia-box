@@ -292,7 +292,7 @@
                             Categoría o partida arancelaria
                         </span>
                         <span class="m-list-settings__item-control">
-                          {{ datoEmbarque.nota ? datoEmbarque.nota : '-' }}
+                            {{ (datoEmbarque.nota && datoEmbarque.categoria ) ? datoEmbarque.categoria +' - '+ datoEmbarque.nota : (datoEmbarque.nota ? datoEmbarque.nota : (datoEmbarque.categoria ? datoEmbarque.categoria : '-')) }}
                          </span>
                     </div>
                     <div class="m-list-settings__item" *ngIf="datoEmbarque.descripcion_embarque">
@@ -350,7 +350,7 @@
                       
                         <th>
                             Costo(USD)
-                        </th>    
+                        </th>  
                     </tr>
                     </thead>
                     <tbody>
@@ -380,7 +380,7 @@
                     </tr>
                     <tr>
                         <td colspan="5" style="text-align: center;"><h4>Total</h4></td>
-                        <td>{{ totalPeso }}</td>
+                        <td>{{ totalPeso | number:'1.2-2' }}</td>
                         <td>{{ totalPrecio }}</td>
                     </tr>
                     </tbody>
@@ -452,40 +452,108 @@
                                                     (change)= "validarForm()"
                                 ></app-auto-complete>
                             </div>
-                            <label class="col-lg-3 col-form-label">
+                            <label class="col-lg-3 col-form-label" *ngIf="!consolidadoFact">
                                 Unidades Físicas:
                              </label>
                              <div class="col-lg-2">
-                                 <h5 *ngIf="dv" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
-                                 <input type="number" min="0" *ngIf="!dv" class="form-control m-input" placeholder="Unidades"
+                                 <h5 *ngIf="dv && !consolidadoFact" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
+                                 <input type="number" min="0" *ngIf="!dv && !consolidadoFact" class="form-control m-input" placeholder="Unidades"
                                  [(ngModel)]="unidades"  #unidad="ngModel"
                                  name="unidad" required
                                  > 
                              </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf="!consolidadoArt">
-                        <label class="col-lg-3 col-form-label">
-                            Descripción:
-                         </label>
-                         <div class="col-lg-9">
-                             <input type="text" class="form-control m-input" placeholder="Dejar en blanco si es la misma del artículo"
+                        
+                         <div class="form-group m-form__group row">
+                         <div class="col-lg-12" >
+                            <label class="col-lg-12 col-form-label">
+                                Cambiar descripción si es necesario:
+                             </label><br/>
+                             <input  *ngIf="!consolidadoFact"  type="text" class="form-control m-input" placeholder="Descripción"
                              [(ngModel)]="descripcionembarque"  #descripcion="ngModel"
                              name="descripcion"
                              > 
-                         </div>
+                        
+                         <div class="table-responsive"  *ngIf="consolidadoFact">
+                            <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        TRACKBOX
+                                    </th>
+                                   
+                                    <th>Descripción </th>
+                                    <th>Unidades </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let a of articulos">
+                                    
+                                    <td>
+                                        <p *ngIf="a.trackbox">{{ a.trackbox }}</p>
+                                        <i class="fa fa-warning" *ngIf="!a.trackbox"></i>
+                                    </td>
+                                    
+                                    <td> 
+                                        <input type="text" class="form-control m-input" placeholder="Descripción"
+                                        [(ngModel)]="a.descripcion_embarque"  #descripcion+{{a.id}}="ngModel"
+                                        name="descripcion+{{a.id}}"
+                                        > 
+                                    </td>
+                                    <td>
+                                        <input type="number" *ngIf="!a.fac_d_v" min="0" class="form-control m-input" placeholder="Unidades"
+                                        [(ngModel)]="a.unidades"  #unidad+{{a.id}}="ngModel"
+                                        name="unidad+{{a.id}}" required
+                                        > 
+                                        <h5 *ngIf="a.fac_d_v" class="text-left">{{ a.unidades }} </h5>
+                                    </td>
+                                </tr>
+                              
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
                         </div>
                         <div class="form-group m-form__group row">
                            
                             <label class="col-lg-3 col-form-label">
                                 Categoría o partida arancelaria:
                             </label>
-                            <div class="col-lg-9">
+                            <div class="col-lg-3">
+                                <select class="form-control m-input" placeholder="Categoría"
+                                [(ngModel)]="arancel" #categoria="ngModel" name="categoria" required>
+                                    <option *ngFor="let arancel of arancelesCat" [ngValue]="arancel.codigo">
+                                        {{arancel.codigo}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
                                 <input type="text" maxlength="255" class="form-control m-input" placeholder="Categoría o partida arancelaria"
                                 [(ngModel)]="notaembarque"  #nota="ngModel"
                                 name="nota"
                                 > 
                             </div>
                         </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-3"><span>
+                                A - DOCUMENTOS <br/>
+                                B- 4X4</span>
+                            </div>
+                        
+                        <div class="col-lg-5">
+                            <span>
+                            C-  COURIER CON PARTIDA ARANCELARIA <br/>
+                            D - PRENDAS DE VESTIR, TEXTILES CONFECCIONADOS Y CALZADO 
+                            </span>
+                        </div>
+                        
+                        <div class="col-lg-4"><span>
+                            E - MEDICINAS CON RECETAS <br/>
+                            F - EQUIPOS DE COMPUTADORA Y LIBROS <br/>
+                            G - MIGRANTES</span>
+                        </div>
+                      
+                    </div>
                     </div>
                     <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid">
@@ -499,13 +567,13 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button *ngIf="!confirmar"
-                                            [disabled]="validar || unidades == 0"
+                                            [disabled]="validar || (!consolidadoFact && unidades == 0)"
                                             [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                             >
                                         Guardar
                                     </button>
                                     <button *ngIf="confirmar"
-                                        [disabled]="validar || unidades == 0"
+                                        [disabled]="validar || (!consolidadoFact && unidades == 0)"
                                         [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                         type="submit">
                                         SI

@@ -42,12 +42,16 @@
                     </span><br>
                     <span style="font-size: 14px" *ngIf="appService.user.codigo_postal">
                         <i class="fa fa-location-arrow"></i>
-                        <strong>Código Postal: </strong> {{appService.user.codigo_postal}}
-                    </span><br>
+                        <strong>Código Postal: </strong> {{appService.user.codigo_postal}}<br>
+                    </span>
                     <span style="font-size: 14px" *ngIf="appService.user.telefono1">
                         <i class="fa fa-location-arrow"></i>
-                        <strong>Teléfono: </strong> {{appService.user.telefono1}}
-                    </span><br>
+                        <strong>Teléfono: </strong> {{appService.user.telefono1}}<br>
+                    </span>
+                    <span style="font-size: 14px" *ngIf="appService.user.celular">
+                        <i class="fa fa-location-arrow"></i>
+                        <strong>Celular: </strong> {{appService.user.celular}}<br>
+                    </span>
                 </div>
                 <div class="col-md-7 col-lg-7 col-sm-12">
                     <span style="font-size: 14px">
@@ -445,20 +449,20 @@
                             Track Remitente
                         </th>
                         <th>Descripción </th>
-                        <th>
+                         <th>
                             Piezas
                         </th>
-                        <th>
+                          <th>
                             Dimensiones(In)
                         </th>
                         <th>
                             Peso(Lb)
                         </th>
-                       
+                      
                         <th>
                             Costo(USD)
-                        </th>     
-                        
+                        </th>  
+                         
                     </tr>
                     </thead>
                     <tbody>
@@ -471,24 +475,25 @@
                          <td>
                             {{ articulo.tracking }}
                         </td>
-                        <td>{{ articulo.descripcion }}</td>
-                        <td>
+                          <td>{{ articulo.descripcion }}</td>
+                           <td>
                             {{ articulo.piezas }}
                         </td>
-                        <td>
+                         <td>
                             {{ articulo.largo }}x{{articulo.ancho}}x{{articulo.alto}}
                         </td>
                         <td>
                             {{ articulo.peso | number:'1.2-2' }}
                         </td>
-                        
+                       
                         <td>
                             {{ articulo.precio }}
                         </td>
+                      
                     </tr>
                     <tr>
                         <td colspan="5" style="text-align: center;"><h4>Total</h4></td>
-                        <td>{{ totalPeso }}</td>
+                        <td>{{ totalPeso | number:'1.2-2' }}</td>
                         <td>{{ totalPrecio }}</td>
                     </tr>
                     </tbody>
@@ -507,15 +512,13 @@
                     <span>Debe seleccionar Importer porque no coinciden los artículos seleccionados.</span>
                 </div>
                 <div class="row" style="margin: 5px">
-                    <h3>Puede cambiar los datos de embarque sino se tomarán los iniciales por defecto</h3>
+                    <h4>Puede cambiar los datos de embarque sino se tomarán los iniciales por defecto</h4>
                 </div>
                 <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
-                      #embarcarForm="ngForm" (submit)="onSubmitEmbarcar(embarcarForm.value)">
+                      #embarcarForm="ngForm"  (submit)="onSubmitEmbarcar(embarcarForm.value)">
                     <div class="m-portlet__body">
-                     
-                        <div class="row text-center" style="margin: 5px; padding-top:10px !important;">
-                            </div>
-                            <div class="form-group m-form__group row" style="padding-top:10px !important;">
+                   
+                    <div class="form-group m-form__group row" style="padding-top:10px !important;">
                             <label class="col-lg-3 col-form-label">
                                 Remitente:
                             </label>
@@ -536,8 +539,8 @@
                                                     textField1="nombre"
                                                     textField2="apellido"
                                                     valueField="numero_identidad"
-                                                    (change)= "validarForm()"
                                                     [isModal]="true"
+                                                    (change)= "validarForm()"
                                 ></app-auto-complete>
                             </div>
                          
@@ -558,44 +561,112 @@
                                                     textField1="nombre"
                                                     textField2="apellido"
                                                     valueField="numero_identidad"
-                                                    (change)= "validarForm()"
                                                     [isModal]="true"
+                                                    (change)= "validarForm()"
                                 ></app-auto-complete>
                             </div>
-                            <label class="col-lg-3 col-form-label">
+                            <label class="col-lg-3 col-form-label" *ngIf="!consolidadoFact">
                                 Unidades Físicas:
                              </label>
                              <div class="col-lg-2">
-                                 <h5 *ngIf="dv" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
-                                 <input type="number" min="0" *ngIf="!dv" class="form-control m-input" placeholder="Unidades"
+                                 <h5 *ngIf="dv && !consolidadoFact" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
+                                 <input type="number" min="0" *ngIf="!dv && !consolidadoFact" class="form-control m-input" placeholder="Unidades"
                                  [(ngModel)]="unidades"  #unidad="ngModel"
                                  name="unidad" required
                                  > 
                              </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf="!estaConsolidado">
-                        <label class="col-lg-3 col-form-label">
-                            Descripción:
-                         </label>
-                         <div class="col-lg-9">
-                             <input type="text" class="form-control m-input" placeholder="Dejar en blanco si es la misma del artículo"
+                        
+                         <div class="form-group m-form__group row">
+                         <div class="col-lg-12" >
+                            <label class="col-lg-12 col-form-label">
+                                Cambiar descripción si es necesario:
+                             </label><br/>
+                             <input  *ngIf="!consolidadoFact"  type="text" class="form-control m-input" placeholder="Descripción"
                              [(ngModel)]="descripcionembarque"  #descripcion="ngModel"
                              name="descripcion"
                              > 
-                         </div>
+                        
+                         <div class="table-responsive"  *ngIf="consolidadoFact">
+                            <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        TRACKBOX
+                                    </th>
+                                   
+                                    <th>Descripción </th>
+                                    <th>Unidades </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let a of articulos">
+                                    
+                                    <td>
+                                        <p *ngIf="a.trackbox">{{ a.trackbox }}</p>
+                                        <i class="fa fa-warning" *ngIf="!a.trackbox"></i>
+                                    </td>
+                                    
+                                    <td> 
+                                        <input type="text" class="form-control m-input" placeholder="Descripción"
+                                        [(ngModel)]="a.descripcion_embarque"  #descripcion+{{a.id}}="ngModel"
+                                        name="descripcion+{{a.id}}"
+                                        > 
+                                    </td>
+                                    <td>
+                                        <input type="number" *ngIf="!a.fac_d_v" min="0" class="form-control m-input" placeholder="Unidades"
+                                        [(ngModel)]="a.unidades"  #unidad+{{a.id}}="ngModel"
+                                        name="unidad+{{a.id}}" required
+                                        > 
+                                        <h5 *ngIf="a.fac_d_v" class="text-left">{{ a.unidades }} </h5>
+                                    </td>
+                                </tr>
+                              
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
                         </div>
                         <div class="form-group m-form__group row">
                            
                             <label class="col-lg-3 col-form-label">
                                 Categoría o partida arancelaria:
                             </label>
-                            <div class="col-lg-9">
+                            <div class="col-lg-3">
+                                <select class="form-control m-input" placeholder="Categoría"
+                                [(ngModel)]="arancel" #categoria="ngModel" name="categoria" required>
+                                    <option *ngFor="let arancel of arancelesCat" [ngValue]="arancel.codigo">
+                                        {{arancel.codigo}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
                                 <input type="text" maxlength="255" class="form-control m-input" placeholder="Categoría o partida arancelaria"
                                 [(ngModel)]="notaembarque"  #nota="ngModel"
                                 name="nota"
                                 > 
                             </div>
                         </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-3"><span>
+                                A - DOCUMENTOS <br/>
+                                B- 4X4</span>
+                            </div>
+                        
+                        <div class="col-lg-5">
+                            <span>
+                            C-  COURIER CON PARTIDA ARANCELARIA <br/>
+                            D - PRENDAS DE VESTIR, TEXTILES CONFECCIONADOS Y CALZADO 
+                            </span>
+                        </div>
+                        
+                        <div class="col-lg-4"><span>
+                            E - MEDICINAS CON RECETAS <br/>
+                            F - EQUIPOS DE COMPUTADORA Y LIBROS <br/>
+                            G - MIGRANTES</span>
+                        </div>
+                      
+                    </div>
                     </div>
                     <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid">
@@ -609,13 +680,13 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button *ngIf="!confirmar"
-                                            [disabled]="validar || unidades == 0"
+                                            [disabled]="validar || (!consolidadoFact && unidades == 0)"
                                             [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                             >
                                         Guardar
                                     </button>
                                     <button *ngIf="confirmar"
-                                        [disabled]="validar || unidades == 0"
+                                        [disabled]="validar || (!consolidadoFact && unidades == 0)"
                                         [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                         type="submit">
                                         SI
@@ -739,7 +810,7 @@
                                     <input type="text" class="form-control"/>
                                 </div>
                                 <app-auto-complete *ngIf="usuarios" placeholder="USUARIO REGISTRADO"
-                                                    [ngModel]="remitente_usuario_DV" #remitente_id="ngModel"
+                                                    [ngModel]="remitente_usuario" #remitente_id="ngModel"
                                                     name="remitente_id"  [items]="usuarios"
                                                     [textField]="'numero_identidad'"
                                                     textField1="nombre"
@@ -759,7 +830,7 @@
                                     <input type="text" class="form-control"/>
                                 </div>
                                 <app-auto-complete *ngIf="usuarios_importer" placeholder="Seleccione"
-                                                    [ngModel]="importer_usuario_DV" #importer="ngModel"
+                                                    [ngModel]="importer_usuario" #importer="ngModel"
                                                     name="importer" required [items]="usuarios_importer"
                                                     [textField]="'numero_identidad'"
                                                     textField1="nombre"
@@ -867,7 +938,7 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button type="submit"
-                                            [disabled]="declaracionForm.invalid || totalDescripciones == 0"
+                                            [disabled]="declaracionForm.invalid"
                                             [class]="(declaracionForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                     >
                                         Guardar

@@ -11,6 +11,9 @@ import { isNullOrUndefined } from "util";
 import { User } from '../../../../../auth/_models';
 import { UsuariosService } from '../../../../../shared/services/api/usuarios.service';
 import { AppService } from '../../../../../app.service';
+import { ArancelesService } from '../../../../../shared/services/api/aranceles.service';
+import { Arancel } from '../../../../../shared/model/arancel.model';
+import {Big} from 'big.js';
 @Component({
     selector: 'app-embarcados-datatable',
     templateUrl: './embarcado-datatable.component.html',
@@ -33,7 +36,6 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
     totalPrecio = 0;
     existeRemitente = false;
     existeImporter = false;
-    consolidadoArt = false;
     confirmar: boolean = false;
     mensaje: boolean = false;
     notaembarque:string;
@@ -42,15 +44,22 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
     ids:any;
     usuarios:User[];
     usuarios_importer:User[];
+    consolidadoFact = false;
+    consolidadoArt = false;
+    aranceles: Arancel[];
+    arancelesCat: Arancel[];
+    arancel: any = 'B';
     constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, public enviosService: EnviosService,
         public toastr: ToastsManager,
         public articuloService: ArticulosService,
         public usuariosService:UsuariosService,
-        public appService: AppService) {
+        public appService: AppService,
+        public arancelesService : ArancelesService) {
         super(ngbModal);
     }
 
     ngOnInit() {
+      this.getArancelesCat();
         this.page = this.filters.offset + 1;
         this.registroInicialPagina =
           this.totalItems > 0 ? this.filters.offset * this.filters.limit + 1 : 0;
@@ -100,9 +109,9 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
 
     
     onEmbarcar(content,id) {
+      let existe=false;
       this.remitente_usuario = null;
       this.importer_usuario = null;
-      
       this.existeRemitente = false;
       this.existeImporter = false;
       Helpers.setLoading(true);
@@ -111,9 +120,9 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
         .subscribe(
           (datos) => {
             Helpers.setLoading(false);
-            
             this.unidades = 0;
             this.dv = false;
+            this.consolidadoFact = false;
             this.articulos = datos.json().data[0];
             this.totalPeso = 0;
             this.totalPrecio = 0;
@@ -122,13 +131,37 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
             this.consolidadoArt = false;
             this.mensaje = false;
             this.confirmar= false;
+            let desc = [];
             for(let i in this.articulos){
+                this.arancel = this.articulos[i].categoria ? this.articulos[i].categoria : 'B';
                 this.unidades = this.articulos[i].unidades ? this.articulos[i].unidades : 0;
-                this.dv = this.articulos[i].fac_d_v;
-                sumPrecio = sumPrecio + this.articulos[i].precio;
-                sumPeso = sumPeso + this.articulos[i].peso;
+                if(!this.dv)
+                  this.dv = this.articulos[i].fac_d_v;
+                if(!this.consolidadoFact)
+                  this.consolidadoFact = !this.articulos[i].consolidado_factura && this.articulos[i].consolidado;
+                this.articulos[i].consolidadoFact = !this.articulos[i].consolidado_factura && this.articulos[i].consolidado;
+                let precio = Big(this.articulos[i].precio);
+                sumPrecio = precio.plus(sumPrecio);
+                let peso = Big(this.articulos[i].peso);
+                sumPeso = peso.plus(sumPeso);
+                let p= Big(sumPeso);
+                sumPeso = p.toNumber();
                 this.notaembarque = this.articulos[i].nota ? this.articulos[i].nota : '';
                 this.descripcionembarque = this.articulos[i].descripcion_embarque ? this.articulos[i].descripcion_embarque : '';
+                if(this.descripcionembarque == ''){
+                  this.articulos[i].descripcion_embarque = this.articulos[i].descripcion;
+                  let c=1;
+                  if(desc.length == 0){
+                    desc[0]=this.articulos[i].descripcion;
+                  }else{
+                    for(let e in desc){
+                        if(desc[e] != this.articulos[i].descripcion)
+                          desc[c]=this.articulos[i].descripcion;
+                          c++;
+                    }
+                  }
+                }
+                this.descripcionembarque = desc.join(',');
                 this.text = this.articulos[i].tienda_embarque ? this.articulos[i].tienda_embarque : '' ;
                 if(this.articulos[i].consolidado)
                    this.consolidadoArt = true;
@@ -150,6 +183,7 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
           }
         );
     }
+  
 
     negadaConfirmacion(){
       this.mensaje = false;
@@ -158,27 +192,51 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
 
   onSubmitEmbarcar() {
     if(this.confirmar){
-      this.modalRef.close();
       Helpers.setLoading(true);
-      this.articuloService
+      let unidadesCons:any[] = [];
+      let descCons:any[] = [];
+      let existe = false;
+      if(this.consolidadoFact){
+        for(let i in this.articulos){
+          if(!this.articulos[i].unidades || this.articulos[i].unidades <= 0)
+            existe = true;
+          else{
+            unidadesCons[i] = {
+              id : this.articulos[i].id,
+              unidades: this.articulos[i].unidades
+            };
+          }
+          descCons[i] = {
+            id : this.articulos[i].id,
+            descripciones: this.articulos[i].descripcion_embarque
+          };
+        }
+      }
+      if(!existe){
+        this.modalRef.close();
+        this.articuloService
         .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
-        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades})
+        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades,unidadesMasivas:unidadesCons,categoria:this.arancel,descMasiva : descCons})
         .subscribe(
           () => {
             Helpers.setLoading(false);
-            this.toastr.success("Embarque actualizado");
-            this.cargar.emit;
+            this.toastr.success("Embarque Actualizado");
+            this.cargar.emit();
           },
           error => {
             Helpers.setLoading(false);
             this.toastr.error(error.json().error.message);
           }
         );
+      }else{
+        this.toastr.error('Debe asignar unidades físicas a todos los artículos.');
+        Helpers.setLoading(false);
+      }
+     
     }else{
       this.mensaje = true;
       this.confirmar= true;
     }
-    
   }
 
   validarForm(){
@@ -201,5 +259,10 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
     });
 }
 
+getArancelesCat() {
+  this.arancelesService.categoria().subscribe(aranceles => {
+      this.arancelesCat = aranceles.json().data;
+  });
+}
 }
 

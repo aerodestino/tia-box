@@ -18,6 +18,7 @@ export class RegistroUsuarioComponent implements OnInit {
   tipo_registro = 1;
   provincias: any[] = [];
   ciudades: any[] = [];
+  parroquias: any[] = [];
   default= 8;
   constructor(
     public usuariosService: UsuariosService,
@@ -57,7 +58,7 @@ export class RegistroUsuarioComponent implements OnInit {
   getCiudades(provincia_id) {
     this.ciudades = null;
     this.ciudadesService
-      .getAll({ provincia_id: provincia_id })
+      .getPrincipal({ provincia_id: provincia_id })
       .subscribe(ciudades => {
         this.ciudades = ciudades.json().data;
       });
@@ -81,6 +82,17 @@ export class RegistroUsuarioComponent implements OnInit {
       }
     );
   }
+
+
+  getParroquias(ciudad_id) {
+    this.parroquias = null;
+    this.ciudadesService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+        this.parroquias = data.json().data;
+    }, (error) => {
+        console.log(error.json());
+    });
+  }
+
 
   onCancel() {
     this.router.navigate(["/login"], { queryParams: { returnUrl: "" } });

@@ -29,6 +29,8 @@ import { Province } from "../../../../../shared/model/province.model";
 import { ProvinciasService } from "../../../../../shared/services/api/provincias.service";
 import { CiudadesService } from "../../../../../shared/services/api/ciudades.service";
 import { AuthRoutingModule } from "../../../../../auth/auth-routing.routing";
+import { Arancel } from "../../../../../shared/model/arancel.model";
+import { ArancelesService } from "../../../../../shared/services/api/aranceles.service";
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./mi-casillero-lista.component.html",
@@ -41,6 +43,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
     file:any;
     unidades:number = 0;
     dv = false;
+    consolidadoFact = false;
+    consolidadoArt = false;
+    aranceles: Arancel[];
+    arancelesCat: Arancel[];
+    arancel: any = 'B';
     nombreTrackbox: any = '';
     modalRef = null;
     selectionPrecios: any;
@@ -189,6 +196,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public entregaService: EntregaService,
     public provinciaService: ProvinciasService,
     public ciudadService: CiudadesService,
+    public arancelesService: ArancelesService
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -196,6 +204,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   }
 
   ngOnInit() {
+    this.getArancelesCat();
     this.getUsuarios();
     this.getEnBodega();
     this.getEnTransito();
@@ -411,7 +420,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     let existe=false;
     
     for (let i in this.datos){
-        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+        if(this.datos[i].costo == null ||this.datos[i].costo <= 0 ||this.datos[i].costo == '0.00' )
             existe= true;    
     }
     if(existe || this.selectionPrecios){
@@ -441,23 +450,50 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onSubmitEmbarcar() {
     if(this.confirmar){
-    Helpers.setLoading(true);
-    this.modalRef.close();
-    this.articulosService
-      .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
-        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades})
-      .subscribe(
-        () => {
-          Helpers.setLoading(false);
-          this.toastr.success("Artículos enviados a embarcar");
-          this.getEnBodega();
-          this.getEmbarcados();  
-        },
-        error => {
-          Helpers.setLoading(false);
-          this.toastr.error(error.json().error.message);
+      Helpers.setLoading(true);
+      let unidadesCons:any[] = [];
+      let descCons:any[] = [];
+      let existe = false;
+      if(this.consolidadoFact){
+        for(let i in this.articulos){
+          if(!this.articulos[i].unidades || this.articulos[i].unidades <= 0)
+            existe = true;
+          else{
+            unidadesCons[i] = {
+              id : this.articulos[i].id,
+              unidades: this.articulos[i].unidades
+            };
+          }
+          descCons[i] = {
+            id : this.articulos[i].id,
+            descripciones: this.articulos[i].descripcion_embarque
+          };
         }
-      );
+      }
+      if(!existe){
+        this.modalRef.close();
+        this.articulosService
+        .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
+        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades,unidadesMasivas:unidadesCons,categoria:this.arancel,descMasiva : descCons})
+        .subscribe(
+          () => {
+            Helpers.setLoading(false);
+            this.toastr.success("Artículos enviados a embarcar");
+            this.enBodegaSeleccion = [];
+            this.filters.articulos = this.enBodegaSeleccion;
+            this.getEnBodega();
+            this.getEmbarcados();
+          },
+          error => {
+            Helpers.setLoading(false);
+            this.toastr.error(error.json().error.message);
+          }
+        );
+      }else{
+        this.toastr.error('Debe asignar unidades físicas a todos los artículos.');
+        Helpers.setLoading(false);
+      }
+     
     }else{
       this.mensaje = true;
       this.confirmar= true;
@@ -477,18 +513,16 @@ export class MiCasilleroListaComponent extends BaseListComponent
     let existe=false;
     this.remitente_usuario = null;
     this.importer_usuario = null;
-    this.text = '';
-    this.dv = false;
+    
     this.existeRemitente = false;
     this.existeImporter = false;
-    this.estaConsolidado = false;
     Helpers.setLoading(true);
     for (let i in this.datos){
-        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+        if(this.datos[i].costo == null ||this.datos[i].costo <= 0 ||this.datos[i].costo == '0.00' )
             existe= true;    
     }
-    if(existe || this.selectionPrecios){
-      if(this.selectionPrecios){
+    if(existe || !this.existeprecio){
+      if(!this.existeprecio){
         this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
           Helpers.setLoading(false);
       }else{
@@ -496,27 +530,57 @@ export class MiCasilleroListaComponent extends BaseListComponent
         Helpers.setLoading(false);
       }
     }else{
+      this.getUsuarios();
     this.articulosService
       .embarcarModal({ articulos: this.enBodegaSeleccion })
       .subscribe(
         (datos) => {
           Helpers.setLoading(false);
           this.unidades = 0;
+          this.dv = false;
+          this.consolidadoFact = false;
           this.articulos = datos.json().data[0];
           this.totalPeso = 0;
           this.totalPrecio = 0;
           let sumPrecio = 0;
           let sumPeso = 0;
+          this.consolidadoArt = false;
+          this.mensaje = false;
+          this.confirmar= false;
+          let desc = [];
           for(let i in this.articulos){
-            this.dv = this.articulos[i].fac_d_v;
-            this.unidades = this.articulos[i].unidades ? this.articulos[i].unidades : 0;
-              sumPrecio = sumPrecio + this.articulos[i].precio;
-              sumPeso = sumPeso + this.articulos[i].peso;
+              this.arancel = this.articulos[i].categoria ? this.articulos[i].categoria : 'B';
+              this.unidades = this.articulos[i].unidades ? this.articulos[i].unidades : 0;
+              if(!this.dv)
+                this.dv = this.articulos[i].fac_d_v;
+              if(!this.consolidadoFact)
+                this.consolidadoFact = !this.articulos[i].consolidado_factura && this.articulos[i].consolidado;
+              this.articulos[i].consolidadoFact = !this.articulos[i].consolidado_factura && this.articulos[i].consolidado;
+              let precio = Big(this.articulos[i].precio);
+              sumPrecio = precio.plus(sumPrecio);
+              let peso = Big(this.articulos[i].peso);
+              sumPeso = peso.plus(sumPeso);
+              let p= Big(sumPeso);
+              sumPeso = p.toNumber();
               this.notaembarque = this.articulos[i].nota ? this.articulos[i].nota : '';
               this.descripcionembarque = this.articulos[i].descripcion_embarque ? this.articulos[i].descripcion_embarque : '';
+              if(this.descripcionembarque == ''){
+                this.articulos[i].descripcion_embarque = this.articulos[i].descripcion;
+                let c=1;
+                if(desc.length == 0){
+                  desc[0]=this.articulos[i].descripcion;
+                }else{
+                  for(let e in desc){
+                      if(desc[e] != this.articulos[i].descripcion)
+                        desc[c]=this.articulos[i].descripcion;
+                        c++;
+                  }
+                }
+              }
+              this.descripcionembarque = desc.join(',');
               this.text = this.articulos[i].tienda_embarque ? this.articulos[i].tienda_embarque : '' ;
               if(this.articulos[i].consolidado)
-                this.estaConsolidado = true;
+                 this.consolidadoArt = true;
           }
            this.totalPrecio = sumPrecio;
            this.totalPeso = sumPeso;
@@ -618,7 +682,7 @@ OnModalFactura(content){
     let existe=false;
     
     for (let i in this.datos){
-        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+        if(this.datos[i].costo == null ||this.datos[i].costo <= 0 ||this.datos[i].costo == '0.00' )
             existe= true;    
     }
     if(existe || this.selectionPrecios){
@@ -792,35 +856,45 @@ onExportarEstatus() {
 
 OnModalDV(content) {
   this.totalDescripciones = 0;
-  this.importer_usuario_DV=null;
-  this.remitente_usuario_DV =null;
-  this.paqueteList=[];
-  let existe=false;
-    
-  for (let i in this.datos){
-    if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
-        existe= true;    
-}   
-    if(existe || this.selectionPrecios){
-      if(this.selectionPrecios){
-        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
-          Helpers.setLoading(false);
-      }else{
-        this.toastr.error('El costo debe ser mayor que cero');
-        Helpers.setLoading(false);
-      }
-    }else{
-      this.getPaises();
-  
-      this.declaracion = new Declaracion;
-      this.articulodv= new Articulo;
-      
-      this.pais_origen_d_v_id = 8;
-      this.pais_destino_d_v_id = 8;
-      const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
-      this.paqueteList.push(person);
-      this.modalRef = this.ngbModal.open(content, {size: "lg"});
-  }
+        this.importer_usuario=null;
+        this.remitente_usuario =null;
+        this.paqueteList=[];
+        let existe= false;
+        for (let i in this.datos){
+            if(this.datos[i].costo == null ||this.datos[i].costo <= 0 )
+                existe= true;    
+        }
+        if(existe || !this.existeprecio){
+            if(!this.existeprecio){
+              this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
+                Helpers.setLoading(false);
+            }else{
+              this.toastr.error('El costo debe ser mayor que cero');
+              Helpers.setLoading(false);
+            }
+          }else{
+            this.getUsuarios();
+            this.getPaises();
+            this.declaracion = new Declaracion;
+            this.articulodv= new Articulo;
+            let fecha = new Date();
+            this.articulodv.tienda_d_v = this.datos ? this.datos[0].remitente_text : '';
+            this.importer_usuario=this.datos ? this.datos[0].consignatario : null;
+            this.remitente_usuario =this.datos ? this.datos[0].remitente : null;
+            if(this.articulodv.fecha_expiracion_d_v)
+               fecha = new Date(this.articulodv.fecha_expiracion_d_v);
+           
+            this.articulodv.fecha_expiracion_d_v = {
+                "year": fecha.getFullYear(),
+                "month": fecha.getMonth() + 1,
+                "day": fecha.getDate()
+            };
+            this.pais_origen_d_v_id = 9;
+            this.pais_destino_d_v_id = 8;
+             const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+            this.paqueteList.push(person); 
+            this.modalRef = this.ngbModal.open(content, {size: "lg"});
+        }
 }
 
 getPaises() {
@@ -835,12 +909,14 @@ this.paisesService.getAll().subscribe((data) => {
 updateList(id: number, property: string, event: any) {
 this.paqueteList[0][id][property] = event.target.textContent;
 
+if(this.paqueteList[0][id]['cantidad'] && this.paqueteList[0][id]['vunitario']){
   let c = Big(this.paqueteList[0][id]['cantidad']);
   let v = Big(this.paqueteList[0][id]['vunitario']);
   this.paqueteList[0][id]['total'] = c.mul(v);
   let t = Big(this.paqueteList[0][id]['total']);
   let td = Big(this.totalDescripciones);
   this.totalDescripciones = t.plus(td);
+}
 }
 
 remove(id: any) {
@@ -861,21 +937,34 @@ changeValue(id: number, property: string, event: any) {
 }
 
 onSubmit(value) {
-if(this.totalDescripciones > 0){
-Helpers.setLoading(true);
-this.modalRef.close();
-this.articulosService.declaracionValoresMasiva(value).subscribe( (pdf) => {
-  //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
-    Helpers.setLoading(false);
-    this.toastr.success("Declaración de valores masiva creada");
-    this.getEnBodega();
-}, error => {
-    Helpers.setLoading(false);
-   this.toastr.error(error.json().error.message);
-});
+  let existe = false;
+  if(this.paqueteList[0].length > 0){
+    for(let i in this.paqueteList[0]){
+      if(this.paqueteList[0][i].descripcion =='' || this.paqueteList[0][i].descripcion =='N/A' || this.paqueteList[0][i].cantidad==''|| this.paqueteList[0][i].vunitario==''|| this.paqueteList[0][i].cantidad==0 || this.paqueteList[0][i].vunitario==0 || this.paqueteList[0][i].total==0){
+        existe = true;
+        break;
+      }
+    }
+  }else{
+    existe = true;
+  }
+  if(!existe){
+  Helpers.setLoading(true);
+  this.enBodegaSeleccion = [];
+  this.filters.articulos = this.enBodegaSeleccion;
+  this.modalRef.close();
+  this.articulosService.declaracionValoresMasiva(value).subscribe( (pdf) => {
+    //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
+      Helpers.setLoading(false);
+      this.toastr.success("Declaración de valores masiva creada")
+      this.getEnBodega();
+  }, error => {
+      Helpers.setLoading(false);
+     this.toastr.error(error.json().error.message);
+  });
 }else{
-Helpers.setLoading(false);
-   this.toastr.error('El valor total debe ser mayor que cero'); 
+  Helpers.setLoading(false);
+     this.toastr.error('Debe llenar correctamente las descripciones'); 
 }
 }
 
@@ -991,5 +1080,9 @@ getDireccion(id){
   }
 }
 
-
+getArancelesCat() {
+  this.arancelesService.categoria().subscribe(aranceles => {
+      this.arancelesCat = aranceles.json().data;
+  });
+}
 }

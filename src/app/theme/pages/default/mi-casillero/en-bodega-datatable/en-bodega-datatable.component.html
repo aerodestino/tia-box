@@ -36,7 +36,7 @@
            
         </td>
         <td>
-            {{articulo.fechaBodega | date: "dd/MM/y" : "-0500"}}
+            {{articulo.fechaBodega | date: "dd/MM/y" : "-0400"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -145,6 +145,7 @@
 </ng-template>
 <!--end::Modal-->  <!--begin::Modal-->
 
+<!--begin::View  Modal-->
 <ng-template #declaracion let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Declaración de valores</h4>
@@ -188,15 +189,15 @@
                                        [ngModel]="articulodv.envio.warehouse"  #awb="ngModel"
                                        name="awb"
                                        required>
-                                <input type="text" class="form-control m-input" *ngIf="!articulodv.consolidado && !articulodv.envio"
+                                <input type="text" class="form-control m-input" *ngIf="(!articulodv.consolidado && !articulodv.envio) || (!masiva && !articulodv.envio)"
                                        [(ngModel)]="articulodv.trackbox" #awbs="ngModel"
                                        name="awbs"
                                        required disabled>
-                                <input type="text" class="form-control m-input m--hide" *ngIf="!articulodv.consolidado && !articulodv.envio"
+                                <input type="text" class="form-control m-input m--hide" *ngIf="(!articulodv.consolidado && !articulodv.envio) || (!masiva && !articulodv.envio)"
                                        [ngModel]="articulodv.trackbox"  #awb="ngModel"
                                        name="awb"
                                        required>
-                                <input type="text" class="form-control m-input" *ngIf="articulodv.consolidado  && !articulodv.envio"
+                                <input type="text" class="form-control m-input" *ngIf="(articulodv.consolidado  && !articulodv.envio) && masiva"
                                        [(ngModel)]="articulodv.awb"  #awb="ngModel"
                                        name="awb"
                                        required>
@@ -255,7 +256,7 @@
                                 <span class="m-switch m-switch--icon">
                                     <label>
                                         <input type="checkbox" checked="checked" name="tipo"
-                                            [ngModel]="masiva" #tipo="ngModel">
+                                            [(ngModel)]="masiva" #tipo="ngModel" (change)="cambiomasiva()">
                                         <span></span>
                                     </label>
                                 </span>
@@ -319,13 +320,13 @@
                                     <tr *ngFor="let person of paqueteList[0]; let id = index">
                                       
                                         <td  style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'descripcion', $event);" (blur)="updateList(id, 'descripcion', $event)"  style="padding:5px; text-align:center;">{{person.descripcion}}</span>
+                                        <span contenteditable="true"  (blur)="updateList(id, 'descripcion', $event)"  style="padding:5px; text-align:center;">{{person.descripcion}}</span>
                                         </td>
                                         <td style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);" (blur)="updateList(id, 'cantidad', $event)"  style="padding:5px; text-align:center;">{{person.cantidad}}</span>
+                                        <span contenteditable="true"  (blur)="updateList(id, 'cantidad', $event)"  style="padding:5px; text-align:center;">{{person.cantidad}}</span>
                                         </td>
                                         <td style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'vunitario', $event);" (blur)="updateList(id, 'vunitario', $event)"  style="padding:5px; text-align:center;">{{person.vunitario}}</span>
+                                        <span contenteditable="true"  (blur)="updateList(id, 'vunitario', $event)"  style="padding:5px; text-align:center;">{{person.vunitario}}</span>
                                         </td>
                                         <td style="font-size: 1.1em !important;">{{(person.cantidad * person.vunitario) ? person.cantidad * person.vunitario : 0}}</td>
                                         <td style="font-size: 1.1em !important;"> <span class="table-remove">
@@ -359,7 +360,7 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button type="submit"
-                                            [disabled]="declaracionForm.invalid || totalDescripciones == 0"
+                                            [disabled]="declaracionForm.invalid"
                                             [class]="(declaracionForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                     >
                                         Guardar

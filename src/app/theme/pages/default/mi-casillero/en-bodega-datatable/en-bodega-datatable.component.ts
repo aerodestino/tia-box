@@ -133,7 +133,11 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
       if (item.selected){
         this.selectionIds.push(item.id);
         if(!this.text  || (this.text && this.text == '')) this.text = item.trackbox;
-        this.costo.push(item.precio);
+        const datos =  {  costo:item.precio,
+          consignatario: item.uidentidad ? item.uidentidad : (item.exidentidad ? item.exidentidad : null) , 
+          remitente: item.ecidentidad ? item.ecidentidad : (item.ucidentidad ? item.ucidentidad : null),
+         remitente_text : item.tienda};
+        this.costo.push(datos);
         if(item.factura_file)
           existeFactura ++;
         if(item.editar_consolidacion)
@@ -199,7 +203,7 @@ close(){
   this.modalRef.close();
 }
 
-declaracionValores(content,iddato,articulo) {
+declaracionValores(content,id,articulo) {
   Helpers.setLoading(true);
   let person = [];
   this.totalDescripciones = 0;
@@ -207,74 +211,87 @@ declaracionValores(content,iddato,articulo) {
   this.remitente_usuario =null;
   this.paqueteList=[];
   this.getUsuarios();
-  this.getPaises();
-  this.articuloService.dv({id: iddato}).subscribe((data) => {
-    this.articulodv = data.json().data;
-    console.log(this.articulodv);
-    this.declaracion = new Declaracion;
-    this.trackbox= articulo.trackbox;
-    let fecha = new Date(this.articulodv.fecha_expiracion_d_v);
-    this.articulodv.fecha_expiracion_d_v = {
-        "year": fecha.getFullYear(),
-        "month": fecha.getMonth() + 1,
-        "day": fecha.getDate()
-    };
-    if(this.articulodv.descripciones_d_v){
-        for(let i in this.articulodv.descripciones_d_v ){
-            person.push({ id: articulo.id , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 
-            vunitario: this.articulodv.descripciones_d_v[i]['vunitario'], total: this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario'] });
-            this.totalDescripciones = this.totalDescripciones + (this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario']);
-        }
-        this.paqueteList.push(person);
-        console.log(this.paqueteList);
-    }else{
-        const person =  [{ id: articulo.id , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
-        this.paqueteList.push(person);
-    }
+  this.getPaises();  
+  this.declaracion = new Declaracion;
+  this.trackbox= articulo.trackbox;
+  this.articulodv= articulo;
+  let fecha = new Date(this.articulodv.fechaBodega);
+  if(this.articulodv.fecha_expiracion_d_v)
+      fecha = new Date(this.articulodv.fecha_expiracion_d_v);
   
-    if(!this.articulodv.pais_origen_d_v)
-        this.pais_origen_d_v_id = 8;
-    else    
-        this.pais_origen_d_v_id = this.articulodv.pais_origen_d_v.id;
-    if(!this.articulodv.pais_destino_d_v)
-        this.pais_destino_d_v_id = 8;
-    else
-        this.pais_destino_d_v_id = this.articulodv.pais_destino_d_v.id;
-    if(this.articulodv.usuario_carrier_d_v || this.articulodv.extra_carrier_d_v)
-        this.remitente_usuario = (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : (this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null;
-        if(this.articulodv.usuario_importer_d_v || this.articulodv.extra_importer_d_v)
-        this.importer_usuario = (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : (this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : null;
-    
-    this.declaracion.articulo_id = iddato;
-    this.modalRef = this.ngbModal.open(content, {size: "lg"});
-    Helpers.setLoading(false);
-}, (error) => {
-    this.toastr.error(error.json().error.message);
-});
- 
+  this.articulodv.fecha_expiracion_d_v = {
+      "year": fecha.getFullYear(),
+      "month": fecha.getMonth() + 1,
+      "day": fecha.getDate()
+  }; 
+  if(this.articulodv.descripciones_d_v){
+      for(let i in this.articulodv.descripciones_d_v ){
+          person.push({ id: articulo.id , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 
+          vunitario: this.articulodv.descripciones_d_v[i]['vunitario'], total: this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario'] });
+          this.totalDescripciones = this.totalDescripciones + (this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario']);
+      }
+      this.paqueteList.push(person);
+  }else{
+      const person =  [{ id: articulo.id , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+      this.paqueteList.push(person);
+  }
+
+  if(!this.articulodv.pais_origen_d_v)
+      this.pais_origen_d_v_id = 9;
+  else    
+      this.pais_origen_d_v_id = this.articulodv.pais_origen_d_v.id;
+  if(!this.articulodv.pais_destino_d_v)
+      this.pais_destino_d_v_id = 8;
+  else
+      this.pais_destino_d_v_id = this.articulodv.pais_destino_d_v.id;
+  if(this.articulodv.usuario_carrier_d_v || this.articulodv.extra_carrier_d_v)
+      this.remitente_usuario = (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : (this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null;
+  if(this.articulodv.usuario_importer_d_v || this.articulodv.extra_importer_d_v)
+      this.importer_usuario = (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : (this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : null;
+  if(!this.remitente_usuario)
+      this.remitente_usuario = (this.articulodv.ecidentidad) ? this.articulodv.ecidentidad : this.articulodv.ucidentidad;
+  if(!this.importer_usuario)
+      this.importer_usuario = (this.articulodv.uidentidad) ? this.articulodv.uidentidad : this.articulodv.exidentidad;
+  if(!this.articulodv.tienda_d_v || this.articulodv.tienda_d_v == '')
+      this.articulodv.tienda_d_v = this.articulodv.tienda;
+  this.declaracion.articulo_id = id;
+  this.modalRef = this.ngbModal.open(content, {size: "lg"});
+  Helpers.setLoading(false);
 }
 
 onSubmit(value) {
-Helpers.setLoading(true);
-this.modalRef.close();
-if(this.totalDescripciones > 0){
-    this.declaracion.awb= this.articulodv.trackbox;
-    this.articuloService.declaracionValores(this.declaracion.articulo_id, value).subscribe( (pdf) => {
-      //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
-        
-        Helpers.setLoading(false);
-        this.toastr.success("Declaración de valores creada");
-        this.cargar.emit();
-    }, error => {
-        Helpers.setLoading(false);
-       this.toastr.error(error.json().error.message);
-    });
-}else{
-    Helpers.setLoading(false);
-       this.toastr.error('El valor total debe ser mayor que cero'); 
-}
+  let existe = false;
+  if(this.paqueteList[0].length > 0){
+    for(let i in this.paqueteList[0]){
+      if(this.paqueteList[0][i].descripcion =='N/A' || this.paqueteList[0][i].descripcion =='' || this.paqueteList[0][i].cantidad==''|| this.paqueteList[0][i].vunitario==''|| this.paqueteList[0][i].cantidad==0 || this.paqueteList[0][i].vunitario==0 || this.paqueteList[0][i].total==0){
+        existe = true;
+        break;
+      }
+    }
+  }else{
+    existe = true;
+  }
+  if(!existe){
+      Helpers.setLoading(true);
+      this.modalRef.close();
+      this.declaracion.awb= this.articulodv.trackbox;
+      this.articuloService.declaracionValores(this.declaracion.articulo_id, value).subscribe( (pdf) => {
+        //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
+          
+          Helpers.setLoading(false);
+          this.toastr.success("Declaración de valores creada");
+          this.cargar.emit();
+      }, error => {
+          Helpers.setLoading(false);
+         this.toastr.error(error.json().error.message);
+      });
+  }else{
+      Helpers.setLoading(false);
+         this.toastr.error('Debe llenar correctamente las descripciones'); 
+  }
 
 }
+
 
 getUsuarios() {
 this.usuarios = null;
@@ -298,14 +315,20 @@ this.paisService.getAll().subscribe((data) => {
 
 
 updateList(id: number, property: string, event: any) {
-
+console.log(event.target.textContent);
 this.paqueteList[0][id][property] = event.target.textContent;
-let c = Big(this.paqueteList[0][id]['cantidad']);
-let v = Big(this.paqueteList[0][id]['vunitario']);
-this.paqueteList[0][id]['total'] = c.mul(v);
-let t = Big(this.paqueteList[0][id]['total']);
-let td = Big(this.totalDescripciones);
-this.totalDescripciones = t.plus(td);
+console.log(this.paqueteList[0][id][property]);
+
+if(this.paqueteList[0][id]['cantidad'] && this.paqueteList[0][id]['vunitario']){
+  let c = Big(this.paqueteList[0][id]['cantidad']);
+  let v = Big(this.paqueteList[0][id]['vunitario']);
+  this.paqueteList[0][id]['total'] = c.mul(v);
+  let t = Big(this.paqueteList[0][id]['total']);
+  let td = Big(this.totalDescripciones);
+  this.totalDescripciones = t.plus(td);
+  let d = Big(this.totalDescripciones);
+  this.totalDescripciones = d.toNumber();
+} console.log(this.paqueteList);
 }
 
 remove(id: any) {

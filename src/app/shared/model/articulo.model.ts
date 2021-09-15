@@ -57,6 +57,8 @@ export class Articulo extends Model {
         public descripcion_embarque?: any,
         public nota?: any,
         public tienda_embarque?: any,
+        public tienda_d_v?: any,
+        public categoria?: any,
     ) {
         super();
     }
