@@ -348,7 +348,7 @@
                             Categoría o partida arancelaria
                         </span>
                         <span class="m-list-settings__item-control">
-                          {{ datoEmbarque.nota ? datoEmbarque.nota : '-' }}
+                            {{ (datoEmbarque.nota && datoEmbarque.categoria ) ? datoEmbarque.categoria +' - '+ datoEmbarque.nota : (datoEmbarque.nota ? datoEmbarque.nota : (datoEmbarque.categoria ? datoEmbarque.categoria : '-')) }}
                          </span>
                     </div>
                     <div class="m-list-settings__item" *ngIf="datoEmbarque.descripcion_embarque">
@@ -425,7 +425,7 @@
                                 name="provinciaRetiro_id" [items]="provinciasR"
                                 (change)="getCiudadesR(provinciaRetiro_id.value)"
                                 [textField]="'nombre'"
-                                valueField="id"
+                                valueField="id" 
                                  ></app-auto-complete>
                            
                             </div>
@@ -439,7 +439,7 @@
                                 [ngModel]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel"
                                 name="ciudadRetiro_id" [items]="ciudadesR"
                                 [textField]="'nombre'"
-                                valueField="id"
+                                valueField="id" (change)="getParroquiasR(ciudadRetiro_id.value)" 
                                  ></app-auto-complete>
                                
                             </div>
@@ -447,6 +447,20 @@
                                 <input type="text"  disabled={{disabled}} class="form-control m-input" placeholder="Ciudad Manual"
                                 [ngModel]="entrega.ciudad_retiro_text" #ciudadretirotext="ngModel" name="ciudadretirotext">
                             </div>
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
+                        <label class="col-lg-3 col-form-label">
+                            Parroquía:
+                        </label>
+                        <div class="col-lg-3">
+                            <app-auto-complete *ngIf="parroquiasR" placeholder="Seleccione"
+                            [ngModel]="entrega.parroquia_retiro.id" #parroquiaRetiro_id="ngModel"
+                            name="parroquiaRetiro_id"  [items]="parroquiasR" [disabled]="disabled"
+                            [textField]="'nombre'"
+                            valueField="id" 
+                             ></app-auto-complete>
+                        
+                        </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
@@ -488,7 +502,7 @@
                                 <app-auto-complete *ngIf="usuarios" placeholder="Seleccione"
                                                     [ngModel]="usuarioRetirar" #usuario_retiro="ngModel"
                                                     name="usuario_retiro" required [items]="usuarios"
-                                                    [textField]="'numero_identidad'"
+                                                    [textField]="'numero_identidad'" 
                                                     textField1="nombre"
                                                     textField2="apellido"
                                                     valueField="numero_identidad" (change)="getDireccion(usuario_retiro.value)"
@@ -584,7 +598,7 @@
                                 name="provincia_id" required [items]="provincias" [disabled]="disabledDir"
                                 (change)="getCiudades(provincia_id.value)"
                                 [textField]="'nombre'"
-                                valueField="id"
+                                valueField="id" 
                                  ></app-auto-complete>
                             
                             </div>
@@ -597,11 +611,26 @@
                                 <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
                                 [ngModel]="entrega.ciudad.id" #ciudad_id="ngModel"
                                 name="ciudad_id" required [items]="ciudades" [disabled]="disabledDir"
+                                [textField]="'nombre'" 
+                                valueField="id"
+                                (change)="getParroquias(ciudad_id.value)"
+                                 ></app-auto-complete>
+                            
+                            </div>
+                            <label class="col-lg-3 col-form-label">
+                                Parroquía:
+                            </label>
+                            <div class="col-lg-3">
+                                <app-auto-complete *ngIf="parroquias" placeholder="Seleccione"
+                                [ngModel]="entrega.parroquia.id" #parroquia_id="ngModel"
+                                name="parroquia_id"  [items]="parroquias" [disabled]="disabledDir"
                                 [textField]="'nombre'"
                                 valueField="id"
                                  ></app-auto-complete>
                             
                             </div>
+                            </div>
+                            <div class="form-group m-form__group row"  *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
                             <label class="col-lg-3 col-form-label">
                                 Código Postal:
                             </label>
@@ -806,6 +835,14 @@
                             {{ entrega.ciudad_retiro_text }}
                         </span>
                     </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.parroquia_retiro">
+                        <span class="m-list-settings__item-label">
+                           Parroquía
+                        </span>
+                        <span class="m-list-settings__item-control" >
+                            {{ entrega.parroquia_retiro ?  entrega.parroquia_retiro.nombre : '-' }}
+                        </span>
+                    </div>
                     <div class="m-list-settings__item" *ngIf="!entrega.domicilio">
                         <span class="m-list-settings__item-label">
                             Otra Información
@@ -910,7 +947,14 @@
                             {{ entrega.extra.usuario.ciudad.nombre }}
                         </span> 
                     </div>
-
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1 && entrega.parroquia">
+                        <span class="m-list-settings__item-label">
+                           Parroquía
+                        </span>
+                        <span class="m-list-settings__item-control" >
+                            {{ entrega.parroquia ?  entrega.parroquia.nombre : '-' }}
+                        </span>
+                    </div>
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                             Provincia

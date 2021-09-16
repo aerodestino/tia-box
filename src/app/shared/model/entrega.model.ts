@@ -32,7 +32,10 @@ export class Entrega extends Model {
         public ciudad_retiro_text?: string,
         public pais?:any,
         public pais_retiro?:any,
-        public provincia_retiro?:any
+        public provincia_retiro?:any,
+        public parroquia?: City,
+        public parroquia_retiro?: City,
+        public parroquia_id?: any
     ) {
         super();
     }

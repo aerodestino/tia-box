@@ -79,6 +79,8 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
   selectionIds: string[];
   selectionArticulo: any[];
   precios: any[];
+  parroquias: City[]=null;
+  parroquiasR: City[]=null;
   constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, 
     public articuloService: ArticulosService,public toastr: ToastsManager,
     public usuariosService: UsuariosService,
@@ -142,6 +144,7 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
     this.entrega.direccion = '';
     this.entrega.codigoPostal = '';
     this.entrega.ciudad = new City();
+    this.entrega.parroquia = new City();
     this.entrega.ciudad.provincia = new Province();
     this.entrega.ciudad.provincia.pais = new Country();
     this.entrega.direccion = '';
@@ -152,10 +155,12 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
             this.entrega.direccion = this.usuarios[i].direccion;
             this.entrega.codigoPostal = this.usuarios[i].codigo_postal;
             this.entrega.ciudad.id = this.usuarios[i].ciudad_id;
+            this.entrega.parroquia.id = this.usuarios[i].parroquia_id;
             this.entrega.ciudad.provincia.id = this.usuarios[i].provincia_id;
             this.entrega.ciudad.provincia.pais.id = this.usuarios[i].pais_id;
             this.getProvincias(this.entrega.ciudad.provincia.pais.id);
             this.getCiudades(this.entrega.ciudad.provincia.id);
+            this.getParroquias(this.entrega.ciudad.id);
             this.entrega.celular = this.usuarios[i].celular;
             this.entrega.cedula = this.usuarios[i].numero_identidad;
             this.disabledDir = true;
@@ -240,6 +245,23 @@ onVer(articulo, modal) {
      
 }
 
+getParroquias(ciudad_id) {
+  this.parroquias = null;
+  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+      this.parroquias = data.json().data;
+  }, (error) => {
+      console.log(error.json());
+  });
+}
+
+getParroquiasR(ciudad_id) {
+  this.parroquiasR = null;
+  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+      this.parroquiasR = data.json().data;
+  }, (error) => {
+      console.log(error.json());
+  });
+}
 
 View(content, entrega,tipo) {
   this.tpeso = 0;
@@ -276,8 +298,10 @@ View(content, entrega,tipo) {
         if(this.entrega.ciudad){
           this.getProvincias(this.entrega.ciudad.provincia.pais.id);
           this.getCiudades(this.entrega.ciudad.provincia.id);
+          this.getParroquias(this.entrega.ciudad.id);
         }else{
           this.entrega.ciudad = new City();
+          this.entrega.parroquia = new City();
           this.entrega.ciudad.provincia = new Province();
           this.entrega.ciudad.provincia.pais = new Country();
         }
@@ -285,8 +309,10 @@ View(content, entrega,tipo) {
         if(this.entrega.ciudad_retiro){
           this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
           this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+          this.getParroquiasR(this.entrega.ciudad_retiro.id);
         }else{
           this.entrega.ciudad_retiro= new City();
+          this.entrega.parroquia_retiro= new City();
           this.entrega.ciudad_retiro.provincia = new Province();
           this.entrega.ciudad_retiro.provincia.pais = new Country();
           this.entrega.ciudad_retiro.provincia.pais.id = 8;
@@ -317,7 +343,8 @@ domicilioValue(value){
       this.entrega.ciudad_retiro.provincia.pais.id = 8;
       this.entrega.ciudad_retiro.provincia.id = 895;
       this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
-      
+      this.getParroquiasR(this.entrega.ciudad_retiro.id);
+      this.entrega.parroquia_retiro = new City();
       this.entrega.ciudad_retiro_text = 'Guayaquil';
       this.disabled = true;
   }
@@ -340,6 +367,7 @@ selectedValue(value){
       this.entrega.celular = '';
       this.entrega.codigoPostal = '';
       this.entrega.ciudad = new City();
+      this.entrega.parroquia = new City();
       this.entrega.ciudad.provincia = new Province();
       this.entrega.ciudad.provincia.pais = new Country();
   }
@@ -403,7 +431,7 @@ this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
 
 getCiudades(provincia_id) {
 this.ciudades = null;
-this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
+this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
     this.ciudades = data.json().data;
 }, (error) => {
     console.log(error.json());
@@ -412,7 +440,7 @@ this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
 
 getCiudadesR(provincia_id) {
 this.ciudadesR = null;
-this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
+this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
   this.ciudadesR = data.json().data;
  
 }, (error) => {

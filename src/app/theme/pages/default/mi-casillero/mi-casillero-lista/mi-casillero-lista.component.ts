@@ -39,6 +39,8 @@ import { ArancelesService } from "../../../../../shared/services/api/aranceles.s
 })
 export class MiCasilleroListaComponent extends BaseListComponent
   implements OnInit {
+    parroquias: City[]=null;
+    parroquiasR: City[]=null;
     datos: any;
     file:any;
     unidades:number = 0;
@@ -705,6 +707,7 @@ onEntrega(content){
     this.entrega = new Entrega();
     this.entrega.ciudad = new City;
     this.entrega.ciudad_retiro = new City;
+    this.entrega.parroquia_retiro = new City;
     this.entrega.ciudad.provincia = new Province;
     this.entrega.ciudad_retiro.provincia = new Province;
     this.entrega.ciudad.provincia.pais = new Country;
@@ -740,8 +743,10 @@ domicilioValue(value){
     this.entrega.ciudad_retiro.id = 4813;
       this.entrega.ciudad_retiro.provincia.pais.id = 8;
       this.entrega.ciudad_retiro.provincia.id = 895;
+      this.entrega.ciudad_retiro.provincia.id = 895;
       this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
-      
+      this.getParroquiasR(this.entrega.ciudad_retiro.id);
+      this.entrega.parroquia_retiro = new City();
       this.entrega.ciudad_retiro_text = 'Guayaquil';
       this.disabled = true;
   }
@@ -764,6 +769,7 @@ selectedValue(value){
       this.entrega.celular = '';
       this.entrega.codigoPostal = '';
       this.entrega.ciudad = new City();
+      this.entrega.parroquia = new City();
       this.entrega.ciudad.provincia = new Province();
       this.entrega.ciudad.provincia.pais = new Country();
   }
@@ -1058,6 +1064,7 @@ getDireccion(id){
   this.entrega.direccion = '';
   this.entrega.codigoPostal = '';
   this.entrega.ciudad = new City();
+  this.entrega.parroquia = new City();
   this.entrega.ciudad.provincia = new Province();
   this.entrega.ciudad.provincia.pais = new Country();
   this.entrega.direccion = '';
@@ -1068,10 +1075,12 @@ getDireccion(id){
           this.entrega.direccion = this.usuarios[i].direccion;
           this.entrega.codigoPostal = this.usuarios[i].codigo_postal;
           this.entrega.ciudad.id = this.usuarios[i].ciudad_id;
+          this.entrega.parroquia.id = this.usuarios[i].parroquia_id;
           this.entrega.ciudad.provincia.id = this.usuarios[i].provincia_id;
           this.entrega.ciudad.provincia.pais.id = this.usuarios[i].pais_id;
           this.getProvincias(this.entrega.ciudad.provincia.pais.id);
           this.getCiudades(this.entrega.ciudad.provincia.id);
+          this.getParroquias(this.entrega.ciudad.id);
           this.entrega.celular = this.usuarios[i].celular;
           this.entrega.cedula = this.usuarios[i].numero_identidad;
           this.disabledDir = true;
@@ -1083,6 +1092,24 @@ getDireccion(id){
 getArancelesCat() {
   this.arancelesService.categoria().subscribe(aranceles => {
       this.arancelesCat = aranceles.json().data;
+  });
+}
+
+getParroquias(ciudad_id) {
+  this.parroquias = null;
+  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+      this.parroquias = data.json().data;
+  }, (error) => {
+      console.log(error.json());
+  });
+}
+
+getParroquiasR(ciudad_id) {
+  this.parroquiasR = null;
+  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+      this.parroquiasR = data.json().data;
+  }, (error) => {
+      console.log(error.json());
   });
 }
 }

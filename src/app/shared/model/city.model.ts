@@ -21,6 +21,5 @@ export class City extends Model {
         this.pais = pais || new Country();
         this.provincia = provincia || new Province();
         this.zona = zona || new Zone();
-        this.parroquia = parroquia || new City();
     }
 }
