@@ -3,6 +3,7 @@ import { City } from "./city.model";
 import { Province } from "./province.model";
 import { User } from "./user.model";
 import { Extra } from "./extra.model";
+import { Articulo } from "./articulo.model";
 
 /**
 * The model that represents Facturacion's data.
@@ -10,6 +11,7 @@ import { Extra } from "./extra.model";
 export class Entrega extends Model {
     constructor(
         public ciudad?: City,
+        public articulo?: Articulo[],
         public ciudad_id?: number,
         public usuario?: User,
         public extra?: Extra,

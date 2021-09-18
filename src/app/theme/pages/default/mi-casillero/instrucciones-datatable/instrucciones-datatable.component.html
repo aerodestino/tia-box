@@ -1,0 +1,1084 @@
+<table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+    <thead>
+    <tr>
+       
+        <th>
+        </th>
+        <th>Fecha en Bodega</th>
+        <th>Código Almacén</th>
+        <th>Tracking</th>
+        <th>Descripción</th>
+        <th>Remitente</th>
+        <th>Peso(Lb)</th>
+        <th>Piezas</th>
+        <th>Dim(In)</th>
+        <th>Vol(Vlb)</th>
+        <th>Valor(USD)</th>
+        <th>Estatus</th>
+        <th>Detalles</th>
+        <th>Acciones Entrega</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="!data.length">
+        No se encontraron resultados
+    </tr>
+    <tr *ngFor="let articulo of data">
+        <td>
+        <div class="row">
+            <div class="col-md-1">
+            <label class="m-checkbox">
+                <input type="checkbox" [(ngModel)]="articulo.selected" (change)="changeAllState()">
+                <span></span>
+            </label>
+            </div>
+            <div class="col-md-3">
+            <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigo_consolidado}}</i>
+            <a style="cursor: pointer;" *ngIf="articulo.enviar" (click)="modalEmbarque(embarqueModal,articulo )"> 
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                    padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35;" title="Instrucciones de Embarque por Administrativo"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && !articulo.editar_embarque) && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque"  ></i>
+    
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                    padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35" title="Instrucciones de Embarque por Administrativo (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="(articulo.estado_articulo.id <= 2 && articulo.editar_embarque) && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque (Bloqueada Edición)"  ></i>
+    
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && articulo.embarque_por && articulo.embarque_por.is_client" style="font-size: 10px;color:#ee1111;    border: 1px solid;
+                      padding: 5px;margin-left: -8px;" title="Instrucciones de Embarque por Cliente (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && articulo.embarque_por && !articulo.embarque_por.is_client" style="font-size: 10px;color:#4f9e35" title="Instrucciones de Embarque por Administrativo (Bloqueada Edición)"  ></i>
+                <i class="fa fa-plane" *ngIf="articulo.estado_articulo.id > 2 && !articulo.embarque_por" style="font-size: 10px;color:#ee1111" title="Instrucciones de Embarque (Bloqueada Edición)"  ></i>
+    
+                <i class="fa fa-ban" style="font-size: 8px !important;color:#ee1111;float: left;" *ngIf="(articulo.estado_articulo.id > 2 || articulo.editar_embarque) && ((articulo.embarque_por && articulo.embarque_por.is_client) || !articulo.embarque_por)"></i>
+                <i class="fa fa-ban" style="font-size: 8px !important;color:#4f9e35;float: left" *ngIf="(articulo.estado_articulo.id > 2 || articulo.editar_embarque) && articulo.embarque_por && !articulo.embarque_por.is_client"></i>
+            </a>              </div>
+           </div>
+        </td>
+        <td>
+            {{articulo.fecha_bodega | date: "dd/MM/y" : "-0500"}}
+        </td>
+        <td>
+            {{articulo.trackbox}}
+        </td>
+        <td>
+           {{articulo.tracking}}
+        </td>
+        <td>
+            <span *ngIf="articulo.media == 0">{{articulo.descripcion}}</span>
+            <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media > 0" (click)="onVerImagenes(articulo.id)">{{articulo.descripcion}}</span>
+            <span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
+        </td>
+        <td>
+            {{articulo.tienda}}
+        </td>
+        <td>
+            {{articulo.peso | number:'1.2-2' }}
+        </td>
+        <td>
+            {{articulo.piezas}}
+        </td>
+        <td>
+            {{articulo.largo}}x{{articulo.ancho}}x{{articulo.alto}}
+        </td>
+        <td>
+            {{articulo.volumen}}
+        </td>
+        <td>
+            {{ articulo.precio }}
+        </td>
+        <td>
+            {{ articulo.estado_articulo ? articulo.estado_articulo.nombre : '-' }}
+        </td>
+       <td>
+            <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>   
+         </td>
+        <td>
+        <div class="row">
+            <div class="col-md-1">
+            <i class="fa fa-edit m--font-info" *ngIf="articulo.entrega && !articulo.guia_enviada " title="Editar Entrega" style="cursor: pointer;" (click)="View(editarModal,articulo.entrega.id,0)"></i>
+            </div>
+            <div class="col-md-1">
+            <i class="fa fa-eye m--font-info" *ngIf="articulo.entrega" title="Visualizar Entrega" style="cursor: pointer;" (click)="View(detallesModal,articulo.entrega.id,1)"></i>
+            </div>
+            <div class="col-md-1" *ngIf="articulo.entrega && !articulo.guia_enviada">
+                <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer"
+                   (click)="onDelete(deleteConfirmation,articulo.entrega.id)"></i>
+            </div>
+        </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <ngb-pagination [collectionSize]="totalItems" [pageSize]="filters.limit" [(page)]="page"
+                        aria-label="Default pagination" (pageChange)="onPageChange()"
+                        [maxSize]="5"></ngb-pagination>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 m--align-right">
+        <div class="m--align-right" style="justify-content: flex-end">
+            <select class="form-control m-input m-input--pill m-input--solid m-input--fixed-small" title="Warning"
+                    data-style="btn-warning"
+                    [(ngModel)]="filters.limit"
+                    name="limit" style="width: auto" (change)="onLimitChange()">
+                <option *ngFor="let numPerPage of numsPerPage" [ngValue]="numPerPage">
+                    {{numPerPage}}
+                </option>
+            </select>
+        </div>
+        <div class="m--align-right">
+            <span>Mostrando {{registroInicialPagina}}-{{registroFinalPagina}} de {{totalItems}} registros</span>
+        </div>
+    </div>
+
+</div>
+
+<!--begin::Delete Confirmation Modal-->
+<ng-template #deleteConfirmation let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar Eliminación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>¿Está seguro que desea eliminar el recurso?</p><br>
+        <span class="m--font-danger">Esta acción es irreversible!!</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger m-btn--air" (click)="c('aceptar')">Aceptar</button>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::Articulo Detalles Modal-->
+<ng-template #articuloDetallesModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Detalles</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+            <thead>
+            <tr>
+                <th>Guía de Envío</th>
+                <th>Recibo</th>
+                <th>Forma de Entrega</th>
+                <th>Guía de Entrega</th>
+                <th>Fecha de Entrega</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    {{detalles.codigo_pedido }}
+                </td>
+                <td>
+                    {{detalles.facturacion ? detalles.facturacion.recibo : '-'}}
+                </td>
+                <td>
+                    {{(detalles.entrega && detalles.entrega.guia_enviada && detalles.entrega.courier) ? detalles.entrega.courier.nombre : ((detalles.facturacion && detalles.facturacion.courier) ? detalles.facturacion.courier.nombre : '-') }}
+                </td>
+                <td>
+                    {{(detalles.entrega && detalles.entrega.guia_enviada) ? detalles.entrega.guia : ((detalles.facturacion && detalles.facturacion.guia) ? detalles.facturacion.guia : '-') }}
+                </td>
+                <td>
+                    {{(detalles.entrega && detalles.entrega.guia_enviada) ? (detalles.entrega.fecha_guia | date: "dd/MM/y" : "-0500") : ((detalles.facturacion && detalles.facturacion.fecha_guia) ? (detalles.facturacion.fecha_guia | date: "dd/MM/y" : "-0500") : '-') }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</ng-template>
+<!--end::Modal-->  <!--begin::Modal-->
+
+
+<!--begin::View  Modal-->
+<ng-template #embarqueModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Instrucciones de Embarque</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            
+            <div class="m-list-settings">
+                <div *ngIf="datoEmbarque" class="m-list-settings__group">
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            WHBOX
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.warehouse">
+                          <i class="fa fa-warning" ></i>
+                         </span>
+                         <span class="m-list-settings__item-control" *ngIf="datoEmbarque.warehouse">
+                            {{ datoEmbarque.warehouse }}
+                           </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Trackbox
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.trackbox }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Código Consolidado
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.codigo_consolidado ? datoEmbarque.codigo_consolidado : '-' }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Descripción
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.descripcion }}
+                         </span>
+                    </div>
+                  
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Remitente Embarque
+                        </span>
+                        <span class="m-list-settings__item-control " *ngIf="datoEmbarque.usuario_embarque_remitente"
+                              >
+                              {{datoEmbarque.usuario_embarque_remitente.numero_identidad}} - {{datoEmbarque.usuario_embarque_remitente.codigo}} {{ datoEmbarque.usuario_embarque_remitente.full_name }}
+                         </span>
+                         <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && datoEmbarque.extra_embarque_remitente"
+                         >
+                         {{ datoEmbarque.extra_embarque_remitente.identificacion }} - {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente && datoEmbarque.tienda_embarque "
+                       >
+                         {{ datoEmbarque.tienda_embarque }}
+                       </span>
+                        <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
+                        !datoEmbarque.tienda_embarque && datoEmbarque.usuario_carrier"
+                              >
+                              {{datoEmbarque.usuario_carrier.numero_identidad}} - {{datoEmbarque.usuario_carrier.codigo}} {{ datoEmbarque.usuario_carrier.full_name }}
+                         </span>
+                         <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
+                         !datoEmbarque.tienda_embarque && !datoEmbarque.usuario_carrier && datoEmbarque.extra_carrier"
+                         >
+                         {{ datoEmbarque.extra_carrier.identificacion }} - {{ datoEmbarque.extra_carrier.nombre }} {{resourceData.extra_carrier.apellidos }}
+                    </span>
+                    <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
+                    !datoEmbarque.tienda_embarque && !datoEmbarque.extra_carrier && !datoEmbarque.usuario_carrier"
+                    >
+                      {{ datoEmbarque.tienda }}
+                     </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Consignatario Embarque
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="datoEmbarque.usuario_embarque_importer"
+                        >
+                        {{ datoEmbarque.usuario_embarque_importer.numero_identidad }} - {{ datoEmbarque.usuario_embarque_importer.codigo }} {{ datoEmbarque.usuario_embarque_importer.full_name}}
+                   </span>
+                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && datoEmbarque.extra_embarque_importer"
+                   >
+                   {{ datoEmbarque.extra_embarque_importer.identificacion }} - {{ datoEmbarque.extra_embarque_importer.nombre }} {{datoEmbarque.extra_embarque_importer.apellidos}}
+                  </span>
+                
+                  <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && !datoEmbarque.extra_embarque_importer &&
+                  datoEmbarque.usuario"
+                        >
+                        {{datoEmbarque.usuario.numero_identidad}} - {{datoEmbarque.usuario.codigo}} {{ datoEmbarque.usuario.nombre }} {{datoEmbarque.usuario.apellido}}
+                   </span>
+                   <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && !datoEmbarque.extra_embarque_importer &&
+                    datoEmbarque.extra && !datoEmbarque.usuario"
+                   >
+                   {{datoEmbarque.extra.usuario?.numero_identidad}} - {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/>  ({{ datoEmbarque.extra.identificacion }} - {{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
+              </span>
+             
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Peso(Lb)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.peso | number:'1.2-2' }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Volumen(Vlb)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.volumen | number:'1.2-2' }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Costo(USD)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.precio }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Piezas
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.piezas }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Unidades Físicas
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.unidades ? datoEmbarque.unidades : 0 }}
+                         </span>
+                    </div>
+					 <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Categoría o partida arancelaria
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ (datoEmbarque.nota && datoEmbarque.categoria ) ? datoEmbarque.categoria +' - '+ datoEmbarque.nota : (datoEmbarque.nota ? datoEmbarque.nota : (datoEmbarque.categoria ? datoEmbarque.categoria : '-')) }}
+                         </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="datoEmbarque.descripcion_embarque">
+                        <span class="m-list-settings__item-label">
+                          Descripción Recomendada
+                        </span>
+                        <span class="m-list-settings__item-control">
+                          {{ datoEmbarque.descripcion_embarque ? datoEmbarque.descripcion_embarque : '-' }}
+                         </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #editarModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{titulo}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+                      #entregaForm="ngForm" (submit)="onSubmitEntrega(entregaForm.value)">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                <h5> Tipo de entrega</h5>
+                            </label>
+                            <div class="col-lg-9">
+                                <select #domicilio_retiro="ngModel"  [(ngModel)]="domicilio" name="domicilio_retiro" class="form-control m-input" (change)="domicilioValue(domicilio_retiro.value)">
+                                    <option value= "1">DOMICILIO</option>
+                                    <option value= "0">RETIRO PUNTO TRAMACO</option>
+                                    <option value= "2">RETIRO MATRIZ</option>
+                                </select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
+                            <label class="col-lg-3 col-form-label">
+                                <h5 >Dónde se retira:</h5>  
+                            </label>
+    
+                        </div>
+                        
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
+                             <label class="col-lg-3 col-form-label">
+                                País:
+                            </label>
+                            <div class="col-lg-3">
+                                <select  class="form-control m-input" placeholder="País" (change)="getProvinciasR(pais_id.value)"
+                                        [ngModel]="entrega.ciudad_retiro.provincia.pais.id" #pais_id="ngModel" name="pais_id"
+                                        disabled={{disabled}}>
+                                    <option [value]="" disabled>Seleccione un País</option>
+                                    <option *ngFor="let pais of paisesEntrega" [value]="pais.id" >
+                                        {{pais.nombre}}
+                                    </option>
+                                </select>
+                            </div>
+                            <label class="col-lg-3 col-form-label">
+                                Provincia:
+                            </label>
+                            <div class="col-lg-3">
+                                <app-auto-complete *ngIf="provinciasR" placeholder="Seleccione" [disabled]="disabled"
+                                [ngModel]="entrega.ciudad_retiro.provincia.id" #provinciaRetiro_id="ngModel"
+                                name="provinciaRetiro_id" [items]="provinciasR"
+                                (change)="getCiudadesR(provinciaRetiro_id.value)"
+                                [textField]="'nombre'"
+                                valueField="id" 
+                                 ></app-auto-complete>
+                           
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
+                            <label class="col-lg-3 col-form-label">
+                                Ciudad:
+                            </label>
+                            <div class="col-lg-4">
+                                <app-auto-complete *ngIf="ciudadesR" placeholder="Seleccione" [disabled]="disabled"
+                                [ngModel]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel"
+                                name="ciudadRetiro_id" [items]="ciudadesR"
+                                [textField]="'nombre'"
+                                valueField="id" (change)="getParroquiasR(ciudadRetiro_id.value)" 
+                                 ></app-auto-complete>
+                               
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text"  disabled={{disabled}} class="form-control m-input" placeholder="Ciudad Manual"
+                                [ngModel]="entrega.ciudad_retiro_text" #ciudadretirotext="ngModel" name="ciudadretirotext">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
+                        <label class="col-lg-3 col-form-label">
+                            Parroquía:
+                        </label>
+                        <div class="col-lg-3">
+                            <app-auto-complete *ngIf="parroquiasR" placeholder="Seleccione"
+                            [ngModel]="entrega.parroquia_retiro.id" #parroquiaRetiro_id="ngModel"
+                            name="parroquiaRetiro_id"  [items]="parroquiasR" [disabled]="disabled"
+                            [textField]="'nombre'"
+                            valueField="id" 
+                             ></app-auto-complete>
+                        
+                        </div>
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
+                            <label class="col-lg-3 col-form-label">
+                                Otra Información:
+                            </label>
+                            <div class="col-lg-9">
+                                <textarea class="form-control m-input" placeholder="Anotación"
+                                          [ngModel]="entrega.nota_retiro" #notaRetiro="ngModel"
+                                          name="notaRetiro">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-9">
+                                <h5 *ngIf= "domicilio == 0 || domicilio == 2">Datos de la persona que retira:</h5> 
+                                <h5 *ngIf= "domicilio == 1">Datos del domicilio:</h5> 
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                <h5> Tipo de usuario</h5>
+                            </label>
+                            <div class="col-lg-9">
+                                <select class="form-control m-input" [ngModel]="selectUsuario" #selected="ngModel" name="selected" (change)="selectedValue(selected.value)">
+                                    <option value= "1">Usuario Existente en sistema</option>
+                                    <option value= "0">Usuario no existente en sistema</option>
+                                </select>
+                            </div>
+                           
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf="selectUsuario == 1">
+                            <label class="col-lg-3 col-form-label">
+                                Usuario*:
+                            </label>
+                            <div class="col-lg-9">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios">
+                                    <input type="text" class="form-control"/>
+                                </div>
+                                <app-auto-complete *ngIf="usuarios" placeholder="Seleccione"
+                                                    [ngModel]="usuarioRetirar" #usuario_retiro="ngModel"
+                                                    name="usuario_retiro" required [items]="usuarios"
+                                                    [textField]="'numero_identidad'" 
+                                                    textField1="nombre"
+                                                    textField2="apellido"
+                                                    valueField="numero_identidad" (change)="getDireccion(usuario_retiro.value)"
+                                ></app-auto-complete>
+                            </div>
+                           
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf="selectUsuario == 0">
+                            <label class="col-lg-3 col-form-label">
+                                Nombre*:
+                            </label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input" placeholder="Nombre"
+                                       [ngModel]="entrega.nombre" #nombre="ngModel" name="nombre" required>
+                                <section *ngIf="nombre.invalid && nombre.dirty" class="bs">
+                                    <p class="m--font-danger" *ngIf="nombre.hasError('required')">El nombre es
+                                        requerido</p>
+                                </section>
+                            </div>
+                            <label class="col-lg-3 col-form-label">
+                                Apellidos:
+                            </label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input" placeholder="Apellidos"
+                                       [ngModel]="entrega.apellidos" #apellidos="ngModel"
+                                       name="apellidos" required>
+                                <section *ngIf="apellidos.invalid && apellidos.dirty" class="bs">
+                                    <p class="m--font-danger" *ngIf="apellidos.hasError('required')">Los apellidos son
+                                        requeridos</p>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0)">
+                            <label class="col-lg-3 col-form-label">
+                                Cédula:
+                            </label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input" placeholder="Cédula"
+                                       [ngModel]="entrega.cedula" #cedula="ngModel" disabled={{disabledDir}}
+                                       name="cedula" required>
+                                <section *ngIf="cedula.invalid && cedula.dirty" class="bs">
+                                <p class="m--font-danger" *ngIf="cedula.hasError('required')">La cédula es
+                                    requerida</p>
+                                </section>
+                            </div>
+                            <label class="col-lg-3 col-form-label">
+                                Celular:
+                            </label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input" placeholder="Celular"
+                                       [ngModel]="entrega.celular" #celular="ngModel" disabled={{disabledDir}}
+                                       name="celular" required>
+                                <section *ngIf="celular.invalid && celular.dirty" class="bs">
+                                <p class="m--font-danger" *ngIf="celular.hasError('required')">El celular es
+                                    requerido</p>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
+                                <label class="col-lg-3 col-form-label">
+                                    Dirección:
+                                </label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control m-input" placeholder="Dirección"
+                                    [ngModel]="entrega.direccion" #direccion="ngModel" disabled={{disabledDir}}
+                                    name="direccion" required>
+                                    <section *ngIf="direccion.invalid && direccion.dirty" class="bs">
+                                    <p class="m--font-danger" *ngIf="direccion.hasError('required')">La dirección es
+                                        requerida</p>
+                                    </section>
+                                </div>
+                            
+                        </div>
+                        <div class="form-group m-form__group row"  *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
+                            <label class="col-lg-3 col-form-label">
+                                País:
+                            </label>
+                            <div class="col-lg-3">
+                                <select  class="form-control m-input" placeholder="País" (change)="getProvincias(pais_id.value)"
+                                        [ngModel]="entrega.ciudad.provincia.pais.id"  disabled={{disabledDir}} #pais_id="ngModel" name="pais_id" required>
+                                    <option [value]="" disabled>Seleccione un País</option> 
+                                    <option *ngFor="let pais of paisesEntrega" [value]="pais.id" >
+                                        {{pais.nombre}}
+                                    </option>
+                                </select>
+                            </div>
+                            <label class="col-lg-3 col-form-label">
+                                Provincia:
+                            </label>
+                            <div class="col-lg-3">
+                                <app-auto-complete *ngIf="provincias" placeholder="Seleccione"
+                                [ngModel]="entrega.ciudad.provincia.id" #provincia_id="ngModel"
+                                name="provincia_id" required [items]="provincias" [disabled]="disabledDir"
+                                (change)="getCiudades(provincia_id.value)"
+                                [textField]="'nombre'"
+                                valueField="id" 
+                                 ></app-auto-complete>
+                            
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row"  *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
+                            <label class="col-lg-3 col-form-label">
+                                Ciudad:
+                            </label>
+                            <div class="col-lg-3">
+                                <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
+                                [ngModel]="entrega.ciudad.id" #ciudad_id="ngModel"
+                                name="ciudad_id" required [items]="ciudades" [disabled]="disabledDir"
+                                [textField]="'nombre'" 
+                                valueField="id"
+                                (change)="getParroquias(ciudad_id.value)"
+                                 ></app-auto-complete>
+                            
+                            </div>
+                            <label class="col-lg-3 col-form-label">
+                                Parroquía:
+                            </label>
+                            <div class="col-lg-3">
+                                <app-auto-complete *ngIf="parroquias" placeholder="Seleccione"
+                                [ngModel]="entrega.parroquia.id" #parroquia_id="ngModel"
+                                name="parroquia_id"  [items]="parroquias" [disabled]="disabledDir"
+                                [textField]="'nombre'"
+                                valueField="id"
+                                 ></app-auto-complete>
+                            
+                            </div>
+                            </div>
+                            <div class="form-group m-form__group row"  *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
+                            <label class="col-lg-3 col-form-label">
+                                Código Postal:
+                            </label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input" placeholder="Código Postal"
+                                [ngModel]="entrega.codigoPostal" #codigo_postal="ngModel"
+                                name="codigo_postal" required disabled = {{disabledDir}}>
+                                <section *ngIf="codigo_postal.invalid && codigo_postal.dirty" class="bs">
+                                <p class="m--font-danger" *ngIf="codigo_postal.hasError('required')">El código postal es
+                                    requerido</p>
+                                </section>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Anotación:
+                            </label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control m-input" placeholder="Anotación"
+                                [ngModel]="entrega.nota" #nota="ngModel"
+                                name="nota">
+                            
+                            </div>
+                       
+                    </div>
+                    </div>
+                    <input hidden type="text" class="form-control m-input"
+                    [(ngModel)]="estatusSeleccion" #articulos="ngModel"
+                    name="articulos">
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
+                                    <button type="submit"
+                                            [disabled]="entregaForm.invalid"
+                                            [class]="(entregaForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
+                                    >
+                                        Actualizar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" style="margin: 5px">
+                    <h3>Artículos</h3>
+                </div>
+                <div class="table-responsive" style="overflow: auto;">
+                <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+                    <thead>
+                    <tr>
+                        <th>
+                            Img
+                        </th> 
+                        <th>
+                            TRACKBOX
+                        </th>
+                        <th>
+                            Track Remitente
+                        </th>
+                        <th>
+                            Peso(Lb)
+                            <div style="float: right;">
+                                <input type="radio" class="radio-inline" id="Kg" name="tipopeso" value="1" [(ngModel)]="tpeso" #tipopeso="ngModel" required [checked]="tipopeso.value==1" (change)="onConversion(entrega.articulo)" > <label for="Kg" ><span></span>Kg</label>
+                            
+                                <input type="radio" class="radio-inline" id="lb" name="tipopeso" value="0"  [(ngModel)]="tpeso" #tipopeso="ngModel" required [checked]="tipopeso.value==0" (change)="onConversion(entrega.articulo)" > <label for="lb" ><span></span>Lb</label>      
+                            </div>
+                        </th>
+                        <th>
+                            Dimensiones(In)
+                        </th>
+                        <th>
+                            Costo(USD)
+                        </th>
+                        <th>
+                            Piezas
+                        </th>
+                        <th>Descripción </th>
+                        <th>
+                            Estado
+                        </th> 
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let articulo of entrega.articulo">
+                        <td>
+                            <img *ngIf="articulo.media && articulo.media[0]"
+                                 style="width: 50px; height: 50px; object-fit: contain"
+                                 [src]="articulo.media[0].web_url">
+                        </td> 
+                        <td>
+                            <p *ngIf="articulo.trackbox">{{ articulo.trackbox }}</p>
+                            <i class="fa fa-warning" *ngIf="!articulo.trackbox"></i>
+                        </td>
+                         <td>
+                            {{ articulo.tracking }}
+                        </td>
+                        <td>
+                            {{ articulo.peso | number:'1.2-2' }}
+                        </td>
+                        <td>
+                            {{ articulo.largo }}x{{articulo.ancho}}x{{articulo.alto}}
+                        </td>
+                        <td>
+                            {{ articulo.precio }}
+                        </td>
+                        <td>
+                            {{ articulo.piezas }}
+                        </td>
+                       <!--  <td>
+                            <span class="m-list-settings__item-control">
+                             <span class="m-badge m-badge--success m-badge--wide"
+                                   *ngIf="articulo.factura == 1">Si</span>
+                             <span class="m-badge m-badge--danger m-badge--wide" *ngIf="articulo.factura == 0">No</span>
+                            </span>
+                        </td> -->
+                        <td>{{ articulo.descripcion }}</td>
+                        <td>
+                            {{ articulo.estado_articulo.nombre }}
+                        </td> 
+                        
+                    </tr>
+                    <tr style="font-weight: bold;">
+                        <td colspan="4" style="text-align: center;">TOTAL</td>
+                        <td>{{ totalPeso | number:'1.2-2' }}</td>
+                        <td>{{ totalPrecio }}</td>
+                        <td>{{ totalPiezas }}</td>
+                        
+                        <td colspan="3" ></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #detallesModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Instrucción de Entrega</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <div *ngIf="entrega" class="m-list-settings__group">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                          <h5> TIPO : DOMICILIO </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 0">
+                        <span class="m-list-settings__item-label">
+                          <h5> TIPO : RETIRO PUNTO TRAMACO </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 2">
+                        <span class="m-list-settings__item-label">
+                          <h5> TIPO : RETIRO MATRIZ </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1">
+                        <span class="m-list-settings__item-label">
+                          <h5> Dónde se retira </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.ciudad_retiro">
+                        <span class="m-list-settings__item-label">
+                           País
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ entrega.ciudad_retiro.provincia && entrega.ciudad_retiro.provincia.pais ?  entrega.ciudad_retiro.provincia.pais.nombre : '-' }}
+                        </span>
+            
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.ciudad_retiro">
+                        <span class="m-list-settings__item-label">
+                           Provincia
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ entrega.ciudad_retiro.provincia ?  entrega.ciudad_retiro.provincia.nombre : '-' }}
+                        </span>
+            
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1">
+                        <span class="m-list-settings__item-label">
+                           Ciudad
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.ciudad_retiro_text == ''">
+                            {{ entrega.ciudad_retiro ?  entrega.ciudad_retiro.nombre : '-' }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.ciudad_retiro_text != ''">
+                            {{ entrega.ciudad_retiro_text }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.parroquia_retiro">
+                        <span class="m-list-settings__item-label">
+                           Parroquía
+                        </span>
+                        <span class="m-list-settings__item-control" >
+                            {{ entrega.parroquia_retiro ?  entrega.parroquia_retiro.nombre : '-' }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="!entrega.domicilio">
+                        <span class="m-list-settings__item-label">
+                            Otra Información
+                        </span>
+                        <span class="m-list-settings__item-control" >
+                            {{ entrega.nota_retiro ?  entrega.nota_retiro : '-' }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label"  *ngIf="entrega.domicilio == 1">
+                           <h5>Datos del domicilio</h5> 
+                        </span>
+                        <span class="m-list-settings__item-label"  *ngIf="entrega.domicilio != 1">
+                           <h5> Datos de la persona que retira </h5> 
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Nombre y apellidos
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.nombre && entrega.nombre != '' ">
+                            {{ entrega.nombre +' '+ entrega.apellidos }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.nombre == '' && entrega.usuario">
+                            {{ (entrega.usuario.empresa) ? entrega.usuario.codigo +'- '+  entrega.usuario.empresa : entrega.usuario.codigo +'- '+  entrega.usuario.nombre +' '+ entrega.usuario.apellido }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.nombre  == '' && entrega.extra">
+                            {{ entrega.extra.nombre +' '+ entrega.extra.apellidos }}
+                        </span>
+                    </div>
+
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Cédula
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.cedula">
+                            {{ entrega.cedula }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.cedula && entrega.usuario">
+                            {{ entrega.usuario.numero_identidad  }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.cedula && entrega.extra">
+                            {{ entrega.extra.identificacion }}
+                        </span>
+                    </div>
+
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                            Dirección
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion && entrega.direccion != '' ">
+                            {{ entrega.direccion }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion  == '' && entrega.usuario">
+                            {{ entrega.usuario.direccion  }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion == '' && entrega.extra">
+                            {{ entrega.extra.direccion }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                            Código Postal
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal && entrega.codigo_postal != '' ">
+                            {{ entrega.codigo_postal }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal  == '' && entrega.usuario">
+                            {{ entrega.usuario.codigo_postal  }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal == '' && entrega.extra">
+                            {{ entrega.extra.usuario ? entrega.extra.usuario.codigo_postal : '-'  }}
+                        </span>
+                    </div>
+
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Celular
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.celular">
+                            {{ entrega.celular }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.celular && entrega.usuario">
+                            {{ entrega.usuario.telefono1  }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.celular && entrega.extra">
+                            {{ entrega.extra.celular }}
+                        </span>
+                    </div>
+
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                            Ciudad
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.ciudad">
+                            {{ entrega.ciudad.nombre }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.usuario && entrega.usuario.ciudad ">
+                            {{ entrega.usuario.ciudad.nombre  }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad">
+                            {{ entrega.extra.usuario.ciudad.nombre }}
+                        </span> 
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1 && entrega.parroquia">
+                        <span class="m-list-settings__item-label">
+                           Parroquía
+                        </span>
+                        <span class="m-list-settings__item-control" >
+                            {{ entrega.parroquia ?  entrega.parroquia.nombre : '-' }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                            Provincia
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.ciudad && entrega.ciudad.provincia">
+                            {{ entrega.ciudad.provincia.nombre  }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf=" entrega.usuario && entrega.usuario.ciudad && entrega.usuario.ciudad.provincia">
+                            {{ entrega.usuario.ciudad.provincia.nombre }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad && entrega.extra.usuario.ciudad.provincia ">
+                            {{ entrega.extra.usuario.ciudad.provincia.nombre }}
+                        </span>
+                    </div>
+
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                            País
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.ciudad && entrega.ciudad.provincia && entrega.ciudad.provincia.pais">
+                            {{ entrega.ciudad.provincia.pais.nombre  }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.usuario && entrega.usuario.ciudad && entrega.usuario.ciudad.provincia && entrega.usuario.ciudad.provincia.pais" >
+                            {{ entrega.usuario.ciudad.provincia.pais.nombre }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad && entrega.extra.usuario.ciudad.provincia && entrega.extra.usuario.ciudad.provincia.pais">
+                            {{ entrega.extra.usuario.ciudad.provincia.pais.nombre  }}
+                        </span>
+                    </div>
+
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Anotación
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ entrega.nota ? entrega.nota : '-'}}
+                           </span>
+                    </div>
+                   
+                    <div class="table-responsive" style="overflow: auto;">
+                    <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+                        <thead>
+                        <tr>
+                            <th>
+                                Img
+                            </th> 
+                            <th>
+                                TRACKBOX
+                            </th>
+                            <th>
+                                Usuario
+                            </th>
+                            <th>
+                                Track Remitente
+                            </th>
+                            <th>
+                                Peso(Lb)
+                            </th>
+                            <th>
+                                Dimensiones(In)
+                            </th>
+                            <th>
+                                Costo(USD)
+                            </th>
+                            <th>
+                                Piezas
+                            </th>
+                            <th>Descripción </th>
+                            <th>
+                                Estado
+                            </th> 
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let articulo of entrega.articulo">
+                            <td>
+                                <img *ngIf="articulo.media && articulo.media[0]"
+                                     style="width: 50px; height: 50px; object-fit: contain"
+                                     [src]="articulo.media[0].web_url">
+                            </td> 
+                            <td>
+                                <p *ngIf="articulo.trackbox">{{ articulo.trackbox }}</p>
+                                <i class="fa fa-warning" *ngIf="!articulo.trackbox"></i>
+                            </td>
+                            <td>
+                                {{articulo.usuario?.codigo}} {{ (articulo.usuario?.empresa && articulo.usuario?.empresa != '') ? articulo.usuario?.empresa : articulo.usuario?.nombre +' '+ articulo.usuario?.apellido }}
+                            </td>
+                             <td>
+                                {{ articulo.tracking }}
+                            </td>
+                            <td>
+                                {{ articulo.peso | number:'1.2-2' }}
+                            </td>
+                            <td>
+                                {{ articulo.largo }}x{{articulo.ancho}}x{{articulo.alto}}
+                            </td>
+                            <td>
+                                {{ articulo.precio }}
+                            </td>
+                            <td>
+                                {{ articulo.piezas }}
+                            </td>
+                           <!--  <td>
+                                <span class="m-list-settings__item-control">
+                                 <span class="m-badge m-badge--success m-badge--wide"
+                                       *ngIf="articulo.factura == 1">Si</span>
+                                 <span class="m-badge m-badge--danger m-badge--wide" *ngIf="articulo.factura == 0">No</span>
+                                </span>
+                            </td> -->
+                            <td>{{ articulo.descripcion }}</td>
+                            <td>
+                                {{ articulo.estado_articulo.nombre }}
+                            </td> 
+                            
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</ng-template>
+<!--end::Modal-->

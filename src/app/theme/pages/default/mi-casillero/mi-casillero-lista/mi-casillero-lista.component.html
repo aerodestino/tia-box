@@ -127,7 +127,7 @@
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('embarcadosSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#embarcadosTab" role="tab">
-                Por Embarcar <span class="m-badge m-badge--success" *ngIf="totalEmbarcados">{{totalEmbarcados}}</span>
+                Embarcados/Tránsito <span class="m-badge m-badge--success" *ngIf="totalEmbarcados">{{totalEmbarcados}}</span>
             </a>
         </li>
         <!-- <li class="nav-item m-tabs__item" (click)="seleccionarTab('enTransitoSeleccionadas')">
@@ -135,9 +135,14 @@
                 En Tránsito <span class="m-badge m-badge--success" *ngIf="totalEnTransito">{{totalEnTransito}}</span>
             </a>
         </li> -->
+       <li class="nav-item m-tabs__item" (click)="seleccionarTab('instruccionesSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#instruccionesTab" role="tab">
+                Instrucciones de Entrega <span class="m-badge m-badge--success" *ngIf="totalInstrucciones">{{totalInstrucciones}}</span>
+            </a>
+        </li> 
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('facturacionSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#facturacionTab" role="tab">
-                En el País <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
+                Recibo Cobro <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
             </a>
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('rutaNacionalSeleccionadas')">
@@ -152,7 +157,7 @@
         </li>
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('estatusSeleccionadas')">
             <a class="nav-link m-tabs__link " data-toggle="tab" href="#estatusTab" role="tab">
-                Estatus <span class="m-badge m-badge--success" *ngIf="totalEstatus">{{totalEstatus}}</span>
+                Estatus General<span class="m-badge m-badge--success" *ngIf="totalEstatus">{{totalEstatus}}</span>
             </a>
         </li>
     </ul>
@@ -337,6 +342,38 @@
                             (articuloChange)="onArticuloChange($event)"
                             (selectionChange)="onEstatusSelectionChange($event)"
                     ></app-estatus-datatable>
+                </div>
+                <!--end: Datatable -->
+            </div>
+        </div>
+
+        <div class="tab-pane" id="instruccionesTab" role="tabpanel" [class.active]="instruccionesSeleccionadas">
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+
+                    <!--begin: Search Form -->
+                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <app-instrucciones-list-header [totalInstrucciones]="instruccionesSeleccion.length" [puedeEntrega]="puedeEntrega" [selection]="instruccionesSeleccion"
+                            (exportar)="onExportarInstrucciones()" (entrega)="onEntrega(entregaModal)"
+                        ></app-instrucciones-list-header>
+                    </div>
+                    <!--end: Search Form -->        <!--begin: Datatable -->
+                    <div class="row" style="justify-content: center">
+                        <div class="m-loader" style="width: 30px;" *ngIf="!instrucciones && instruccionesSeleccionadas"></div>
+                    </div>
+                    <app-instrucciones-datatable
+                            *ngIf="instrucciones && instruccionesSeleccionadas"
+                            [data]="instrucciones"
+                            (ver)="verImagenes($event, imagenesModal)"
+                            [totalItems]="totalInstrucciones"
+                            [filters]="instruccionesFilters"
+                            [url]="urlfactura"
+                            (cargar)= "getInstrucciones($event)"
+                            (entregaSelection)= "onPuedeEntrega($event)"
+                            (filtersChange)="onInstruccionesFiltersChange($event)"
+                            (articuloChange)="onArticuloChange($event)"
+                            (selectionChange)="onInstruccionesSelectionChange($event)"
+                    ></app-instrucciones-datatable>
                 </div>
                 <!--end: Datatable -->
             </div>

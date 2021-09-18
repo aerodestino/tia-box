@@ -56,6 +56,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   usuario: any;
   enBodega: any[];
   estatus: any[];
+  instrucciones: any[];
   enTransito: any[];
   embarcados: any[];
   facturacion: any[];
@@ -68,6 +69,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
+  instrauccionesSeleccionadas = false;
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
@@ -77,8 +79,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
   ids:any[] = [];
   enBodegaSeleccion: any;
   estatusSeleccion: any;
+  instruccionesSeleccion: any;
   estaConsolidado = false;
   totalEnBodega = 0;
+  totalInstrucciones = 0;
   totalEnTransito = 0;
   totalFacturacion = 0;
   totalRutaNacional = 0;
@@ -117,6 +121,13 @@ export class MiCasilleroListaComponent extends BaseListComponent
     limit: 5,
     offset: 0,
     estado_articulo_id: 3,
+    q: ''
+  };
+
+ instruccionesFilters = {
+    limit: 5,
+    offset: 0,
+    estado_articulo_id: 1,
     q: ''
   };
 
@@ -215,6 +226,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getRutaNacional();
     this.getEntregados();
     this.getEstatus();
+    this.getInstrucciones();
     this.getPaisesE();
   }
 
@@ -236,6 +248,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onEstatusSelectionChange(selection) {
     this.estatusSeleccion = selection;
+  }
+
+  onInstruccionesSelectionChange(selection) {
+    this.instruccionesSeleccion = selection;
   }
 
   onArticuloChange(selection) {
@@ -265,6 +281,21 @@ export class MiCasilleroListaComponent extends BaseListComponent
         this.getEstados();
         this.estatus = articulos.json().data[0].results;
         this.totalEstatus = articulos.json().data[0].paging.total;
+        this.urlfactura = articulos.json().data[1];
+      },
+      error => {
+        this.toastr.error(error.json().error.message);
+      }
+    );
+  }
+
+  getInstrucciones() {
+    this.instrucciones = null;
+    this.instruccionesSeleccion = [];
+    this.articulosService.getPorEstado(this.instruccionesFilters).subscribe(
+      articulos => {
+        this.instrucciones = articulos.json().data[0].results;
+        this.totalInstrucciones = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
       error => {
@@ -383,6 +414,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
   onEntregadosFiltersChange(filters) {
     this.entregadosFilters = filters;
     this.getEntregados();
+  }
+
+  onInstruccionesFiltersChange(filters) {
+    this.instruccionesFilters = filters;
+    this.getInstrucciones();
   }
 
   onSubirFactura(articulo) {
@@ -705,10 +741,12 @@ onEntrega(content){
   this.totalPesoEnt = 0;
   this.totalPiezas = 0;
     this.entrega = new Entrega();
+    this.selectedValue(0);
     this.entrega.ciudad = new City;
     this.entrega.ciudad_retiro = new City;
     this.entrega.parroquia_retiro = new City;
     this.entrega.ciudad.provincia = new Province;
+    this.entrega.parroquia = new City;
     this.entrega.ciudad_retiro.provincia = new Province;
     this.entrega.ciudad.provincia.pais = new Country;
     this.entrega.ciudad.provincia.pais.id= 8;
@@ -903,6 +941,22 @@ OnModalDV(content) {
         }
 }
 
+onExportarInstrucciones() {
+  Helpers.setLoading(true);
+  let filters = {
+    articulos: this.estatusSeleccion,
+    q: this.estatusFilters.q,
+    estado: this.estatusFilters.estado
+  };
+  this.entregaService.exportarInstrucciones(filters, ResponseContentType.Blob).subscribe(excel => {
+      this.excelWorkService.downloadXLS('Entregas.xlsx', excel);
+      Helpers.setLoading(false);
+  }, error => {
+      this.toastr.error(error.json().error.message);
+      Helpers.setLoading(false);
+  });
+}
+
 getPaises() {
 this.paises = null;
 this.paisesService.getAll().subscribe((data) => {
@@ -986,11 +1040,12 @@ getPaisesE() {
 onSubmitEntrega(entrega) {
   this.modalRef.close();
   Helpers.setLoading(true);
+  entrega.articulos = this.instruccionesSeleccion;
   this.entregaService.create(entrega).subscribe( () => {
       Helpers.setLoading(false);
       this.toastr.success("Entrega creada");
        // this.envioUpdated.emit();
-       this.getEstatus();
+       this.getInstrucciones();
   }, error => {
       Helpers.setLoading(false);
       if(error.json().data)
