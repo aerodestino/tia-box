@@ -944,10 +944,8 @@ OnModalDV(content) {
 onExportarInstrucciones() {
   Helpers.setLoading(true);
   let filters = {
-    articulos: this.estatusSeleccion,
-    q: this.estatusFilters.q,
-    estado: this.estatusFilters.estado
-  };
+    articulos: this.instruccionesSeleccion,
+    q: this.instruccionesFilters.q  };
   this.entregaService.exportarInstrucciones(filters, ResponseContentType.Blob).subscribe(excel => {
       this.excelWorkService.downloadXLS('Entregas.xlsx', excel);
       Helpers.setLoading(false);
