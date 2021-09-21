@@ -51,6 +51,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     arancelesCat: Arancel[];
     arancel: any = 'B';
     nombreTrackbox: any = '';
+    valorFactura: any = 0;
     modalRef = null;
     selectionPrecios: any;
   usuario: any;
@@ -261,6 +262,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   getEnBodega() {
     this.enBodega = null;
     this.enBodegaSeleccion = [];
+    this.valorFactura = 0;
     this.articulosService.getPorEstado(this.enBodegaFilters).subscribe(
       articulos => {
         this.enBodega = articulos.json().data[0].results;
@@ -373,6 +375,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   seleccionarTab(tab) {
     this.enBodegaSeleccionadas = false;
     this.enTransitoSeleccionadas = false;
+    this.instrauccionesSeleccionadas = false;
     this.facturacionSeleccionadas = false;
     this.rutaNacionalSeleccionadas = false;
     this.entregadosSeleccionadas = false;
@@ -676,12 +679,16 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
 
 onSubmitFactura() {
-  this.modalRef.close();
+  if(!this.valorFactura || this.valorFactura == 0 || this.valorFactura == ''){
+    this.toastr.error('El costo debe ser mayor que cero.'); 
+  }else{
+    this.modalRef.close();
     Helpers.setLoading(true);
     const formData: FormData = new FormData();
     formData.append('factura', this.file, this.file.name);
     formData.append('articulos', this.enBodegaSeleccion);
     formData.append('nombre', this.nombreTrackbox);
+    formData.append('valor', this.valorFactura);
      this.articulosService.subirFacturaMasiva(formData).subscribe(() => {
         this.toastr.success("Factura Agregada");
         Helpers.setLoading(false);
@@ -691,6 +698,8 @@ onSubmitFactura() {
         Helpers.setLoading(false);
         this.toastr.error(error.json().error.message);
     });  
+  }
+
 }
 
 onDatos(element) {
@@ -717,23 +726,10 @@ onPuedeEntrega(element) {
 }
 
 OnModalFactura(content){
-    let existe=false;
-    
-    for (let i in this.datos){
-        if(this.datos[i].costo == null ||this.datos[i].costo <= 0 ||this.datos[i].costo == '0.00' )
-            existe= true;    
-    }
-    if(existe || this.selectionPrecios){
-      if(this.selectionPrecios){
-        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
-          Helpers.setLoading(false);
-      }else{
-        this.toastr.error('El costo debe ser mayor que cero');
-        Helpers.setLoading(false);
-      }
-    }else{
+    this.file = null;
+    this.valorFactura = 0;
     this.modalRef = this.ngbModal.open(content, {size: "lg"});
-    }
+  
 }
 
 onEntrega(content){
@@ -899,46 +895,32 @@ onExportarEstatus() {
 }
 
 OnModalDV(content) {
-  this.totalDescripciones = 0;
-        this.importer_usuario=null;
-        this.remitente_usuario =null;
-        this.paqueteList=[];
-        let existe= false;
-        for (let i in this.datos){
-            if(this.datos[i].costo == null ||this.datos[i].costo <= 0 )
-                existe= true;    
-        }
-        if(existe || !this.existeprecio){
-            if(!this.existeprecio){
-              this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
-                Helpers.setLoading(false);
-            }else{
-              this.toastr.error('El costo debe ser mayor que cero');
-              Helpers.setLoading(false);
-            }
-          }else{
-            this.getUsuarios();
-            this.getPaises();
-            this.declaracion = new Declaracion;
-            this.articulodv= new Articulo;
-            let fecha = new Date();
-            this.articulodv.tienda_d_v = this.datos ? this.datos[0].remitente_text : '';
-            this.importer_usuario=this.datos ? this.datos[0].consignatario : null;
-            this.remitente_usuario =this.datos ? this.datos[0].remitente : null;
-            if(this.articulodv.fecha_expiracion_d_v)
-               fecha = new Date(this.articulodv.fecha_expiracion_d_v);
-           
-            this.articulodv.fecha_expiracion_d_v = {
-                "year": fecha.getFullYear(),
-                "month": fecha.getMonth() + 1,
-                "day": fecha.getDate()
-            };
-            this.pais_origen_d_v_id = 9;
-            this.pais_destino_d_v_id = 8;
-             const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
-            this.paqueteList.push(person); 
-            this.modalRef = this.ngbModal.open(content, {size: "lg"});
-        }
+      this.totalDescripciones = 0;
+      this.importer_usuario=null;
+      this.remitente_usuario =null;
+      this.paqueteList=[];
+      this.getUsuarios();
+      this.getPaises();
+      this.declaracion = new Declaracion;
+      this.articulodv= new Articulo;
+      let fecha = new Date();
+      this.articulodv.tienda_d_v = this.datos ? this.datos[0].remitente_text : '';
+      this.importer_usuario=this.datos ? this.datos[0].consignatario : null;
+      this.remitente_usuario =this.datos ? this.datos[0].remitente : null;
+      if(this.articulodv.fecha_expiracion_d_v)
+          fecha = new Date(this.articulodv.fecha_expiracion_d_v);
+      
+      this.articulodv.fecha_expiracion_d_v = {
+          "year": fecha.getFullYear(),
+          "month": fecha.getMonth() + 1,
+          "day": fecha.getDate()
+      };
+      this.pais_origen_d_v_id = 9;
+      this.pais_destino_d_v_id = 8;
+        const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+      this.paqueteList.push(person); 
+      this.modalRef = this.ngbModal.open(content, {size: "lg"});
+
 }
 
 onExportarInstrucciones() {

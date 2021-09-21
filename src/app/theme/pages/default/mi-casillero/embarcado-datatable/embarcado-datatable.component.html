@@ -86,12 +86,11 @@
             <span class="m-badge m-badge--info m-badge--wide"  title="Factura" style="color: white; background-color: #1e1111" *ngIf="!articulo.factura_url">No</span>            
 
         </td>
-      <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id == 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #4f9e35"></i></td>
+      <td ><i *ngIf="articulo.estado_articulo && articulo.estado_articulo.id == 3" class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #4f9e35"></i></td>
       <!-- <td *ngIf="articulo.estado_articulo && articulo.estado_articulo.id != 3"><i class="fa fa-check m-badge m-badge--info m-badge--wide"  style="color: white; background-color: #1e1111"></i></td> -->
-        <td></td>
       <td> 
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1" *ngIf="(articulo.estado_articulo && articulo.estado_articulo.id < 3 && !articulo.editar_embarque)">
             <i class="fa fa-edit m--font-info" title="Editar Embarque" style="cursor: pointer;" (click)="onEmbarcar(embarcar,articulo.id)"></i>
             </div>
         </div>

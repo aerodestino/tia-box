@@ -431,12 +431,22 @@
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
+                      
+                        <label class="col-lg-3 col-form-label">
+                            Valor Factura*:
+                        </label>
                         <div class="col-lg-3">
-                        <input type="text" class="form-control m-input" 
-                        [(ngModel)]="nombreTrackbox" #nombre="ngModel"
-                        name="nombre" hidden placeholder="Nombre Factura"
-                        required>
-                        </div>
+                            <input type="number" min="0" class="form-control m-input" 
+                            [(ngModel)]="valorFactura" #valor="ngModel"
+                            name="valor" placeholder="Valor Factura"
+                            required>
+                            </div>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control m-input" 
+                            [(ngModel)]="nombreTrackbox" #nombre="ngModel"
+                            name="nombre" hidden placeholder="Nombre Factura"
+                            required>
+                            </div>
                     </div>
                     <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid">
@@ -444,7 +454,7 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button type="submit"
-                                            [disabled]="!fileInput.value && !nombre.value"
+                                            [disabled]="!fileInput.value"
                                             [class]="(facturaForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                     >
                                         Guardar

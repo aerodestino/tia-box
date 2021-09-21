@@ -134,9 +134,9 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
         this.selectionIds.push(item.id);
         if(!this.text  || (this.text && this.text == '')) this.text = item.trackbox;
         const datos =  {  costo:item.precio,
-          consignatario: item.uidentidad ? item.uidentidad : (item.exidentidad ? item.exidentidad : null) , 
-          remitente: item.ecidentidad ? item.ecidentidad : (item.ucidentidad ? item.ucidentidad : null),
-         remitente_text : item.tienda};
+          consignatario: (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : ((this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : ((this.articulodv.usuario) ? this.articulodv.usuario.numero_identidad : ((this.articulodv.extra) ? this.articulodv.extra.identificacion : ((this.articulodv.extra_carrier) ? this.articulodv.extra_carrier.identificacion : (this.articulodv.usuario_carrier) ? this.articulodv.usuario_carrier.numero_identidad : null)))) , 
+          remitente: (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : ((this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null),
+         remitente_text : item.tienda_d_v ? item.tienda : ''};
         this.costo.push(datos);
         if(item.factura_file)
           existeFactura ++;
@@ -151,8 +151,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     this.trackboxOutput.emit(this.text);
     this.selectionChange.emit(this.selectionIds);
     this.datosSelection.emit(this.costo);
-    (existeFactura > 0) ? this.facturaSelection.emit(false) : this.facturaSelection.emit(true);
-    (existeFactura > 0) ? this.dvSelection.emit(false) : this.dvSelection.emit(true);
+    (existeConsolidado == 0) ? this.facturaSelection.emit(false) : this.facturaSelection.emit(true);
+    (existeConsolidado == 0) ? this.dvSelection.emit(false) : this.dvSelection.emit(true);
     (existeFactura == this.selectionIds.length && existeConsolidado == 0) ? this.consolidarSelection.emit(false) : this.consolidarSelection.emit(true);
     (existeFactura == this.selectionIds.length && existeEmbarcado == 0) ? this.enviarSelection.emit(false) : this.enviarSelection.emit(true);
     (existePrecio > 0) ? this.preciosSelection.emit(true) : this.preciosSelection.emit(false);
@@ -215,7 +215,7 @@ declaracionValores(content,id,articulo) {
   this.declaracion = new Declaracion;
   this.trackbox= articulo.trackbox;
   this.articulodv= articulo;
-  let fecha = new Date(this.articulodv.fechaBodega);
+  let fecha = new Date(this.articulodv.fecha_bodega);
   if(this.articulodv.fecha_expiracion_d_v)
       fecha = new Date(this.articulodv.fecha_expiracion_d_v);
   
@@ -244,19 +244,22 @@ declaracionValores(content,id,articulo) {
       this.pais_destino_d_v_id = 8;
   else
       this.pais_destino_d_v_id = this.articulodv.pais_destino_d_v.id;
-  if(this.articulodv.usuario_carrier_d_v || this.articulodv.extra_carrier_d_v)
+      if(this.articulodv.usuario_carrier_d_v || this.articulodv.extra_carrier_d_v)
       this.remitente_usuario = (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : (this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null;
   if(this.articulodv.usuario_importer_d_v || this.articulodv.extra_importer_d_v)
       this.importer_usuario = (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : (this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : null;
   if(!this.remitente_usuario)
-      this.remitente_usuario = (this.articulodv.ecidentidad) ? this.articulodv.ecidentidad : this.articulodv.ucidentidad;
+      this.remitente_usuario = (this.articulodv.extra_carrier) ? this.articulodv.extra_carrier.identificacion : (this.articulodv.usuario_carrier) ? this.articulodv.usuario_carrier.numero_identidad : null;
   if(!this.importer_usuario)
-      this.importer_usuario = (this.articulodv.uidentidad) ? this.articulodv.uidentidad : this.articulodv.exidentidad;
+      this.importer_usuario = (this.articulodv.usuario) ? this.articulodv.usuario.numero_identidad : (this.articulodv.extra) ? this.articulodv.extra.identificacion : null;
   if(!this.articulodv.tienda_d_v || this.articulodv.tienda_d_v == '')
       this.articulodv.tienda_d_v = this.articulodv.tienda;
   this.declaracion.articulo_id = id;
   this.modalRef = this.ngbModal.open(content, {size: "lg"});
   Helpers.setLoading(false);
+}
+
+cambiomasiva(){
 }
 
 onSubmit(value) {
