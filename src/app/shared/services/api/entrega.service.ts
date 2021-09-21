@@ -10,6 +10,11 @@ export class EntregaService extends ApiService {
         this.url = 'api/entregas/'
     }
 
+    exportarInstrucciones(params: any, responseType?: any) {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}downloadInstrucciones`, {params: this.object2Params(params),responseType: responseType});
+    }
+
     getArticulos(id, responseType?: any) : Observable<any>{
         return this.http.get(`${this.url}${id}/articulos`,{params: this.object2Params(this.serialize(responseType))});
     }

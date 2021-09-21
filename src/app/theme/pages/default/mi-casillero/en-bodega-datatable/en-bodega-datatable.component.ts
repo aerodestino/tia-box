@@ -133,8 +133,12 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
       if (item.selected){
         this.selectionIds.push(item.id);
         if(!this.text  || (this.text && this.text == '')) this.text = item.trackbox;
-        this.costo.push(item.precio);
-        if(item.factura_file)
+        const datos =  {  costo:item.precio,
+          consignatario: (item.extra_importer_d_v) ? item.extra_importer_d_v.identificacion : ((item.usuario_importer_d_v) ? item.usuario_importer_d_v.numero_identidad : ((item.usuario) ? item.usuario.numero_identidad : ((item.extra) ? item.extra.identificacion : ((item.extra_carrier) ? item.extra_carrier.identificacion : (item.usuario_carrier) ? item.usuario_carrier.numero_identidad : null)))) , 
+          remitente: (item.extra_carrier_d_v) ? item.extra_carrier_d_v.identificacion : ((item.usuario_carrier_d_v) ? item.usuario_carrier_d_v.numero_identidad : null),
+         remitente_text : item.tienda_d_v ? item.tienda : ''};
+        this.costo.push(datos);
+        if(item.factura_url)
           existeFactura ++;
         if(item.editar_consolidacion)
           existeConsolidado ++;
@@ -147,8 +151,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     this.trackboxOutput.emit(this.text);
     this.selectionChange.emit(this.selectionIds);
     this.datosSelection.emit(this.costo);
-    (existeFactura > 0) ? this.facturaSelection.emit(false) : this.facturaSelection.emit(true);
-    (existeFactura > 0) ? this.dvSelection.emit(false) : this.dvSelection.emit(true);
+    (existeConsolidado == 0) ? this.facturaSelection.emit(false) : this.facturaSelection.emit(true);
+    (existeConsolidado == 0) ? this.dvSelection.emit(false) : this.dvSelection.emit(true);
     (existeFactura == this.selectionIds.length && existeConsolidado == 0) ? this.consolidarSelection.emit(false) : this.consolidarSelection.emit(true);
     (existeFactura == this.selectionIds.length && existeEmbarcado == 0) ? this.enviarSelection.emit(false) : this.enviarSelection.emit(true);
     (existePrecio > 0) ? this.preciosSelection.emit(true) : this.preciosSelection.emit(false);
@@ -199,7 +203,7 @@ close(){
   this.modalRef.close();
 }
 
-declaracionValores(content,iddato,articulo) {
+declaracionValores(content,id,articulo) {
   Helpers.setLoading(true);
   let person = [];
   this.totalDescripciones = 0;
@@ -207,74 +211,90 @@ declaracionValores(content,iddato,articulo) {
   this.remitente_usuario =null;
   this.paqueteList=[];
   this.getUsuarios();
-  this.getPaises();
-  this.articuloService.dv({id: iddato}).subscribe((data) => {
-    this.articulodv = data.json().data;
-    console.log(this.articulodv);
-    this.declaracion = new Declaracion;
-    this.trackbox= articulo.trackbox;
-    let fecha = new Date(this.articulodv.fecha_expiracion_d_v);
-    this.articulodv.fecha_expiracion_d_v = {
-        "year": fecha.getFullYear(),
-        "month": fecha.getMonth() + 1,
-        "day": fecha.getDate()
-    };
-    if(this.articulodv.descripciones_d_v){
-        for(let i in this.articulodv.descripciones_d_v ){
-            person.push({ id: articulo.id , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 
-            vunitario: this.articulodv.descripciones_d_v[i]['vunitario'], total: this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario'] });
-            this.totalDescripciones = this.totalDescripciones + (this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario']);
-        }
-        this.paqueteList.push(person);
-        console.log(this.paqueteList);
-    }else{
-        const person =  [{ id: articulo.id , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
-        this.paqueteList.push(person);
-    }
+  this.getPaises();  
+  this.declaracion = new Declaracion;
+  this.trackbox= articulo.trackbox;
+  this.articulodv= articulo;
+  let fecha = new Date(this.articulodv.fecha_bodega);
+  if(this.articulodv.fecha_expiracion_d_v)
+      fecha = new Date(this.articulodv.fecha_expiracion_d_v);
   
-    if(!this.articulodv.pais_origen_d_v)
-        this.pais_origen_d_v_id = 8;
-    else    
-        this.pais_origen_d_v_id = this.articulodv.pais_origen_d_v.id;
-    if(!this.articulodv.pais_destino_d_v)
-        this.pais_destino_d_v_id = 8;
-    else
-        this.pais_destino_d_v_id = this.articulodv.pais_destino_d_v.id;
-    if(this.articulodv.usuario_carrier_d_v || this.articulodv.extra_carrier_d_v)
-        this.remitente_usuario = (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : (this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null;
-        if(this.articulodv.usuario_importer_d_v || this.articulodv.extra_importer_d_v)
-        this.importer_usuario = (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : (this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : null;
-    
-    this.declaracion.articulo_id = iddato;
-    this.modalRef = this.ngbModal.open(content, {size: "lg"});
-    Helpers.setLoading(false);
-}, (error) => {
-    this.toastr.error(error.json().error.message);
-});
- 
+  this.articulodv.fecha_expiracion_d_v = {
+      "year": fecha.getFullYear(),
+      "month": fecha.getMonth() + 1,
+      "day": fecha.getDate()
+  }; 
+  if(this.articulodv.descripciones_d_v){
+      for(let i in this.articulodv.descripciones_d_v ){
+          person.push({ id: articulo.id , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 
+          vunitario: this.articulodv.descripciones_d_v[i]['vunitario'], total: this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario'] });
+          this.totalDescripciones = this.totalDescripciones + (this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario']);
+      }
+      this.paqueteList.push(person);
+  }else{
+      const person =  [{ id: articulo.id , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+      this.paqueteList.push(person);
+  }
+
+  if(!this.articulodv.pais_origen_d_v)
+      this.pais_origen_d_v_id = 9;
+  else    
+      this.pais_origen_d_v_id = this.articulodv.pais_origen_d_v.id;
+  if(!this.articulodv.pais_destino_d_v)
+      this.pais_destino_d_v_id = 8;
+  else
+      this.pais_destino_d_v_id = this.articulodv.pais_destino_d_v.id;
+      if(this.articulodv.usuario_carrier_d_v || this.articulodv.extra_carrier_d_v)
+      this.remitente_usuario = (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : (this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null;
+  if(this.articulodv.usuario_importer_d_v || this.articulodv.extra_importer_d_v)
+      this.importer_usuario = (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : (this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : null;
+  if(!this.remitente_usuario)
+      this.remitente_usuario = (this.articulodv.extra_carrier) ? this.articulodv.extra_carrier.identificacion : (this.articulodv.usuario_carrier) ? this.articulodv.usuario_carrier.numero_identidad : null;
+  if(!this.importer_usuario)
+      this.importer_usuario = (this.articulodv.usuario) ? this.articulodv.usuario.numero_identidad : (this.articulodv.extra) ? this.articulodv.extra.identificacion : null;
+  if(!this.articulodv.tienda_d_v || this.articulodv.tienda_d_v == '')
+      this.articulodv.tienda_d_v = this.articulodv.tienda;
+  this.declaracion.articulo_id = id;
+  this.modalRef = this.ngbModal.open(content, {size: "lg"});
+  Helpers.setLoading(false);
+}
+
+cambiomasiva(){
 }
 
 onSubmit(value) {
-Helpers.setLoading(true);
-this.modalRef.close();
-if(this.totalDescripciones > 0){
-    this.declaracion.awb= this.articulodv.trackbox;
-    this.articuloService.declaracionValores(this.declaracion.articulo_id, value).subscribe( (pdf) => {
-      //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
-        
-        Helpers.setLoading(false);
-        this.toastr.success("Declaración de valores creada");
-        this.cargar.emit();
-    }, error => {
-        Helpers.setLoading(false);
-       this.toastr.error(error.json().error.message);
-    });
-}else{
-    Helpers.setLoading(false);
-       this.toastr.error('El valor total debe ser mayor que cero'); 
-}
+  let existe = false;
+  if(this.paqueteList[0].length > 0){
+    for(let i in this.paqueteList[0]){
+      if(this.paqueteList[0][i].descripcion =='N/A' || this.paqueteList[0][i].descripcion =='' || this.paqueteList[0][i].cantidad==''|| this.paqueteList[0][i].vunitario==''|| this.paqueteList[0][i].cantidad==0 || this.paqueteList[0][i].vunitario==0 || this.paqueteList[0][i].total==0){
+        existe = true;
+        break;
+      }
+    }
+  }else{
+    existe = true;
+  }
+  if(!existe){
+      Helpers.setLoading(true);
+      this.modalRef.close();
+      this.declaracion.awb= this.articulodv.trackbox;
+      this.articuloService.declaracionValores(this.declaracion.articulo_id, value).subscribe( (pdf) => {
+        //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
+          
+          Helpers.setLoading(false);
+          this.toastr.success("Declaración de valores creada");
+          this.cargar.emit();
+      }, error => {
+          Helpers.setLoading(false);
+         this.toastr.error(error.json().error.message);
+      });
+  }else{
+      Helpers.setLoading(false);
+         this.toastr.error('Debe llenar correctamente las descripciones'); 
+  }
 
 }
+
 
 getUsuarios() {
 this.usuarios = null;
@@ -298,14 +318,20 @@ this.paisService.getAll().subscribe((data) => {
 
 
 updateList(id: number, property: string, event: any) {
-
+console.log(event.target.textContent);
 this.paqueteList[0][id][property] = event.target.textContent;
-let c = Big(this.paqueteList[0][id]['cantidad']);
-let v = Big(this.paqueteList[0][id]['vunitario']);
-this.paqueteList[0][id]['total'] = c.mul(v);
-let t = Big(this.paqueteList[0][id]['total']);
-let td = Big(this.totalDescripciones);
-this.totalDescripciones = t.plus(td);
+console.log(this.paqueteList[0][id][property]);
+
+if(this.paqueteList[0][id]['cantidad'] && this.paqueteList[0][id]['vunitario']){
+  let c = Big(this.paqueteList[0][id]['cantidad']);
+  let v = Big(this.paqueteList[0][id]['vunitario']);
+  this.paqueteList[0][id]['total'] = c.mul(v);
+  let t = Big(this.paqueteList[0][id]['total']);
+  let td = Big(this.totalDescripciones);
+  this.totalDescripciones = t.plus(td);
+  let d = Big(this.totalDescripciones);
+  this.totalDescripciones = d.toNumber();
+} console.log(this.paqueteList);
 }
 
 remove(id: any) {

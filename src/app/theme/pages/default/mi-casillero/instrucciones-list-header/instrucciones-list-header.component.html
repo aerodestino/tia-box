@@ -1,6 +1,9 @@
 <div class="row align-items-center">
     <div class="col-12 m--align-right">
-      
+        <button [disabled]="puedeEntrega || totalInstrucciones < 1" class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
+        (click)="onEntrega()" style="font-size: 1.2rem;">
+        Entrega
+        </button>
         <button class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
             (click)="onExportar()" style="font-size: 1.2rem;">
             <i class="fa fa-file-excel-o"></i>

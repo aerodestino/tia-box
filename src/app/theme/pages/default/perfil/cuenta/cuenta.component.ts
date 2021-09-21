@@ -20,6 +20,7 @@ export class CuentaComponent implements OnInit {
     ciudades: any[] = [];
     default= 8;
     message: any='';
+    parroquias: any[] = [];
     @Input() usuario: any;
     @Output() verCupos: EventEmitter<any> = new EventEmitter();
     constructor(public usuariosService: UsuariosService,
@@ -36,6 +37,7 @@ export class CuentaComponent implements OnInit {
     ngOnInit() {
         if (!this.usuario.provincia) this.usuario.provincia = new Province();
         if (!this.usuario.ciudad) this.usuario.ciudad = new City();
+        if (!this.usuario.parroquia) this.usuario.parroquia = new City();
         this.getPaises();
         if(this.usuario.pais.id)
              this.getProvincias(this.usuario.pais.id);
@@ -44,12 +46,25 @@ export class CuentaComponent implements OnInit {
             
         if(this.usuario.provincia && this.usuario.provincia.id ) 
             this.getCiudades(this.usuario.provincia.id);
+        if(this.usuario.ciudad.id)
+            this.getParroquias(this.usuario.ciudad.id);
     }
 
     getPaises() {
         this.paisesService.getAllWithoutAuth().subscribe(paises => {
             this.paises = paises.json().data;
         })
+    }
+
+    getParroquias(ciudad_id) {
+        this.parroquias = null;
+        this.ciudadesService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+            this.parroquias = data.json().data;
+            if (!this.usuario.parroquia)
+                this.usuario.parroquia = new City();
+        }, (error) => {
+            console.log(error.json());
+        });
     }
 
     getProvincias(pais_id) {
@@ -59,7 +74,7 @@ export class CuentaComponent implements OnInit {
     }
 
     getCiudades(provincia_id) {
-        this.ciudadesService.getAll({provincia_id: provincia_id}).subscribe(ciudades => {
+        this.ciudadesService.getPrincipal({provincia_id: provincia_id}).subscribe(ciudades => {
             this.ciudades = ciudades.json().data;
         });
     }

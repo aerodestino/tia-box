@@ -1,3 +1,4 @@
+import { City } from "./city.model";
 import { Model } from "./model";
 import { Role } from "./role.model";
 import { Site } from "./site.model";
@@ -21,6 +22,8 @@ export class User extends Model {
         public pais_id?: any,
         public provincia_id?: any,
         public cedula?: string,
+        public parroquia?: City,
+        public parroquia_id?: any,
         public status?: number) {
         super();
     }

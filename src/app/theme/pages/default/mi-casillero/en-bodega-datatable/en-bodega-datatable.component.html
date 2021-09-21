@@ -31,12 +31,12 @@
                 <input type="checkbox" [(ngModel)]="articulo.selected" (change)="changeAllState()">
                 <span></span>
             </label>
-            <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigoConsolidado}}</i>
+            <i class="fa fa-dropbox" style="font-size: 10px" *ngIf="articulo.consolidado">{{articulo.codigo_consolidado}}</i>
             <a style="cursor: pointer;"  *ngIf="articulo.enviar" title="Instrucciones de Embarque"  (click)="modalEmbarque(embarqueModal,articulo )"> <i class="fa fa-plane" style="font-size: 10px"></i></a>
            
         </td>
         <td>
-            {{articulo.fechaBodega | date: "dd/MM/y" : "-0500"}}
+            {{articulo.fecha_bodega | date: "dd/MM/y" : "-0400"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -71,9 +71,9 @@
             (click)="guardarPrecio(articulo.id,articulo.precio)"  *ngIf="!articulo.editarprecio"></i>
         </td>
         <td>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file" title="Declaración de Valores" style="color: white; background-color: #4f9e35"  *ngIf="articulo.factura_file && articulo.facDV && !articulo.consolidadoFactura">Si</a>            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura" style="color: white; background-color: #1e1111" target="_blank" *ngIf="articulo.factura_file && !articulo.facDV && !articulo.consolidadoFactura">Si</a>
-            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file | replice" title="Factura Consolidada" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_file && !articulo.facDV && articulo.consolidadoFactura">Si</a>            
-            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="url + articulo.factura_file" title="Factura Consolidada" style="color: white; background-color: #4660d1" *ngIf="articulo.factura_file && articulo.facDV && articulo.consolidadoFactura">Si</a>                  <input
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url" title="Declaración de Valores" style="color: white; background-color: #4f9e35"  *ngIf="articulo.factura_url && articulo.fac_d_v && !articulo.consolidado_factura">Si</a>            <a class="m-badge m-badge--info m-badge--wide" [attr.href]=" articulo.factura_url" title="Factura" style="color: white; background-color: #1e1111" target="_blank" *ngIf="articulo.factura_url && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
+            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url" title="Factura Consolidada" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && !articulo.fac_d_v && articulo.consolidado_factura">Si</a>            
+            <a  class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url" title="Factura Consolidada" style="color: white; background-color: #4660d1" *ngIf="articulo.factura_url && articulo.fac_d_v && articulo.consolidado_factura">Si</a>                  <input
                     name="archivo"
                     type="file"
                     hidden
@@ -86,11 +86,11 @@
             hidden
             #fileInputMasiva
             (change)="onSubirFacturaMasiva($event, articulo)">
-            <i class="fa fa-folder-open m--font-success" style="cursor: pointer" title="Subir Factura" (click)="fileInput.click()" *ngIf="!articulo.factura_file"></i>
+            <i class="fa fa-folder-open m--font-success" style="cursor: pointer" title="Subir Factura" (click)="fileInput.click()" *ngIf="!articulo.factura_url"></i>
             <span *ngIf="articulo.facturaExcel">{{articulo.facturaExcel.name}}</span>
             <i class="fa fa-file-pdf-o m--font-success" style="cursor: pointer; margin-left: 5px;" title="Declaración de valores" (click)="declaracionValores(declaracion,articulo.id,articulo)"></i>
-            <i class="fa fa-edit m--font-success" style="cursor: pointer" title="Editar Factura" (click)="fileInput.click()" *ngIf="articulo.factura_file"></i>
-            <i class="fa fa-copy m--font-success" style="cursor: pointer" title="Editar Factura Masiva" (click)="fileInputMasiva.click()" *ngIf="articulo.factura_file && articulo.consolidadoFactura "></i>
+            <i class="fa fa-edit m--font-success" style="cursor: pointer" title="Editar Factura" (click)="fileInput.click()" *ngIf="articulo.factura_url"></i>
+            <i class="fa fa-copy m--font-success" style="cursor: pointer" title="Editar Factura Masiva" (click)="fileInputMasiva.click()" *ngIf="articulo.factura_url && articulo.consolidado_factura "></i>
         </td>
         <td>
            
@@ -145,6 +145,7 @@
 </ng-template>
 <!--end::Modal-->  <!--begin::Modal-->
 
+<!--begin::View  Modal-->
 <ng-template #declaracion let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Declaración de valores</h4>
@@ -188,15 +189,15 @@
                                        [ngModel]="articulodv.envio.warehouse"  #awb="ngModel"
                                        name="awb"
                                        required>
-                                <input type="text" class="form-control m-input" *ngIf="!articulodv.consolidado && !articulodv.envio"
+                                <input type="text" class="form-control m-input" *ngIf="(!articulodv.consolidado && !articulodv.envio) || (!masiva && !articulodv.envio)"
                                        [(ngModel)]="articulodv.trackbox" #awbs="ngModel"
                                        name="awbs"
                                        required disabled>
-                                <input type="text" class="form-control m-input m--hide" *ngIf="!articulodv.consolidado && !articulodv.envio"
+                                <input type="text" class="form-control m-input m--hide" *ngIf="(!articulodv.consolidado && !articulodv.envio) || (!masiva && !articulodv.envio)"
                                        [ngModel]="articulodv.trackbox"  #awb="ngModel"
                                        name="awb"
                                        required>
-                                <input type="text" class="form-control m-input" *ngIf="articulodv.consolidado  && !articulodv.envio"
+                                <input type="text" class="form-control m-input" *ngIf="(articulodv.consolidado  && !articulodv.envio) && masiva"
                                        [(ngModel)]="articulodv.awb"  #awb="ngModel"
                                        name="awb"
                                        required>
@@ -255,7 +256,7 @@
                                 <span class="m-switch m-switch--icon">
                                     <label>
                                         <input type="checkbox" checked="checked" name="tipo"
-                                            [ngModel]="masiva" #tipo="ngModel">
+                                            [(ngModel)]="masiva" #tipo="ngModel" (change)="cambiomasiva()">
                                         <span></span>
                                     </label>
                                 </span>
@@ -319,13 +320,13 @@
                                     <tr *ngFor="let person of paqueteList[0]; let id = index">
                                       
                                         <td  style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'descripcion', $event);" (blur)="updateList(id, 'descripcion', $event)"  style="padding:5px; text-align:center;">{{person.descripcion}}</span>
+                                        <span contenteditable="true"  (blur)="updateList(id, 'descripcion', $event)"  style="padding:5px; text-align:center;">{{person.descripcion}}</span>
                                         </td>
                                         <td style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);" (blur)="updateList(id, 'cantidad', $event)"  style="padding:5px; text-align:center;">{{person.cantidad}}</span>
+                                        <span contenteditable="true"  (blur)="updateList(id, 'cantidad', $event)"  style="padding:5px; text-align:center;">{{person.cantidad}}</span>
                                         </td>
                                         <td style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'vunitario', $event);" (blur)="updateList(id, 'vunitario', $event)"  style="padding:5px; text-align:center;">{{person.vunitario}}</span>
+                                        <span contenteditable="true"  (blur)="updateList(id, 'vunitario', $event)"  style="padding:5px; text-align:center;">{{person.vunitario}}</span>
                                         </td>
                                         <td style="font-size: 1.1em !important;">{{(person.cantidad * person.vunitario) ? person.cantidad * person.vunitario : 0}}</td>
                                         <td style="font-size: 1.1em !important;"> <span class="table-remove">
@@ -359,7 +360,7 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button type="submit"
-                                            [disabled]="declaracionForm.invalid || totalDescripciones == 0"
+                                            [disabled]="declaracionForm.invalid"
                                             [class]="(declaracionForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                     >
                                         Guardar

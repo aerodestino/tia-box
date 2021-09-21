@@ -26,11 +26,11 @@ import { City } from "../../../../../shared/model/city.model";
 import { Province } from "../../../../../shared/model/province.model";
 import { Entrega } from "../../../../../shared/model/entrega.model";
 @Component({
-  selector: "app-estatus-datatable",
-  templateUrl: "./estatus-datatable.component.html",
+  selector: "app-instrucciones-datatable",
+  templateUrl: "./instrucciones-datatable.component.html",
   styles: []
 })
-export class EstatusDatatableComponent extends BaseDatatableComponent
+export class InstruccionesDatatableComponent extends BaseDatatableComponent
   implements OnInit, AfterViewInit {
   selectedAll = false;
   text:string = '';
@@ -205,7 +205,7 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
       if (item.selected){
         this.selectionIds.push(item.id);
         this.selectionArticulo.push(item);
-        if((item.estado_articulo.id == 3 || item.estado_articulo.id == 4) && !item.entrega)
+        if(!item.entrega)
           existe++;
       } 
     });
@@ -263,24 +263,24 @@ getParroquiasR(ciudad_id) {
   });
 }
 
-View(content, entrega,tipo) {
+View(content, id,tipo) {
   this.tpeso = 0;
   this.totalPeso = 0;
   this.totalPiezas = 0;
   Helpers.setLoading(true);
-//  this.entregaService.getById(id).subscribe(resource => {
-      this.entrega = entrega;
-      this.domicilio = entrega.domicilio;
-      for(let i in entrega.articulo){
-        let c = Big(entrega.articulo[i].precio);
+  this.entregaService.getById(id).subscribe(resource => {
+      this.entrega = resource.json().data;
+      this.domicilio = this.entrega.domicilio;
+      for(let i in this.entrega.articulo){
+        let c = Big(this.entrega.articulo[i].precio);
         this.totalPrecio = c.plus(this.totalPrecio);
-        let peso = Big(entrega.articulo[i].peso);
+        let peso = Big(this.entrega.articulo[i].peso);
         this.totalPeso = peso.plus(this.totalPeso);
-        let piezas = Big(entrega.articulo[i].piezas);
+        let piezas = Big(this.entrega.articulo[i].piezas);
         this.totalPiezas = piezas.plus(this.totalPiezas);
         
-        let pesolistado = Big(entrega.articulo[i].peso);
-        entrega.articulo[i].peso = pesolistado.toNumber(); 
+        let pesolistado = Big(this.entrega.articulo[i].peso);
+        this.entrega.articulo[i].peso = pesolistado.toNumber(); 
         let tpesolistado = Big( this.totalPeso);
         this.totalPeso = tpesolistado.toNumber(); 
     }
@@ -309,6 +309,8 @@ View(content, entrega,tipo) {
         if(this.entrega.ciudad_retiro){
           this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
           this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+          if(!this.entrega.parroquia_retiro)
+             this.entrega.parroquia_retiro = new City();
           this.getParroquiasR(this.entrega.ciudad_retiro.id);
         }else{
           this.entrega.ciudad_retiro= new City();
@@ -327,10 +329,10 @@ View(content, entrega,tipo) {
       Helpers.setLoading(false);
       this.modalRef = this.ngbModal.open(content, {size: "lg"});
 
-/*  }, (error) => {
+  }, (error) => {
       this.toastr.error(error.json().message);
       Helpers.setLoading(false);
-  }); */
+  }); 
 }
 
 domicilioValue(value){

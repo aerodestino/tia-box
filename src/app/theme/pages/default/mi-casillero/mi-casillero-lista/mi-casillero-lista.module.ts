@@ -13,11 +13,13 @@ import { EnBodegaDatatableComponent } from "../en-bodega-datatable/en-bodega-dat
 import { EstatusDatatableComponent } from "../estatus-datatable/estatus-datatable.component";
 import { EnBodegaListHeaderComponent } from "../en-bodega-list-header/en-bodega-list-header.component";
 import { EstatusListHeaderComponent } from "../estatus-list-header/estatus-list-header.component";
+import { InstruccionesListHeaderComponent } from "../instrucciones-list-header/instrucciones-list-header.component";
 import { EnTransitoDatatableComponent } from "../en-transito-datatable/en-transito-datatable.component";
 import { EmbarcadoDatatableComponent } from "../embarcado-datatable/embarcado-datatable.component";
 import { FacturacionDatatableComponent } from "../facturacion-datatable/facturacion-datatable.component";
 import { RutaNacionalDatatableComponent } from "../ruta-nacional-datatable/ruta-nacional-datatable.component";
 import { EntregadosDatatableComponent } from "../entregados-datatable/entregados-datatable.component";
+import { InstruccionesDatatableComponent } from "../instrucciones-datatable/instrucciones-datatable.component";
 import { ReplacePipe } from '../../../../../shared/pipes/replace.pipes';
 const routes: Routes = [
     {
@@ -48,6 +50,8 @@ const routes: Routes = [
         EmbarcadoDatatableComponent,
         EstatusDatatableComponent,
         EstatusListHeaderComponent,
+        InstruccionesDatatableComponent,
+        InstruccionesListHeaderComponent,
         ReplacePipe
     ]
 })

@@ -29,6 +29,8 @@ import { Province } from "../../../../../shared/model/province.model";
 import { ProvinciasService } from "../../../../../shared/services/api/provincias.service";
 import { CiudadesService } from "../../../../../shared/services/api/ciudades.service";
 import { AuthRoutingModule } from "../../../../../auth/auth-routing.routing";
+import { Arancel } from "../../../../../shared/model/arancel.model";
+import { ArancelesService } from "../../../../../shared/services/api/aranceles.service";
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./mi-casillero-lista.component.html",
@@ -37,16 +39,25 @@ import { AuthRoutingModule } from "../../../../../auth/auth-routing.routing";
 })
 export class MiCasilleroListaComponent extends BaseListComponent
   implements OnInit {
+    parroquias: City[]=null;
+    parroquiasR: City[]=null;
     datos: any;
     file:any;
     unidades:number = 0;
     dv = false;
+    consolidadoFact = false;
+    consolidadoArt = false;
+    aranceles: Arancel[];
+    arancelesCat: Arancel[];
+    arancel: any = 'B';
     nombreTrackbox: any = '';
+    valorFactura: any = 0;
     modalRef = null;
     selectionPrecios: any;
   usuario: any;
   enBodega: any[];
   estatus: any[];
+  instrucciones: any[];
   enTransito: any[];
   embarcados: any[];
   facturacion: any[];
@@ -59,6 +70,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
+  instruccionesSeleccionadas = false;
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
@@ -68,8 +80,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
   ids:any[] = [];
   enBodegaSeleccion: any;
   estatusSeleccion: any;
+  instruccionesSeleccion: any;
   estaConsolidado = false;
   totalEnBodega = 0;
+  totalInstrucciones = 0;
   totalEnTransito = 0;
   totalFacturacion = 0;
   totalRutaNacional = 0;
@@ -108,6 +122,13 @@ export class MiCasilleroListaComponent extends BaseListComponent
     limit: 5,
     offset: 0,
     estado_articulo_id: 3,
+    q: ''
+  };
+
+ instruccionesFilters = {
+    limit: 5,
+    offset: 0,
+    estado_articulo_id: 1,
     q: ''
   };
 
@@ -189,6 +210,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public entregaService: EntregaService,
     public provinciaService: ProvinciasService,
     public ciudadService: CiudadesService,
+    public arancelesService: ArancelesService
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -196,6 +218,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   }
 
   ngOnInit() {
+    this.getArancelesCat();
     this.getUsuarios();
     this.getEnBodega();
     this.getEnTransito();
@@ -204,6 +227,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getRutaNacional();
     this.getEntregados();
     this.getEstatus();
+    this.getInstrucciones();
     this.getPaisesE();
   }
 
@@ -227,6 +251,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.estatusSeleccion = selection;
   }
 
+  onInstruccionesSelectionChange(selection) {
+    this.instruccionesSeleccion = selection;
+  }
+
   onArticuloChange(selection) {
     this.articulosDatos = selection;
   }
@@ -234,6 +262,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   getEnBodega() {
     this.enBodega = null;
     this.enBodegaSeleccion = [];
+    this.valorFactura = 0;
     this.articulosService.getPorEstado(this.enBodegaFilters).subscribe(
       articulos => {
         this.enBodega = articulos.json().data[0].results;
@@ -254,6 +283,21 @@ export class MiCasilleroListaComponent extends BaseListComponent
         this.getEstados();
         this.estatus = articulos.json().data[0].results;
         this.totalEstatus = articulos.json().data[0].paging.total;
+        this.urlfactura = articulos.json().data[1];
+      },
+      error => {
+        this.toastr.error(error.json().error.message);
+      }
+    );
+  }
+
+  getInstrucciones() {
+    this.instrucciones = null;
+    this.instruccionesSeleccion = [];
+    this.articulosService.getPorEstado(this.instruccionesFilters).subscribe(
+      articulos => {
+        this.instrucciones = articulos.json().data[0].results;
+        this.totalInstrucciones = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
       error => {
@@ -331,6 +375,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   seleccionarTab(tab) {
     this.enBodegaSeleccionadas = false;
     this.enTransitoSeleccionadas = false;
+    this.instruccionesSeleccionadas = false;
     this.facturacionSeleccionadas = false;
     this.rutaNacionalSeleccionadas = false;
     this.entregadosSeleccionadas = false;
@@ -374,6 +419,11 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.getEntregados();
   }
 
+  onInstruccionesFiltersChange(filters) {
+    this.instruccionesFilters = filters;
+    this.getInstrucciones();
+  }
+
   onSubirFactura(articulo) {
     if( articulo.precio <= 0 || articulo.precio <= 0.00 ){
       this.toastr.error('El costo debe ser mayor que cero');
@@ -411,7 +461,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     let existe=false;
     
     for (let i in this.datos){
-        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+        if(this.datos[i].costo == null ||this.datos[i].costo <= 0 ||this.datos[i].costo == '0.00' )
             existe= true;    
     }
     if(existe || this.selectionPrecios){
@@ -441,23 +491,50 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onSubmitEmbarcar() {
     if(this.confirmar){
-    Helpers.setLoading(true);
-    this.modalRef.close();
-    this.articulosService
-      .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
-        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades})
-      .subscribe(
-        () => {
-          Helpers.setLoading(false);
-          this.toastr.success("Artículos enviados a embarcar");
-          this.getEnBodega();
-          this.getEmbarcados();  
-        },
-        error => {
-          Helpers.setLoading(false);
-          this.toastr.error(error.json().error.message);
+      Helpers.setLoading(true);
+      let unidadesCons:any[] = [];
+      let descCons:any[] = [];
+      let existe = false;
+      if(this.consolidadoFact){
+        for(let i in this.articulos){
+          if(!this.articulos[i].unidades || this.articulos[i].unidades <= 0)
+            existe = true;
+          else{
+            unidadesCons[i] = {
+              id : this.articulos[i].id,
+              unidades: this.articulos[i].unidades
+            };
+          }
+          descCons[i] = {
+            id : this.articulos[i].id,
+            descripciones: this.articulos[i].descripcion_embarque
+          };
         }
-      );
+      }
+      if(!existe){
+        this.modalRef.close();
+        this.articulosService
+        .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
+        nota: this.notaembarque, descripcion:this.descripcionembarque,unidades:this.unidades,unidadesMasivas:unidadesCons,categoria:this.arancel,descMasiva : descCons})
+        .subscribe(
+          () => {
+            Helpers.setLoading(false);
+            this.toastr.success("Artículos enviados a embarcar");
+            this.enBodegaSeleccion = [];
+            this.filters.articulos = this.enBodegaSeleccion;
+            this.getEnBodega();
+            this.getEmbarcados();
+          },
+          error => {
+            Helpers.setLoading(false);
+            this.toastr.error(error.json().error.message);
+          }
+        );
+      }else{
+        this.toastr.error('Debe asignar unidades físicas a todos los artículos.');
+        Helpers.setLoading(false);
+      }
+     
     }else{
       this.mensaje = true;
       this.confirmar= true;
@@ -477,18 +554,16 @@ export class MiCasilleroListaComponent extends BaseListComponent
     let existe=false;
     this.remitente_usuario = null;
     this.importer_usuario = null;
-    this.text = '';
-    this.dv = false;
+    
     this.existeRemitente = false;
     this.existeImporter = false;
-    this.estaConsolidado = false;
     Helpers.setLoading(true);
     for (let i in this.datos){
-        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
+        if(this.datos[i].costo == null ||this.datos[i].costo <= 0 ||this.datos[i].costo == '0.00' )
             existe= true;    
     }
-    if(existe || this.selectionPrecios){
-      if(this.selectionPrecios){
+    if(existe || !this.existeprecio){
+      if(!this.existeprecio){
         this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
           Helpers.setLoading(false);
       }else{
@@ -496,27 +571,57 @@ export class MiCasilleroListaComponent extends BaseListComponent
         Helpers.setLoading(false);
       }
     }else{
+      this.getUsuarios();
     this.articulosService
       .embarcarModal({ articulos: this.enBodegaSeleccion })
       .subscribe(
         (datos) => {
           Helpers.setLoading(false);
           this.unidades = 0;
+          this.dv = false;
+          this.consolidadoFact = false;
           this.articulos = datos.json().data[0];
           this.totalPeso = 0;
           this.totalPrecio = 0;
           let sumPrecio = 0;
           let sumPeso = 0;
+          this.consolidadoArt = false;
+          this.mensaje = false;
+          this.confirmar= false;
+          let desc = [];
           for(let i in this.articulos){
-            this.dv = this.articulos[i].fac_d_v;
-            this.unidades = this.articulos[i].unidades ? this.articulos[i].unidades : 0;
-              sumPrecio = sumPrecio + this.articulos[i].precio;
-              sumPeso = sumPeso + this.articulos[i].peso;
+              this.arancel = this.articulos[i].categoria ? this.articulos[i].categoria : 'B';
+              this.unidades = this.articulos[i].unidades ? this.articulos[i].unidades : 0;
+              if(!this.dv)
+                this.dv = this.articulos[i].fac_d_v;
+              if(!this.consolidadoFact)
+                this.consolidadoFact = !this.articulos[i].consolidado_factura && this.articulos[i].consolidado;
+              this.articulos[i].consolidadoFact = !this.articulos[i].consolidado_factura && this.articulos[i].consolidado;
+              let precio = Big(this.articulos[i].precio);
+              sumPrecio = precio.plus(sumPrecio);
+              let peso = Big(this.articulos[i].peso);
+              sumPeso = peso.plus(sumPeso);
+              let p= Big(sumPeso);
+              sumPeso = p.toNumber();
               this.notaembarque = this.articulos[i].nota ? this.articulos[i].nota : '';
               this.descripcionembarque = this.articulos[i].descripcion_embarque ? this.articulos[i].descripcion_embarque : '';
+              if(this.descripcionembarque == ''){
+                this.articulos[i].descripcion_embarque = this.articulos[i].descripcion;
+                let c=1;
+                if(desc.length == 0){
+                  desc[0]=this.articulos[i].descripcion;
+                }else{
+                  for(let e in desc){
+                      if(desc[e] != this.articulos[i].descripcion)
+                        desc[c]=this.articulos[i].descripcion;
+                        c++;
+                  }
+                }
+              }
+              this.descripcionembarque = desc.join(',');
               this.text = this.articulos[i].tienda_embarque ? this.articulos[i].tienda_embarque : '' ;
               if(this.articulos[i].consolidado)
-                this.estaConsolidado = true;
+                 this.consolidadoArt = true;
           }
            this.totalPrecio = sumPrecio;
            this.totalPeso = sumPeso;
@@ -574,12 +679,16 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
 
 onSubmitFactura() {
-  this.modalRef.close();
+  if(!this.valorFactura || this.valorFactura == 0 || this.valorFactura == ''){
+    this.toastr.error('El costo debe ser mayor que cero.'); 
+  }else{
+    this.modalRef.close();
     Helpers.setLoading(true);
     const formData: FormData = new FormData();
     formData.append('factura', this.file, this.file.name);
     formData.append('articulos', this.enBodegaSeleccion);
     formData.append('nombre', this.nombreTrackbox);
+    formData.append('valor', this.valorFactura);
      this.articulosService.subirFacturaMasiva(formData).subscribe(() => {
         this.toastr.success("Factura Agregada");
         Helpers.setLoading(false);
@@ -589,6 +698,8 @@ onSubmitFactura() {
         Helpers.setLoading(false);
         this.toastr.error(error.json().error.message);
     });  
+  }
+
 }
 
 onDatos(element) {
@@ -615,23 +726,10 @@ onPuedeEntrega(element) {
 }
 
 OnModalFactura(content){
-    let existe=false;
-    
-    for (let i in this.datos){
-        if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
-            existe= true;    
-    }
-    if(existe || this.selectionPrecios){
-      if(this.selectionPrecios){
-        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
-          Helpers.setLoading(false);
-      }else{
-        this.toastr.error('El costo debe ser mayor que cero');
-        Helpers.setLoading(false);
-      }
-    }else{
+    this.file = null;
+    this.valorFactura = 0;
     this.modalRef = this.ngbModal.open(content, {size: "lg"});
-    }
+  
 }
 
 onEntrega(content){
@@ -639,9 +737,12 @@ onEntrega(content){
   this.totalPesoEnt = 0;
   this.totalPiezas = 0;
     this.entrega = new Entrega();
+    this.selectedValue(0);
     this.entrega.ciudad = new City;
     this.entrega.ciudad_retiro = new City;
+    this.entrega.parroquia_retiro = new City;
     this.entrega.ciudad.provincia = new Province;
+    this.entrega.parroquia = new City;
     this.entrega.ciudad_retiro.provincia = new Province;
     this.entrega.ciudad.provincia.pais = new Country;
     this.entrega.ciudad.provincia.pais.id= 8;
@@ -676,8 +777,10 @@ domicilioValue(value){
     this.entrega.ciudad_retiro.id = 4813;
       this.entrega.ciudad_retiro.provincia.pais.id = 8;
       this.entrega.ciudad_retiro.provincia.id = 895;
+      this.entrega.ciudad_retiro.provincia.id = 895;
       this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
-      
+      this.getParroquiasR(this.entrega.ciudad_retiro.id);
+      this.entrega.parroquia_retiro = new City();
       this.entrega.ciudad_retiro_text = 'Guayaquil';
       this.disabled = true;
   }
@@ -700,6 +803,7 @@ selectedValue(value){
       this.entrega.celular = '';
       this.entrega.codigoPostal = '';
       this.entrega.ciudad = new City();
+      this.entrega.parroquia = new City();
       this.entrega.ciudad.provincia = new Province();
       this.entrega.ciudad.provincia.pais = new Country();
   }
@@ -791,36 +895,46 @@ onExportarEstatus() {
 }
 
 OnModalDV(content) {
-  this.totalDescripciones = 0;
-  this.importer_usuario_DV=null;
-  this.remitente_usuario_DV =null;
-  this.paqueteList=[];
-  let existe=false;
-    
-  for (let i in this.datos){
-    if(this.datos[i] == null ||this.datos[i] <= 0 ||this.datos[i] == '0.00' )
-        existe= true;    
-}   
-    if(existe || this.selectionPrecios){
-      if(this.selectionPrecios){
-        this.toastr.error('Debe guardar el precio de algún artículo seleccionado');
-          Helpers.setLoading(false);
-      }else{
-        this.toastr.error('El costo debe ser mayor que cero');
-        Helpers.setLoading(false);
-      }
-    }else{
+      this.totalDescripciones = 0;
+      this.importer_usuario=null;
+      this.remitente_usuario =null;
+      this.paqueteList=[];
+      this.getUsuarios();
       this.getPaises();
-  
       this.declaracion = new Declaracion;
       this.articulodv= new Articulo;
+      let fecha = new Date();
+      this.articulodv.tienda_d_v = this.datos ? this.datos[0].remitente_text : '';
+      this.importer_usuario=this.datos ? this.datos[0].consignatario : null;
+      this.remitente_usuario =this.datos ? this.datos[0].remitente : null;
+      if(this.articulodv.fecha_expiracion_d_v)
+          fecha = new Date(this.articulodv.fecha_expiracion_d_v);
       
-      this.pais_origen_d_v_id = 8;
+      this.articulodv.fecha_expiracion_d_v = {
+          "year": fecha.getFullYear(),
+          "month": fecha.getMonth() + 1,
+          "day": fecha.getDate()
+      };
+      this.pais_origen_d_v_id = 9;
       this.pais_destino_d_v_id = 8;
-      const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
-      this.paqueteList.push(person);
+        const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+      this.paqueteList.push(person); 
       this.modalRef = this.ngbModal.open(content, {size: "lg"});
-  }
+
+}
+
+onExportarInstrucciones() {
+  Helpers.setLoading(true);
+  let filters = {
+    articulos: this.instruccionesSeleccion,
+    q: this.instruccionesFilters.q  };
+  this.entregaService.exportarInstrucciones(filters, ResponseContentType.Blob).subscribe(excel => {
+      this.excelWorkService.downloadXLS('Entregas.xlsx', excel);
+      Helpers.setLoading(false);
+  }, error => {
+      this.toastr.error(error.json().error.message);
+      Helpers.setLoading(false);
+  });
 }
 
 getPaises() {
@@ -835,12 +949,14 @@ this.paisesService.getAll().subscribe((data) => {
 updateList(id: number, property: string, event: any) {
 this.paqueteList[0][id][property] = event.target.textContent;
 
+if(this.paqueteList[0][id]['cantidad'] && this.paqueteList[0][id]['vunitario']){
   let c = Big(this.paqueteList[0][id]['cantidad']);
   let v = Big(this.paqueteList[0][id]['vunitario']);
   this.paqueteList[0][id]['total'] = c.mul(v);
   let t = Big(this.paqueteList[0][id]['total']);
   let td = Big(this.totalDescripciones);
   this.totalDescripciones = t.plus(td);
+}
 }
 
 remove(id: any) {
@@ -861,21 +977,34 @@ changeValue(id: number, property: string, event: any) {
 }
 
 onSubmit(value) {
-if(this.totalDescripciones > 0){
-Helpers.setLoading(true);
-this.modalRef.close();
-this.articulosService.declaracionValoresMasiva(value).subscribe( (pdf) => {
-  //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
-    Helpers.setLoading(false);
-    this.toastr.success("Declaración de valores masiva creada");
-    this.getEnBodega();
-}, error => {
-    Helpers.setLoading(false);
-   this.toastr.error(error.json().error.message);
-});
+  let existe = false;
+  if(this.paqueteList[0].length > 0){
+    for(let i in this.paqueteList[0]){
+      if(this.paqueteList[0][i].descripcion =='' || this.paqueteList[0][i].descripcion =='N/A' || this.paqueteList[0][i].cantidad==''|| this.paqueteList[0][i].vunitario==''|| this.paqueteList[0][i].cantidad==0 || this.paqueteList[0][i].vunitario==0 || this.paqueteList[0][i].total==0){
+        existe = true;
+        break;
+      }
+    }
+  }else{
+    existe = true;
+  }
+  if(!existe){
+  Helpers.setLoading(true);
+  this.enBodegaSeleccion = [];
+  this.filters.articulos = this.enBodegaSeleccion;
+  this.modalRef.close();
+  this.articulosService.declaracionValoresMasiva(value).subscribe( (pdf) => {
+    //  this.excelWorkService.downloadXLS(this.trackbox +'.pdf', pdf);
+      Helpers.setLoading(false);
+      this.toastr.success("Declaración de valores masiva creada")
+      this.getEnBodega();
+  }, error => {
+      Helpers.setLoading(false);
+     this.toastr.error(error.json().error.message);
+  });
 }else{
-Helpers.setLoading(false);
-   this.toastr.error('El valor total debe ser mayor que cero'); 
+  Helpers.setLoading(false);
+     this.toastr.error('Debe llenar correctamente las descripciones'); 
 }
 }
 
@@ -891,11 +1020,12 @@ getPaisesE() {
 onSubmitEntrega(entrega) {
   this.modalRef.close();
   Helpers.setLoading(true);
+  entrega.articulos = this.instruccionesSeleccion;
   this.entregaService.create(entrega).subscribe( () => {
       Helpers.setLoading(false);
       this.toastr.success("Entrega creada");
        // this.envioUpdated.emit();
-       this.getEstatus();
+       this.getInstrucciones();
   }, error => {
       Helpers.setLoading(false);
       if(error.json().data)
@@ -969,6 +1099,7 @@ getDireccion(id){
   this.entrega.direccion = '';
   this.entrega.codigoPostal = '';
   this.entrega.ciudad = new City();
+  this.entrega.parroquia = new City();
   this.entrega.ciudad.provincia = new Province();
   this.entrega.ciudad.provincia.pais = new Country();
   this.entrega.direccion = '';
@@ -979,10 +1110,12 @@ getDireccion(id){
           this.entrega.direccion = this.usuarios[i].direccion;
           this.entrega.codigoPostal = this.usuarios[i].codigo_postal;
           this.entrega.ciudad.id = this.usuarios[i].ciudad_id;
+          this.entrega.parroquia.id = this.usuarios[i].parroquia_id;
           this.entrega.ciudad.provincia.id = this.usuarios[i].provincia_id;
           this.entrega.ciudad.provincia.pais.id = this.usuarios[i].pais_id;
           this.getProvincias(this.entrega.ciudad.provincia.pais.id);
           this.getCiudades(this.entrega.ciudad.provincia.id);
+          this.getParroquias(this.entrega.ciudad.id);
           this.entrega.celular = this.usuarios[i].celular;
           this.entrega.cedula = this.usuarios[i].numero_identidad;
           this.disabledDir = true;
@@ -991,5 +1124,27 @@ getDireccion(id){
   }
 }
 
+getArancelesCat() {
+  this.arancelesService.categoria().subscribe(aranceles => {
+      this.arancelesCat = aranceles.json().data;
+  });
+}
 
+getParroquias(ciudad_id) {
+  this.parroquias = null;
+  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+      this.parroquias = data.json().data;
+  }, (error) => {
+      console.log(error.json());
+  });
+}
+
+getParroquiasR(ciudad_id) {
+  this.parroquiasR = null;
+  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+      this.parroquiasR = data.json().data;
+  }, (error) => {
+      console.log(error.json());
+  });
+}
 }

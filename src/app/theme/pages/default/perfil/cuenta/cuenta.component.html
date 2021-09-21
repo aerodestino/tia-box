@@ -71,7 +71,16 @@
                 <input type="text" class="form-control m-input" placeholder="Celular"
                        [(ngModel)]="usuario.celular" #celular="ngModel" name="celular">
             </div>
-
+            <label class="col-lg-2 col-form-label">
+                Teléfono:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Teléfono"
+                       [(ngModel)]="usuario.telefono1" #telefono1="ngModel" name="telefono1">
+            </div>
+           
+        </div>
+        <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
                 País
             </label>
@@ -87,8 +96,6 @@
                     </option>
                 </select>
             </div>
-        </div>
-        <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
                 Provincia/Departamento
             </label>
@@ -100,17 +107,33 @@
                     </option>
                 </select>
             </div>
+          
+
+        </div>
+        <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
                 Ciudad
             </label>
             <div class="col-lg-3">
                 <select  class="form-control m-input" placeholder="Ciudad"
-                [ngModel]="usuario.ciudad ? usuario.ciudad.id: '' " #ciudad_id="ngModel" name="ciudad_id" required>
+                [ngModel]="usuario.ciudad ? usuario.ciudad.id: '' "  (change)="getParroquias(ciudad_id.value)" #ciudad_id="ngModel" name="ciudad_id" required>
                     <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
                         {{ciudad.nombre}}
                     </option>
                 </select>
             </div>
+                <label class="col-lg-2 col-form-label" >
+                  Parroquía:
+              </label>
+              <div class="col-lg-3">
+                  <select class="form-control m-input" placeholder="Parroquía"
+                          [(ngModel)]="usuario.parroquia.id" #parroquia_id="ngModel" name="parroquia_id">
+                      <option [value]="" disabled>Seleccione una Parroquía</option>
+                      <option *ngFor="let p of parroquias" [value]="p.id" >
+                          {{p.nombre}}
+                      </option>
+                  </select>
+              </div>
 
         </div>
         <div class="form-group m-form__group row">
@@ -135,6 +158,7 @@
                         requerido</p>
                 </section>
             </div>
+           
         </div>
         <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
