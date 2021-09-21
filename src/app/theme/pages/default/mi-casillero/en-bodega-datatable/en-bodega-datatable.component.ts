@@ -134,11 +134,11 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
         this.selectionIds.push(item.id);
         if(!this.text  || (this.text && this.text == '')) this.text = item.trackbox;
         const datos =  {  costo:item.precio,
-          consignatario: (this.articulodv.extra_importer_d_v) ? this.articulodv.extra_importer_d_v.identificacion : ((this.articulodv.usuario_importer_d_v) ? this.articulodv.usuario_importer_d_v.numero_identidad : ((this.articulodv.usuario) ? this.articulodv.usuario.numero_identidad : ((this.articulodv.extra) ? this.articulodv.extra.identificacion : ((this.articulodv.extra_carrier) ? this.articulodv.extra_carrier.identificacion : (this.articulodv.usuario_carrier) ? this.articulodv.usuario_carrier.numero_identidad : null)))) , 
-          remitente: (this.articulodv.extra_carrier_d_v) ? this.articulodv.extra_carrier_d_v.identificacion : ((this.articulodv.usuario_carrier_d_v) ? this.articulodv.usuario_carrier_d_v.numero_identidad : null),
+          consignatario: (item.extra_importer_d_v) ? item.extra_importer_d_v.identificacion : ((item.usuario_importer_d_v) ? item.usuario_importer_d_v.numero_identidad : ((item.usuario) ? item.usuario.numero_identidad : ((item.extra) ? item.extra.identificacion : ((item.extra_carrier) ? item.extra_carrier.identificacion : (item.usuario_carrier) ? item.usuario_carrier.numero_identidad : null)))) , 
+          remitente: (item.extra_carrier_d_v) ? item.extra_carrier_d_v.identificacion : ((item.usuario_carrier_d_v) ? item.usuario_carrier_d_v.numero_identidad : null),
          remitente_text : item.tienda_d_v ? item.tienda : ''};
         this.costo.push(datos);
-        if(item.factura_file)
+        if(item.factura_url)
           existeFactura ++;
         if(item.editar_consolidacion)
           existeConsolidado ++;

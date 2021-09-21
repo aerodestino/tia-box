@@ -70,7 +70,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
-  instrauccionesSeleccionadas = false;
+  instruccionesSeleccionadas = false;
   facturacionSeleccionadas = false;
   rutaNacionalSeleccionadas = false;
   entregadosSeleccionadas = false;
@@ -375,7 +375,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   seleccionarTab(tab) {
     this.enBodegaSeleccionadas = false;
     this.enTransitoSeleccionadas = false;
-    this.instrauccionesSeleccionadas = false;
+    this.instruccionesSeleccionadas = false;
     this.facturacionSeleccionadas = false;
     this.rutaNacionalSeleccionadas = false;
     this.entregadosSeleccionadas = false;
