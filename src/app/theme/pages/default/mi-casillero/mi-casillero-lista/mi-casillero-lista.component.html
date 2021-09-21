@@ -94,6 +94,8 @@
                 [(ngModel)]="entregadosFilters.q" name="search" (keyup.enter)="getEntregados()" *ngIf="entregadosSeleccionadas">
                 <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
                 [(ngModel)]="estatusFilters.q" name="search" (keyup.enter)="getEstatus()" *ngIf="estatusSeleccionadas">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..."
+                [(ngModel)]="instruccionesFilters.q" name="search" (keyup.enter)="getInstrucciones()" *ngIf="instruccionesSeleccionadas">
               
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                     <span>

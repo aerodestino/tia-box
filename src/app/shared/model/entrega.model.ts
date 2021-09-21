@@ -31,6 +31,7 @@ export class Entrega extends Model {
         public notaRetiro?:any,
         public domicilio?:any,
         public codigoPostal?: string,
+        public codigo_postal?: string,
         public ciudad_retiro_text?: string,
         public pais?:any,
         public pais_retiro?:any,
