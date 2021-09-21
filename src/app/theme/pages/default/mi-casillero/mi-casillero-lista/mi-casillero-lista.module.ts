@@ -20,7 +20,6 @@ import { FacturacionDatatableComponent } from "../facturacion-datatable/facturac
 import { RutaNacionalDatatableComponent } from "../ruta-nacional-datatable/ruta-nacional-datatable.component";
 import { EntregadosDatatableComponent } from "../entregados-datatable/entregados-datatable.component";
 import { InstruccionesDatatableComponent } from "../instrucciones-datatable/instrucciones-datatable.component";
-import { ReplacePipe } from '../../../../../shared/pipes/replace.pipes';
 const routes: Routes = [
     {
         "path": "",
@@ -52,7 +51,6 @@ const routes: Routes = [
         EstatusListHeaderComponent,
         InstruccionesDatatableComponent,
         InstruccionesListHeaderComponent,
-        ReplacePipe
     ]
 })
 export class MiCasilleroListaModule {
