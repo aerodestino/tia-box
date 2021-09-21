@@ -12,16 +12,17 @@ export class CiudadesService extends ApiService {
 
     getAll(params?: any): Observable<any> {
         if (!params)
-            return this.http.getWithoutAuthHeader(`${this.url}todos`);
+            return this.http.getWithoutAuthHeader(`${this.url}all`);
         params = this.serialize(params);
-        return this.http.getWithoutAuthHeader(`${this.url}todos`, { params: this.object2Params(params) });
+        return this.http.getWithoutAuthHeader(`${this.url}all`, { params: this.object2Params(params) });
     }
 
     getPrincipal(params?: any): Observable<any> {
         if (!params)
-            return this.http.get(`${this.url}todosPrincipal`);
+            return this.http.getWithoutAuthHeader(`${this.url}todos`);
         params = this.serialize(params);
-        return this.http.get(`${this.url}todosPrincipal`, { params: this.object2Params(params) });
+        return this.http.getWithoutAuthHeader(`${this.url}todos`, { params: this.object2Params(params) });
+   
     }
 
     getParroquias(params?: any): Observable<any> {
