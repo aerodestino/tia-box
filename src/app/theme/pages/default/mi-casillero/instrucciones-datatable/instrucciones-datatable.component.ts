@@ -25,6 +25,7 @@ import { CiudadesService } from "../../../../../shared/services/api/ciudades.ser
 import { City } from "../../../../../shared/model/city.model";
 import { Province } from "../../../../../shared/model/province.model";
 import { Entrega } from "../../../../../shared/model/entrega.model";
+import { isNullOrUndefined } from "util";
 @Component({
   selector: "app-instrucciones-datatable",
   templateUrl: "./instrucciones-datatable.component.html",
@@ -246,31 +247,38 @@ onVer(articulo, modal) {
 }
 
 getParroquias(ciudad_id) {
-  this.parroquias = null;
-  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
-      this.parroquias = data.json().data;
-  }, (error) => {
-      console.log(error.json());
-  });
+  if(ciudad_id){
+    this.parroquias = null;
+    this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+        this.parroquias = data.json().data;
+    }, (error) => {
+        console.log(error.json());
+    });
+  }
+
 }
 
 getParroquiasR(ciudad_id) {
-  this.parroquiasR = null;
-  this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
-      this.parroquiasR = data.json().data;
-  }, (error) => {
-      console.log(error.json());
-  });
+  if(ciudad_id){
+    this.parroquiasR = null;
+    this.ciudadService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+        this.parroquiasR = data.json().data;
+    }, (error) => {
+        console.log(error.json());
+    });
+  }
+
 }
 
-View(content, id,tipo) {
+View(content, entrega,tipo) {
   this.tpeso = 0;
   this.totalPeso = 0;
   this.totalPiezas = 0;
   Helpers.setLoading(true);
-  this.entregaService.getById(id).subscribe(resource => {
+  this.entregaService.getById(entrega).subscribe(resource => {
       this.entrega = resource.json().data;
       this.domicilio = this.entrega.domicilio;
+      this.getPaisesE();
       for(let i in this.entrega.articulo){
         let c = Big(this.entrega.articulo[i].precio);
         this.totalPrecio = c.plus(this.totalPrecio);
@@ -296,34 +304,40 @@ View(content, id,tipo) {
              this.usuarioRetirar = this.entrega.extra.identificacion;
         }
         if(this.entrega.ciudad){
+          if(this.entrega.ciudad.parroquia){
+            this.entrega.parroquia = this.entrega.ciudad;
+            this.entrega.ciudad = this.entrega.ciudad.ciudad_principal;
+          }else{
+            this.entrega.parroquia = new City();
+          }   
           this.getProvincias(this.entrega.ciudad.provincia.pais.id);
           this.getCiudades(this.entrega.ciudad.provincia.id);
           this.getParroquias(this.entrega.ciudad.id);
         }else{
-          this.entrega.ciudad = new City();
-          this.entrega.parroquia = new City();
+          this.entrega.ciudad= new City();
+          this.entrega.parroquia= new City();
           this.entrega.ciudad.provincia = new Province();
           this.entrega.ciudad.provincia.pais = new Country();
         }
 
         if(this.entrega.ciudad_retiro){
+          if(this.entrega.ciudad_retiro.parroquia){
+            this.entrega.parroquia_retiro= this.entrega.ciudad_retiro;
+            this.entrega.ciudad_retiro = this.entrega.ciudad_retiro.ciudad_principal;
+          }else{
+            this.entrega.parroquia_retiro= new City();
+          }   
           this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
           this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
-          if(!this.entrega.parroquia_retiro)
-             this.entrega.parroquia_retiro = new City();
           this.getParroquiasR(this.entrega.ciudad_retiro.id);
         }else{
           this.entrega.ciudad_retiro= new City();
           this.entrega.parroquia_retiro= new City();
           this.entrega.ciudad_retiro.provincia = new Province();
           this.entrega.ciudad_retiro.provincia.pais = new Country();
-          this.entrega.ciudad_retiro.provincia.pais.id = 8;
-          this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
         }
-        this.domicilioValue(this.domicilio);
-        this.titulo = 'Editar Entrega';
-      }else{
-        this.titulo = 'Crear Entrega';
+        this.domicilioValue(this.entrega.domicilio);
+       
       }
      
       Helpers.setLoading(false);
@@ -350,6 +364,17 @@ domicilioValue(value){
       this.entrega.ciudad_retiro_text = 'Guayaquil';
       this.disabled = true;
   }
+  if(this.domicilio == 0){
+    if(isNullOrUndefined(this.entrega.ciudad_retiro.provincia.pais.id)){
+      this.entrega.ciudad_retiro.provincia.pais.id =8;
+      this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
+      if(this.entrega.ciudad_retiro.provincia.id)
+        this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+      if(this.entrega.ciudad_retiro.id)
+        this.getParroquiasR(this.entrega.ciudad_retiro.id);
+
+    }
+  }
   if(this.domicilio == 1 && this.selectUsuario == 1){
       if(this.usuarioRetirar != '')
           this.getDireccion(this.usuarioRetirar);
@@ -372,6 +397,12 @@ selectedValue(value){
       this.entrega.parroquia = new City();
       this.entrega.ciudad.provincia = new Province();
       this.entrega.ciudad.provincia.pais = new Country();
+      this.entrega.ciudad.provincia.pais.id =8;
+      this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+      if(this.entrega.ciudad.provincia.id)
+        this.getCiudades(this.entrega.ciudad.provincia.id);
+      if(this.entrega.ciudad.id)
+        this.getParroquias(this.entrega.ciudad.id);
   }
   if(this.domicilio == 1 && this.selectUsuario == 1){
       if(this.usuarioRetirar != '')
@@ -412,42 +443,59 @@ onSubmitEntrega(entrega) {
 }
 
 getProvincias(pais_id) {
-this.provincias = null;
-this.ciudades = null;
-this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
-    this.provincias = data.json().data;
-}, (error) => {
-    console.log(error.json());
-});
+  if(pais_id){
+    this.provincias = null;
+    this.ciudades = null;
+    this.parroquias = null;
+    this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
+        this.provincias = data.json().data;
+    }, (error) => {
+        console.log(error.json());
+    });
+  }
+
 }
 
 getProvinciasR(pais_id) {
-this.provincias = null;
-this.ciudades = null;
-this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
-  this.provinciasR = data.json().data;
-}, (error) => {
-  console.log(error.json());
-});
+  if(pais_id){
+    this.provincias = null;
+    this.ciudades = null;
+    this.parroquiasR = null;
+    this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
+      this.provinciasR = data.json().data;
+    }, (error) => {
+      console.log(error.json());
+    });
+  }
+
 }
 
 getCiudades(provincia_id) {
-this.ciudades = null;
-this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
-    this.ciudades = data.json().data;
-}, (error) => {
-    console.log(error.json());
-});
+
+  if(provincia_id){
+    this.ciudades = null;
+    this.parroquias = null;
+    this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
+      this.ciudades = data.json().data;
+  }, (error) => {
+      console.log(error.json());
+  });
+  }
+
 }
 
 getCiudadesR(provincia_id) {
-this.ciudadesR = null;
-this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
-  this.ciudadesR = data.json().data;
- 
-}, (error) => {
-  console.log(error.json());
-});
+if(provincia_id){
+  this.ciudadesR = null;
+  this.parroquiasR = null;
+    this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
+      this.ciudadesR = data.json().data;
+    
+    }, (error) => {
+      console.log(error.json());
+    });
+  }
+
 }
 
 getUsuarios() {

@@ -1069,7 +1069,7 @@
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
-                                Ciudad:
+                                Ciudad Principal:
                             </label>
                             <div class="col-lg-4">
                                 <app-auto-complete *ngIf="ciudadesR" placeholder="Seleccione"
@@ -1087,7 +1087,7 @@
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || domicilio == 2">
                         <label class="col-lg-3 col-form-label">
-                            Parroquía:
+                            Ciudad Secundaria y Parroquía:
                         </label>
                         <div class="col-lg-3">
                             <app-auto-complete *ngIf="parroquiasR" placeholder="Seleccione"
@@ -1243,7 +1243,7 @@
                         </div>
                         <div class="form-group m-form__group row" *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
                             <label class="col-lg-3 col-form-label">
-                                Ciudad:
+                                Ciudad Principal
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
@@ -1255,7 +1255,7 @@
                               
                             </div>
                             <label class="col-lg-3 col-form-label">
-                                Parroquía:
+                                Ciudad Secundaria y Parroquía
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="parroquias" placeholder="Seleccione"

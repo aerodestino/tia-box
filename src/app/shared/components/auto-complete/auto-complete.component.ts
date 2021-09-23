@@ -111,6 +111,7 @@ export class AutoCompleteComponent implements OnInit, ControlValueAccessor {
             this.inputText = this.inputText + ' ' + item[this.textField2];
         this.onTextChange();
         this.propagateChange(this.selected);
+        this.hideDropdown();
         this.change.emit(this.selected);
     }
     onTextChange() {

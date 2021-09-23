@@ -430,13 +430,14 @@
                                 (change)="getCiudadesR(provinciaRetiro_id.value)"
                                 [textField]="'nombre'"
                                 valueField="id" 
+                                [isModal]="true"
                                  ></app-auto-complete>
                            
                             </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
                             <label class="col-lg-3 col-form-label">
-                                Ciudad:
+                                Ciudad Principal:
                             </label>
                             <div class="col-lg-4">
                                 <app-auto-complete *ngIf="ciudadesR" placeholder="Seleccione" [disabled]="disabled"
@@ -444,6 +445,7 @@
                                 name="ciudadRetiro_id" [items]="ciudadesR"
                                 [textField]="'nombre'"
                                 valueField="id" (change)="getParroquiasR(ciudadRetiro_id.value)" 
+                                [isModal]="true"
                                  ></app-auto-complete>
                                
                             </div>
@@ -454,7 +456,7 @@
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2">
                         <label class="col-lg-3 col-form-label">
-                            Parroquía:
+                            Ciudad Secundaria y Parroquía:
                         </label>
                         <div class="col-lg-3">
                             <app-auto-complete *ngIf="parroquiasR" placeholder="Seleccione"
@@ -462,6 +464,7 @@
                             name="parroquiaRetiro_id"  [items]="parroquiasR" [disabled]="disabled"
                             [textField]="'nombre'"
                             valueField="id" 
+                            [isModal]="true"
                              ></app-auto-complete>
                         
                         </div>
@@ -510,6 +513,7 @@
                                                     textField1="nombre"
                                                     textField2="apellido"
                                                     valueField="numero_identidad" (change)="getDireccion(usuario_retiro.value)"
+                                                    [isModal]="true"
                                 ></app-auto-complete>
                             </div>
                            
@@ -603,13 +607,14 @@
                                 (change)="getCiudades(provincia_id.value)"
                                 [textField]="'nombre'"
                                 valueField="id" 
+                                [isModal]="true"
                                  ></app-auto-complete>
                             
                             </div>
                         </div>
                         <div class="form-group m-form__group row"  *ngIf="(disabledDir && domicilio == 1) || (selectUsuario == 0 && domicilio == 1)">
                             <label class="col-lg-3 col-form-label">
-                                Ciudad:
+                                Ciudad Principal:
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
@@ -618,11 +623,12 @@
                                 [textField]="'nombre'" 
                                 valueField="id"
                                 (change)="getParroquias(ciudad_id.value)"
+                                [isModal]="true"
                                  ></app-auto-complete>
                             
                             </div>
                             <label class="col-lg-3 col-form-label">
-                                Parroquía:
+                                Ciudad Secundaria y Parroquía:
                             </label>
                             <div class="col-lg-3">
                                 <app-auto-complete *ngIf="parroquias" placeholder="Seleccione"
@@ -630,6 +636,7 @@
                                 name="parroquia_id"  [items]="parroquias" [disabled]="disabledDir"
                                 [textField]="'nombre'"
                                 valueField="id"
+                                [isModal]="true"
                                  ></app-auto-complete>
                             
                             </div>
@@ -830,21 +837,21 @@
                     </div>
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1">
                         <span class="m-list-settings__item-label">
-                           Ciudad
+                           Ciudad Principal
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="entrega.ciudad_retiro_text == ''">
-                            {{ entrega.ciudad_retiro ?  entrega.ciudad_retiro.nombre : '-' }}
+                            {{ (entrega.ciudad_retiro && entrega.ciudad_retiro.parroquia) ? (entrega.ciudad_retiro.ciudad_principal ? entrega.ciudad_retiro.ciudad_principal.nombre : '-') : entrega.ciudad_retiro.nombre }}
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="entrega.ciudad_retiro_text != ''">
                             {{ entrega.ciudad_retiro_text }}
                         </span>
                     </div>
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.parroquia_retiro">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.ciudad_retiro_text == '' && entrega.ciudad_retiro && entrega.ciudad_retiro.parroquia">
                         <span class="m-list-settings__item-label">
-                           Parroquía
+                            Ciudad Secundaria y Parroquía
                         </span>
-                        <span class="m-list-settings__item-control" >
-                            {{ entrega.parroquia_retiro ?  entrega.parroquia_retiro.nombre : '-' }}
+                        <span class="m-list-settings__item-control">
+                            {{ entrega.ciudad_retiro && entrega.ciudad_retiro.parroquia ?  entrega.ciudad_retiro.nombre : '-' }}
                         </span>
                     </div>
                     <div class="m-list-settings__item" *ngIf="!entrega.domicilio">
@@ -939,26 +946,33 @@
 
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
-                            Ciudad
+                            Ciudad Principal
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="entrega.ciudad">
-                            {{ entrega.ciudad.nombre }}
+                            {{ entrega.ciudad.parroquia ? (entrega.ciudad.ciudad_principal ? entrega.ciudad.ciudad_principal.nombre : '-') : entrega.ciudad.nombre }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.usuario && entrega.usuario.ciudad ">
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.usuario && entrega.usuario.ciudad ">
+                            {{ entrega.usuario.ciudad.parroquia ? (entrega.usuario.ciudad.ciudad_principal ? entrega.usuario.ciudad.ciudad_principal.nombre : '-') : entrega.usuario.ciudad.nombre }}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad">
+                            {{ entrega.extra.usuario.ciudad.parroquia ? (entrega.extra.usuario.ciudad.ciudad_principal ? entrega.extra.usuario.ciudad.ciudad_principal.nombre : '-') : entrega.extra.usuario.ciudad.nombre }}
+                        </span> 
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                        <span class="m-list-settings__item-label">
+                            Ciudad Secundaria y Parroquía
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.ciudad">
+                            {{ entrega.ciudad.parroquia ? entrega.ciudad.nombre : '-'}}
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.usuario && entrega.usuario.ciudad && entrega.usuario.ciudad.parroquia ">
                             {{ entrega.usuario.ciudad.nombre  }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad">
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad && entrega.extra.usuario.ciudad.parroquia">
                             {{ entrega.extra.usuario.ciudad.nombre }}
                         </span> 
                     </div>
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1 && entrega.parroquia">
-                        <span class="m-list-settings__item-label">
-                           Parroquía
-                        </span>
-                        <span class="m-list-settings__item-control" >
-                            {{ entrega.parroquia ?  entrega.parroquia.nombre : '-' }}
-                        </span>
-                    </div>
+
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                             Provincia
@@ -966,10 +980,10 @@
                         <span class="m-list-settings__item-control" *ngIf="entrega.ciudad && entrega.ciudad.provincia">
                             {{ entrega.ciudad.provincia.nombre  }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf=" entrega.usuario && entrega.usuario.ciudad && entrega.usuario.ciudad.provincia">
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.usuario && entrega.usuario.ciudad && entrega.usuario.ciudad.provincia">
                             {{ entrega.usuario.ciudad.provincia.nombre }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad && entrega.extra.usuario.ciudad.provincia ">
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad && entrega.extra.usuario.ciudad.provincia ">
                             {{ entrega.extra.usuario.ciudad.provincia.nombre }}
                         </span>
                     </div>
@@ -981,10 +995,10 @@
                         <span class="m-list-settings__item-control" *ngIf="entrega.ciudad && entrega.ciudad.provincia && entrega.ciudad.provincia.pais">
                             {{ entrega.ciudad.provincia.pais.nombre  }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.usuario && entrega.usuario.ciudad && entrega.usuario.ciudad.provincia && entrega.usuario.ciudad.provincia.pais" >
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.usuario && entrega.usuario.ciudad && entrega.usuario.ciudad.provincia && entrega.usuario.ciudad.provincia.pais" >
                             {{ entrega.usuario.ciudad.provincia.pais.nombre }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad && entrega.extra.usuario.ciudad.provincia && entrega.extra.usuario.ciudad.provincia.pais">
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.ciudad && entrega.extra && entrega.extra.usuario && entrega.extra.usuario.ciudad && entrega.extra.usuario.ciudad.provincia && entrega.extra.usuario.ciudad.provincia.pais">
                             {{ entrega.extra.usuario.ciudad.provincia.pais.nombre  }}
                         </span>
                     </div>

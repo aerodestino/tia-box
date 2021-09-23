@@ -16,7 +16,8 @@ export class City extends Model {
         public zona_id?: number,
         public zona?: Zone,
         public status?: number,
-        public parroquia?: City) {
+        public ciudad_principal?: City,
+        public parroquia?: boolean) {
         super();
         this.pais = pais || new Country();
         this.provincia = provincia || new Province();
