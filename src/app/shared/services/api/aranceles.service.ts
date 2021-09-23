@@ -11,6 +11,7 @@ export class ArancelesService extends ApiService {
     }
 
     categoria(): Observable<any> {
-        return this.http.get(`${this.url}categoria`);
+        let dato = this.serialize({web:true});
+        return this.http.get(`${this.url}categoria`, { params: this.object2Params(dato) });
     }
 }

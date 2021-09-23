@@ -80,11 +80,11 @@
 
 
             <a class="m-badge m-badge--success m-badge--wide" title="Declaración de Valores"  [attr.href]="articulo.factura_url" style="color: white; background-color: #4f9e35"
-               target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && articulo.factura && articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
+               target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
            <a class="m-badge m-badge--success m-badge--wide" [attr.href]="articulo.factura_url" title="Factura"  style="color: white"
-               target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && articulo.factura && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
+               target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
                <a class="m-badge m-badge--success m-badge--wide" [attr.href]="articulo.factura_url" title="Consolidado"  style="color: white; background-color: #4660d1"
-               target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && articulo.factura && articulo.consolidado_factura">Si</a>                 
+               target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && articulo.consolidado_factura">Si</a>                 
             <input
                     name="archivo"
                     type="file"
