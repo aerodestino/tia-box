@@ -737,7 +737,6 @@ onEntrega(content){
   this.totalPesoEnt = 0;
   this.totalPiezas = 0;
     this.entrega = new Entrega();
-    this.selectedValue(0);
     this.entrega.ciudad = new City;
     this.entrega.ciudad_retiro = new City;
     this.entrega.parroquia_retiro = new City;
@@ -752,6 +751,8 @@ onEntrega(content){
     this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
     this.entrega.domicilio = 1;
     this.entrega.articulos= this.articulosDatos;
+    this.usuarioRetirar = this.entrega.articulos[0].usuario ? this.entrega.articulos[0].usuario.numero_identidad : (this.entrega.articulos[0].extra ? this.entrega.articulos[0].extra.identificacion : null );
+    this.getDireccion(this.usuarioRetirar);
     for(let i in this.entrega.articulos){
       let c = Big(this.entrega.articulos[i].precio);
       this.totalPrecioEnt = c.plus(this.totalPrecioEnt);
@@ -763,8 +764,10 @@ onEntrega(content){
       let pesolistado = Big(this.entrega.articulos[i].peso);
       this.entrega.articulos[i].peso = pesolistado.toNumber(); 
       let tpesolistado = Big( this.totalPesoEnt);
-      this.totalPesoEnt = tpesolistado.toNumber(); 
+      this.totalPesoEnt = tpesolistado.toNumber();
   }
+
+ 
   this.modalRef = this.ngbModal.open(content, {size: "lg"});
  
 }
@@ -801,7 +804,7 @@ selectedValue(value){
       this.entrega.direccion = '';
       this.entrega.cedula = '';
       this.entrega.celular = '';
-      this.entrega.codigoPostal = '';
+      this.entrega.codigo_postal = '';
       this.entrega.ciudad = new City();
       this.entrega.parroquia = new City();
       this.entrega.ciudad.provincia = new Province();
@@ -1094,10 +1097,10 @@ onConversion(articulo){
   }
 }
 
-getDireccion(id){
+getDireccion(id){console.log('sdf');
   this.disabledDir = false;
   this.entrega.direccion = '';
-  this.entrega.codigoPostal = '';
+  this.entrega.codigo_postal = '';
   this.entrega.ciudad = new City();
   this.entrega.parroquia = new City();
   this.entrega.ciudad.provincia = new Province();
@@ -1108,7 +1111,7 @@ getDireccion(id){
   for(let i in this.usuarios){
       if(this.usuarios[i].numero_identidad === id){
           this.entrega.direccion = this.usuarios[i].direccion;
-          this.entrega.codigoPostal = this.usuarios[i].codigo_postal;
+          this.entrega.codigo_postal = this.usuarios[i].codigo_postal;
           this.entrega.ciudad.id = this.usuarios[i].ciudad_id;
           this.entrega.parroquia.id = this.usuarios[i].parroquia_id;
           this.entrega.ciudad.provincia.id = this.usuarios[i].provincia_id;

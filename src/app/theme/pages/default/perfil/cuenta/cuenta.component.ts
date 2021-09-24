@@ -37,7 +37,12 @@ export class CuentaComponent implements OnInit {
     ngOnInit() {
         if (!this.usuario.provincia) this.usuario.provincia = new Province();
         if (!this.usuario.ciudad) this.usuario.ciudad = new City();
-        if (!this.usuario.parroquia) this.usuario.parroquia = new City();
+        if(this.usuario.ciudad.parroquia){
+            this.usuario.parroquia = this.usuario.ciudad;
+            this.usuario.ciudad = this.usuario.ciudad.ciudad_principal;
+        }else{
+            this.usuario.parroquia = new City();
+        }
         this.getPaises();
         if(this.usuario.pais.id)
              this.getProvincias(this.usuario.pais.id);

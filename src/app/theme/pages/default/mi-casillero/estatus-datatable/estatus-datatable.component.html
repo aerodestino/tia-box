@@ -2,7 +2,10 @@
     <thead>
     <tr>
        
-        <th>
+        <th><label class="m-checkbox" style="margin-bottom: 16px !important;">
+            <input type="checkbox" [(ngModel)]="selectedAll" (change)="onSelectAllClick()">
+            <span  style="border: 1px solid #fff !important; background-color: #fff !important;"></span>
+        </label> 
         </th>
         <th>Fecha en Bodega</th>
         <th>Código Almacén</th>
