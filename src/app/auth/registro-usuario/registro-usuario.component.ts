@@ -40,7 +40,7 @@ export class RegistroUsuarioComponent implements OnInit {
 
   getPaises() {
     this.paises = null;
-    this.paisesService.getAllWithoutAuth({ status: 1 }).subscribe(paises => {
+    this.paisesService.getAllWithoutAuth({ status: 1,web:0 }).subscribe(paises => {
       this.paises = paises.json().data;
     });
   }
