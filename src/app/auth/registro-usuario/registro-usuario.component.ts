@@ -64,23 +64,28 @@ export class RegistroUsuarioComponent implements OnInit {
       });
   }
 
-  onSubmit(datosUsuario) {
-    datosUsuario.origen_id = 1;
-    this.appService.loadingMessage = "Registrando Usuario";
-    Helpers.setLoading(true);
-    this.usuariosService.signup(datosUsuario).subscribe(
-      () => {
-        Helpers.setLoading(false);
-        this.appService.loadingMessage = "Cargando";
-        this.toastr.success("Usuario Registrado");
-        this.router.navigate(["/mi-casillero"]);
-      },
-      error => {
-        this.toastr.error(error.json().error.message);
-        Helpers.setLoading(false);
-        this.appService.loadingMessage = "Cargando";
-      }
-    );
+  onSubmit(datosUsuario,valid) {
+    if(!valid){
+      datosUsuario.origen_id = 1;
+      this.appService.loadingMessage = "Registrando Usuario";
+      Helpers.setLoading(true);
+      this.usuariosService.signup(datosUsuario).subscribe(
+        () => {
+          Helpers.setLoading(false);
+          this.appService.loadingMessage = "Cargando";
+          this.toastr.success("Usuario Registrado");
+          this.router.navigate(["/mi-casillero"]);
+        },
+        error => {
+          this.toastr.error(error.json().error.message);
+          Helpers.setLoading(false);
+          this.appService.loadingMessage = "Cargando";
+        }
+      );
+    }else{
+      this.toastr.error('Revise estén correctos los datos obligatorios(con *)');
+    }
+   
   }
 
 

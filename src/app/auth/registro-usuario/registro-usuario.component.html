@@ -7,11 +7,11 @@
         </div>
     </div>
 </div>
-<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #signupForm="ngForm" (submit)="onSubmit(signupForm.value)"  autocomplete="off">
+<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" #signupForm="ngForm" (submit)="onSubmit(signupForm.value,signupForm.invalid)"  autocomplete="off">
     <div class="m-portlet__body">
         <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
-                Tipo Registro:
+                Tipo Registro*:
             </label>
             <div class="col-lg-3">
                 <select class="form-control m-input" (change)="onChange()"
@@ -25,7 +25,7 @@
                 </select>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
-                Nombre Empresa:
+                Nombre Empresa*:
             </label>
             <div class="col-lg-3" *ngIf="tipo_registro == 2">
                 <input type="text" class="form-control m-input" placeholder="Empresa"
@@ -38,7 +38,7 @@
         <div class="form-group m-form__group row">
            
             <label class="col-lg-2 col-form-label">
-                Cédula:
+                Cédula*:
             </label>
             <div class="col-lg-3">
                 <input type="text" pattern="^[a-zA-Z0-9]+$" class="form-control m-input" placeholder="Cédula"
@@ -50,7 +50,7 @@
                 </section>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
-                Nombre:
+                Nombre*:
             </label>
             <div class="col-lg-3" *ngIf="tipo_registro == 1">
                 <input type="text" class="form-control m-input" placeholder="Nombre"
@@ -60,7 +60,7 @@
                 </section>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
-                Nombre Contacto:
+                Nombre Contacto*:
             </label>
             <div class="col-lg-3" *ngIf="tipo_registro == 2" >
                 <input type="text" class="form-control m-input" placeholder="Nombre"
@@ -73,7 +73,7 @@
         <div class="form-group m-form__group row">
            
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 1">
-                Apellido
+                Apellido*:
             </label>
             <div class="col-lg-3" *ngIf="tipo_registro == 1">
                 <input type="text" class="form-control m-input" placeholder="Apellido"
@@ -83,7 +83,7 @@
                 </section>
             </div>
             <label class="col-lg-2 col-form-label" *ngIf="tipo_registro == 2">
-                Apellido Contacto
+                Apellido Contacto*:
             </label>
             <div class="col-lg-3" *ngIf="tipo_registro == 2">
                 <input type="text" class="form-control m-input" placeholder="Apellido"
@@ -93,7 +93,7 @@
                 </section>
             </div>
             <label class="col-lg-2 col-form-label" >
-                Dirección
+                Dirección*:
             </label>
             <div class="col-lg-3">
                 <input type="text" class="form-control m-input" placeholder="Dirección"
@@ -106,7 +106,7 @@
         <div class="form-group m-form__group row">
             
             <label class="col-lg-2 col-form-label">
-                País
+                País*:
             </label>
             <div class="col-lg-3">
                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paises">
@@ -120,7 +120,7 @@
                 </select>
             </div>
             <label class="col-lg-2 col-form-label" >
-                Provincia
+                Provincia*:
             </label>
             <div class="col-lg-3" >
                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!provincias">
@@ -136,7 +136,7 @@
         </div>
         <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label" >
-                Ciudad Principal
+                Ciudad Principal*:
             </label>
             <div class="col-lg-3">
                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!ciudades">
@@ -150,7 +150,7 @@
                 </select>
             </div>
             <label class="col-lg-2 col-form-label" >
-                Ciudad Secundaria y Parroquía
+                Ciudad Secundaria y Parroquía:
               </label>
               <div class="col-lg-3">
                   <select class="form-control m-input" placeholder="Parroquía"
@@ -164,7 +164,7 @@
         </div>
         <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label" >
-                Código Postal:
+                Código Postal*:
             </label>
             <div class="col-lg-3">
                 <input type="text" class="form-control m-input" placeholder="Código Postal"
@@ -174,19 +174,24 @@
                 </section>
             </div>
             <label class="col-lg-2 col-form-label">
-                Teléfono:
+                Teléfono*:
             </label>
             <div class="col-lg-3">
                 <input type="text" class="form-control m-input" placeholder="Teléfono"
-                       ngModel #telefono1="ngModel" name="telefono1">
+                       ngModel #telefono1="ngModel" name="telefono1" required>
             </div>
         </div>
 
-
-
         <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
-               Usuario (Email):
+                Celular:
+            </label>
+            <div class="col-lg-3">
+                <input type="text" class="form-control m-input" placeholder="Celular"
+                       ngModel #celular="ngModel" name="celular">
+            </div>
+            <label class="col-lg-2 col-form-label">
+               Usuario (Email)*:
             </label>
             <div class="col-lg-3">
                 <input type="email" class="form-control m-input" placeholder="email"
@@ -197,8 +202,11 @@
                     <p class="m--font-danger" *ngIf="email.hasError('pattern')">Introduzca un email válido</p>
                 </section>
             </div>
+           
+        </div>
+        <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
-                Contraseña:
+                Contraseña*:
             </label>
             <div class="col-lg-3">
                 <input type="password" class="form-control m-input" placeholder="Contraseña"
@@ -207,10 +215,8 @@
                     <p class="m--font-danger" *ngIf="password.hasError('required')">El email es requerido</p>
                 </section>
             </div>
-        </div>
-        <div class="form-group m-form__group row">
             <label class="col-lg-2 col-form-label">
-                Repetir Contraseña
+                Repetir Contraseña*:
             </label>
             <div class="col-lg-3">
                 <input type="password" class="form-control m-input" placeholder="Contraseña"
@@ -229,7 +235,7 @@
             <div class="row">
                 <div class="col-lg-5"></div>
                 <div class="col-lg-7">
-                    <button type="submit" class="btn btn-success" [disabled]="signupForm.invalid">
+                    <button type="submit" class="btn btn-success">
                         Aceptar
                     </button>
                     <button type="button" class="btn btn-secondary" (click)="onCancel()">
