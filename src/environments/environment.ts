@@ -9,5 +9,5 @@ export const environment = {
   API_URL: "https://api-dev.box593.com/app_dev.php/",
  // API_URL: "http://localhost:81/box593-api/web/app_dev.php/",
 
-  CHAT_URL: "wss://api-dev.box593.com/wss2/"
+  CHAT_URL: "wss://api.box593.com/wss2/"
 };
