@@ -772,7 +772,7 @@
                                  *ngFor="let noticia of appService.noticias">
                                 <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
                                 <span class="m-list-timeline__text" style="font-size: 1.2rem !important; color:#1e1111 !important">
-                                    {{noticia.fecha}} -- {{noticia.texto}}
+                                    {{noticia.fecha}} : <div [innerHtml]="noticia.texto"></div>
                             </span>
                                
                             </div>
