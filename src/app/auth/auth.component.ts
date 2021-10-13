@@ -69,10 +69,14 @@ export class AuthComponent implements OnInit {
              //   this.getProfile();
             },
             error => {
-               if(error._body == '{"error":"invalid_interfaz","error_description":"No tiene acceso a la interfaz"}')
-                    this.toastr.error('No tiene acceso a la interfaz')                    
-                else
-                    this.toastr.error("Usuario o contraseña incorrectos")
+                if(error._body == '{"error":"invalid_interfaz","error_description":"No tiene acceso a la interfaz"}'){
+                    this.toastr.error('No tiene acceso a la interfaz');                   
+                }else{
+                    if(error._body == '{"error":"invalid_client","error_description":"El usuario esta desactivado"}')
+                         this.toastr.error("El usuario está desactivado");
+                    else
+                        this.toastr.error("Usuario o contraseña incorrectos");
+                }
                 this.loading = false;
             });
     }
@@ -149,7 +153,7 @@ export class AuthComponent implements OnInit {
 
      cleanUnnecessaryWhiteSpaces(cadena: string){
         let cleanString = '';
-        if(cadena !='')
+        if(cadena && cadena !='')
             cleanString = cadena.trim();
         return cleanString;
      }
