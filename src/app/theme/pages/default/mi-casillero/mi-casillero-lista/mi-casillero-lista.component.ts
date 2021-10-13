@@ -840,6 +840,7 @@ onSelectionPrecios(element) {
 }
 
 onNoticias(content){
+  Helpers.setLoading(false);
   this.modalRef = this.ngbModal.open(content, {size: "lg"});
 }
 
