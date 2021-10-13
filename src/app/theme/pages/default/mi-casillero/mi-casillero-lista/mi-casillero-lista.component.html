@@ -760,6 +760,9 @@
 <ng-template #noticiaModal let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Noticias</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <div class="m-portlet__head-caption">
@@ -770,11 +773,17 @@
                         <div class="m-list-timeline__items">
                             <div class="m-list-timeline__item"
                                  *ngFor="let noticia of appService.noticias">
-                                <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
-                                <span class="m-list-timeline__text" style="font-size: 1.2rem !important; color:#1e1111 !important">
+                
+                                <button class="btn btn-link" type="button" style="font-size: 1.5rem !important; font-weight: bold; color:#f12143 !important" data-toggle="collapse" attr.data-target="#collapse_{{noticia.id}}">
+                                    {{noticia.fecha}} : {{noticia.titulo}} 
+                                  </button>
+                              <!--   <span class="m-list-timeline__text" style="font-size: 1.2rem !important; color:#1e1111 !important">
                                     {{noticia.fecha}} : <div [innerHtml]="noticia.texto"></div>
-                            </span>
-                               
+                                </span> -->
+                                <div id="collapse_{{noticia.id}}" class="collapse" data-parent="#accordionExample">
+                                    <div class="card-body" [innerHtml]="noticia.texto">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
