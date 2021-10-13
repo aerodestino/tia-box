@@ -495,6 +495,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
       let unidadesCons:any[] = [];
       let descCons:any[] = [];
       let existe = false;
+      let existeDesc = false;
       if(this.consolidadoFact){
         for(let i in this.articulos){
           if(!this.articulos[i].unidades || this.articulos[i].unidades <= 0)
@@ -505,13 +506,17 @@ export class MiCasilleroListaComponent extends BaseListComponent
               unidades: this.articulos[i].unidades
             };
           }
+          if(!this.articulos[i].descripcion_embarque || this.articulos[i].descripcion_embarque == '')
+          existeDesc = true;
+         else{
           descCons[i] = {
             id : this.articulos[i].id,
             descripciones: this.articulos[i].descripcion_embarque
           };
         }
+        }
       }
-      if(!existe){
+      if(!existe && !existeDesc){
         this.modalRef.close();
         this.articulosService
         .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
@@ -531,7 +536,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
           }
         );
       }else{
-        this.toastr.error('Debe asignar unidades físicas a todos los artículos.');
+        if(existe)
+          this.toastr.error('Debe asignar unidades físicas a todos los artículos.');
+        if(existeDesc)
+          this.toastr.error('Debe ingresar las descripciones a todos los artículos.');
         Helpers.setLoading(false);
       }
      

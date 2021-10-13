@@ -615,7 +615,7 @@
                                 ></app-auto-complete>
                             </div>
                             <label class="col-lg-3 col-form-label" *ngIf="!consolidadoFact">
-                                Unidades Físicas:
+                                Unidades Físicas*:
                              </label>
                              <div class="col-lg-2">
                                  <h5 *ngIf="dv && !consolidadoFact" class="text-left" style="margin-top: 10px;">{{ unidades }} </h5>
@@ -629,10 +629,10 @@
                          <div class="form-group m-form__group row">
                          <div class="col-lg-12" >
                             <label class="col-lg-12 col-form-label">
-                                Cambiar descripción si es necesario:
+                                Cambiar descripción si es necesario*:
                              </label><br/>
                              <input  *ngIf="!consolidadoFact"  type="text" class="form-control m-input" placeholder="Descripción"
-                             [(ngModel)]="descripcionembarque"  #descripcion="ngModel"
+                             [(ngModel)]="descripcionembarque"  #descripcion="ngModel" required
                              name="descripcion"
                              > 
                         
@@ -659,7 +659,7 @@
                                     <td> 
                                         <input type="text" class="form-control m-input" placeholder="Descripción"
                                         [(ngModel)]="a.descripcion_embarque"  #descripcion+{{a.id}}="ngModel"
-                                        name="descripcion+{{a.id}}"
+                                        name="descripcion+{{a.id}}" required
                                         > 
                                     </td>
                                     <td>
@@ -729,13 +729,13 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-10">
                                     <button *ngIf="!confirmar"
-                                            [disabled]="validar || (!consolidadoFact && unidades == 0)"
+                                            [disabled]="validar || (!consolidadoFact && (unidades == 0 || descripcionembarque== ''))"
                                             [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                             >
                                         Guardar
                                     </button>
                                     <button *ngIf="confirmar"
-                                        [disabled]="validar || (!consolidadoFact && unidades == 0)"
+                                        [disabled]="validar || (!consolidadoFact && (unidades == 0 || descripcionembarque== ''))"
                                         [class]="(embarcarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
                                         type="submit">
                                         SI
