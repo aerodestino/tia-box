@@ -39,6 +39,7 @@ import { ArancelesService } from "../../../../../shared/services/api/aranceles.s
 })
 export class MiCasilleroListaComponent extends BaseListComponent
   implements OnInit {
+    tpesoEmbarque = 0;
     parroquias: City[]=null;
     parroquiasR: City[]=null;
     datos: any;
@@ -517,6 +518,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
         }
       }
       if(!existe && !existeDesc){
+        if((this.totalPeso/2.2046 > 4 || this.totalPrecio > 400 ) && this.arancel == 'B'){
+          this.toastr.error('Para la categoría B el peso debe ser menor a 4Kg y valor menos a 400 USD.');
+          Helpers.setLoading(false);
+        }else{
         this.modalRef.close();
         this.articulosService
         .embarcar({articulos: this.ids,remitente:this.remitente_usuario,importer:this.importer_usuario, remitente_text:this.text,
@@ -535,6 +540,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
             this.toastr.error(error.json().error.message);
           }
         );
+        }
       }else{
         if(existe)
           this.toastr.error('Debe asignar unidades físicas a todos los artículos.');
@@ -612,21 +618,39 @@ export class MiCasilleroListaComponent extends BaseListComponent
               let p= Big(sumPeso);
               sumPeso = p.toNumber();
               this.notaembarque = this.articulos[i].nota ? this.articulos[i].nota : '';
-              this.descripcionembarque = this.articulos[i].descripcion_embarque ? this.articulos[i].descripcion_embarque : '';
+              this.descripcionembarque = (this.articulos[i].descripcion_embarque && ((this.articulos[i].descripcion_embarque).toUpperCase() != 'VARIOS')) ? this.articulos[i].descripcion_embarque : '';
               if(this.descripcionembarque == ''){
-                this.articulos[i].descripcion_embarque = this.articulos[i].descripcion;
-                let c=1;
-                if(desc.length == 0){
-                  desc[0]=this.articulos[i].descripcion;
+                if(this.articulos[i].fac_d_v){
+                  let descDV =[];
+                  for(let l in this.articulos[i].descripciones_d_v){
+                    let c=1;
+                    if(descDV.length == 0){
+                      descDV[0]=((this.articulos[i].descripciones_d_v[l].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripciones_d_v[l].descripcion : '';
+                    }else{
+                      for(let e in descDV){
+                          if(descDV[e] != this.articulos[i].descripciones_d_v[l].descripcion)
+                            descDV[c]=((this.articulos[i].descripciones_d_v[l].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripciones_d_v[l].descripcion : '';
+                            c++;
+                      }
+                    }
+                  } 
+                  this.articulos[i].descripcion_embarque = descDV.join('; ');
+                  this.descripcionembarque = descDV.join('; '); 
                 }else{
-                  for(let e in desc){
-                      if(desc[e] != this.articulos[i].descripcion)
-                        desc[c]=this.articulos[i].descripcion;
-                        c++;
+                  this.articulos[i].descripcion_embarque = ((this.articulos[i].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripcion : '';
+                  let c=1;
+                  if(desc.length == 0){
+                    desc[0]=((this.articulos[i].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripcion : '';
+                  }else{
+                    for(let e in desc){
+                        if(desc[e] != this.articulos[i].descripcion)
+                          desc[c]=((this.articulos[i].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripcion : '';
+                          c++;
+                    }
                   }
+                  this.descripcionembarque = desc.join('; ');
                 }
               }
-              this.descripcionembarque = desc.join(',');
               this.text = this.articulos[i].tienda_embarque ? this.articulos[i].tienda_embarque : '' ;
               if(this.articulos[i].consolidado)
                  this.consolidadoArt = true;
@@ -1158,5 +1182,25 @@ getParroquiasR(ciudad_id) {
   }, (error) => {
       console.log(error.json());
   });
+}
+
+
+onConversionEmbarque(){
+  this.totalPeso = 0;
+  for(let i in this.articulos){
+      if(this.tpesoEmbarque == 1){
+          let peso = Big(this.articulos[i]['peso']);
+          let conv = peso.div(2.2046);
+          this.articulos[i]['peso'] = conv.toNumber();
+      }else{
+          let peso = Big(this.articulos[i]['peso']);
+          let conv = peso.mul(2.2046);
+          this.articulos[i]['peso'] = conv.toNumber();
+      }
+      let pesoT = Big(this.articulos[i]['peso']);
+      this.totalPeso = pesoT.plus(this.totalPeso);
+      let t= Big(this.totalPeso);
+      this.totalPeso = t.toNumber();
+  }
 }
 }

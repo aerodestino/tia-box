@@ -505,7 +505,12 @@
                             Dimensiones(In)
                         </th>
                         <th>
-                            Peso(Lb)
+                            Peso
+                            <div style="float: right;">
+                                <input type="radio" class="radio-inline" id="Kg" name="tipopeso" value="1" [(ngModel)]="tpesoEmbarque" #tipopeso="ngModel" required [checked]="tipopeso.value==1" (change)="onConversionEmbarque()" > <label for="Kg" ><span></span>Kg</label>
+                            
+                                <input type="radio" class="radio-inline" id="lb" name="tipopeso" value="0"  [(ngModel)]="tpesoEmbarque" #tipopeso="ngModel" required [checked]="tipopeso.value==0" (change)="onConversionEmbarque()" > <label for="lb" ><span></span>Lb</label>      
+                            </div>
                         </th>
                       
                         <th>
