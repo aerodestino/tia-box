@@ -14,10 +14,12 @@ export class EnBodegaListHeaderComponent implements OnInit {
     @Input() puedeFactura;
     @Input() consolidarPaquete;
     @Input() enviarPaquete;
+    @Input() retirarPaquete;
     @Output() DVMasiva: EventEmitter<any> = new EventEmitter();
     @Output() exportar: EventEmitter<any> = new EventEmitter();
     @Output() consolidar: EventEmitter<any> = new EventEmitter();
     @Output() embarcar: EventEmitter<any> = new EventEmitter();
+    @Output() retirar: EventEmitter<any> = new EventEmitter();
     @Output() facturaMasiva: EventEmitter<any> = new EventEmitter();
     constructor(public ngbModal: NgbModal) { }
 
@@ -26,6 +28,10 @@ export class EnBodegaListHeaderComponent implements OnInit {
 
     onEmbarcar() {
         this.embarcar.emit();
+    }
+
+    onRetirar() {
+        this.retirar.emit();
     }
 
     onConsolidar() {

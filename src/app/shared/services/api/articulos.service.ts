@@ -74,4 +74,14 @@ export class ArticulosService extends ApiService {
         resource = this.serialize(resource);
         return this.http.post(`${this.url}declaracionmasiva`, resource);
         }
+
+    retirarModal(params: any): Observable<any> {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}datosRetirar`, { params: this.object2Params(params) });
+    }
+
+    retirar(resource: any) {
+        resource = this.serialize(resource);
+        return this.http.post(`${this.url}retirarweb`, resource);
+        }
 }
