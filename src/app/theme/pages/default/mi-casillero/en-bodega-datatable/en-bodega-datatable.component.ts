@@ -59,6 +59,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   @Output() preciosSelection: EventEmitter<any> = new EventEmitter();
   @Output() consolidarSelection: EventEmitter<any> = new EventEmitter();
   @Output() enviarSelection: EventEmitter<any> = new EventEmitter();
+  @Output() retirarSelection: EventEmitter<any> = new EventEmitter();
   selectionIds: string[];
   precios: any[];
   constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, 
@@ -129,6 +130,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     let existeConsolidado = 0;
     let existeEmbarcado = 0;
     let existePrecio = 0;
+    let existeRetirar = 0;
     this.data.forEach(item => {
       if (item.selected){
         this.selectionIds.push(item.id);
@@ -146,6 +148,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
           existeEmbarcado ++;
         if(!item.editarprecio)
           existePrecio ++;
+        if(!item.consolidado && !item.enviar && !item.facturacion)
+          existeRetirar ++ ;
       } 
     });
     this.trackboxOutput.emit(this.text);
@@ -156,6 +160,8 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     (existeFactura == this.selectionIds.length && existeConsolidado == 0) ? this.consolidarSelection.emit(false) : this.consolidarSelection.emit(true);
     (existeFactura == this.selectionIds.length && existeEmbarcado == 0) ? this.enviarSelection.emit(false) : this.enviarSelection.emit(true);
     (existePrecio > 0) ? this.preciosSelection.emit(true) : this.preciosSelection.emit(false);
+    (existeRetirar == this.selectionIds.length) ? this.retirarSelection.emit(false) : this.retirarSelection.emit(true);
+
   }
 
   onSubirFactura(event, articulo) {

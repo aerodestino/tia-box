@@ -20,7 +20,11 @@
             <i class="fa fa-dropbox"></i>
             Consolidar
         </button>
-
+        <button [disabled]="retirarPaquete || totalEnBodega < 1" class="btn btn-warning m-btn m-btn--icon m-btn--air m-btn--custom"
+                (click)="onRetirar()" style="font-size: 1.2rem;" >
+            <i class="fa fa-dollar"></i>
+            Servicio Bodega
+        </button>
         <button class="btn btn-success m-btn m-btn--icon m-btn--air m-btn--custom"
             (click)="onExportar()" style="font-size: 1.2rem;">
             <i class="fa fa-file-excel-o"></i>

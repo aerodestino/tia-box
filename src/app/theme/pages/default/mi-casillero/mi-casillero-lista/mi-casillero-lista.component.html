@@ -173,11 +173,13 @@
                         <app-en-bodega-list-header [totalEnBodega]="enBodegaSeleccion.length" [selection]="enBodegaSeleccion"
                             (consolidar)="onConsolidar()"
                             (embarcar)="onEmbarcar(embarcar)"
+                            (retirar)="onRetirar(retirarModal)"
                             (exportar)="onExportar()"
                             [puedeDV]="puedeDV"
                             [puedeFactura]="puedeFactura"
                             [consolidarPaquete]="consolidarPaquete"
                             [enviarPaquete]="enviarPaquete"
+                            [retirarPaquete]="retirarPaquete"
                             (DVMasiva)="OnModalDV(declaracionModal)"
                             (facturaMasiva)="OnModalFactura(facturaMasivaModal)"
                         ></app-en-bodega-list-header>
@@ -204,6 +206,7 @@
                             (facturaSelection)= "onPuedeFactura($event)"
                             (consolidarSelection)= "onConsolidarPaquete($event)"
                             (enviarSelection)= "onEnviarPaquete($event)"
+                            (retirarSelection)= "onRetirarPaquete($event)"
                     ></app-en-bodega-datatable>
                 </div>
                 <!--end: Datatable -->
@@ -1419,6 +1422,135 @@
                     </tbody>
                 </table>
                 </div>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+
+<!--begin::View  Modal-->
+<ng-template #retirarModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Servicios de Bodega</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <div class="row" style="margin: 5px">
+                    <h3>Se realizará el servicio a estos artículos</h3>
+                </div>
+                <div class="table-responsive">
+                <table *ngIf="articulosLista.length > 0 " class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+                    <thead>
+                    <tr>
+                        <th>
+                            TRACKBOX
+                        </th>
+                        <th>
+                            Track Remitente
+                        </th>
+                        <th>
+                            Peso(Lb)
+                        </th>
+                        <th>
+                            Dimensiones(In)
+                        </th>
+                        <th>
+                            Costo(USD)
+                        </th>
+                        <th>
+                            Piezas
+                        </th>
+                        <th>Descripción </th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let articulo of articulosLista">
+                        
+                        <td>
+                            <p *ngIf="articulo.trackbox">{{ articulo.trackbox }}</p>
+                            <i class="fa fa-warning" *ngIf="!articulo.trackbox"></i>
+                        </td>
+                         <td>
+                            {{ articulo.tracking }}
+                        </td>
+                        <td>
+                            {{ articulo.peso | number:'1.2-2' }}
+                        </td>
+                        <td>
+                            {{ articulo.largo }}x{{articulo.ancho}}x{{articulo.alto}}
+                        </td>
+                        <td>
+                            {{ articulo.precio }}
+                        </td>
+                        <td>
+                            {{ articulo.piezas }}
+                        </td>
+                        <td>{{ articulo.descripcion }}</td>
+                       
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+              
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
+                      #retirarForm="ngForm" (submit)="onSubmitRetirar(retirarForm.value)">
+                    <div class="m-portlet__body">
+                        <input hidden [(ngModel)]="ids"  name="articulos" #articulos="ngModel">
+                        <input hidden [(ngModel)]="retiro.id"  name="retiro_id" #retiro_id="ngModel">
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-3 col-form-label">
+                                Servicio en Bodega*:
+                            </label>
+                            <div class="col-lg-4">
+                                <select class="form-control m-input" placeholder="Servicio" 
+                                [(ngModel)]="retiro.servicio_id" name="servicio_id" #servicio_id="ngModel"
+                                        required
+                                        >
+                                        <option [value]="1"> Retiro
+                                        </option>
+                                        <option [value]="2"> Bajar Peso - Separación
+                                        </option>
+                                </select>
+                            </div>
+                        </div>
+                     
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12" >
+                               <label class="col-lg-12 col-form-label">
+                                  Descripción:
+                                </label><br/>
+                                <input  type="text" class="form-control m-input" placeholder="Desripcion"
+                                [(ngModel)]="retiro.nota"  #descripcion="ngModel"
+                                name="descripcion"
+                                required> 
+                            </div>
+                        </div>
+                      
+                    </div>
+                    
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions--solid">
+                            <div class="row">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-10">
+                                    <button type="submit"
+                                            [disabled]="retirarForm.invalid"
+                                            [class]="(retirarForm.invalid == false) ? 'btn btn-success' : 'btn btn-danger'"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
 
         </div>

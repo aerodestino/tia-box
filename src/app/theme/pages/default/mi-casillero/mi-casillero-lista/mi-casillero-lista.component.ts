@@ -68,6 +68,13 @@ export class MiCasilleroListaComponent extends BaseListComponent
   puedeFactura: boolean = true;
   consolidarPaquete: boolean = true;
   enviarPaquete: boolean = true;
+  retirarPaquete: boolean = true;
+  retiro = {
+    id: '',
+    nota: '',
+    servicio_id: '',
+    servicio: ''
+  };
   urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
@@ -179,6 +186,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   notaembarque:string = '';
   descripcionembarque: string= '';
   articulosLista: any[] = [];
+  articulosListaRetiro: any[] = [];
   existeprecio: boolean = true;
   total:number= 0;
   public pais_destino_d_v_id: any;
@@ -749,6 +757,10 @@ onEnviarPaquete(element) {
   this.enviarPaquete = element;
 }
 
+onRetirarPaquete(element) {
+  this.retirarPaquete = element;
+}
+
 onPuedeDV(element) {
   this.puedeDV = element;
 }
@@ -1203,4 +1215,52 @@ onConversionEmbarque(){
       this.totalPeso = t.toNumber();
   }
 }
+
+onSubmitRetirar(resource) {
+  Helpers.setLoading(true);
+  this.modalRef.close();
+ this.articulosService.retirar(resource).subscribe(
+      () => {
+        Helpers.setLoading(false);
+        this.toastr.success("Artículos retirados");
+        this.getEnBodega();
+      },
+      error => {
+        Helpers.setLoading(false);
+        this.toastr.error(error.json().error.message);
+      }
+    ); 
+}
+
+onRetirar(content) {
+  Helpers.setLoading(true);
+  this.articulosService
+      .retirarModal({ articulos: this.enBodegaSeleccion })
+      .subscribe(
+        (datos) => {
+          this.articulosListaRetiro = datos.json().data[0];
+          for(let i in this.articulosListaRetiro){
+              this.ids[i] = this.articulosListaRetiro[i].id;
+          }
+          if(this.articulosListaRetiro.length == 1 && this.articulosListaRetiro[0].retiro){
+            this.retiro = this.articulosListaRetiro[0].retiro;
+            if(this.retiro.servicio == 'Retiro')
+               this.retiro.servicio_id = '1';
+            else
+               this.retiro.servicio_id = '2';
+          }
+          else{
+            this.retiro.id = '';
+            this.retiro.nota = '';
+            this.retiro.servicio_id = '';
+          }
+          Helpers.setLoading(false);
+          this.modalRef = this.ngbModal.open(content, {size: "lg"});
+        },
+        error => {
+          Helpers.setLoading(false);
+          this.toastr.error(error.json().error.message);
+        }
+      ); 
+  }
 }
