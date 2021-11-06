@@ -22,14 +22,18 @@
                                 <div class="m-portlet__head-caption">
                                     <div class="m-portlet__head-title">
                                         <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(1)">
-                                            1-COMO USAR MI CUENTA
+                                            1-CÓMO USAR MI CUENTA
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-portlet__body row" *ngIf="videoselected == 1 && activo">
                                 <div class="col-md-3">
-                                    <iframe src="https://player.vimeo.com/video/642885516" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>                                </div>
+                                    <iframe src="https://player.vimeo.com/video/642885516" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>   
+                                    <br/>
+                                    <a  style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642885516">Link del video</a>
+
+                                </div>
                                 <div class="col-md-9">
                                     <span>
                                         Ingresa a tu cuenta, en el menú podrás observar lo siguiente:  <br/>
@@ -48,9 +52,7 @@
 
                                         INFORMAR RASTREO - Registra los números de rastreos o trackings de tus pedidos. (Esto es opcional).
 
-                                    </span><br/>
-                                    <a  style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642885516">Link del video</a>
-
+                                    </span>
                                 </div>
                             </div>
                     </div>
@@ -58,8 +60,44 @@
                         <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(7)">
+                                        2-QUÉ ES Y CÓMO CREAR UN USUARIO EXTRA
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body row" *ngIf="videoselected == 7 && activo">
+                            <div class="col-md-3">
+                                <iframe src="https://player.vimeo.com/video/642900408" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe> 
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900408">Link del video</a>
+
+                            </div>
+                             <div class="col-md-9">
+                                 <span>
+                                    Este paso es muy importante para agilizar la entrega de tus paquetes. <br/>
+                                     Ve a CASILLERO y a la pestaña INSTRUCCIONES DE ENTREGA.<br/>
+
+                                    Elige el o los paquetes que quieras y dale clic al botón ENTREGA. <br/>
+                                    
+                                     Te aparecerá un formulario donde debes elegir o llenar los siguientes datos: <br/>
+                                    
+                                      - A dónde y quién recibe o retira.
+                                    
+                                    Observa bien las opciones que tenemos y verifica los datos. Puedes escoger datos que ya están registrados, como llenarlos si se da el caso. <br/>
+                                    
+                                    Dale GUARDAR.
+                                    
+                                 </span>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet m-portlet--bordered">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
                                     <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(2)">
-                                        2-COMO SUBIR UNA FACTURA
+                                        3-CÓMO SUBIR UNA FACTURA
                                     </h3>
                                 </div>
                             </div>
@@ -67,7 +105,10 @@
                         <div class="m-portlet__body row" *ngIf="videoselected == 2 && activo">
                             <div class="col-md-3">
                                 <iframe src="https://player.vimeo.com/video/642888296" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                             </div>
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642888296">Link del video</a>
+
+                            </div>
                              <div class="col-md-9">
                                  <span>
                                     Una vez que recibas la notificación que un paquete ha llegado sin factura puedes ingresar a CASILLERO y en la pestaña EN BODEGA podrás observar los CÓDIGOS de los paquetes con sus columnas de valor y documento. <br/>
@@ -75,9 +116,7 @@
                                     Primero debemos ingresar el valor de la factura, posterior a esto debemos presionar el ícono de CARPETA y elegir el documento a subir, luego debemos presionar el ícono de guardar. Recuerda solo permite formatos PDF. <br/>
                                     
                                     En el caso que no tengas una factura puedes crear una declaración de valor. Te lo enseñamos en otro video tutorial. 
-                                 </span><br/>
-                                 <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642888296">Link del video</a>
-
+                                 </span>
                              </div>
                         </div>
                     </div>
@@ -86,7 +125,7 @@
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(3)">
-                                        3-COMO CREAR UNA DECLARACIÓN DE VALOR LEGAL
+                                        4-CÓMO CREAR UNA DECLARACIÓN DE VALOR LEGAL
                                     </h3>
                                 </div>
                             </div>
@@ -94,6 +133,9 @@
                         <div class="m-portlet__body row" *ngIf="videoselected == 3 && activo">
                             <div class="col-md-3">
                                 <iframe src="https://player.vimeo.com/video/642888516" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642888516">Link del video</a>
+
                             </div>
                             <div class="col-md-9">
                                 <span> En el caso que no tengas una factura, puedes crear una declaración de valor. <br/>
@@ -104,9 +146,7 @@
                                     Si el paquete va a ir a nombre de algún usuario extra, debes cambiarlo también.  <br/>
                                     Recuerda esto debe ser real, si la aduana considera que no es correcta, tienen el derecho a sobre valorar o poner multas.
                                     
-                                </span> <br/>
-                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642888516">Link del video</a>
-
+                                </span> 
                             </div>
                         </div>
                     </div>
@@ -115,7 +155,7 @@
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(4)">
-                                        4-CONSOLIDAR PAQUETES EN UN SOLO TRAMITE
+                                        5-CONSOLIDAR PAQUETES EN UN SOLO TRÁMITE
                                     </h3>
                                 </div>
                             </div>
@@ -123,16 +163,17 @@
                         <div class="m-portlet__body row" *ngIf="videoselected == 4 && activo">
                             <div class="col-md-3">
                                 <iframe src="https://player.vimeo.com/video/642899931" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                             </div>
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642899931">Link del video</a>
+
+                            </div>
                              <div class="col-md-9">
                                  <span>
                                     Para consolidar varios paquetes en un solo trámite, los paquetes deben tener todos su valores
                                      y documento de soporte individualmente registrados, escoges los paquetes a mano izquierda de cada uno de ellos,
                                       vas al botón CONSOLIDAR. <br/>
                                       Ya con esto podrás embarcar.
-                                 </span><br/>
-                                 <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642899931">Link del video</a>
-
+                                 </span>
                              </div>
                         </div>
                     </div>
@@ -141,7 +182,7 @@
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(5)">
-                                        5-COMO EMBARCAR
+                                        6-CÓMO EMBARCAR
                                     </h3>
                                 </div>
                             </div>
@@ -149,6 +190,9 @@
                         <div class="m-portlet__body row" *ngIf="videoselected == 5 && activo">
                             <div class="col-md-3">
                                 <iframe src="https://player.vimeo.com/video/642900054" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900054">Link del video</a>
+    
                             </div>
                             <div class="col-md-3">
                                 <span>
@@ -161,9 +205,38 @@
 
                                 Automáticamente se districuyen los valores y se consolidan los paquetes. Ta estás listo para embarcar. <br/>
                                 En el caso que no tengas factura puedes hacerlo con el botón DECLARACIÓN CONSOLIDADA y seguir los pasos. Esto solo se recomienda en el caso de emergencia.
-                            </span><br/>
-                            <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900054">Link del video</a>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
+                    <div class="m-portlet m-portlet--bordered">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(8)">
+                                        7-PAQUETES EN TRÁNSITO Y ESTADOS GENERALES
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body row" *ngIf="videoselected == 8 && activo">
+                            <div class="col-md-3">
+                                <iframe src="https://player.vimeo.com/video/642900716" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900716">Link del video</a>
 
+                            </div>
+                            <div class="col-md-9">
+                                    <span>
+                                        Para revisar los paquetes que han sido embarcados y están en tránsito ve a menú CASILLERO 
+                                        y en la pestaña  EMBARCADOS/TRÁNSITO ve a la última columna debe aparecer un ícono color verde, 
+                                        este identifica que su paquete ya está en tránsito.  <br/>
+
+                                        También puedes verlo en menú CASILLERO y en la pestaña STATUS GENERAL, puedes filtrar por estados.
+
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -172,7 +245,7 @@
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(6)">
-                                        6-INSTRUCCIONES DE ENTREGA
+                                        8-INSTRUCCIONES DE ENTREGA
                                     </h3>
                                 </div>
                             </div>
@@ -180,6 +253,9 @@
                         <div class="m-portlet__body row" *ngIf="videoselected == 6 && activo">
                             <div class="col-md-3">
                                 <iframe src="https://player.vimeo.com/video/642900294" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900294">Link del video</a>
+
                             </div>
                             <div class="col-md-9">
                                 <span>
@@ -196,72 +272,33 @@
 
                                     Tus paquetes han sido embarcados
 
-                                </span><br/>
-                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900294">Link del video</a>
-
+                                </span>
                             </div>
                         </div>
                     </div>
+                    
                     <div class="m-portlet m-portlet--bordered">
                         <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
-                                    <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(7)">
-                                        7-QUE ES Y COMO CREAR UN USUARIO EXTRA
+                                    <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(10)">
+                                        9-ESTADO DE ENTREGA DE MIS PAQUETES
                                     </h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="m-portlet__body row" *ngIf="videoselected == 7 && activo">
+                        <div class="m-portlet__body row" *ngIf="videoselected == 10 && activo">
                             <div class="col-md-3">
-                                <iframe src="https://player.vimeo.com/video/642900408" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe> 
-                             </div>
-                             <div class="col-md-9">
-                                 <span>
-                                    Este paso es muy importante para agilizar la entrega de tus paquetes. <br/>
-                                     Ve a CASILLERO y a la pestaña INSTRUCCIONES DE ENTREGA.<br/>
-
-                                    Elige el o los paquetes que quieras y dale clic al botón ENTREGA. <br/>
-                                    
-                                     Te aparecerá un formulario donde debes elegir o llenar los siguientes datos: <br/>
-                                    
-                                      - A dónde y quién recibe o retira.
-                                    
-                                    Observa bien las opciones que tenemos y verifica los datos. Puedes escoger datos que ya están registrados, como llenarlos si se da el caso. <br/>
-                                    
-                                    Dale GUARDAR.
-                                    
-                                 </span><br/>
-                                 <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900408">Link del video</a>
-
-                             </div>
-                        </div>
-                    </div>
-                    <div class="m-portlet m-portlet--bordered">
-                        <div class="m-portlet__head">
-                            <div class="m-portlet__head-caption">
-                                <div class="m-portlet__head-title">
-                                    <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(8)">
-                                        8-PAQUETES EN TRÁNSITO Y ESTADOS GENERALES
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-portlet__body row" *ngIf="videoselected == 8 && activo">
-                            <div class="col-md-3">
-                                <iframe src="https://player.vimeo.com/video/642900716" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                                <iframe src="https://player.vimeo.com/video/642900930" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                                <br/>
+                                <a  style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900930">Link del video</a>
+                            
                             </div>
                             <div class="col-md-9">
-                                    <span>
-                                        Para revisar los paquetes que han sido embarcados y están en tránsito ve a menú CASILLERO 
-                                        y en la pestaña  EMBARCADOS/TRÁNSITO ve a la última columna debe aparecer un ícono color verde, 
-                                        este identifica que su paquete ya está en tránsito.  <br/>
-
-                                        También puedes verlo en menú CASILLERO y en la pestaña STATUS GENERAL, puedes filtrar por estados.
-
-                                    </span><br/>
-                                    <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900716">Link del video</a>
-
+                                <span>
+                                    Para revisar debes ir a menú CASILLERO, en la pestaña POR ENTREGAR podrás
+                                    ver la información de la guía de envío a tu domicilio o en su caso, la autorización de retiro en los puntos de entrega.
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -270,7 +307,7 @@
                             <div class="m-portlet__head-caption">
                                 <div class="m-portlet__head-title">
                                     <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(9)">
-                                        9-RECIBOS DE COBROS
+                                        10-RECIBOS DE COBROS
                                     </h3>
                                 </div>
                             </div>
@@ -278,40 +315,18 @@
                         <div class="m-portlet__body row" *ngIf="videoselected == 9 && activo">
                             <div class="col-md-3">
                                 <iframe src="https://player.vimeo.com/video/642900835" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                             </div>
+                                <br/>
+                                <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900835">Link del video</a>
+
+                            </div>
                              <div class="col-md-9">
                                  <span>
                                     Ve a menú RECIBOS y podrás ver el listado con su respectivo estado.<br/>
                                     Dale al ícono de DETALLE y podrás ver los paquetes que se está cobrando en ese recibo. <br/>
                                     Para ver tus recibos de paquetes no entregados vas al menú CASILLERO en la pestaña RECIBO DE COBROS.
                                     
-                                 </span><br/>
-                                 <a style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900835">Link del video</a>
-
+                                 </span>
                              </div>
-                        </div>
-                    </div>
-                    <div class="m-portlet m-portlet--bordered">
-                        <div class="m-portlet__head">
-                            <div class="m-portlet__head-caption">
-                                <div class="m-portlet__head-title">
-                                    <h3 class="m-portlet__head-text m-link" style="cursor: pointer" (click)="selectVideo(10)">
-                                        10-ESTADO DE ENTREGA DE MIS PAQUETES
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-portlet__body row" *ngIf="videoselected == 10 && activo">
-                            <div class="col-md-3">
-                                <iframe src="https://player.vimeo.com/video/642900930" width="200" height="150" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                            </div>
-                            <div class="col-md-9">
-                                <span>
-                                    Para revisar debes ir a menú CASILLERO, en la pestaña POR ENTREGAR podrás
-                                    ver la información de la guía de envío a tu domicilio o en su caso, la autorización de retiro en los puntos de entrega.
-                                </span><br/>
-                                <a  style="color: #1e1e1e; font-weight: bold;" target="blank" href="https://player.vimeo.com/video/642900930">Link del video</a>
-                            </div>
                         </div>
                     </div>
                 </div>
