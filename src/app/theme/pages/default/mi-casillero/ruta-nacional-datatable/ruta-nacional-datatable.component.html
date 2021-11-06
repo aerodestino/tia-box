@@ -75,7 +75,7 @@
             <tbody>
             <tr *ngFor="let articulo of envio">
                 <td>
-                    {{(articulo.warehouse) ? articulo.warehouse : '-' }}
+                    {{(articulo.codigoPedido) ? articulo.codigoPedido : '-' }}
                 </td>
                 <td>
                     {{articulo.tracking}}
@@ -83,7 +83,7 @@
                 <td>
                     <span *ngIf="articulo.media == 0">{{articulo.descripcion}}</span>
                     <span class="m-link m-link--info" style="cursor: pointer;" *ngIf="articulo.media > 0" (click)="onVerImagenes(articulo.id)">{{articulo.descripcion}}</span>
-                    <span *ngIf="articulo.extranombre">({{articulo.extranombre}} {{articulo.extraapellidos}})</span>
+                    <span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
                 </td>
                 <td>
                     {{articulo.tienda}}
