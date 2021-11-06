@@ -20,7 +20,7 @@ export class TutorialComponent extends BaseListComponent implements OnInit {
         public router: Router,
         public toastr: ToastsManager,
         public vcr: ViewContainerRef,
-        public appService: AppService
+        public appService: AppService,
     ) {
         super(router, toastr, vcr, appService);
         this.url = '/tutorial';
@@ -29,8 +29,10 @@ export class TutorialComponent extends BaseListComponent implements OnInit {
     }
 
     ngOnInit() {
+
     }
     selectVideo(video) {
+    
       if(this.videoselected != video){
         this.videoselected = video;
         this.activo = true;
