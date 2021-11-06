@@ -16,7 +16,7 @@ export class EntregaService extends ApiService {
     }
 
     getArticulos(id, responseType?: any) : Observable<any>{
-        return this.http.get(`${this.url}${id}/articulos`,{params: this.object2Params(this.serialize(responseType))});
+        return this.http.get(`${this.url}${id}/articulos`);
     }
 
     exportar(params: any, responseType?: any) {

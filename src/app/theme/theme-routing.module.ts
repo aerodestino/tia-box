@@ -40,6 +40,11 @@ const routes: Routes = [
                 "canActivate": [AuthGuard],
             },
             {
+                "path": "tutorial",
+                "loadChildren": ".\/pages\/default\/tutorial\/tutorial.module#TutorialModule",
+                "canActivate": [AuthGuard],
+            },
+            {
                 "path": "tracks/crear",
                 "loadChildren": ".\/pages\/default\/tracks\/crear-track\/crear-track.module#CrearTrackModule",
                 "canActivate": [AuthGuard],

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 import { BaseDatatableComponent } from "../../../../../shared/prototypes/base-datatable";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FacturacionesService } from "../../../../../shared/services/api/facturaciones.service";
+import { EntregaService } from "../../../../../shared/services/api/entrega.service";
 import { Tracking } from "../../../../../shared/model/tracking.model";
 import { Helpers } from "../../../../../helpers";
 import { ToastsManager } from "ng2-toastr";
@@ -17,7 +17,7 @@ export class RutaNacionalDatatableComponent extends BaseDatatableComponent imple
     envio: any;
     totalPrecio = 0;
     totalPeso = 0;
-    constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal,public facturacionesService: FacturacionesService,
+    constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal,public entregaService: EntregaService,
         public toastr: ToastsManager) {
         super(ngbModal);
     }
@@ -39,8 +39,8 @@ export class RutaNacionalDatatableComponent extends BaseDatatableComponent imple
       this.totalPrecio = 0;
       this.totalPeso = 0;
         Helpers.setLoading(true);
-        this.facturacionesService
-          .getArticulos({ id: articulo })
+        this.entregaService
+          .getArticulos(articulo)
           .subscribe(
             (dato) => {
               Helpers.setLoading(false);
