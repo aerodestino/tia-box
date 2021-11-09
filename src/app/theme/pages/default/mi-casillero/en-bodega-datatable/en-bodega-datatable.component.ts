@@ -142,9 +142,9 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
         this.costo.push(datos);
         if(item.factura_url)
           existeFactura ++;
-        if(item.editar_consolidacion)
+        if(item.editar_consolidacion || item.retiro)
           existeConsolidado ++;
-        if(item.editar_embarque)
+        if(item.editar_embarque || item.retiro)
           existeEmbarcado ++;
         if(!item.editarprecio)
           existePrecio ++;
