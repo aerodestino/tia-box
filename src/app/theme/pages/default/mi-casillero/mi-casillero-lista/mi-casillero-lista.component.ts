@@ -468,7 +468,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
 
   onConsolidar() {
     let existe=false;
-    
+     Helpers.setLoading(true);
     for (let i in this.datos){
         if(this.datos[i].costo == null ||this.datos[i].costo <= 0 ||this.datos[i].costo == '0.00' )
             existe= true;    
@@ -545,6 +545,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
           },
           error => {
             Helpers.setLoading(false);
+             this.getEnBodega();
+            this.getEmbarcados();
             this.toastr.error(error.json().error.message);
           }
         );
