@@ -200,11 +200,13 @@
                          </span>
                          <span class="m-list-settings__item-control" *ngIf="datoEmbarque.usuario_embarque_remitente && datoEmbarque.extra_embarque_remitente"
                          (click)="verUsuario(datoEmbarque.usuario_embarque_remitente.id, usuarioModal)">
-                              {{datoEmbarque.usuario_embarque_remitente.numero_identidad}} - {{datoEmbarque.usuario_embarque_remitente.codigo}} {{ (datoEmbarque.usuario_embarque_remitente.empresa && datoEmbarque.usuario_embarque_remitente.empresa != '') ? datoEmbarque.usuario_embarque_remitente.empresa : datoEmbarque.usuario_embarque_remitente.nombre +' '+ datoEmbarque.usuario_embarque_remitente.apellido}} <br/> ({{ datoEmbarque.extra_embarque_remitente.identificacion }} - {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
+                              {{datoEmbarque.usuario_embarque_remitente.numero_identidad}} - {{datoEmbarque.usuario_embarque_remitente.codigo}} {{ (datoEmbarque.usuario_embarque_remitente.empresa && datoEmbarque.usuario_embarque_remitente.empresa != '') ? datoEmbarque.usuario_embarque_remitente.empresa : datoEmbarque.usuario_embarque_remitente.nombre +' '+ datoEmbarque.usuario_embarque_remitente.apellido}} 
+                              <br/> ({{ datoEmbarque.extra_embarque_remitente.identificacion }} - {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
                         </span>
                          <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && datoEmbarque.extra_embarque_remitente"
                          >
-                         {{datoEmbarque.extra_embarque_remitente.usuario?.numero_identidad}} - {{datoEmbarque.extra_embarque_remitente.usuario?.codigo}} {{(!datoEmbarque.extra_embarque_remitente.usuario?.empresa || datoEmbarque.extra_embarque_remitente.usuario?.empresa == '') ? datoEmbarque.extra_embarque_remitente.usuario?.nombre +''+ datoEmbarque.extra_embarque_remitente.usuario?.apellido : datoEmbarque.extra_embarque_remitente.usuario?.empresa}} <br/> ({{ datoEmbarque.extra_embarque_remitente.identificacion }} - {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
+                         {{datoEmbarque.extra_embarque_remitente.usuario?.numero_identidad}} - {{datoEmbarque.extra_embarque_remitente.usuario?.codigo}} {{(!datoEmbarque.extra_embarque_remitente.usuario?.empresa || datoEmbarque.extra_embarque_remitente.usuario?.empresa == '') ? datoEmbarque.extra_embarque_remitente.usuario?.nombre +''+ datoEmbarque.extra_embarque_remitente.usuario?.apellido : datoEmbarque.extra_embarque_remitente.usuario?.empresa}} 
+                         <br/> ({{ datoEmbarque.extra_embarque_remitente.identificacion }} - {{ datoEmbarque.extra_embarque_remitente.nombre }} {{datoEmbarque.extra_embarque_remitente.apellidos}})
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente && datoEmbarque.tienda_embarque "
                        >
@@ -247,7 +249,8 @@
                    <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && !datoEmbarque.extra_embarque_importer &&
                     datoEmbarque.extra"
                    >
-                   {{datoEmbarque.extra.usuario?.numero_identidad}} - {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} <br/>  ({{ datoEmbarque.extra.identificacion }} - {{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
+                   {{datoEmbarque.extra.usuario?.numero_identidad}} - {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} 
+                   <br/>  ({{ datoEmbarque.extra.identificacion }} - {{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
               </span>
              
                     </div>
