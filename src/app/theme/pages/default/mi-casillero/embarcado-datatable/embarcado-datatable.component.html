@@ -220,7 +220,7 @@
                          <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
                          !datoEmbarque.tienda_embarque && datoEmbarque.extra_carrier"
                          >
-                         {{datoEmbarque.extra_carrier.usuario?.numero_identidad}} - {{datoEmbarque.extra_carrier.usuario?.codigo}} {{(!datoEmbarque.extra_carrier.usuario?.empresa || datoEmbarque.extra_carrier.usuario?.empresa == '') ? datoEmbarque.extra_carrier.usuario?.nombre +''+ datoEmbarque.extra_carrier.usuario?.apellido : datoEmbarque.extra_carrier.usuario?.empresa}} <br/> ({{ datoEmbarque.extra_carrier.identificacion }} - {{ datoEmbarque.extra_carrier.nombre }} {{resourceData.extra_carrier.apellidos}})
+                         {{datoEmbarque.extra_carrier.usuario?.numero_identidad}} - {{datoEmbarque.extra_carrier.usuario?.codigo}} {{(!datoEmbarque.extra_carrier.usuario?.empresa || datoEmbarque.extra_carrier.usuario?.empresa == '') ? datoEmbarque.extra_carrier.usuario?.nombre +''+ datoEmbarque.extra_carrier.usuario?.apellido : datoEmbarque.extra_carrier.usuario?.empresa}} <br/> ({{ datoEmbarque.extra_carrier.identificacion }} - {{ datoEmbarque.extra_carrier.nombre }} {{datoEmbarque.extra_carrier.apellidos}})
                     </span>
                     <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_remitente && !datoEmbarque.extra_embarque_remitente &&
                     !datoEmbarque.tienda_embarque && !datoEmbarque.extra_carrier && !datoEmbarque.usuario_carrier"
@@ -249,8 +249,7 @@
                    <span class="m-list-settings__item-control" *ngIf="!datoEmbarque.usuario_embarque_importer && !datoEmbarque.extra_embarque_importer &&
                     datoEmbarque.extra"
                    >
-                   {{datoEmbarque.extra.usuario?.numero_identidad}} - {{datoEmbarque.extra.usuario?.codigo}} {{ datoEmbarque.extra.usuario?.nombre }} {{datoEmbarque.extra.usuario?.apellido}} 
-                   <br/>  ({{ datoEmbarque.extra.identificacion }} - {{ datoEmbarque.extra.nombre }} {{resourceData.extra.apellidos}})
+                  {{ datoEmbarque.extra.identificacion }} - {{ datoEmbarque.extra.nombre }} {{datoEmbarque.extra.apellidos}}
               </span>
              
                     </div>
