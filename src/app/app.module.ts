@@ -86,6 +86,7 @@ import { ScriptLoaderService } from "./_services/script-loader.service";
 import { NoCacheHeadersInterceptor } from "./shared/services/auth/cache.service";
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EntregaService } from "./shared/services/api/entrega.service";
+import { ParroquiasService } from "./shared/services/api/parroquias.service";
 registerLocaleData(localeES, "es-CU");
 
 @NgModule({
@@ -126,6 +127,7 @@ registerLocaleData(localeES, "es-CU");
     ZonasService,
     ProvinciasService,
     CiudadesService,
+    ParroquiasService,
     PlantillasService,
     PlataformasService,
     PasarelasService,

@@ -34,8 +34,9 @@ export class CiudadesService extends ApiService {
 
     getParroquiasByCiudad(params?: any): Observable<any> {
         if (!params)
-            return this.http.get(`${this.url}parroquiabyciudad`);
+        return this.http.getWithoutAuthHeader(`${this.url}parroquiabyciudad`);
         params = this.serialize(params);
-        return this.http.get(`${this.url}parroquiabyciudad`, { params: this.object2Params(params) });
+        return this.http.getWithoutAuthHeader(`${this.url}parroquiabyciudad`, { params: this.object2Params(params) });
+
     }
 }
