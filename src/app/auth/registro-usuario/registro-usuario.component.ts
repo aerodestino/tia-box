@@ -5,6 +5,7 @@ import { AppService } from "../../app.service";
 import { Helpers } from "../../helpers";
 import { CiudadesService } from "../../shared/services/api/ciudades.service";
 import { PaisesService } from "../../shared/services/api/paises.service";
+import { ParroquiasService } from "../../shared/services/api/parroquias.service";
 import { ProvinciasService } from "../../shared/services/api/provincias.service";
 import { UsuariosService } from "../../shared/services/api/usuarios.service";
 
@@ -28,7 +29,8 @@ export class RegistroUsuarioComponent implements OnInit {
     public toastr: ToastsManager,
     public appService: AppService,
     public vcr: ViewContainerRef,
-    public router: Router
+    public router: Router,
+    public parroquiasService: ParroquiasService
   ) {
     this.toastr.setRootViewContainerRef(vcr);
   }
@@ -91,7 +93,7 @@ export class RegistroUsuarioComponent implements OnInit {
 
   getParroquias(ciudad_id) {
     this.parroquias = null;
-    this.ciudadesService.getParroquiasByCiudad({ciudad_id: ciudad_id}).subscribe((data) => {
+    this.parroquiasService.getParroquias({ ciudad_id: ciudad_id }).subscribe((data) => {
         this.parroquias = data.json().data;
     }, (error) => {
         console.log(error.json());
