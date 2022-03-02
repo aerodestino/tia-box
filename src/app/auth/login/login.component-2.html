@@ -68,7 +68,7 @@
 						Introduzca su correo para resetear su contraseña:
 					</div>
 				</div>
-				<form (ngSubmit)="f.form.valid && forgotPass(correo.value)" #f="ngForm" class="m-login__form m-form" action="">
+				<form (ngSubmit)="forgotPass(correo.value)" #f="ngForm" class="m-login__form m-form" action="">
 					<ng-template #alertForgotPass></ng-template>
 					<div class="form-group m-form__group">
 						<input  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+[a-zA-Z0-9  ])+$" class="form-control m-input" type="text" placeholder="Email" name="correo" [(ngModel)]="model.email" #correo="ngModel" id="m_email" autocomplete="off">
