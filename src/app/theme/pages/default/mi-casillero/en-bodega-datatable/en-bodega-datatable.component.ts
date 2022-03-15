@@ -47,6 +47,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   ocultar = true;
   paqueteList: Array<any> = [];
   idlist:number;
+  fechaMaximoDV:any;
   @Input() url: any;
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
   @Output() cargar: EventEmitter<any> = new EventEmitter();
@@ -93,14 +94,6 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
       if (!skumaster.selected) this.selectedAll = false;
     });
     this.emitSelectionChange();
-  }
-
-  descargar(file) {
-    var link = document.createElement("a");
-    let url = this.url+''+file;
-    link.href = URL.createObjectURL(url);
-    link.download = file;
-    link.click();
   }
 
   onSelectAllClick() {
@@ -225,6 +218,12 @@ declaracionValores(content,id,articulo) {
   if(this.articulodv.fecha_expiracion_d_v)
       fecha = new Date(this.articulodv.fecha_expiracion_d_v);
   
+  let maximo= new Date();
+  this.fechaMaximoDV = {
+      "year": maximo.getFullYear(),
+      "month": maximo.getMonth() + 1,
+      "day": maximo.getDate()
+  }; 
   this.articulodv.fecha_expiracion_d_v = {
       "year": fecha.getFullYear(),
       "month": fecha.getMonth() + 1,
