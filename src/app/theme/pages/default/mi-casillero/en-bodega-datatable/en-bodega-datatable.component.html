@@ -179,7 +179,7 @@
                             <div class="input-group col-lg-3">
                                 <input class="form-control" placeholder="yyyy-mm-dd"
                                     name="fecha_expiracion" #fecha_expiracion="ngModel" [(ngModel)]="articulodv.fecha_expiracion_d_v"
-                                    ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+                                    ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required [maxDate]="fechaMaximoDV">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" 
                                         style="color: #575962; background-color: white; line-height: initial; margin-left: -1px;"

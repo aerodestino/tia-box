@@ -75,6 +75,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     servicio_id: '',
     servicio: ''
   };
+  fechaMaximoDV:any;
   urlfactura: any;
   enBodegaSeleccionadas = true;
   enTransitoSeleccionadas = false;
@@ -960,6 +961,12 @@ OnModalDV(content) {
       if(this.articulodv.fecha_expiracion_d_v)
           fecha = new Date(this.articulodv.fecha_expiracion_d_v);
       
+      let maximo= new Date();
+      this.fechaMaximoDV = {
+          "year": maximo.getFullYear(),
+          "month": maximo.getMonth() + 1,
+          "day": maximo.getDate()
+      }; 
       this.articulodv.fecha_expiracion_d_v = {
           "year": fecha.getFullYear(),
           "month": fecha.getMonth() + 1,
