@@ -74,15 +74,6 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
         //     'assets/demo/default/custom/components/datatables/base/html-table.js');
     }
 
-
-    descargar(file) {
-        var link = document.createElement("a");
-        let url = this.url+''+file;
-        link.href = URL.createObjectURL(url);
-        link.download = file;
-        link.click();
-      }
-
       onVerImagenes(articulo) {
         this.ver.emit(articulo);
       }
@@ -147,21 +138,39 @@ export class EmbarcadoDatatableComponent extends BaseDatatableComponent implemen
                 let p= Big(sumPeso);
                 sumPeso = p.toNumber();
                 this.notaembarque = this.articulos[i].nota ? this.articulos[i].nota : '';
-                this.descripcionembarque = this.articulos[i].descripcion_embarque ? this.articulos[i].descripcion_embarque : '';
+                this.descripcionembarque = (this.articulos[i].descripcion_embarque && ((this.articulos[i].descripcion_embarque).toUpperCase() != 'VARIOS')) ? this.articulos[i].descripcion_embarque : '';
                 if(this.descripcionembarque == ''){
-                  this.articulos[i].descripcion_embarque = this.articulos[i].descripcion;
-                  let c=1;
-                  if(desc.length == 0){
-                    desc[0]=this.articulos[i].descripcion;
+                  if(this.articulos[i].fac_d_v){
+                    let descDV =[];
+                    for(let l in this.articulos[i].descripciones_d_v){
+                      let c=1;
+                      if(descDV.length == 0){
+                        descDV[0]=((this.articulos[i].descripciones_d_v[l].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripciones_d_v[l].descripcion : '';
+                      }else{
+                        for(let e in descDV){
+                            if(descDV[e] != this.articulos[i].descripciones_d_v[l].descripcion)
+                              descDV[c]=((this.articulos[i].descripciones_d_v[l].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripciones_d_v[l].descripcion : '';
+                              c++;
+                        }
+                      }
+                    } 
+                    this.articulos[i].descripcion_embarque = descDV.join('; ');
+                    this.descripcionembarque = descDV.join('; '); 
                   }else{
-                    for(let e in desc){
-                        if(desc[e] != this.articulos[i].descripcion)
-                          desc[c]=this.articulos[i].descripcion;
-                          c++;
+                    this.articulos[i].descripcion_embarque = ((this.articulos[i].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripcion : '';
+                    let c=1;
+                    if(desc.length == 0){
+                      desc[0]=((this.articulos[i].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripcion : '';
+                    }else{
+                      for(let e in desc){
+                          if(desc[e] != this.articulos[i].descripcion)
+                            desc[c]=((this.articulos[i].descripcion).toUpperCase() != 'VARIOS') ? this.articulos[i].descripcion : '';
+                            c++;
+                      }
                     }
+                    this.descripcionembarque = desc.join('; ');
                   }
                 }
-                this.descripcionembarque = desc.join(',');
                 this.text = this.articulos[i].tienda_embarque ? this.articulos[i].tienda_embarque : '' ;
                 if(this.articulos[i].consolidado)
                    this.consolidadoArt = true;

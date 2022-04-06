@@ -639,7 +639,11 @@
                             <label class="col-lg-12 col-form-label">
                                 Cambiar descripción si es necesario*:
                              </label><br/>
-                             <input  *ngIf="!consolidadoFact"  type="text" class="form-control m-input" placeholder="Descripción"
+                             <input  *ngIf="dv && !consolidadoFact"  type="text" class="form-control m-input" placeholder="Descripción"
+                             [(ngModel)]="descripcionembarque"  #descripcion="ngModel" required
+                             name="descripcion" readonly style="background-color: #6f727d38"
+                             > 
+                             <input  *ngIf="!dv && !consolidadoFact"  type="text" class="form-control m-input" placeholder="Descripción"
                              [(ngModel)]="descripcionembarque"  #descripcion="ngModel" required
                              name="descripcion"
                              > 
@@ -665,10 +669,14 @@
                                     </td>
                                     
                                     <td> 
-                                        <input type="text" class="form-control m-input" placeholder="Descripción"
+                                        <input *ngIf="!a.fac_d_v" type="text" class="form-control m-input" placeholder="Descripción"
                                         [(ngModel)]="a.descripcion_embarque"  #descripcion+{{a.id}}="ngModel"
                                         name="descripcion+{{a.id}}" required
                                         > 
+                                        <input *ngIf="a.fac_d_v" type="text" class="form-control m-input" placeholder="Descripción"
+                                        [(ngModel)]="a.descripcion_embarque"  #descripcion+{{a.id}}="ngModel"
+                                        name="descripcion+{{a.id}}" required readonly style="background-color: #6f727d38"
+                                        >
                                     </td>
                                     <td>
                                         <input type="number" *ngIf="!a.fac_d_v" min="0" class="form-control m-input" placeholder="Unidades"
