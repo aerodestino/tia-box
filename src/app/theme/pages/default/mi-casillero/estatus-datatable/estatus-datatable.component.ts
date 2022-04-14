@@ -64,6 +64,7 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
   domicilio = 1;
   disabled = false;
   titulo = 'Crear Entrega';
+  notas: any; 
   @Input() url: any;
   @Output() entregaSelection: EventEmitter<any> = new EventEmitter();
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
@@ -167,14 +168,6 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
         }
            
     }
-  }
-
-  descargar(file) {
-    var link = document.createElement("a");
-    let url = this.url+''+file;
-    link.href = URL.createObjectURL(url);
-    link.download = file;
-    link.click();
   }
 
   onSelectAllClick() {
@@ -475,6 +468,13 @@ onDelete(content, id) {
       });
       }
   });
+}
+
+onNotas(content, articulo) {
+  Helpers.setLoading(true);
+  this.notas = articulo;
+  this.modalRef = this.ngbModal.open(content);
+  Helpers.setLoading(false);
 }
 
 }

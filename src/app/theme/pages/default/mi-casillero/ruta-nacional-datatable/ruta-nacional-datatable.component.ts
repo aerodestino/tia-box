@@ -17,17 +17,17 @@ export class RutaNacionalDatatableComponent extends BaseDatatableComponent imple
     envio: any;
     totalPrecio = 0;
     totalPeso = 0;
+    ver_usuario = ''; 
+    modalRef = null;
     constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal,public entregaService: EntregaService,
         public toastr: ToastsManager) {
         super(ngbModal);
     }
 
     ngOnInit() {
-        console.log(this.data);
         this.page = this.filters.offset + 1;
         this.registroInicialPagina = this.totalItems > 0 ? this.filters.offset * this.filters.limit + 1 : 0;
         this.registroFinalPagina = this.registroInicialPagina + this.filters.limit > this.totalItems ? this.totalItems : this.registroInicialPagina + this.filters.limit - 1;
-        console.log(this.filters.offset, this.filters.limit, this.totalItems, this.registroInicialPagina, this.registroFinalPagina);
     }
 
     ngAfterViewInit() {
@@ -51,7 +51,7 @@ export class RutaNacionalDatatableComponent extends BaseDatatableComponent imple
               this.totalPeso = peso.plus(this.totalPeso);
               this.totalPrecio = precio.plus(this.totalPrecio);
              }
-             this.ngbModal.open(modal, { size: "lg" });
+             this.modalRef = this.ngbModal.open(modal, { size: "lg" });
             },
             error => {
               Helpers.setLoading(false);
@@ -64,5 +64,17 @@ export class RutaNacionalDatatableComponent extends BaseDatatableComponent imple
         this.ver.emit(articulo);
     }
 
+    
+    onNotas(content, notas) {
+      this.ver_usuario = '';
+      Helpers.setLoading(true);
+      this.ver_usuario = notas;
+      this.modalRef = this.ngbModal.open(content);
+      Helpers.setLoading(false);
+    }
+
+    close(){
+      this.modalRef.close();
+    }
 }
 

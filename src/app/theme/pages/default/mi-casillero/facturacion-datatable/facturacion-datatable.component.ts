@@ -18,6 +18,9 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
     pago: any;
     totalPrecio = 0;
     totalPeso = 0;
+    ver_usuario = ''; 
+    modalRef = null;
+
     constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal,public facturacionesService: FacturacionesService,
         public toastr: ToastsManager) {
         super(ngbModal);
@@ -52,7 +55,7 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
               this.totalPeso = peso.plus(this.totalPeso);
               this.totalPrecio = precio.plus(this.totalPrecio);
              }
-             this.ngbModal.open(modal, { size: "lg" });
+             this.modalRef = this.ngbModal.open(modal, { size: "lg" });
             },
             error => {
               Helpers.setLoading(false);
@@ -62,8 +65,13 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
     }
 
     openModal(modal) {
-        this.ngbModal.open(modal);
+      this.modalRef =  this.ngbModal.open(modal);
     }
+
+    close(){
+      this.modalRef.close();
+    }
+    
 
     onFormasPago(articulo, modal) {
         Helpers.setLoading(true);
@@ -73,7 +81,7 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
             (dato) => {
               Helpers.setLoading(false);
              this.pago= dato.json().data;
-             this.ngbModal.open(modal, { size: "lg" });
+             this.modalRef =  this.ngbModal.open(modal, { size: "lg" });
             },
             error => {
               Helpers.setLoading(false);
@@ -84,6 +92,14 @@ export class FacturacionDatatableComponent extends BaseDatatableComponent implem
 
     onVerImagenes(articulo) {
         this.ver.emit(articulo);
+    }
+
+    onNotas(content, notas) {
+      this.ver_usuario = '';
+      Helpers.setLoading(true);
+      this.ver_usuario = notas;
+      this.modalRef = this.ngbModal.open(content);
+      Helpers.setLoading(false);
     }
 }
 

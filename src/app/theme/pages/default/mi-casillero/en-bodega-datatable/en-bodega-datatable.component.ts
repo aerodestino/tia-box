@@ -48,6 +48,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   paqueteList: Array<any> = [];
   idlist:number;
   fechaMaximoDV:any;
+  ver_usuario: any = '';
   @Input() url: any;
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
   @Output() cargar: EventEmitter<any> = new EventEmitter();
@@ -196,6 +197,14 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
     this.datoEmbarque = articulo;
     this.modalRef = this.ngbModal.open(content);
     Helpers.setLoading(false);
+}
+
+onNotas(content, notas) {
+  this.ver_usuario = '';
+  Helpers.setLoading(true);
+  this.ver_usuario = notas.ver_usuario;
+  this.modalRef = this.ngbModal.open(content);
+  Helpers.setLoading(false);
 }
 
 close(){

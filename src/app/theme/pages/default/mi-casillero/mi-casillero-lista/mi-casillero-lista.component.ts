@@ -294,6 +294,35 @@ export class MiCasilleroListaComponent extends BaseListComponent
         this.estatus = articulos.json().data[0].results;
         this.totalEstatus = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
+
+        this.estatus.forEach(item => {
+          item.ver_usuario = false;
+          item.notaArticulo = '';
+          item.notaFacturacion = '';
+          item.notaEnvio = '';
+          item.notaGuia = '';
+          item.notaGuiaEntrega = '';
+          item.notaRetiro = '';
+
+          if(item.notas && item.notas.ver_usuario)
+            item.notaArticulo = item.notas.ver_usuario;
+          if(item.envio && item.envio.notas && item.envio.notas.ver_usuario)
+            item.notaEnvio = item.envio.notas.ver_usuario;
+          if(item.facturacion && item.facturacion.notas && item.facturacion.notas.ver_usuario)
+            item.notaFacturacion = item.facturacion.notas.ver_usuario;
+          if(item.envio && item.envio.guia && item.envio.guia.notas && item.envio.guia.notas.ver_usuario)
+            item.notaGuia = item.envio.guia.notas.ver_usuario;
+          if(item.entrega && item.entrega.notas && item.entrega.notas.ver_usuario)
+            item.notaGuiaEntrega = item.entrega.notas.ver_usuario;
+          if(item.retiro && item.retiro.notas && item.retiro.notas.ver_usuario)
+            item.notaRetiro = item.retiro.notas.ver_usuario;
+
+          if(item.notaArticulo != '' || item.notaEnvio != '' || item.notaGuia != '' || item.notaGuiaEntrega != '' || item.notaRetiro != ''
+          || item.notaFacturacion != '')
+            item.ver_usuario = true;
+
+            console.log(item.notaFacturacion);
+      });
       },
       error => {
         this.toastr.error(error.json().error.message);

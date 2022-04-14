@@ -4,6 +4,7 @@ import { BaseDatatableComponent } from "../../../../../shared/prototypes/base-da
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TrackingsService } from "../../../../../shared/services/api/trackings.service";
 import { Tracking } from "../../../../../shared/model/tracking.model";
+import { Helpers } from "../../../../../helpers";
 
 @Component({
     selector: 'app-entregados-datatable',
@@ -12,7 +13,8 @@ import { Tracking } from "../../../../../shared/model/tracking.model";
 })
 export class EntregadosDatatableComponent extends BaseDatatableComponent implements OnInit, AfterViewInit {
     @Output() ver: EventEmitter<any> = new EventEmitter();
-    item: any;
+    item: any; 
+    modalRef = null;
     constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal) {
         super(ngbModal);
     }
@@ -32,11 +34,16 @@ export class EntregadosDatatableComponent extends BaseDatatableComponent impleme
 
     onVer(articulo, modal) {
         this.item = articulo;
-        this.ngbModal.open(modal, {size: "lg"});
+        this.modalRef = this.ngbModal.open(modal, {size: "lg"});
     }
 
     onVerImagenes(articulo) {
         this.ver.emit(articulo);
     }
+
+      close(){
+        this.modalRef.close();
+      }
+      
 }
 
