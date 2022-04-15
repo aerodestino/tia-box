@@ -41,7 +41,11 @@
             {{articulo.precio}}
         </td>
         <td>
-            <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>
+            <div class="row">
+                <div class="col-3">
+                     <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>
+                </div>
+            </div>
         </td>
     </tr>
     </tbody>

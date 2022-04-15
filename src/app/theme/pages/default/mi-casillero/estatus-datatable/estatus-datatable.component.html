@@ -93,8 +93,16 @@
             {{ articulo.estado_articulo ? articulo.estado_articulo.nombre : '-' }}
         </td>
        <td>
-            <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>   
-         </td>
+        <div class="row">
+            <div class="col-3">
+                <i class="fa fa-eye m--font-info" title="Ver" style="cursor: pointer;" (click)="onVer(articulo, articuloDetallesModal)"></i>   
+            </div>
+            <div class="col-3" *ngIf="articulo.ver_usuario">
+                <i *ngIf="articulo.ver_usuario" class="fa fa-comments-o m--font-success" title="Notas" style="cursor: pointer" 
+                   (click)="onNotas(notasModal,articulo)"></i>
+            </div>
+        </div>
+        </td>
 
     </tr>
     </tbody>
@@ -357,3 +365,34 @@
 </ng-template>
 <!--end::Modal-->
 
+
+
+<!--begin::View  Modal-->
+<ng-template #notasModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Notas</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <h5 *ngIf="notas.notaArticulo" style="margin-top: 5px;">Notas del Artículo</h5>
+                <span  *ngIf="notas.notaArticulo">{{ notas.notaArticulo }}</span>
+                <h5 *ngIf="notas.notaEnvio" style="margin-top: 5px;">Notas del Envío</h5>
+                <span  *ngIf="notas.notaEnvio">{{ notas.notaEnvio }}</span>
+                <h5 *ngIf="notas.notaFacturacion" style="margin-top: 5px;">Notas del Recibo</h5>
+                <span  *ngIf="notas.notaFacturacion">{{ notas.notaFacturacion }}</span>
+                <h5 *ngIf="notas.notaGuia" style="margin-top: 5px;">Notas de la Guía Madre</h5>
+                <span  *ngIf="notas.notaGuia">{{ notas.notaGuia }}</span>
+                <h5 *ngIf="notas.notaGuiaEntrega" style="margin-top: 5px;">Notas de la Guía de Entrega</h5>
+                <span  *ngIf="notas.notaGuiaEntrega">{{ notas.notaGuiaEntrega }}</span>
+                <h5 *ngIf="notas.notaRetiro" style="margin-top: 5px;">Notas del Servicio de Bodega</h5>
+                <span  *ngIf="notas.notaRetiro">{{ notas.notaRetiro }}</span> 
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->
