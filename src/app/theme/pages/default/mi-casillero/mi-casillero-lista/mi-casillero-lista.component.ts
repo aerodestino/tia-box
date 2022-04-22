@@ -1003,7 +1003,7 @@ OnModalDV(content) {
       };
       this.pais_origen_d_v_id = 9;
       this.pais_destino_d_v_id = 8;
-        const person =  [{ id: 0 , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+        const person =  [{ id: 0 , descripcion: '', cantidad: 1 , total: 0 }];
       this.paqueteList.push(person); 
       this.modalRef = this.ngbModal.open(content, {size: "lg"});
 
@@ -1033,7 +1033,7 @@ this.paisesService.getAll().subscribe((data) => {
 }
 
 updateList(id: number, property: string, event: any) {
-this.paqueteList[0][id][property] = event.target.textContent;
+//this.paqueteList[0][id][property] = event.target.textContent;
 
 if(this.paqueteList[0][id]['cantidad'] && this.paqueteList[0][id]['vunitario']){
   let c = Big(this.paqueteList[0][id]['cantidad']);
@@ -1053,7 +1053,7 @@ this.paqueteList[0].splice(id, 1);
 
 add() {
   this.idlist= this.paqueteList[0].length;
-  const person =  { id: this.idlist ,  descripcion: 'N/A',  cantidad:0, vunitario: 0, total: 0 };
+  const person =  { id: this.idlist ,  descripcion: '',  cantidad:1 , total: 0 };
   this.paqueteList[0].push(person);
 
 }
