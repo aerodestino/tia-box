@@ -972,31 +972,24 @@
                                     <tr *ngFor="let person of paqueteList[0]; let id = index">
                                       
                                         <td  style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'descripcion', $event);" (blur)="updateList(id, 'descripcion', $event)"  style="padding:5px; text-align:center;">{{person.descripcion}}</span>
+                                            <input style="padding:5px; text-align:center;" type="text" 
+                                            [(ngModel)]="person.descripcion"  class="form-control m-input" #descripcion="ngModel" name="descripcion_{{id}}" />
                                         </td>
                                         <td style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);" (blur)="updateList(id, 'cantidad', $event)"  style="padding:5px; text-align:center;">{{person.cantidad}}</span>
+                                            <input style="padding:5px; text-align:center;" type="number"  (keyup)="updateList(id, 'cantidad', $event)"
+                                            [(ngModel)]="person.cantidad" min="1" class="form-control m-input" #cantidad="ngModel" name="cantidad_{{id}}" />
                                         </td>
-                                        <td style="font-size: 1.1em !important;">
-                                        <span contenteditable="true" (keyup)="changeValue(id, 'vunitario', $event);" (blur)="updateList(id, 'vunitario', $event)"  style="padding:5px; text-align:center;">{{person.vunitario}}</span>
+                                        <td style="font-size: 1.1em !important;"> 
+                                            <input style="padding:5px; text-align:center;" type="number"  (keyup)="updateList(id, 'vunitario', $event)"
+                                            [(ngModel)]="person.vunitario" min="0" class="form-control m-input" #vunitario="ngModel" name="vunitario_{{id}}" />
                                         </td>
-                                        <td style="font-size: 1.1em !important;">{{(person.total) ? person.total : 0}}</td>
+                                        <td style="font-size: 1.1em !important;">{{(person.cantidad * person.vunitario) ? person.cantidad * person.vunitario : 0}}</td>
                                         <td style="font-size: 1.1em !important;"> <span class="table-remove">
                                             <i class="fa fa-trash m--font-danger" title="Eliminar" style="cursor: pointer" 
                                             (click)="remove(id)"></i>
                                         </span>
                                         </td> 
                                     </tr>  
-                                   <!--  <tr *ngFor="let person of paqueteList; let id = index">
-                                        <td>{{person.numero}}</td>
-                                        <td>{{person.descripcion}}</td>
-                                        <td>{{person.peso}}</td>
-                                        <td>
-                                            <span contenteditable="true" (keyup)="changeValue(id, 'cantidad', $event);changeValue(id, 'total', person.cantidad * person.vunitario)" (blur)="updateList(id, 'cantidad', $event);updateList(id, 'total',  person.cantidad * person.vunitario)"  style="padding:5px; text-align:center;">Ingrese Cantidad</span>
-                                            </td>
-                                        <td>{{person.vunitario}}</td>
-                                        <td>{{(person.cantidad * person.vunitario) ? person.cantidad * person.vunitario : 0}}</td>
-                                    </tr> -->
                                     </table>
                                 </div>
                                 </div>

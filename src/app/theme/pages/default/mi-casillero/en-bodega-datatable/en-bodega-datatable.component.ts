@@ -240,13 +240,13 @@ declaracionValores(content,id,articulo) {
   }; 
   if(this.articulodv.descripciones_d_v){
       for(let i in this.articulodv.descripciones_d_v ){
-          person.push({ id: articulo.id , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 
+          person.push({ id: i , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 
           vunitario: this.articulodv.descripciones_d_v[i]['vunitario'], total: this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario'] });
           this.totalDescripciones = this.totalDescripciones + (this.articulodv.descripciones_d_v[i]['cantidad'] * this.articulodv.descripciones_d_v[i]['vunitario']);
       }
       this.paqueteList.push(person);
   }else{
-      const person =  [{ id: articulo.id , descripcion: 'N/A', cantidad: 0 , vunitario: 0, total: 0 }];
+      const person =  [{ id: 0 , descripcion: '', cantidad: 1 , total: 0 }];
       this.paqueteList.push(person);
   }
 
@@ -332,9 +332,7 @@ this.paisService.getAll().subscribe((data) => {
 
 
 updateList(id: number, property: string, event: any) {
-console.log(event.target.textContent);
-this.paqueteList[0][id][property] = event.target.textContent;
-console.log(this.paqueteList[0][id][property]);
+//this.paqueteList[0][id][property] = event.target.textContent;
 
 if(this.paqueteList[0][id]['cantidad'] && this.paqueteList[0][id]['vunitario']){
   let c = Big(this.paqueteList[0][id]['cantidad']);
@@ -356,7 +354,7 @@ this.paqueteList[0].splice(id, 1);
 
 add() {
   this.idlist= this.paqueteList[0].length;
-  const person =  { id: this.idlist ,  descripcion: 'N/A',  cantidad:0, vunitario: 0, total: 0 };
+  const person =  { id: this.idlist ,  descripcion: '',  cantidad:1, total: 0 };
   this.paqueteList[0].push(person);
 
 }
