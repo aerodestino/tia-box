@@ -9,6 +9,8 @@ import { FormsModule } from "@angular/forms";
 import { ListHeaderModule } from "../../../../../shared/components/list-header/list-header.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import {PerfilListaComponent} from "../../perfil/perfil-lista/perfil-lista.component";
+import {MomentTimezoneModule} from 'angular-moment-timezone';
+
 const routes: Routes = [
     {
         "path": "",
@@ -24,7 +26,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule, RouterModule.forChild(routes), LayoutModule, FormsModule, ListHeaderModule, NgbModule.forRoot(),
+        CommonModule,MomentTimezoneModule, RouterModule.forChild(routes), LayoutModule, FormsModule, ListHeaderModule, NgbModule.forRoot(),
     ], exports: [
         FacturacionesListaComponent
     ], declarations: [

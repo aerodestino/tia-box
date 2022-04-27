@@ -39,7 +39,7 @@
             <span *ngIf="articulo.retiro">Revisión</span>
         </td>
         <td>
-            {{articulo.fecha_bodega | date: "dd/MM/y" : "-0400"}}
+            {{articulo.fecha_bodega | amTz:"America/New_York":true | date: "dd/MM/y"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -342,11 +342,11 @@
                                             [(ngModel)]="person.descripcion"  class="form-control m-input" #descripcion="ngModel" name="descripcion_{{id}}" />
                                         </td>
                                         <td style="font-size: 1.1em !important;">
-                                            <input style="padding:5px; text-align:center;" type="number"  (keyup)="updateList(id, 'cantidad', $event)"
+                                            <input style="padding:5px; text-align:center;" type="number"  (change)="updateList(id, 'cantidad', $event)"
                                             [(ngModel)]="person.cantidad" min="1" class="form-control m-input" #cantidad="ngModel" name="cantidad_{{id}}" />
                                         </td>
                                         <td style="font-size: 1.1em !important;"> 
-                                            <input style="padding:5px; text-align:center;" type="number"  (keyup)="updateList(id, 'vunitario', $event)"
+                                            <input style="padding:5px; text-align:center;" type="number"  (change)="updateList(id, 'vunitario', $event)"
                                             [(ngModel)]="person.vunitario" min="0" class="form-control m-input" #vunitario="ngModel" name="vunitario_{{id}}" />
                                         </td>
                                         <td style="font-size: 1.1em !important;">{{(person.cantidad * person.vunitario) ? person.cantidad * person.vunitario : 0}}</td>

@@ -12,7 +12,7 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            {{articulo.fecha | date: "dd/MM/y" : "-0500"}}
+            {{articulo.fecha | amTz:"America/New_York":true | date: "dd/MM/y"}}
         </td>
         <td>
            {{articulo.warehouse}}
@@ -71,7 +71,7 @@
             <tbody>
             <tr *ngFor="let articulo of envio">
                 <td>
-                    {{articulo.fecha_bodega | date: "dd/MM/y" : "-0500"}}
+                    {{articulo.fecha_bodega | amTz:"America/New_York":true | date: "dd/MM/y"}}
                 </td>
                 <td>
                     {{articulo.trackbox}}
