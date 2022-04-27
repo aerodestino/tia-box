@@ -27,10 +27,10 @@
             {{track.empresa_transporte}}
         </td>
         <td>
-            {{track.fecha_ingreso | date: "dd/MM/y" : "-0500"}}
+            {{track.fecha_ingreso | amTz:"America/New_York":true | date: "dd/MM/y"}}
         </td>
         <td>
-            {{track.fecha_posible | date: "dd/MM/y" : "-0500"}}
+            {{track.fecha_posible | amTz:"America/New_York":true | date: "dd/MM/y"}}
         </td>
     </tr>
     </tbody>

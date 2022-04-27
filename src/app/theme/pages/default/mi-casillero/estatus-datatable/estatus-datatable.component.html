@@ -58,7 +58,7 @@
            </div>
         </td>
         <td>
-            {{articulo.fecha_bodega | date: "dd/MM/y" : "-0500"}}
+            {{articulo.fecha_bodega | amTz:"America/New_York":true | date: "dd/MM/y"}}
         </td>
         <td>
             {{articulo.trackbox}}
@@ -183,7 +183,7 @@
                     {{(detalles.entrega && detalles.entrega.guia_enviada) ? detalles.entrega.guia : ((detalles.facturacion && detalles.facturacion.guia) ? detalles.facturacion.guia : '-') }}
                 </td>
                 <td>
-                    {{(detalles.entrega && detalles.entrega.guia_enviada) ? (detalles.entrega.fecha_guia | date: "dd/MM/y" : "-0500") : ((detalles.facturacion && detalles.facturacion.fecha_guia) ? (detalles.facturacion.fecha_guia | date: "dd/MM/y" : "-0500") : '-') }}
+                    {{(detalles.entrega && detalles.entrega.guia_enviada) ? (detalles.entrega.fecha_guia | amTz:"America/New_York":true | date: "dd/MM/y") : ((detalles.facturacion && detalles.facturacion.fecha_guia) ? (detalles.facturacion.fecha_guia | amTz:"America/New_York":true | date: "dd/MM/y") : '-') }}
                 </td>
             </tr>
             </tbody>

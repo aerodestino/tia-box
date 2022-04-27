@@ -48,7 +48,7 @@
             </a>              
         </td>
         <td>
-            {{articulo.fecha_embarque | date: "dd/MM/y" : "-0500"}}
+            {{articulo.fecha_embarque | amTz:"America/New_York":true | date: "dd/MM/y"}}
         </td>
         <td>
             {{articulo.trackbox}}
