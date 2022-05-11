@@ -6316,13 +6316,13 @@ a.text-dark:focus, a.text-dark:hover {
     border-color: #4D9DE0; }
 
 .btn-warning {
-  color: #111;
-  background-color: #FFC44A;
-  border-color: #FFC44A; }
+  color: white;
+  background-color: #365ba2;
+  border-color: #365ba2; }
   .btn-warning:hover {
     color: #111;
-    background-color: #E8A81F;
-    border-color: #eea200; }
+    background-color: #2ebfc2;
+    border-color: #2ebfc2; }
   .btn-warning:focus, .btn-warning.focus {
     box-shadow: 0 0 0 3px rgba(255, 184, 34, 0.5); }
   .btn-warning.disabled, .btn-warning:disabled {
