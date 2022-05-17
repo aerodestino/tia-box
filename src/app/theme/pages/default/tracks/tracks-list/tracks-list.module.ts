@@ -8,7 +8,6 @@ import { ListHeaderModule } from "../../../../../shared/components/list-header/l
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import {TracksListComponent} from "./tracks-list.component";
 import {TracksDatatableComponent} from "../tracks-datatable/tracks-datatable.component";
-import {MomentTimezoneModule} from 'angular-moment-timezone';
 
 const routes: Routes = [
     {
@@ -24,7 +23,7 @@ const routes: Routes = [
 ];
 @NgModule({
     imports: [
-        CommonModule, MomentTimezoneModule,RouterModule.forChild(routes), LayoutModule, FormsModule, ListHeaderModule, NgbModule.forRoot()
+        CommonModule,RouterModule.forChild(routes), LayoutModule, FormsModule, ListHeaderModule, NgbModule.forRoot()
     ], exports: [
         RouterModule
     ], declarations: [

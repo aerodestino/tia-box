@@ -31,6 +31,8 @@ import { CiudadesService } from "../../../../../shared/services/api/ciudades.ser
 import { AuthRoutingModule } from "../../../../../auth/auth-routing.routing";
 import { Arancel } from "../../../../../shared/model/arancel.model";
 import { ArancelesService } from "../../../../../shared/services/api/aranceles.service";
+import * as moment from 'moment-timezone';
+
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
   templateUrl: "./mi-casillero-lista.component.html",
@@ -276,6 +278,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.getPorEstado(this.enBodegaFilters).subscribe(
       articulos => {
         this.enBodega = articulos.json().data[0].results;
+        this.convertirFecha(this.enBodega,'fecha_bodega');
         this.totalEnBodega = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
@@ -303,7 +306,13 @@ export class MiCasilleroListaComponent extends BaseListComponent
           item.notaGuia = '';
           item.notaGuiaEntrega = '';
           item.notaRetiro = '';
-
+          item.fecha_bodega = moment(item.fecha_bodega).tz("America/New_York").format("DD/MM/Y");
+          if(item.entrega && item.entrega.fecha_guia){
+            item.entrega.fecha_guia = moment(item.entrega.fecha_guia).tz("America/New_York").format("DD/MM/Y");
+          }
+          if(item.facturacion && item.facturacion.fecha_guia){
+            item.facturacion.fecha_guia = moment(item.facturacion.fecha_guia).tz("America/New_York").format("DD/MM/Y");
+          }
           if(item.notas && item.notas.ver_usuario)
             item.notaArticulo = item.notas.ver_usuario;
           if(item.envio && item.envio.notas && item.envio.notas.ver_usuario)
@@ -336,6 +345,15 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.getPorEstado(this.instruccionesFilters).subscribe(
       articulos => {
         this.instrucciones = articulos.json().data[0].results;
+        this.instrucciones.forEach(item => {
+          item.fecha_bodega = moment(item.fecha_bodega).tz("America/New_York").format("DD/MM/Y");
+          if(item.entrega && item.entrega.fecha_guia){
+            item.entrega.fecha_guia = moment(item.entrega.fecha_guia).tz("America/New_York").format("DD/MM/Y");
+          }
+          if(item.facturacion && item.facturacion.fecha_guia){
+            item.facturacion.fecha_guia = moment(item.facturacion.fecha_guia).tz("America/New_York").format("DD/MM/Y");
+          }
+        });
         this.totalInstrucciones = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
@@ -350,6 +368,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.listEmbaque(this.embarcadosFilters).subscribe(
       articulos => {
         this.embarcados = articulos.json().data[0].results;
+        this.convertirFecha(this.embarcados,'fecha_embarque');
         this.totalEmbarcados = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
@@ -364,6 +383,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.getPorEstado(this.enTransitoFilters).subscribe(
       articulos => {
         this.enTransito = articulos.json().data[0].results;
+        this.convertirFecha(this.enTransito,'fecha');
         this.totalEnTransito = articulos.json().data[0].paging.total;
       },
       error => {
@@ -377,6 +397,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.getPorEstado(this.facturacionFilters).subscribe(
       articulos => {
         this.facturacion = articulos.json().data[0].results;
+        this.convertirFecha(this.facturacion,'fechaNotificacion');
         this.totalFacturacion = articulos.json().data[0].paging.total;
       },
       error => {
@@ -390,6 +411,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.getPorEstado(this.rutaNacionalFilters).subscribe(
       articulos => {
         this.rutaNacional = articulos.json().data[0].results;
+        this.convertirFecha(this.rutaNacional,'fechaGuia');
         this.totalRutaNacional = articulos.json().data[0].paging.total;
       },
       error => {
@@ -403,6 +425,14 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.getPorEstado(this.entregadosFilters).subscribe(
       articulos => {
         this.entregados = articulos.json().data[0].results;
+        this.entregados.forEach(item => {
+          if(item.fechaGuiaEnt)
+            item.fechaGuiaEnt = moment(item.fechaGuiaEnt).tz("America/New_York").format("DD/MM/Y");
+          if(item.fechaGuia)
+            item.fechaGuia = moment(item.fechaGuia).tz("America/New_York").format("DD/MM/Y");
+          if(item.fechaEnvio)
+            item.fechaEnvio = moment(item.fechaEnvio).tz("America/New_York").format("DD/MM/Y");
+        });
         this.totalEntregados = articulos.json().data[0].paging.total;
       },
       error => {
@@ -1300,5 +1330,11 @@ onRetirar(content) {
           this.toastr.error(error.json().error.message);
         }
       ); 
+  }
+
+  convertirFecha(data,fecha){
+    data.forEach(item => {
+        item[fecha] = moment(item[fecha]).tz("America/New_York").format("DD/MM/Y");
+  });
   }
 }

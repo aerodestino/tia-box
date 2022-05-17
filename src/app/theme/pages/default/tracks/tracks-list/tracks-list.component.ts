@@ -6,6 +6,8 @@ import { ToastsManager } from "ng2-toastr";
 import { AppService } from "../../../../../app.service";
 import {TracksService} from "../../../../../shared/services/api/tracks.service";
 import { Helpers } from "../../../../../helpers";
+import * as moment from 'moment-timezone';
+
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: './tracks-list.component.html',
@@ -43,6 +45,11 @@ export class TracksListComponent extends BaseListComponent implements OnInit {
         this.firstLoad = false;
         if (data.json().data.paging)
           this.totalItems = data.json().data.paging.total;
+
+        this.data.forEach(item => {
+            item.fecha_ingreso = moment(item.fecha_ingreso).tz("America/New_York").format("DD/MM/Y");
+            item.fecha_posible = moment(item.fecha_posible).tz("America/New_York").format("DD/MM/Y");
+        });
         this.searching = false;
         Helpers.setLoading(false);
         this.toastr.success("Datos recuperados correctamente");
