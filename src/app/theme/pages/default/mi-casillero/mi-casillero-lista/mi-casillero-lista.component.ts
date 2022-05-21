@@ -122,6 +122,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   tpeso = 0;
   totalPrecioEnt =0;
   totalPiezas =0;
+  fecha_expiracion_d_v: any = null;
   enBodegaFilters = {
     limit: 5,
     offset: 0,
@@ -278,7 +279,10 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.articulosService.getPorEstado(this.enBodegaFilters).subscribe(
       articulos => {
         this.enBodega = articulos.json().data[0].results;
-        this.convertirFecha(this.enBodega,'fecha_bodega');
+        this.enBodega.forEach(item => {
+          item.fecha_bodega_dv = item.fecha_bodega;
+          item.fecha_bodega = moment(item.fecha_bodega).tz("America/New_York").format("DD/MM/Y");
+         });
         this.totalEnBodega = articulos.json().data[0].paging.total;
         this.urlfactura = articulos.json().data[1];
       },
@@ -1026,7 +1030,7 @@ OnModalDV(content) {
           "month": maximo.getMonth() + 1,
           "day": maximo.getDate()
       }; 
-      this.articulodv.fecha_expiracion_d_v = {
+      this.fecha_expiracion_d_v = {
           "year": fecha.getFullYear(),
           "month": fecha.getMonth() + 1,
           "day": fecha.getDate()
