@@ -3,11 +3,11 @@
     <div class="m-container m-container--fluid m-container--full-height">
         <div class="m-stack m-stack--ver m-stack--desktop">
             <!-- BEGIN: Brand -->
-            <div class="m-stack__item m-brand  m-brand--skin-dark" style="background-color: rgba(38, 38, 38, 1);">
+            <div class="m-stack__item m-brand  m-brand--skin-dark" style="background-color: #f8f9fc;">
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
                        <a routerLink="/mi-casillero" class="m-brand__logo-wrapper">
-                            <img alt="" src="./assets/img/logo/logo_dentro.png" height="65" width="auto" />
+                            <img alt="" src="./assets/img/logo/logo_fondo_claro.png" style="margin-left: 30px;" height="65" width="95" />
                         </a>
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <!-- END: Brand -->
-            <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav" style="background-color: #1e1111">
+            <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav" style="background-color: #365ba2">
                 <!-- BEGIN: Horizontal Menu -->
                 <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark"
                         id="m_aside_header_menu_mobile_close_btn">
@@ -187,7 +187,7 @@
 
                                 <div class="m-dropdown__inner">
                                     <div class="m-dropdown__header m--align-center"
-                                         style="background-color: #1e1111; background-size: cover;">
+                                         style="background-color: #365ba2; background-size: cover;">
                                     <span class="m-dropdown__header-title">
                                         {{appService.notificacionesSinLeer}} nuevas
                                     </span>
@@ -299,7 +299,7 @@
                             <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
                             <div class="m-dropdown__inner">
                                 <div class="m-dropdown__header m--align-center"
-                                     style="background-color:#1e1111; background-size: cover;">
+                                     style="background-color:#365ba2; background-size: cover;">
                                     <div class="m-card-user m-card-user--skin-dark">
                                         <div class="m-card-user__pic">
                                             <img [src]="appService.user.avatar.web_url" 

@@ -20,7 +20,6 @@ import { FacturacionDatatableComponent } from "../facturacion-datatable/facturac
 import { RutaNacionalDatatableComponent } from "../ruta-nacional-datatable/ruta-nacional-datatable.component";
 import { EntregadosDatatableComponent } from "../entregados-datatable/entregados-datatable.component";
 import { InstruccionesDatatableComponent } from "../instrucciones-datatable/instrucciones-datatable.component";
-import {MomentTimezoneModule} from 'angular-moment-timezone';
 
 const routes: Routes = [
     {
@@ -37,7 +36,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule, RouterModule.forChild(routes), LayoutModule, FormsModule, ListHeaderModule, NgbModule.forRoot(), AutoCompleteModule,
-        CustomPipesModule,MomentTimezoneModule
+        CustomPipesModule
     ], exports: [
         RouterModule
     ], declarations: [

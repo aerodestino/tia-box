@@ -19,6 +19,8 @@ import {PaisesService} from "../../../../../shared/services/api/paises.service";
 import {Country} from "../../../../../shared/model/country.model";
 import {Declaracion} from "../../../../../shared/model/declaracion.model";
 import {Big} from 'big.js';
+import * as moment from 'moment-timezone';
+
 @Component({
   selector: "app-en-bodega-datatable",
   templateUrl: "./en-bodega-datatable.component.html",
@@ -33,6 +35,7 @@ export class EnBodegaDatatableComponent extends BaseDatatableComponent
   usuario: User;
   declaracion: Declaracion;
   trackbox: any;
+  fecha_expiracion_d_v: any = null;
   public usuarios: User[];
   public usuarios_importer: User[];
   public paises: Country[];
@@ -223,21 +226,30 @@ declaracionValores(content,id,articulo) {
   this.declaracion = new Declaracion;
   this.trackbox= articulo.trackbox;
   this.articulodv= articulo;
-  let fecha = new Date(this.articulodv.fecha_bodega);
-  if(this.articulodv.fecha_expiracion_d_v)
-      fecha = new Date(this.articulodv.fecha_expiracion_d_v);
   
+  if(this.articulodv.fecha_expiracion_d_v){
+    let fechaMoment =  moment(this.articulodv.fecha_expiracion_d_v).tz("America/New_York");
+    this.fecha_expiracion_d_v = {
+     "year": fechaMoment.year(),
+     "month": fechaMoment.month() + 1,
+     "day": fechaMoment.date()
+     }; 
+   }else{
+     let fechaMoment =  moment(this.articulodv.fecha_bodega_dv).tz("America/New_York");
+     this.fecha_expiracion_d_v = {
+         "year": fechaMoment.year(),
+         "month": fechaMoment.month() + 1,
+         "day": fechaMoment.date()
+     }; 
+   }
+
   let maximo= new Date();
   this.fechaMaximoDV = {
       "year": maximo.getFullYear(),
       "month": maximo.getMonth() + 1,
       "day": maximo.getDate()
   }; 
-  this.articulodv.fecha_expiracion_d_v = {
-      "year": fecha.getFullYear(),
-      "month": fecha.getMonth() + 1,
-      "day": fecha.getDate()
-  }; 
+ 
   if(this.articulodv.descripciones_d_v){
       for(let i in this.articulodv.descripciones_d_v ){
           person.push({ id: i , descripcion: this.articulodv.descripciones_d_v[i]['descripcion'], cantidad: this.articulodv.descripciones_d_v[i]['cantidad'] , 

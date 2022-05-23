@@ -17,7 +17,7 @@
     </tr>
     <tr *ngFor="let facturacion of data">
         <td>
-            <span *ngIf="facturacion.fecha_notificacion"> {{ facturacion.fecha_notificacion | amTz:"America/New_York":true | date: "dd/MM/y" }}</span>
+            <span *ngIf="facturacion.fecha_notificacion"> {{ facturacion.fecha_notificacion }}</span>
         </td>
         <td>{{facturacion.recibo ? facturacion.recibo : '-' }}</td>
         <td>{{facturacion.costo ? facturacion.costo : 0 }}</td>

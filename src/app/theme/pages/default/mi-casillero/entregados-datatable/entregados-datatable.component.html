@@ -18,7 +18,7 @@
     </tr>
     <tr *ngFor="let articulo of data">
         <td>
-            {{ (articulo.guiaEnviada && articulo.fechaGuiaEnt) ? (articulo.fechaGuiaEnt | amTz:"America/New_York":true | date: "dd/MM/y") : (articulo.fechaGuia | amTz:"America/New_York":true | date: "dd/MM/y") }}
+            {{ (articulo.guiaEnviada && articulo.fechaGuiaEnt) ? (articulo.fechaGuiaEnt) : (articulo.fechaGuia) }}
         </td>
         <td>
             {{ articulo.trackbox }}
@@ -96,7 +96,7 @@
             <tbody>
             <tr>
                 <td>
-                    {{item.fechaEnvio | amTz:"America/New_York":true | date: "dd/MM/y"}}
+                    {{item.fechaEnvio }}
                 </td>
                 <td>
                     {{item.recibo}}
@@ -108,7 +108,7 @@
                     {{ (item.guiaEnt && item.guiaEnviada) ? item.guiaEnt : item.guia }}
                 </td>
                 <td>
-                    {{(item.fechaGuiaEnt && item.guiaEnviada) ? (item.fechaGuiaEnt | amTz:"America/New_York":true | date: "dd/MM/y") :  (item.fechaGuia | amTz:"America/New_York":true | date: "dd/MM/y")}}
+                    {{(item.fechaGuiaEnt && item.guiaEnviada) ? (item.fechaGuiaEnt) :  (item.fechaGuia)}}
                 </td>
             </tr>
             </tbody>

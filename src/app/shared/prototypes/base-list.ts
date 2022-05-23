@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { ToastsManager } from "ng2-toastr/ng2-toastr";
 import { AppService } from "../../app.service";
 import { Helpers } from "../../helpers";
+import * as moment from 'moment-timezone';
+
 export abstract class BaseListComponent implements OnInit {
   /**
    * resource data
@@ -33,6 +35,7 @@ export abstract class BaseListComponent implements OnInit {
 
   public totalItems: number;
 
+  public fecha: string= null;
   /**
    * The selected Items from the table
    */
@@ -74,6 +77,11 @@ export abstract class BaseListComponent implements OnInit {
         if (data.json().data.paging)
           this.totalItems = data.json().data.paging.total;
         this.searching = false;
+        this.data.forEach(item => {
+          if(this.fecha){
+              item[this.fecha] = moment(item[this.fecha]).tz("America/New_York").format("DD/MM/Y");
+          }
+      });
         Helpers.setLoading(false);
         this.toastr.success("Datos recuperados correctamente");
       },

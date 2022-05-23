@@ -6,6 +6,8 @@ import { EnviosService } from "../../../../../shared/services/api/envios.service
 import { Tracking } from "../../../../../shared/model/tracking.model";
 import { Helpers } from "../../../../../helpers";
 import { ToastsManager } from "ng2-toastr";
+import * as moment from 'moment-timezone';
+
 @Component({
     selector: 'app-en-transito-datatable',
     templateUrl: './en-transito-datatable.component.html',
@@ -40,6 +42,7 @@ export class EnTransitoDatatableComponent extends BaseDatatableComponent impleme
             (dato) => {
               Helpers.setLoading(false);
              this.envio= dato.json().data;
+             this.envio['fecha_bodega'] = moment(this.envio['fecha_bodega']).tz("America/New_York").format("DD/MM/Y");
              this.ngbModal.open(modal, { size: "lg" });
             },
             error => {

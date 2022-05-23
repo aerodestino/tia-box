@@ -170,14 +170,6 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
     }
   }
 
-  descargar(file) {
-    var link = document.createElement("a");
-    let url = this.url+''+file;
-    link.href = URL.createObjectURL(url);
-    link.download = file;
-    link.click();
-  }
-
   onSelectAllClick() {
     if (this.selectedAll) this.selectAll();
     else this.unselectAll();
