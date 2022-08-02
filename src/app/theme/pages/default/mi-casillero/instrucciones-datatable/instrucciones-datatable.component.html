@@ -392,9 +392,9 @@
                             </label>
                             <div class="col-lg-9">
                                 <select #domicilio_retiro="ngModel"  [(ngModel)]="domicilio" name="domicilio_retiro" class="form-control m-input" (change)="domicilioValue(domicilio_retiro.value)">
-                                    <option value= "1">DOMICILIO</option>
+                                    <option value= "1">DOMICILIO TRAMACO</option>
                                     <option value= "0">RETIRO PUNTO TRAMACO</option>
-                                    <option value= "2">RETIRO MATRIZ</option>
+                                    <option value= "2">MATRIZ GYE</option>
                                 </select>
                             </div>
                            
@@ -799,7 +799,7 @@
                 <div *ngIf="entrega" class="m-list-settings__group">
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
-                          <h5> TIPO : DOMICILIO </h5> 
+                          <h5> TIPO : DOMICILIO TRAMACO</h5> 
                         </span>
                     </div>
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 0">
@@ -809,7 +809,7 @@
                     </div>
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 2">
                         <span class="m-list-settings__item-label">
-                          <h5> TIPO : RETIRO MATRIZ </h5> 
+                          <h5> TIPO : MATRIZ GYE</h5> 
                         </span>
                     </div>
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1">
