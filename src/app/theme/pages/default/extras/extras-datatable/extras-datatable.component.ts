@@ -17,7 +17,7 @@ export class ExtrasDatatableComponent extends BaseDatatableComponent
   public resource: any;
   public resourceData: any;
   @Output() verCupos: EventEmitter<any> = new EventEmitter();
-
+  extra = null;
   constructor(
     public ngbModal: NgbModal,
     private toastr: ToastsManager,
@@ -76,4 +76,9 @@ export class ExtrasDatatableComponent extends BaseDatatableComponent
   onVerCupos(extra) {
     this.verCupos.emit(extra);
   }
+
+  verCuposExtra(extra, modal) {
+    this.extra = extra;
+    this.ngbModal.open(modal);
+}
 }
