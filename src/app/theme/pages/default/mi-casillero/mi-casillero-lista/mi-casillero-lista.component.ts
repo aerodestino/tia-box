@@ -5,7 +5,8 @@ import {
   ViewEncapsulation
 } from "@angular/core";
 import { Router } from "@angular/router";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal,NgbDateStruct, NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDate } from "@ng-bootstrap/ng-bootstrap/datepicker/ngb-date";
 import { isNullOrUndefined } from "@swimlane/ngx-datatable/release/utils";
 import { ToastsManager } from "ng2-toastr";
 import { AppService } from "../../../../../app.service";
@@ -75,8 +76,23 @@ export class MiCasilleroListaComponent extends BaseListComponent
     id: '',
     nota: '',
     servicio_id: '',
-    servicio: ''
+    servicio: '',
+    fecha_ejecucion: null
   };
+  today = new Date();
+  maximo =  {
+    "year": this.today.getFullYear(),
+    "month": this.today.getMonth() + 1,
+    "day": this.today.getDate()
+  };
+  model: NgbDateStruct;
+  datePickerJson = {};
+  markDisabled;
+  json = {
+    disable: [6, 7]
+  };
+  isDisabled;
+  selectUsuarioRetiro = true;
   fechaMaximoDV:any;
   urlfactura: any;
   enBodegaSeleccionadas = true;
@@ -223,7 +239,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public entregaService: EntregaService,
     public provinciaService: ProvinciasService,
     public ciudadService: CiudadesService,
-    public arancelesService: ArancelesService
+    public arancelesService: ArancelesService,
+    public calendar: NgbCalendar,
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -1326,6 +1343,26 @@ onRetirar(content) {
             this.retiro.nota = '';
             this.retiro.servicio_id = '';
           }
+
+            let fechaActual= new Date();
+           
+            let semanaEnMilisegundos = 172800000; //48 horas
+            let resta = fechaActual.getTime() + semanaEnMilisegundos; //getTime devuelve milisegundos de esa fecha
+            let fechamaximo = new Date(resta);
+            this.maximo = {
+              "year": fechamaximo.getFullYear(),
+              "month": fechamaximo.getMonth() + 1,
+              "day": fechamaximo.getDate()
+          };
+          this.retiro.fecha_ejecucion = this.maximo;
+          this.isDisabled = (
+            date: NgbDateStruct,
+            current: { day: number; month: number; year: number }
+          ) => 
+              (this.json.disable.includes(this.calendar.getWeekday(new NgbDate(date.year,date.month,date.day))) )
+                ? true
+              : false;
+          ;  
           Helpers.setLoading(false);
           this.modalRef = this.ngbModal.open(content, {size: "lg"});
         },
