@@ -761,7 +761,9 @@
                              <span class="m-badge m-badge--danger m-badge--wide" *ngIf="articulo.factura == 0">No</span>
                             </span>
                         </td> -->
-                        <td>{{ articulo.descripcion }}</td>
+                        <td>{{ articulo.descripcion }}
+							<span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
+						</td>
                         <td>
                             {{ articulo.estado_articulo.nombre }}
                         </td> 
@@ -1083,7 +1085,10 @@
                                  <span class="m-badge m-badge--danger m-badge--wide" *ngIf="articulo.factura == 0">No</span>
                                 </span>
                             </td> -->
-                            <td>{{ articulo.descripcion }}</td>
+                            <td>{{ articulo.descripcion }}                            
+							<span *ngIf="articulo.extra">({{articulo.extra.nombre}} {{articulo.extra.apellidos}})</span>
+
+							</td>
                             <td>
                                 {{ articulo.estado_articulo.nombre }}
                             </td> 
