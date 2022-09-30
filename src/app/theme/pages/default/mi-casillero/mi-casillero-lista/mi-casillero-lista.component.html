@@ -119,6 +119,11 @@
                 </option>
             </select>
         </div>
+		  <div class="form-group m-form__group col-md-3 col-lg-3 col-sm-3" style="text-align: right;" *ngIf="estatusSeleccionadas">
+
+		<input type="text" class="form-control m-input m-input--solid" placeholder="Otros Estados"
+			[(ngModel)]="estatusFilters.estado_text" name="search" *ngIf="estatusSeleccionadas"  (keyup.enter)="getEstatus()">
+		</div>
     </div>
     <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
      
