@@ -90,7 +90,7 @@
             {{ articulo.precio }}
         </td>
         <td>
-            {{ articulo.estado_articulo ? articulo.estado_articulo.nombre : '-' }}
+            {{ (articulo.ultimo_estado && articulo.ultimo_estado != '-')  ? articulo.ultimo_estado : (articulo.estado_articulo ? articulo.estado_articulo.nombre : '-') }}
         </td>
        <td>
         <div class="row">
