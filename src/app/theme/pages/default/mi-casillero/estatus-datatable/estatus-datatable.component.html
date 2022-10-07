@@ -18,6 +18,7 @@
         <th>Vol(Vlb)</th>
         <th>Valor(USD)</th>
         <th>Estatus</th>
+        <th>Bodega</th>
         <th>Detalles</th>
     </tr>
     </thead>
@@ -92,6 +93,9 @@
         <td>
             {{ (articulo.ultimo_estado && articulo.ultimo_estado != '-')  ? articulo.ultimo_estado : (articulo.estado_articulo ? articulo.estado_articulo.nombre : '-') }}
         </td>
+        <td>
+            {{ articulo.ultimo_bodega }}
+        </td>
        <td>
         <div class="row">
             <div class="col-3">
@@ -100,6 +104,10 @@
             <div class="col-3" *ngIf="articulo.ver_usuario">
                 <i *ngIf="articulo.ver_usuario" class="fa fa-comments-o m--font-success" title="Notas" style="cursor: pointer" 
                    (click)="onNotas(notasModal,articulo)"></i>
+            </div>
+            <div class="col-md-3 col-sm-6"  *ngIf="articulo.envio && articulo.envio.tiene_estado" >
+                   <i class="fa fa-caret-square-o-down m--font-info" title="Estados" style="cursor: pointer;"
+                   (click)="getestadosModal(estadosModal,articulo)"></i>
             </div>
         </div>
         </td>
@@ -390,6 +398,123 @@
                 <span  *ngIf="notas.notaGuiaEntrega">{{ notas.notaGuiaEntrega }}</span>
                 <h5 *ngIf="notas.notaRetiro" style="margin-top: 5px;">Notas del Servicio de Bodega</h5>
                 <span  *ngIf="notas.notaRetiro">{{ notas.notaRetiro }}</span> 
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::View  Modal-->
+<ng-template #estadosModal let-c="close" let-e="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Estado de Envío</h4>
+        <button type="button" class="close" aria-label="Close" (click)="e('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <div class="table-responsive" style="max-width: 740px; overflow: auto;">
+                    <table class="table table-bordered table-responsive m-table m-table--head-bg-brand">
+                        <thead>
+                        <tr>
+                            <th>
+                                Fecha
+                            </th> 
+                            <th>
+                                Estado
+                            </th>
+                            <th>
+                                Bodega
+                            </th>
+                            <th>
+                                Lugar
+                            </th>
+                            <th>
+                                Proveedor
+                            </th>
+                            <th>
+                                Aforador 
+                            </th>
+                            <th>
+                                Descripción
+                            </th>
+                            <th>
+                            Número DAS
+                            </th>
+                            <th>
+                                Tipo Aforo
+                            </th> 
+                            <th>
+                                MRN
+                            </th>
+                            <th>
+                                MSN
+                            </th>
+                            <th>
+                                HSN
+                            </th>
+                            <th>
+                                Nacionalización
+                            </th>
+                        
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngIf="!estados || (estados && estados.length <= 0)">
+                            No se encontraron resultados
+                        </tr>
+                        <tr *ngFor="let estado of estados">
+                            <ng-container >
+                            <td>
+                                {{ estado.fecha }}
+                            </td> 
+                            <td>
+                                {{ estado.estado }}
+                            </td>
+                            <td>
+                                {{ estado.bodega ? estado.bodega.nombre : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.lugar ? estado.lugar : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.courier ? estado.courier : '-' }}
+                            </td>
+                            <td *ngIf="estado.nacionalizacion">
+                                {{ estado.aforador ? estado.aforador : '-' }}
+                            </td>
+                            <td *ngIf="!estado.nacionalizacion">-</td>
+                            <td>
+                                {{ estado.descripcion ? estado.descripcion : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.numero_d_a_s ? estado.numero_d_a_s : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.tipo_aforo ? estado.tipo_aforo : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.mrn ? estado.mrn : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.msn ? estado.msn : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.hsn ? estado.hsn : '-' }}
+                            </td>
+                            <td>
+                                {{ estado.nacionalizacion ? 'SI' : 'NO' }}
+                            </td>
+                           
+                        </ng-container>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+              
             </div>
 
         </div>

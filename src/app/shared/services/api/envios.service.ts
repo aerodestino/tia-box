@@ -15,4 +15,8 @@ export class EnviosService extends ApiService {
         return this.http.get(`${this.url}articulos`, { params: this.object2Params(params) });
     }
 
+    getEstados(params: any) {
+        params = this.serialize(params);
+        return this.http.get(`${this.url}estados`, {params: this.object2Params(params)});
+    }
 }
