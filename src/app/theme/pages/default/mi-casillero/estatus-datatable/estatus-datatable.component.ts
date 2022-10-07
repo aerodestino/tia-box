@@ -25,6 +25,9 @@ import { CiudadesService } from "../../../../../shared/services/api/ciudades.ser
 import { City } from "../../../../../shared/model/city.model";
 import { Province } from "../../../../../shared/model/province.model";
 import { Entrega } from "../../../../../shared/model/entrega.model";
+import { EnviosService } from "../../../../../shared/services/api/envios.service";
+import * as moment from 'moment-timezone';
+
 @Component({
   selector: "app-estatus-datatable",
   templateUrl: "./estatus-datatable.component.html",
@@ -82,6 +85,8 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
   precios: any[];
   parroquias: City[]=null;
   parroquiasR: City[]=null;
+  public envioId:any;
+  public estados: any[];
   constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, 
     public articuloService: ArticulosService,public toastr: ToastsManager,
     public usuariosService: UsuariosService,
@@ -89,6 +94,7 @@ export class EstatusDatatableComponent extends BaseDatatableComponent
     public entregaService: EntregaService,
     public provinciaService: ProvinciasService,
     public ciudadService: CiudadesService,
+    public envioService: EnviosService,
     public appService: AppService) {
     super(ngbModal);
   }
@@ -341,6 +347,16 @@ domicilioValue(value){
       this.entrega.ciudad_retiro_text = 'Guayaquil';
       this.disabled = true;
   }
+  if(this.domicilio == 4){
+    this.entrega.ciudad_retiro.provincia.pais.id = 8;
+    this.entrega.ciudad_retiro.provincia.id = 901;
+    this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+    this.getParroquiasR(this.entrega.ciudad_retiro.id);
+    this.entrega.ciudad_retiro.id = 8430;
+    this.entrega.ciudad_retiro_text = 'Quito';
+    this.entrega.parroquia_retiro = new City();
+    this.disabled = true;
+}
   if(this.domicilio == 1 && this.selectUsuario == 1){
       if(this.usuarioRetirar != '')
           this.getDireccion(this.usuarioRetirar);
@@ -475,6 +491,35 @@ onNotas(content, articulo) {
   this.notas = articulo;
   this.modalRef = this.ngbModal.open(content);
   Helpers.setLoading(false);
+}
+
+
+getestadosModal(content,articulo) {
+  Helpers.setLoading(true);
+  this.envioId = articulo.envio ? articulo.envio.id : null;
+  this.estados = null;
+  let datos = {
+    id: articulo.envio ? articulo.envio.id : null,
+    idArticulo:articulo.id,
+    web:1
+  }
+  this.envioService.getEstados(datos).subscribe( estado => {
+      this.estados = estado.json().data[0];
+      this.estados.forEach(item => {
+          item.fecha = moment(item.fecha).tz("America/New_York").format("DD/MM/Y");
+      });
+      let date = new Date();
+     
+      Helpers.setLoading(false);
+      this.modalRef = this.ngbModal.open(content, {size: "lg"});
+  },(error)=> {
+      this.toastr.error(error.json().message);
+      this.estados = [];
+      Helpers.setLoading(false);
+      this.modalRef = this.ngbModal.open(content, {size: "lg"});
+  }); 
+ 
+
 }
 
 }

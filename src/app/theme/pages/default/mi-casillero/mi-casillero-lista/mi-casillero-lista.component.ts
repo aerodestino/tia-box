@@ -6,7 +6,6 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal,NgbDateStruct, NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
-import { NgbDate } from "@ng-bootstrap/ng-bootstrap/datepicker/ngb-date";
 import { isNullOrUndefined } from "@swimlane/ngx-datatable/release/utils";
 import { ToastsManager } from "ng2-toastr";
 import { AppService } from "../../../../../app.service";
@@ -33,6 +32,7 @@ import { AuthRoutingModule } from "../../../../../auth/auth-routing.routing";
 import { Arancel } from "../../../../../shared/model/arancel.model";
 import { ArancelesService } from "../../../../../shared/services/api/aranceles.service";
 import * as moment from 'moment-timezone';
+import { NgbDate } from "@ng-bootstrap/ng-bootstrap/datepicker/ngb-date";
 
 @Component({
   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -85,14 +85,6 @@ export class MiCasilleroListaComponent extends BaseListComponent
     "month": this.today.getMonth() + 1,
     "day": this.today.getDate()
   };
-  model: NgbDateStruct;
-  datePickerJson = {};
-  markDisabled;
-  json = {
-    disable: [6, 7]
-  };
-  isDisabled;
-  selectUsuarioRetiro = true;
   fechaMaximoDV:any;
   urlfactura: any;
   enBodegaSeleccionadas = true;
@@ -192,9 +184,18 @@ export class MiCasilleroListaComponent extends BaseListComponent
     offset: 0,
     estado_articulo_id: 0,
     estado: -1,
+    estado_text: '',
+    bodega: '',
     q: ''
   };
-
+  model: NgbDateStruct;
+  datePickerJson = {};
+  markDisabled;
+  json = {
+    disable: [6, 7]
+  };
+  isDisabled;
+  selectUsuarioRetiro = true;
   importer_usuario = null;
   remitente_usuario = null;
   existeImporter:boolean = false;
@@ -241,6 +242,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
     public ciudadService: CiudadesService,
     public arancelesService: ArancelesService,
     public calendar: NgbCalendar,
+
   ) {
     super(router, toastr, vcr, appService);
     this.url = "/mi-casillero";
@@ -350,8 +352,6 @@ export class MiCasilleroListaComponent extends BaseListComponent
           if(item.notaArticulo != '' || item.notaEnvio != '' || item.notaGuia != '' || item.notaGuiaEntrega != '' || item.notaRetiro != ''
           || item.notaFacturacion != '')
             item.ver_usuario = true;
-
-            console.log(item.notaFacturacion);
       });
       },
       error => {
@@ -901,7 +901,6 @@ onEntrega(content){
 domicilioValue(value){
   this.domicilio = value;
   this.disabled = false;
- 
   this.disabledDir = false;
   if(this.domicilio == 2){
     this.entrega.ciudad_retiro.id = 4813;
@@ -914,6 +913,16 @@ domicilioValue(value){
       this.entrega.ciudad_retiro_text = 'Guayaquil';
       this.disabled = true;
   }
+  if(this.domicilio == 4){
+    this.entrega.ciudad_retiro.provincia.pais.id = 8;
+    this.entrega.ciudad_retiro.provincia.id = 901;
+    this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+    this.getParroquiasR(this.entrega.ciudad_retiro.id);
+    this.entrega.ciudad_retiro.id = 8430;
+    this.entrega.ciudad_retiro_text = 'Quito';
+    this.entrega.parroquia_retiro = new City();
+    this.disabled = true;
+}
   if(this.domicilio == 1 && this.selectUsuario == 1){
       if(this.usuarioRetirar != '')
           this.getDireccion(this.usuarioRetirar);
@@ -1014,7 +1023,9 @@ onExportarEstatus() {
   let filters = {
     articulos: this.estatusSeleccion,
     q: this.estatusFilters.q,
-    estado: this.estatusFilters.estado
+    estado: this.estatusFilters.estado,
+    estado_text: this.estatusFilters.estado_text,
+    bodega: this.estatusFilters.bodega
   };
   this.articulosService.exportarEstatus(filters, ResponseContentType.Blob).subscribe(excel => {
       this.excelWorkService.downloadXLS('Paquetes.xlsx', excel);
@@ -1231,7 +1242,7 @@ onConversion(articulo){
   }
 }
 
-getDireccion(id){console.log('sdf');
+getDireccion(id){
   this.disabledDir = false;
   this.entrega.direccion = '';
   this.entrega.codigo_postal = '';
@@ -1341,7 +1352,7 @@ onRetirar(content) {
           else{
             this.retiro.id = '';
             this.retiro.nota = '';
-            this.retiro.servicio_id = '';
+            this.retiro.servicio_id = '1';
           }
 
             let fechaActual= new Date();
