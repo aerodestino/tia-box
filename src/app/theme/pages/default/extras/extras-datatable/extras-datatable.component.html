@@ -17,6 +17,18 @@
         Cédula
       </th>
       <th>
+        País
+      </th> 
+      <th>
+        Provincia
+      </th>
+       <th>
+        Ciudad
+      </th>
+      <th>
+        Parroquía
+      </th>
+      <th>
         Acciones
       </th>
     </tr>
@@ -40,6 +52,18 @@
       </td>
       <td>
         {{ extra.identificacion }}
+      </td>
+      <td>              
+        {{ (extra.ciudad && extra.ciudad.provincia && extra.ciudad.provincia.pais) ? extra.ciudad.provincia.pais.nombre : '-' }}
+      </td>
+      <td>              
+        {{ (extra.ciudad && extra.ciudad.provincia) ? extra.ciudad.provincia.nombre : '-' }}
+      </td>
+      <td>              
+        {{ (extra.ciudad && extra.ciudad.parroquia && extra.ciudad.ciudad_principal) ? extra.ciudad.ciudad_principal.nombre : (extra.ciudad ? extra.ciudad.nombre : '-') }}
+      </td>
+      <td>              
+        {{ (extra.ciudad && extra.ciudad.parroquia) ? extra.ciudad.nombre : '-' }}
       </td>
       <td>
         <div class="row">
@@ -241,6 +265,9 @@
 </ng-template>
 <!--end::Modal-->
 
+
+
+
 <!--begin::Ver Cupos Modal-->
 <ng-template #cuposModal let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -263,7 +290,7 @@
               </div>
               <div class="m-list-settings__item">
                                       <span class="m-list-settings__item-label">
-                                          Cupo Valor
+                                         Cupo Valor
                                       </span>
                   <span class="m-list-settings__item-control">
                                           {{cupo.valor}}
@@ -294,3 +321,4 @@
       </div>
   </div>
 </ng-template>
+<!--end::Modal-->  <!--begin::Modal-->
