@@ -14,8 +14,8 @@ import {Helpers} from "../../../../../helpers";
 })
 export class ActualizarExtraComponent implements OnInit {
     @Input() id: any;
-    extra: Extra;
     @Output() updated: EventEmitter<any> = new EventEmitter();
+    extra: Extra;
     constructor(public appService: AppService,
                 public extrasService: ExtrasService, public toastr: ToastsManager,
                 public vcr: ViewContainerRef, public router: Router) {

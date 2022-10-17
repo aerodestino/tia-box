@@ -14,10 +14,11 @@ import { CanService } from "../../../../../shared/services/auth/can.service";
 export class ExtrasDatatableComponent extends BaseDatatableComponent
   implements OnInit {
   documento: null;
+  extra = null;
   public resource: any;
   public resourceData: any;
   @Output() verCupos: EventEmitter<any> = new EventEmitter();
-  extra = null;
+
   constructor(
     public ngbModal: NgbModal,
     private toastr: ToastsManager,

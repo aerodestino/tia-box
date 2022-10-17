@@ -771,6 +771,18 @@ export class MiCasilleroListaComponent extends BaseListComponent
     this.usuariosService.allUsuarios({usuario_id : (this.appService.user) ? this.appService.user.id : null }).subscribe((data) => {
         this.usuarios = data.json().data.results;
         this.usuarios_importer = data.json().data.results;
+        for(let i in this.usuarios){
+          let nombre = ((this.usuarios[i].empresa) ? this.usuarios[i].empresa : this.usuarios[i].nombre);
+          this.usuarios[i].buscar = this.usuarios[i].codigo+' '+ nombre +' '+this.usuarios[i].apellido ;
+          this.usuarios[i].buscar1 = this.usuarios[i].codigo+' '+ this.usuarios[i].apellido ;
+  
+          if(this.usuarios[i].empresa && this.usuarios[i].empresa != ''){
+              this.usuarios[i].nombre= this.usuarios[i].empresa +'('+ this.usuarios[i].codigo +')';
+              this.usuarios[i].apellido= '';
+          }else{
+              this.usuarios[i].apellido= this.usuarios[i].apellido +'('+ this.usuarios[i].codigo +')'; 
+          }
+      }
     }, (error) => {
         this.toastr.error(error.json().error.message);
     });

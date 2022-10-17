@@ -1,5 +1,7 @@
 import { City } from "./city.model";
+import { Country } from "./country.model";
 import { Model } from "./model";
+import { Province } from "./province.model";
 import { Role } from "./role.model";
 import { Site } from "./site.model";
 
@@ -17,6 +19,12 @@ export class User extends Model {
         public sitio_id?: number | string,
         public direccion?: string,
         public celular?: string,
+        public codigo?: string,
+        public apellido?: string,
+        public empresa?: string,
+        public buscar?: string,
+        public buscar1?: string,
+        public buscar2?: string,
         public codigo_postal?: string,
         public ciudad_id?: any,
         public pais_id?: any,
@@ -24,6 +32,9 @@ export class User extends Model {
         public cedula?: string,
         public parroquia?: City,
         public parroquia_id?: any,
+        public ciudad?: City,
+        public provincia?: Province,
+        public pais?: Country,
         public status?: number) {
         super();
     }

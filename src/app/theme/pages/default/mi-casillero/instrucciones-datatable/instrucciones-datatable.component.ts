@@ -65,6 +65,7 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
   domicilio = 1;
   disabled = false;
   titulo = 'Crear Entrega';
+  isModal = true;
   @Input() url: any;
   @Output() entregaSelection: EventEmitter<any> = new EventEmitter();
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
@@ -344,7 +345,6 @@ View(content, entrega,tipo) {
 domicilioValue(value){
   this.domicilio = value;
   this.disabled = false;
- 
   this.disabledDir = false;
   if(this.domicilio == 2){
     this.entrega.ciudad_retiro.id = 4813;
@@ -356,6 +356,16 @@ domicilioValue(value){
       this.entrega.ciudad_retiro_text = 'Guayaquil';
       this.disabled = true;
   }
+  if(this.domicilio == 4){
+    this.entrega.ciudad_retiro.provincia.pais.id = 8;
+    this.entrega.ciudad_retiro.provincia.id = 901;
+    this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+    this.getParroquiasR(this.entrega.ciudad_retiro.id);
+    this.entrega.ciudad_retiro.id = 8430;
+    this.entrega.ciudad_retiro_text = 'Quito';
+    this.entrega.parroquia_retiro = new City();
+    this.disabled = true;
+}
   if(this.domicilio == 0){
     if(isNullOrUndefined(this.entrega.ciudad_retiro.provincia.pais.id)){
       this.entrega.ciudad_retiro.provincia.pais.id =8;
@@ -494,7 +504,18 @@ getUsuarios() {
   this.usuarios = null;
   this.usuariosService.allUsuarios({usuario_id : (this.appService.user) ? this.appService.user.id : null }).subscribe((data) => {
       this.usuarios = data.json().data.results;
-    
+      for(let i in this.usuarios){
+        let nombre = ((this.usuarios[i].empresa) ? this.usuarios[i].empresa : this.usuarios[i].nombre);
+        this.usuarios[i].buscar = this.usuarios[i].codigo+' '+ nombre +' '+this.usuarios[i].apellido ;
+        this.usuarios[i].buscar1 = this.usuarios[i].codigo+' '+ this.usuarios[i].apellido ;
+
+        if(this.usuarios[i].empresa && this.usuarios[i].empresa != ''){
+            this.usuarios[i].nombre= this.usuarios[i].empresa +'('+ this.usuarios[i].codigo +')';
+            this.usuarios[i].apellido= '';
+        }else{
+            this.usuarios[i].apellido= this.usuarios[i].apellido +'('+ this.usuarios[i].codigo +')'; 
+        }
+    }
   }, (error) => {
       this.toastr.error(error.json().error.message);
   });
