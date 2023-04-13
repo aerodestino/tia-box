@@ -74,16 +74,16 @@
             (click)="guardarPrecio(articulo.id,articulo.precio)"  *ngIf="!articulo.editarprecio"></i>
         </td>
         <td>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url" title="Declaración de Valores" style="color: white; background-color: #4f9e35" target="_blank" *ngIf="articulo.factura_url && articulo.fac_client && articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_url && articulo.fac_client && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
-            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url" title="Factura Consolidada" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && articulo.fac_client && articulo.consolidado_factura">Si</a>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url+articulo.factura_file" title="Declaración de Valores" style="color: white; background-color: #4f9e35" target="_blank" *ngIf="articulo.factura_url && articulo.fac_client && articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url+articulo.factura_file" title="Factura" style="color: white" target="_blank" *ngIf="articulo.factura_url && articulo.fac_client && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
+            <a class="m-badge m-badge--info m-badge--wide" [attr.href]="articulo.factura_url+articulo.factura_file" title="Factura Consolidada" style="color: white; background-color: #4660d1" target="_blank" *ngIf="articulo.factura_url && articulo.fac_client && articulo.consolidado_factura">Si</a>
 
 
-            <a class="m-badge m-badge--success m-badge--wide" title="Declaración de Valores"  [attr.href]="articulo.factura_url" style="color: white; background-color: #4f9e35"
+            <a class="m-badge m-badge--success m-badge--wide" title="Declaración de Valores"  [attr.href]="articulo.factura_url+articulo.factura_file" style="color: white; background-color: #4f9e35"
                target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
-           <a class="m-badge m-badge--success m-badge--wide" [attr.href]="articulo.factura_url" title="Factura"  style="color: white"
+           <a class="m-badge m-badge--success m-badge--wide" [attr.href]="articulo.factura_url+articulo.factura_file" title="Factura"  style="color: white"
                target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && !articulo.fac_d_v && !articulo.consolidado_factura">Si</a>
-               <a class="m-badge m-badge--success m-badge--wide" [attr.href]="articulo.factura_url" title="Consolidado"  style="color: white; background-color: #4660d1"
+               <a class="m-badge m-badge--success m-badge--wide" [attr.href]="articulo.factura_url+articulo.factura_file" title="Consolidado"  style="color: white; background-color: #4660d1"
                target="_blank" *ngIf="articulo.factura_url && !articulo.fac_client && articulo.consolidado_factura">Si</a>                 
             <input
                     name="archivo"
