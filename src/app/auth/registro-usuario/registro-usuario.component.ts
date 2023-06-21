@@ -48,7 +48,7 @@ export class RegistroUsuarioComponent implements OnInit {
   }
 
   getProvincias(pais_id) {
-    this.ciudades = null;
+    this.ciudades = [];
     this.provincias = null;
     this.provinciasService
       .getAll({ pais_id: pais_id })
