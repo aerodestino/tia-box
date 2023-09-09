@@ -16,7 +16,7 @@ export class AppService {
   loadingMessage: string = "cargando";
   user: any;
   canShowSideNav = false;
-  
+  bodegas:any = [];
   constructor(protected estadisticasService: EstadisticasService) {}
 
   getEstadisticas() {

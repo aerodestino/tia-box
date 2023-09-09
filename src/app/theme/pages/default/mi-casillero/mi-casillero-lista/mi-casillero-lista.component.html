@@ -26,33 +26,37 @@
             </button>
             </div>
             </div>
-            <div class="row">
-                <div class="col-md-5 col-lg-5 col-sm-12">
+            <div class="row" *ngIf="appService.bodegas">
+                <div *ngFor="let bodega of appService.bodegas" class="col-md-3 col-lg-3 col-sm-12">
                     <span style="font-size: 14px">
-                        <i class="fa fa-briefcase"></i>
-                        <strong>Dirección: </strong> {{appService.user.direccion}}
+                        <strong> {{ bodega.titulo ? bodega.titulo : bodega.nombre }}: </strong>
                     </span><br>
-                    <span style="font-size: 14px" *ngIf="appService.user.ciudad">
-                        <i class="fa fa-location-arrow"></i>
-                        <strong>Ciudad: </strong> {{appService.user.ciudad.nombre}}
+                    <span style="font-size: 14px">
+                        {{appService.user.nombre}} {{appService.user.apellido}} / {{appService.user.interfaz.name}}
                     </span><br>
-                    <span style="font-size: 14px" *ngIf="appService.user.provincia">
-                        <i class="fa fa-location-arrow"></i>
-                        <strong>Provincia: </strong> {{appService.user.provincia.nombre}}
+                    <div *ngIf="bodega.direccion">
+                        <span style="font-size: 14px">
+                            {{bodega.direccion}} #{{appService.user.codigo}}
+                        </span>
+                        <br> 
+                    </div>
+                    <div *ngIf="bodega.region">
+                        <span style="font-size: 14px">
+                            {{bodega.region}}
+                        </span><br> 
+                    </div>
+                   <div *ngIf="bodega.telefono">
+                    <span style="font-size: 14px">
+                        Telf: {{bodega.telefono}}
                     </span><br>
-                    <span style="font-size: 14px" *ngIf="appService.user.codigo_postal">
-                        <i class="fa fa-location-arrow"></i>
-                        <strong>Código Postal: </strong> {{appService.user.codigo_postal}}<br>
-                    </span>
-                    <span style="font-size: 14px" *ngIf="appService.user.telefono1">
-                        <i class="fa fa-location-arrow"></i>
-                        <strong>Teléfono: </strong> {{appService.user.telefono1}}<br>
-                    </span>
-                    <span style="font-size: 14px" *ngIf="appService.user.celular">
-                        <i class="fa fa-location-arrow"></i>
-                        <strong>Celular: </strong> {{appService.user.celular}}<br>
-                    </span>
+                   </div>
+                   <div *ngIf="bodega.descripcion"  style="padding-top: 5px;">
+                    <a style="cursor: pointer;" (click)="verDescripcion(bodega.descripcion, descripcionModal)"><i class="fa fa-folder-open"></i> <strong> ABRIR DESCRIPCIÓN </strong></a> 
+                   </div>
                 </div>
+            </div>
+
+            <div class="row" *ngIf="(appService.bodegas && appService.bodegas.length == 0) || !appService.bodegas">
                 <div class="col-md-7 col-lg-7 col-sm-12">
                     <span style="font-size: 14px">
                         <strong>Casillero Internacional: </strong>
@@ -70,7 +74,6 @@
                          Telf: {{appService.user.interfaz.telefono}}
                     </span><br>
                 </div>
-
             </div>
         </div>
     </div>

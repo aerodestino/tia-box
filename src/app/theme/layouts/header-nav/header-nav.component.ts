@@ -35,6 +35,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getProfile();
     this.getNoticias();
+    this.getBodegas();
   }
   ngAfterViewInit() {
     mLayout.initHeader();
@@ -44,6 +45,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
       this.appService.user = user.json().data;
       this.appService.canShowSideNav = true;
       localStorage.setItem("user_id", this.appService.user.id);
+      this.getBodegas();
     //  this.chatService.initChat();
     },
     error => {
@@ -51,6 +53,16 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
       this.router.navigate(['login']);
     });
   }
+
+  getBodegas() {
+    this.usuariosService.getBodegasUsuario().subscribe(bodegas => {
+      this.appService.bodegas = bodegas.json().data;
+    },
+    error => {
+      console.log(error);
+    });
+  }
+
   getEstadisticas() {
     this.appService.getEstadisticas();
   }

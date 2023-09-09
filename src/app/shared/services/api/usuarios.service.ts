@@ -46,4 +46,7 @@ export class UsuariosService extends ApiService {
 return this.http.get(`${this.url}all_usuarios`, {params: this.object2Params(this.serialize(params))});
 }
 
+getBodegasUsuario(): Observable<any> {
+  return this.http.get(`${this.url}bodegas-usuario`);
+}
 }
