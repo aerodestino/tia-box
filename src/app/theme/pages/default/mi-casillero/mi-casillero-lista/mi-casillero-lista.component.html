@@ -1706,3 +1706,17 @@
     </div>
 </ng-template>
 <!--end::Modal-->
+
+<!--begin::descripción bodegas Modal-->
+<ng-template #descripcionModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Descripción</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body row" style="padding-left: 40px; padding-right: 40px;">
+        <span [innerHTML]="descripcionBodegas"></span>
+    </div>
+</ng-template>
+<!--end::Modal-->  <!--begin::Modal-->
