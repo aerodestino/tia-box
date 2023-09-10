@@ -72,6 +72,7 @@ export class MiCasilleroListaComponent extends BaseListComponent
   consolidarPaquete: boolean = true;
   enviarPaquete: boolean = true;
   retirarPaquete: boolean = true;
+  descripcionBodegas:any = '';
   retiro = {
     id: '',
     nota: '',
@@ -1400,5 +1401,10 @@ onRetirar(content) {
     data.forEach(item => {
         item[fecha] = moment(item[fecha]).tz("America/New_York").format("DD/MM/Y");
   });
+  }
+
+  verDescripcion(descripcion, modal) {
+    this.descripcionBodegas = descripcion;    
+    this.modalRef =this.ngbModal.open(modal, { size: "lg" });
   }
 }
