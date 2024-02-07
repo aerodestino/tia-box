@@ -1147,7 +1147,7 @@
                             </label>
                             <div class="col-lg-9">
                                 <textarea class="form-control m-input" placeholder="Anotación"
-                                          [ngModel]="entrega.nota_retiro" #notaRetiro="ngModel"
+                                          [ngModel]="entrega.nota_retiro" #notaRetiro="ngModel"  maxlength="255"
                                           name="notaRetiro">
                                 </textarea>
                             </div>
@@ -1329,7 +1329,7 @@
                             </label>
                             <div class="col-lg-9">
                                 <input type="text" class="form-control m-input" placeholder="Anotación"
-                                [ngModel]="entrega.nota" #nota="ngModel"
+                                [ngModel]="entrega.nota" #nota="ngModel"  maxlength="255"
                                 name="nota">
                             
                             </div>
@@ -1576,7 +1576,7 @@
                                 </label><br/>
                                 <input  type="text" class="form-control m-input" placeholder="Desripcion"
                                 [(ngModel)]="retiro.nota"  #descripcion="ngModel"
-                                name="descripcion"
+                                name="descripcion"  maxlength="255"
                                 required> 
                             </div>
                         </div>
