@@ -52,6 +52,6 @@ export class FacturacionEstadoPagoComponent extends BaseListComponent implements
         });
     }
      onVolver() {
-        this.router.navigate(['/facturaciones']);
+        this.router.navigate(['/facturas']);
     }
 }
