@@ -26,4 +26,14 @@ export class FacturacionesService extends ApiService {
         params = this.serialize(params);
         return this.http.get(`${this.url}formaspago`, { params: this.object2Params(params) });
     }
+    
+    checkoutTia(resource: any): Observable<any> {
+        resource = super.serialize(resource);
+        return this.http.post(`${this.url}${resource.id}/checkout_tia`, resource);
+    }
+    
+    consultarEstadoTia(resource: any): Observable<any> {
+        resource = super.serialize(resource);
+        return this.http.post(`${this.url}consultar_estado_tia`, resource);
+    }
 }

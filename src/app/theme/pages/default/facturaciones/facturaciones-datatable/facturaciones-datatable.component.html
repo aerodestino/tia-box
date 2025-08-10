@@ -23,12 +23,17 @@
         <td>{{facturacion.costo ? facturacion.costo : 0 }}</td>
         
         <td>{{facturacion.tarifario ? facturacion.tarifario.nombre : '-' }}</td>
-<td>{{ facturacion.estado_facturacion ? facturacion.estado_facturacion.nombre : 'Pendiente' }} </td>
+        <td>{{ facturacion.estado_facturacion ? facturacion.estado_facturacion.nombre : 'Pendiente' }} </td>
         <td>
             <div class="col-md-3 col-sm-6">
                 <i class="fa fa-eye m--font-info" title="Detalles" style="cursor: pointer"
                    (click)="onViewItems(facturacion.articulo,articulosModal)"></i>
             </div>
+             <div class="col-md-3 col-sm-6" *ngIf="facturacion.canEdit && facturacion.interfaz_usuario && facturacion.interfaz_usuario.id == 12 
+                 && facturacion.orden_tia && (!facturacion.estado_facturacion || facturacion.estado_facturacion.id == 1) ">
+                    <i class="fa fa-credit-card m--font-info" title="Pagar TIA" style="cursor: pointer"
+                       (click)="onPagarTia(facturacion.id,facturacion.costo, pagarTiaModal)"></i>
+                </div>
         </td>
     </tr>
     </tbody>
@@ -115,6 +120,25 @@
             </tr>
             </tbody>
         </table>
+    </div>
+</ng-template>
+<!--end::Modal-->
+
+<!--begin::Pagar Tia Modal-->
+<ng-template #pagarTiaModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Pago de facturación</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+            <form [action]="urlReturn" class="paymentWidgets" data-brands="VISA MASTER DINERS DISCOVER AMEX">
+            </form>
+            </div>
+        </div>
     </div>
 </ng-template>
 <!--end::Modal-->

@@ -64,6 +64,11 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/facturaciones\/facturaciones-lista/facturaciones-lista.module#FacturacionesListaModule",
                 "canActivate": [AuthGuard],
             },
+             {
+                "path": "facturaciones/estadopago",
+                "loadChildren": ".\/pages\/default\/facturaciones\/facturacion-estadopago\/facturacion-estadopago.module#FacturacionEstadoPagoModule",
+                "canActivate": [AuthGuard]
+            },
         ]
     },
 ];

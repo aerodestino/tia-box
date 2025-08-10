@@ -14,6 +14,8 @@ import {Helpers} from "../../../../../helpers";
 export class FacturacionesDatatableComponent extends BaseDatatableComponent implements OnInit, AfterViewInit {
     documento: null;
     articulos: any[];
+    scriptTia: string;
+    urlReturn: string;
     public resource: any;
     public resourceData: any;
     @Output() verCupos: EventEmitter<any> = new EventEmitter();
@@ -38,9 +40,28 @@ export class FacturacionesDatatableComponent extends BaseDatatableComponent impl
 
     }
 
-
     onViewItems(articulos, modal) {
         this.articulos = articulos;
         this.ngbModal.open(modal, {size: "lg"});
     }
+
+ 
+      onPagarTia(id,costo, content) {
+        Helpers.setLoading(true);
+        this.facturacioneservice.checkoutTia({id:id,costo:costo}).subscribe( (data) => {
+            Helpers.setLoading(false);
+            var checkoutId = data.json().data;
+            this.scriptTia = 'https://test.oppwa.com/v1/paymentWidgets.js?checkoutId='+checkoutId.id;
+            $('body').append('<script id="pagoTia" src="'+this.scriptTia+'"></script>');
+            this.urlReturn = window.location + '/estadopago';
+            this.ngbModal.open(content);
+        }, error => {
+            Helpers.setLoading(false);
+            if(error.json().data)
+                this.toastr.error(error.json().data.error);
+            if(error.json().error)
+                this.toastr.error(error.json().error.message);
+            
+        });
+      }
 }
