@@ -34,7 +34,7 @@
                 <i *ngIf="articulo.ver_usuario" class="fa fa-comments-o m--font-success" title="Notas" style="cursor: pointer" 
                    (click)="onNotas(notasModal,articulo.ver_usuario)"></i>
             </div>
-             <div class="col-md-3 col-sm-6" *ngIf="articulo.orden_tia && (articulo.estadofacturacion == 1) ">
+             <div class="col-md-3 col-sm-6" *ngIf="articulo.ordenTia && (articulo.estadofacturacion == 1) ">
                     <i class="fa fa-credit-card m--font-info" title="Pagar TIA" style="cursor: pointer"
                        (click)="onPagarTia(articulo.id,articulo.costo, pagarTiaModal)"></i>
             </div>
