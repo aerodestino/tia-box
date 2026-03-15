@@ -18,7 +18,9 @@ export class ThemeComponent implements OnInit {
 
     }
     ngOnInit() {
-        this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
+        this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js',
+            "https://www.datafast.com.ec/js/dfAdditionalValidations1.js"
+        )
             .then(result => {
                 Helpers.setLoading(false);
                 // optional js to be loaded once
