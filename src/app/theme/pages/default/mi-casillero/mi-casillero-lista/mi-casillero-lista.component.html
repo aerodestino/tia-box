@@ -150,16 +150,17 @@
                 En Tránsito <span class="m-badge m-badge--success" *ngIf="totalEnTransito">{{totalEnTransito}}</span>
             </a>
         </li> -->
+         <li class="nav-item m-tabs__item" (click)="seleccionarTab('facturacionSeleccionadas')">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#facturacionTab" role="tab">
+                Recibo Cobro <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
+            </a>
+        </li>
        <li class="nav-item m-tabs__item" (click)="seleccionarTab('instruccionesSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#instruccionesTab" role="tab">
                 Instrucciones de Entrega <span class="m-badge m-badge--success" *ngIf="totalInstrucciones">{{totalInstrucciones}}</span>
             </a>
         </li> 
-        <li class="nav-item m-tabs__item" (click)="seleccionarTab('facturacionSeleccionadas')">
-            <a class="nav-link m-tabs__link" data-toggle="tab" href="#facturacionTab" role="tab">
-                Recibo Cobro <span class="m-badge m-badge--success" *ngIf="totalFacturacion">{{totalFacturacion}}</span>
-            </a>
-        </li>
+       
         <li class="nav-item m-tabs__item" (click)="seleccionarTab('rutaNacionalSeleccionadas')">
             <a class="nav-link m-tabs__link" data-toggle="tab" href="#rutaNacionalTab" role="tab">
                 Por Entregar <span class="m-badge m-badge--success" *ngIf="totalRutaNacional">{{totalRutaNacional}}</span>
