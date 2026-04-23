@@ -120,7 +120,9 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
     this.sucursales = null;
     this.ciudadService.getSucursales({ciudad_id: ciudad_id}).subscribe((data) => {
         this.sucursales = data.json().data;
-        
+        if (this.entrega.sucursales.id) {
+        this.getDireccionSucursal(this.entrega.sucursales.id);
+        }
     }, (error) => {
         console.log(error.json());
     });
@@ -285,9 +287,7 @@ View(content, entrega,tipo) {
       this.entrega = resource.json().data;
       this.domicilio = this.entrega.domicilio;
       this.getPaisesE();
-      if (this.entrega.sucursales.id) {
-        this.getDireccionSucursal(this.entrega.sucursales.id);
-      }
+    
       for(let i in this.entrega.articulo){
         let c = Big(this.entrega.articulo[i].precio);
         this.totalPrecio = c.plus(this.totalPrecio);
