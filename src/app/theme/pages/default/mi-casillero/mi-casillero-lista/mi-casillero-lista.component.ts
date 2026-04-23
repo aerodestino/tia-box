@@ -22,7 +22,7 @@ import {Articulo} from "../../../../../shared/model/articulo.model";
 import {PaisesService} from "../../../../../shared/services/api/paises.service";
 import {Country} from "../../../../../shared/model/country.model";
 import {Big} from 'big.js';
-import { Entrega } from "../../../../../shared/model/entrega.model";
+import { Entrega, Sucursales } from "../../../../../shared/model/entrega.model";
 import { EntregaService } from "../../../../../shared/services/api/entrega.service";
 import { City } from "../../../../../shared/model/city.model";
 import { Province } from "../../../../../shared/model/province.model";
@@ -893,6 +893,8 @@ onEntrega(content){
     this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
     this.entrega.domicilio = 1;
     this.entrega.articulos= this.articulosDatos;
+    this.entrega.sucursales = new Sucursales();
+    this.entrega.sucursales.id = null;
     this.usuarioRetirar = this.entrega.articulos[0].usuario ? this.entrega.articulos[0].usuario.numero_identidad : (this.entrega.articulos[0].extra ? this.entrega.articulos[0].extra.identificacion : null );
     this.getDireccion(this.usuarioRetirar);
     for(let i in this.entrega.articulos){

@@ -121,7 +121,7 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
     this.ciudadService.getSucursales({ciudad_id: ciudad_id}).subscribe((data) => {
         this.sucursales = data.json().data;
         if (this.entrega.sucursales.id) {
-        this.getDireccionSucursal(this.entrega.sucursales.id);
+          this.getDireccionSucursal(this.entrega.sucursales.id);
         }
     }, (error) => {
         console.log(error.json());

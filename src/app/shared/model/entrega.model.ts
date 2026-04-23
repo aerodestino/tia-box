@@ -40,8 +40,12 @@ export class Entrega extends Model {
         public parroquia_retiro?: City,
         public parroquia_id?: any,
         public sucursales_id?: number,
-        public sucursales?: any
+        public sucursales?: Sucursales
     ) {
         super();
     }
+}
+
+export class Sucursales {
+    id?: number
 }

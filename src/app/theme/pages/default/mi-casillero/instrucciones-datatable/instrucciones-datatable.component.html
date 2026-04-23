@@ -477,7 +477,7 @@
                                      ></app-auto-complete>
                                 </div>
                                  <div class="col-lg-5">
-                                    <span *ngIf="entrega.sucursales_id">{{ sucursal_direccion }}</span>
+                                    <span *ngIf="entrega.sucursales.id">{{ sucursal_direccion }}</span>
                                  </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4">
@@ -953,13 +953,13 @@
                          <span class="m-list-settings__item-control" *ngIf="entrega.sucursales && entrega.domicilio == 6">
                             {{ entrega.sucursales.direccion }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion && entrega.direccion != '' ">
+                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion && entrega.direccion != '' && entrega.domicilio != 6">
                             {{ entrega.direccion }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion  == '' && entrega.usuario">
+                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion  == '' && entrega.usuario && entrega.domicilio != 6">
                             {{ entrega.usuario.direccion  }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion == '' && entrega.extra">
+                        <span class="m-list-settings__item-control" *ngIf="entrega.direccion == '' && entrega.extra && entrega.domicilio != 6">
                             {{ entrega.extra.direccion }}
                         </span>
                     </div>
@@ -970,13 +970,13 @@
                          <span class="m-list-settings__item-control" *ngIf="entrega.sucursales && entrega.domicilio == 6">
                             {{ entrega.sucursales.codigo_postal }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal && entrega.codigo_postal != '' ">
+                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal && entrega.codigo_postal != ''  && entrega.domicilio != 6">
                             {{ entrega.codigo_postal }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal  == '' && entrega.usuario">
+                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal  == '' && entrega.usuario && entrega.domicilio != 6">
                             {{ entrega.usuario.codigo_postal  }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal == '' && entrega.extra">
+                        <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal == '' && entrega.extra && entrega.domicilio != 6">
                             {{ entrega.extra.codigo_postal ? entrega.extra.codigo_postal : '-'  }}
                         </span>
                     </div>
@@ -988,13 +988,13 @@
                          <span class="m-list-settings__item-control" *ngIf="entrega.sucursales && entrega.domicilio == 6">
                             {{ entrega.sucursales.celular }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="entrega.celular">
+                        <span class="m-list-settings__item-control" *ngIf="entrega.celular && entrega.domicilio != 6">
                             {{ entrega.celular }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="!entrega.celular && entrega.usuario">
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.celular && entrega.usuario && entrega.domicilio != 6">
                             {{ entrega.usuario.telefono1  }}
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="!entrega.celular && entrega.extra">
+                        <span class="m-list-settings__item-control" *ngIf="!entrega.celular && entrega.extra  && entrega.domicilio != 6">
                             {{ entrega.extra.celular }}
                         </span>
                     </div>

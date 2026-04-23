@@ -1069,7 +1069,7 @@
                                     <option value= "0">RETIRO PUNTO TRAMACO</option>
                                     <option value= "2">MATRIZ</option>
                                     <option value= "4" >PUNTO ADUANA QUITO</option>
-                                    <option *ngIf="puedeTia" value= "6" >SUCURSALES TIA</option>
+                                    <option value= "6" >SUCURSALES TIA</option>
                                 </select>
                             </div>
                            
@@ -1131,9 +1131,9 @@
                                     <input type="text" class="form-control" />
                                     </div>
                                     <app-auto-complete *ngIf="sucursales" placeholder="Seleccione"
-                                    [(ngModel)]="entrega.sucursales_id" #sucursales_id="ngModel"
+                                    [(ngModel)]="entrega.sucursales.id" #sucursales_id="ngModel"
                                     name="sucursales_id" [items]="sucursales" [disabled]="disabled"
-                                    (change)="getDireccionSucursal(entrega.sucursales_id)"
+                                    (change)="getDireccionSucursal(entrega.sucursales.id)"
                                     [required]="true"
                                     [textField]="'numero'"
                                     textField1="nombre"
@@ -1141,7 +1141,7 @@
                                      ></app-auto-complete>
                             </div>
                             <div class="col-lg-5" *ngIf="entrega.domicilio == 6">
-                                <span *ngIf="entrega.sucursales_id">{{ direccion }}</span>
+                                <span *ngIf="entrega.sucursales.id">{{ sucursal_direccion }}</span>
                             </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "entrega.domicilio == 0 || entrega.domicilio == 2 || entrega.domicilio == 4">
