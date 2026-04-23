@@ -38,7 +38,9 @@ export class Entrega extends Model {
         public provincia_retiro?:any,
         public parroquia?: City,
         public parroquia_retiro?: City,
-        public parroquia_id?: any
+        public parroquia_id?: any,
+        public sucursales_id?: number,
+        public sucursales?: any
     ) {
         super();
     }

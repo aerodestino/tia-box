@@ -83,6 +83,8 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
   precios: any[];
   parroquias: City[]=null;
   parroquiasR: City[]=null;
+  sucursal_direccion: any = '';
+  sucursales: any[] = null;
   constructor(private _script: ScriptLoaderService, public ngbModal: NgbModal, 
     public articuloService: ArticulosService,public toastr: ToastsManager,
     public usuariosService: UsuariosService,
@@ -113,6 +115,17 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
     //   "assets/demo/default/custom/components/datatables/base/html-table.js"
     // );
   }
+
+  getSucursales(ciudad_id) {
+    this.sucursales = null;
+    this.ciudadService.getSucursales({ciudad_id: ciudad_id}).subscribe((data) => {
+        this.sucursales = data.json().data;
+        
+    }, (error) => {
+        console.log(error.json());
+    });
+  }
+
 
   onConversion(articulo){
     this.totalPeso = 0;
@@ -272,6 +285,9 @@ View(content, entrega,tipo) {
       this.entrega = resource.json().data;
       this.domicilio = this.entrega.domicilio;
       this.getPaisesE();
+      if (this.entrega.sucursales.id) {
+        this.getDireccionSucursal(this.entrega.sucursales.id);
+      }
       for(let i in this.entrega.articulo){
         let c = Big(this.entrega.articulo[i].precio);
         this.totalPrecio = c.plus(this.totalPrecio);
@@ -384,7 +400,30 @@ domicilioValue(value){
   if(this.domicilio == 1 && this.selectUsuario == 0){
     this.entrega.ciudad.provincia.pais.id= 8;
     this.getProvincias(this.entrega.ciudad.provincia.pais.id);
+  }
+  if (this.domicilio == 6) {
+          this.provinciasR = null;
+          this.provincias = null;
+          this.changeProvincia();
+          this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
+      }
 }
+
+
+changeCiudad() {
+  this.sucursal_direccion = '';
+  this.sucursales = null;
+}
+changeProvincia() {
+  this.sucursal_direccion = '';
+  this.sucursales = null;
+  this.ciudadesR = null;
+}
+changePais() {
+  this.sucursal_direccion = '';
+  this.sucursales = null;
+  this.ciudadesR = null;
+  this.provinciasR = null;
 }
 
 selectedValue(value){
@@ -460,16 +499,34 @@ getProvincias(pais_id) {
 
 getProvinciasR(pais_id) {
   if(pais_id){
-    this.provincias = null;
-    this.ciudades = null;
+    this.provinciasR = null;
+    this.ciudadesR = null;
     this.parroquiasR = null;
+    if (this.domicilio == 6) {
+          this.provinciaService.getAll({pais_id: pais_id, sucursal: 1}).subscribe((data) => {
+              this.provinciasR = data.json().data;
+              if (this.entrega.ciudad_retiro.provincia.id) {
+                this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+              }
+          }, (error) => {
+              console.log(error.json());
+          });
+          return;
+    }
     this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
-      this.provinciasR = data.json().data;
+        this.provinciasR = data.json().data;
+        if(this.domicilio == 2)
+          this.entrega.ciudad_retiro.provincia.id = 895;
+        if(this.domicilio == 4)
+          this.entrega.ciudad_retiro.provincia.id = 901;
+
+        if (this.entrega.ciudad_retiro.provincia.id) {
+                this.getCiudadesR(this.entrega.ciudad_retiro.provincia.id);
+          }
     }, (error) => {
-      console.log(error.json());
+        console.log(error.json());
     });
   }
-
 }
 
 getCiudades(provincia_id) {
@@ -487,17 +544,40 @@ getCiudades(provincia_id) {
 }
 
 getCiudadesR(provincia_id) {
-if(provincia_id){
+  if(provincia_id){
   this.ciudadesR = null;
   this.parroquiasR = null;
+  if (this.domicilio == 6) {
+        this.ciudadService.getPrincipal({provincia_id: provincia_id, sucursal: 1}).subscribe((data) => {
+            this.ciudadesR = data.json().data;
+        }, (error) => {
+            console.log(error.json());
+        });
+        if (this.entrega.ciudad_retiro.id) {
+          this.getSucursales(this.entrega.ciudad_retiro.id);
+        }
+        return;
+    }
     this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
       this.ciudadesR = data.json().data;
-    
-    }, (error) => {
+      if(this.domicilio == 2)
+        this.entrega.ciudad_retiro.id = 4813;
+      if(this.domicilio == 4)
+        this.entrega.ciudad_retiro.id = 8430;
+  }, (error) => {
       console.log(error.json());
-    });
+  });
   }
+  
+}
 
+getDireccionSucursal(sucursalId: number){
+    this.sucursal_direccion = '';
+    this.sucursales.forEach((sucursal: any) => {
+        if(sucursal.id === sucursalId){
+            this.sucursal_direccion = sucursal.direccion;
+        }
+    });
 }
 
 getUsuarios() {

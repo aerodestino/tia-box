@@ -396,23 +396,24 @@
                                     <option value= "0">RETIRO PUNTO TRAMACO</option>
                                     <option value= "2">MATRIZ</option>
                                     <option value= "4">PUNTO ADUANA QUITO</option>
+                                    <option value= "6">SUCURSAES TIA</option>
                                 </select>
                             </div>
                            
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4 || domicilio == 6">
                             <label class="col-lg-3 col-form-label">
                                 <h5 >Dónde se retira:</h5>  
                             </label>
     
                         </div>
                         
-                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4 || domicilio == 6">
                              <label class="col-lg-3 col-form-label">
                                 País:
                             </label>
                             <div class="col-lg-3">
-                                <select  class="form-control m-input" placeholder="País" (change)="getProvinciasR(pais_id.value)"
+                                <select  class="form-control m-input" placeholder="País" (change)="getProvinciasR(pais_id.value);changePais()"
                                         [ngModel]="entrega.ciudad_retiro.provincia.pais.id" #pais_id="ngModel" name="pais_id"
                                         disabled={{disabled}}>
                                     <option [value]="" disabled>Seleccione un País</option>
@@ -428,7 +429,7 @@
                                 <app-auto-complete *ngIf="provinciasR" placeholder="Seleccione" [disabled]="disabled"
                                 [ngModel]="entrega.ciudad_retiro.provincia.id" #provinciaRetiro_id="ngModel"
                                 name="provinciaRetiro_id" [items]="provinciasR"
-                                (change)="getCiudadesR(provinciaRetiro_id.value)"
+                                (change)="getCiudadesR(provinciaRetiro_id.value); changeProvincia()"
                                 [textField]="'nombre'"
                                 valueField="id" 
                                 [isModal]="isModal"
@@ -436,7 +437,7 @@
                            
                             </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4 || domicilio == 6">
                             <label class="col-lg-3 col-form-label">
                                 Ciudad Principal:
                             </label>
@@ -445,7 +446,8 @@
                                 [ngModel]="entrega.ciudad_retiro.id" #ciudadRetiro_id="ngModel"
                                 name="ciudadRetiro_id" [items]="ciudadesR"
                                 [textField]="'nombre'"
-                                valueField="id" (change)="getParroquiasR(ciudadRetiro_id.value)" 
+                                valueField="id" (change)="getParroquiasR(ciudadRetiro_id.value);  getSucursales(ciudadRetiro_id.value);
+                                changeCiudad()" 
                                 [isModal]="isModal"
                                  ></app-auto-complete>
                                
@@ -454,6 +456,29 @@
                                 <input type="text"  disabled={{disabled}} class="form-control m-input" placeholder="Ciudad Manual"
                                 [ngModel]="entrega.ciudad_retiro_text" #ciudadretirotext="ngModel" name="ciudadretirotext">
                             </div>
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf="domicilio == 6">
+                            <label class="col-lg-3 col-form-label">
+                                    Sucursal:
+                                </label>
+                                <div class="col-lg-4">
+                                    <div class="m-loader m-loader--primary m-loader--right"
+                                    *ngIf="!sucursales" >
+                                    <input type="text" class="form-control" />
+                                    </div>
+                                    <app-auto-complete *ngIf="sucursales" placeholder="Seleccione"
+                                    [(ngModel)]="entrega.sucursales.id" #sucursales_id="ngModel"
+                                    name="sucursales_id" [items]="sucursales" [disabled]="disabled"
+                                    (change)="getDireccionSucursal(entrega.sucursales_id)"
+                                    [required]="true"
+                                    [textField]="'numero'"
+                                    textField1="nombre"
+                                    valueField="id" 
+                                     ></app-auto-complete>
+                                </div>
+                                 <div class="col-lg-5">
+                                    <span *ngIf="entrega.sucursales_id">{{ sucursal_direccion }}</span>
+                                 </div>
                         </div>
                         <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4">
                         <label class="col-lg-3 col-form-label">
@@ -470,7 +495,7 @@
                         
                         </div>
                         </div>
-                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4">
+                        <div class="form-group m-form__group row" *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4 || domicilio == 6">
                             <label class="col-lg-3 col-form-label">
                                 Otra Información:
                             </label>
@@ -483,7 +508,7 @@
                         </div>
                         <div class="form-group m-form__group row">
                             <div class="col-lg-9">
-                                <h5 *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4">Datos de la persona que retira:</h5> 
+                                <h5 *ngIf= "domicilio == 0 || domicilio == 2 || domicilio == 4 || domicilio == 6">Datos de la persona que retira:</h5> 
                                 <h5 *ngIf= "domicilio == 1">Datos del domicilio:</h5> 
                             </div>
                         </div>
@@ -800,6 +825,11 @@
         <div class="m-portlet__head-caption">
             <div class="m-list-settings">
                 <div *ngIf="entrega" class="m-list-settings__group">
+                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 6">
+                        <span class="m-list-settings__item-label">
+                          <h5> TIPO : SUCURSALES TIA</h5> 
+                        </span>
+                    </div>
                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
                         <span class="m-list-settings__item-label">
                           <h5> TIPO : DOMICILIO TRAMACO</h5> 
@@ -854,7 +884,15 @@
                             {{ entrega.ciudad_retiro_text }}
                         </span>
                     </div>
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.ciudad_retiro_text == '' && entrega.ciudad_retiro && entrega.ciudad_retiro.parroquia">
+                     <div class="m-list-settings__item" *ngIf="entrega.domicilio == 6">
+                        <span class="m-list-settings__item-label">
+                           Sucursal
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="entrega.ciudad_retiro_text == ''">
+                            {{ entrega.sucursales ? entrega.sucursales.numero + ' - ' + entrega.sucursales.nombre  : '-' }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio != 1 && entrega.domicilio != 6 && entrega.ciudad_retiro_text == '' && entrega.ciudad_retiro && entrega.ciudad_retiro.parroquia">
                         <span class="m-list-settings__item-label">
                             Ciudad Secundaria y Parroquía
                         </span>
@@ -908,9 +946,12 @@
                         </span>
                     </div>
 
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1 || entrega.domicilio == 6">
                         <span class="m-list-settings__item-label">
                             Dirección
+                        </span>
+                         <span class="m-list-settings__item-control" *ngIf="entrega.sucursales && entrega.domicilio == 6">
+                            {{ entrega.sucursales.direccion }}
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="entrega.direccion && entrega.direccion != '' ">
                             {{ entrega.direccion }}
@@ -922,9 +963,12 @@
                             {{ entrega.extra.direccion }}
                         </span>
                     </div>
-                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1">
+                    <div class="m-list-settings__item" *ngIf="entrega.domicilio == 1 || entrega.domicilio == 6">
                         <span class="m-list-settings__item-label">
                             Código Postal
+                        </span>
+                         <span class="m-list-settings__item-control" *ngIf="entrega.sucursales && entrega.domicilio == 6">
+                            {{ entrega.sucursales.codigo_postal }}
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="entrega.codigo_postal && entrega.codigo_postal != '' ">
                             {{ entrega.codigo_postal }}
@@ -940,6 +984,9 @@
                     <div class="m-list-settings__item">
                         <span class="m-list-settings__item-label">
                             Celular
+                        </span>
+                         <span class="m-list-settings__item-control" *ngIf="entrega.sucursales && entrega.domicilio == 6">
+                            {{ entrega.sucursales.celular }}
                         </span>
                         <span class="m-list-settings__item-control" *ngIf="entrega.celular">
                             {{ entrega.celular }}

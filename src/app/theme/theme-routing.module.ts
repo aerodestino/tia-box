@@ -65,7 +65,7 @@ const routes: Routes = [
                 "canActivate": [AuthGuard],
             },
              {
-                "path": "facturas/estadopago",
+                "path": "mi-casillero/estadopago",
                 "loadChildren": ".\/pages\/default\/facturaciones\/facturacion-estadopago\/facturacion-estadopago.module#FacturacionEstadoPagoModule",
                 "canActivate": [AuthGuard]
             },

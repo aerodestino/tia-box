@@ -226,6 +226,8 @@ export class MiCasilleroListaComponent extends BaseListComponent
   puedeDV: boolean = true;
   puedeEntrega: boolean = true;
   usuarioRetirar:string;
+  sucursal_direccion: any = '';
+  sucursales: any[] = null;
   constructor(
     public router: Router,
     public articulosService: ArticulosService,
@@ -944,6 +946,11 @@ domicilioValue(value){
       this.entrega.ciudad.provincia.pais.id= 8;
       this.getProvincias(this.entrega.ciudad.provincia.pais.id);
 }
+  if (this.domicilio == 6) {
+      this.provinciasR = null;
+      this.provincias = null;
+      this.getProvinciasR(this.entrega.ciudad_retiro.provincia.pais.id);
+  }
 }
 
 selectedValue(value){
@@ -1206,15 +1213,30 @@ this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
     console.log(error.json());
 });
 }
-
 getProvinciasR(pais_id) {
-this.provincias = null;
-this.ciudades = null;
-this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
-  this.provinciasR = data.json().data;
-}, (error) => {
-  console.log(error.json());
-});
+  if(pais_id){
+    this.provinciasR = null;
+    this.ciudadesR = null;
+    this.parroquiasR = null;
+    if (this.domicilio == 6) {
+          this.provinciaService.getAll({pais_id: pais_id, sucursal: 1}).subscribe((data) => {
+              this.provinciasR = data.json().data;
+          }, (error) => {
+              console.log(error.json());
+          });
+          return;
+    }
+    this.provinciaService.getAll({pais_id: pais_id}).subscribe((data) => {
+        this.provinciasR = data.json().data;
+        if(this.domicilio == 2)
+          this.entrega.ciudad_retiro.provincia.id = 895;
+        if(this.domicilio == 4)
+          this.entrega.ciudad_retiro.provincia.id = 901;
+
+    }, (error) => {
+        console.log(error.json());
+    });
+  }
 }
 
 getCiudades(provincia_id) {
@@ -1227,13 +1249,64 @@ this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
 }
 
 getCiudadesR(provincia_id) {
-this.ciudadesR = null;
-this.ciudadService.getAll({provincia_id: provincia_id}).subscribe((data) => {
-  this.ciudadesR = data.json().data;
- 
-}, (error) => {
-  console.log(error.json());
-});
+  if(provincia_id){
+  this.ciudadesR = null;
+  this.parroquiasR = null;
+  if (this.domicilio == 6) {
+        this.ciudadService.getPrincipal({provincia_id: provincia_id, sucursal: 1}).subscribe((data) => {
+            this.ciudadesR = data.json().data;
+        }, (error) => {
+            console.log(error.json());
+        });
+        return;
+    }
+    this.ciudadService.getPrincipal({provincia_id: provincia_id}).subscribe((data) => {
+      this.ciudadesR = data.json().data;
+      if(this.domicilio == 2)
+        this.entrega.ciudad_retiro.id = 4813;
+      if(this.domicilio == 4)
+        this.entrega.ciudad_retiro.id = 8430;
+  }, (error) => {
+      console.log(error.json());
+  });
+  }
+  
+}
+
+
+  getSucursales(ciudad_id) {
+    this.sucursales = null;
+    this.ciudadService.getSucursales({ciudad_id: ciudad_id}).subscribe((data) => {
+        this.sucursales = data.json().data;
+        
+    }, (error) => {
+        console.log(error.json());
+    });
+  }
+
+changeCiudad() {
+  this.sucursal_direccion = '';
+  this.sucursales = null;
+}
+changeProvincia() {
+  this.sucursal_direccion = '';
+  this.sucursales = null;
+  this.ciudadesR = null;
+}
+changePais() {
+  this.sucursal_direccion = '';
+  this.sucursales = null;
+  this.ciudadesR = null;
+  this.provinciasR = null;
+}
+
+getDireccionSucursal(sucursalId: number){
+    this.sucursal_direccion = '';
+    this.sucursales.forEach((sucursal: any) => {
+        if(sucursal.id === sucursalId){
+            this.sucursal_direccion = sucursal.direccion;
+        }
+    });
 }
 
 onConversion(articulo){
