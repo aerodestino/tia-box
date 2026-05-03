@@ -943,6 +943,9 @@
                                 País origen*:
                             </label>
                             <div class="col-lg-3">
+                                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paises">
+                                    <input type="text" class="form-control"/>
+                                </div>
                                 <select type="text" class="form-control m-input"
                                 [(ngModel)]="pais_origen_d_v_id" #pais_origen="ngModel" name="pais_origen" required>
                                 <option *ngFor="let pais of paises" [ngValue]="pais.id">
@@ -957,6 +960,9 @@
                                 País destino*:
                             </label>
                             <div class="col-lg-3">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paises">
+                                    <input type="text" class="form-control"/>
+                                </div>
                                 <select type="text" class="form-control m-input"
                                 [(ngModel)]="pais_destino_d_v_id" #pais_destino="ngModel" name="pais_destino" required>
                                 <option *ngFor="let pais of paises" [ngValue]="pais.id">
@@ -1081,6 +1087,9 @@
                                 País:
                             </label>
                             <div class="col-lg-3">
+                                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paisesEntrega">
+                                    <input type="text" class="form-control"/>
+                                </div>
                                 <select  class="form-control m-input" placeholder="País" (change)="getProvinciasR(pais_id.value); changePais()"
                                         [(ngModel)]="entrega.ciudad_retiro.provincia.pais.id" disabled={{disabled}} #pais_id="ngModel" name="pais_id">
                                     <option [value]="" disabled>Seleccione un País</option>
@@ -1280,6 +1289,9 @@
                                 País:
                             </label>
                             <div class="col-lg-3">
+                                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!paisesEntrega">
+                                    <input type="text" class="form-control"/>
+                                </div>
                                 <select  class="form-control m-input" placeholder="País" disabled={{disabledDir}} (change)="getProvincias(pais_id.value)"
                                         [(ngModel)]="entrega.ciudad.provincia.pais.id" #pais_id="ngModel" name="pais_id" required >
                                     <option [value]="" disabled>Seleccione un País</option>
@@ -1292,6 +1304,9 @@
                                 Provincia:
                             </label>
                             <div class="col-lg-3">
+                                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!provincias">
+                                    <input type="text" class="form-control"/>
+                                </div>  
                                 <app-auto-complete *ngIf="provincias" placeholder="Seleccione"
                                 [(ngModel)]="entrega.ciudad.provincia.id" #provincia_id="ngModel"
                                 name="provincia_id" required [items]="provincias"
@@ -1307,6 +1322,9 @@
                                 Ciudad Principal:
                             </label>
                             <div class="col-lg-3">
+                                 <div class="m-loader m-loader--primary m-loader--right" *ngIf="!ciudades">
+                                    <input type="text" class="form-control"/>
+                                </div>
                                 <app-auto-complete *ngIf="ciudades" placeholder="Seleccione"
                                 [(ngModel)]="entrega.ciudad.id" #ciudad_id="ngModel" (change)="getParroquias(ciudad_id.value)"
                                 name="ciudad_id" required [items]="ciudades" [disabled]="disabledDir"
