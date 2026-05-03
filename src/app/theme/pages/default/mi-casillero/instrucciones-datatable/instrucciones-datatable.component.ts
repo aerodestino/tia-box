@@ -41,7 +41,6 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
   declaracion: Declaracion;
   trackbox: any;
   detalles: any;
-  public usuarios: User[];
   public paises: Country[];
   articulodv: any;
   public totalDescripciones:number = 0;
@@ -67,6 +66,7 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
   titulo = 'Crear Entrega';
   isModal = true;
   @Input() url: any;
+  @Input() usuarios: User[] |null = null;
   @Output() entregaSelection: EventEmitter<any> = new EventEmitter();
   @Output() selectionChange: EventEmitter<any> = new EventEmitter();
   @Output() articuloChange: EventEmitter<any> = new EventEmitter();
@@ -98,7 +98,6 @@ export class InstruccionesDatatableComponent extends BaseDatatableComponent
 
   ngOnInit() {
     this.getPaisesE(); 
-    this.getUsuarios();
     this.domicilio = 1;
     this.page = this.filters.offset + 1;
     this.registroInicialPagina =
@@ -582,49 +581,23 @@ getDireccionSucursal(sucursalId: number){
 
 getUsuarios() {
   this.usuarios = null;
-  console.log('Loading users...', this.appService.user);
   this.usuariosService.allUsuarios({usuario_id : (this.appService.user) ? this.appService.user.id : null }).subscribe((data) => {
-      console.log('Users response:', data.json());
-      const response = data.json();
-      
-      // Try different possible response structures
-      if (response.data && response.data.results) {
-        this.usuarios = response.data.results;
-      } else if (response.data) {
-        this.usuarios = response.data;
-      } else if (response.results) {
-        this.usuarios = response.results;
-      } else {
-        this.usuarios = response;
-      }
-      
-      console.log('Users loaded:', this.usuarios);
-      
-      if (this.usuarios && this.usuarios.length > 0) {
-        for(let i in this.usuarios){
-          let nombre = ((this.usuarios[i].empresa) ? this.usuarios[i].empresa : this.usuarios[i].nombre);
-          this.usuarios[i].buscar = this.usuarios[i].codigo+' '+ nombre +' '+this.usuarios[i].apellido ;
-          this.usuarios[i].buscar1 = this.usuarios[i].codigo+' '+ this.usuarios[i].apellido ;
+      this.usuarios = data.json().data.results;
+      console.log('Usuarios:', this.usuarios);
+      for(let i in this.usuarios){
+        let nombre = ((this.usuarios[i].empresa) ? this.usuarios[i].empresa : this.usuarios[i].nombre);
+        this.usuarios[i].buscar = this.usuarios[i].codigo+' '+ nombre +' '+this.usuarios[i].apellido ;
+        this.usuarios[i].buscar1 = this.usuarios[i].codigo+' '+ this.usuarios[i].apellido ;
 
-          if(this.usuarios[i].empresa && this.usuarios[i].empresa != ''){
-              this.usuarios[i].nombre= this.usuarios[i].empresa +'('+ this.usuarios[i].codigo +')';
-              this.usuarios[i].apellido= '';
-          }else{
-              this.usuarios[i].apellido= this.usuarios[i].apellido +'('+ this.usuarios[i].codigo +')'; 
-          }
+        if(this.usuarios[i].empresa && this.usuarios[i].empresa != ''){
+            this.usuarios[i].nombre= this.usuarios[i].empresa +'('+ this.usuarios[i].codigo +')';
+            this.usuarios[i].apellido= '';
+        }else{
+            this.usuarios[i].apellido= this.usuarios[i].apellido +'('+ this.usuarios[i].codigo +')'; 
         }
-      } else {
-        console.warn('No users found or empty response');
-        this.usuarios = [];
-      }
+    }
   }, (error) => {
-      console.error('Error loading users:', error);
-      this.usuarios = [];
-      try {
-        this.toastr.error(error.json().error.message);
-      } catch (e) {
-        this.toastr.error('Error loading users');
-      }
+      this.toastr.error(error.json().error.message);
   });
 }
 

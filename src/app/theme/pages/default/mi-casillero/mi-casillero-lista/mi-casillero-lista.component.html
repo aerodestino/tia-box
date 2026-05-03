@@ -385,6 +385,7 @@
                             [data]="instrucciones"
                             (ver)="verImagenes($event, imagenesModal)"
                             [totalItems]="totalInstrucciones"
+                            [usuarios]="usuarios"
                             [filters]="instruccionesFilters"
                             [url]="urlfactura"
                             (cargar)= "getInstrucciones($event)"
@@ -1192,12 +1193,12 @@
                                 Usuario*:
                             </label>
                             <div class="col-lg-9">
-                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuariosRetiro">
+                                <div class="m-loader m-loader--primary m-loader--right" *ngIf="!usuarios">
                                     <input type="text" class="form-control"/>
                                 </div>
-                                <app-auto-complete *ngIf="usuariosRetiro" placeholder="Seleccione"
+                                <app-auto-complete *ngIf="usuarios" placeholder="Seleccione"
                                                     [ngModel]="usuarioRetirar" #usuario_retiro="ngModel"
-                                                    name="usuario_retiro" required [items]="usuariosRetiro"
+                                                    name="usuario_retiro" required [items]="usuarios"
                                                     [textField]="'numero_identidad'"
                                                     textField1="full_name"
                                                     buscador="buscar"
