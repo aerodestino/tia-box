@@ -168,7 +168,8 @@
               <span *ngIf="usuario.identidad" class="m--font-success">
 								Ya subiste un documento de identidad
 							</span>
-              <a href="{{ usuario.identidad.web_url }}" target="_blank">Ver documento</a>
+              <br/>
+              <a [attr.href]="usuario.identidad.web_url" target="_blank" class="cursor-pointer">Ver documento</a>
 							<br/>
             </div>
             <input

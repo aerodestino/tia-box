@@ -48,13 +48,19 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
   }
 
   getUsuario() {
+     Helpers.setLoading(true);
     this.usuariosService.getProfile().subscribe(
       usuario => {
         this.appService.user = usuario.json().data;
         this.usuario = usuario.json().data;
+        if (!this.usuario.parroquia) {
+          this.usuario.parroquia = { id: null };
+        }
+         Helpers.setLoading(false);
       },
       error => {
         this.toastr.error(error.json().error.message);
+        Helpers.setLoading(false);
       }
     );
   }
@@ -110,6 +116,7 @@ export class PerfilListaComponent extends BaseListComponent implements OnInit {
           Helpers.setLoading(false);
           this.toastr.success("Documento Guardado");
           this.message="Documento Guardado";
+          this.getUsuario();
         },
         error => {
           Helpers.setLoading(false);
