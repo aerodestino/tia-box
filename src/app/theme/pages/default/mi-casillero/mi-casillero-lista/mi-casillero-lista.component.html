@@ -1283,7 +1283,7 @@
                                 <select  class="form-control m-input" placeholder="País" disabled={{disabledDir}} (change)="getProvincias(pais_id.value)"
                                         [(ngModel)]="entrega.ciudad.provincia.pais.id" #pais_id="ngModel" name="pais_id" required >
                                     <option [value]="" disabled>Seleccione un País</option>
-                                    <option *ngFor="let pais of paisesAct" [value]="pais.id" >
+                                    <option *ngFor="let pais of paisesEntrega" [value]="pais.id" >
                                         {{pais.nombre}}
                                     </option>
                                 </select>
