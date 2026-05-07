@@ -129,16 +129,16 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-        <div class="m-portlet__head-caption">
-            <div class="m-list-settings">
-                <div *ngIf="calculo" class="m-list-settings__group">
+                      <div class="modal-body">
+                    <div class="m-portlet__head-caption">
+                             <div class="m-list-settings">
+                <div *ngIf="costo" class="m-list-settings__group">
                     <div class="m-list-settings__item">
                         <span class="m-list-settings__item-label">
                             Valor FOB (USD)
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.precio_total }}
+                            {{ costo.precio_total }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -146,7 +146,7 @@
                             Peso(Lb)
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.peso | number:'1.2-2' }}
+                            {{ costo.peso | number:'1.2-2' }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -154,7 +154,7 @@
                            Volumen(Vlb)
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.volumen }}
+                            {{ costo.volumen }}
                         </span>
                     </div>
                     <br/>
@@ -169,7 +169,7 @@
                             Flete
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.flete }}
+                            {{ costo.flete }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -177,7 +177,7 @@
                             Domicilio
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.domicilio }}
+                            {{ costo.domicilio }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -185,7 +185,7 @@
                             Seguro
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.seguro }}
+                            {{ costo.seguro }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -193,7 +193,7 @@
                             Fuel
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.fuel }}
+                            {{ costo.fuel }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -201,7 +201,7 @@
                             Sobrepeso
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.sobrepeso }}
+                            {{ costo.sobrepeso }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -209,7 +209,7 @@
                             Cubicación
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.cubicacion }}
+                            {{ costo.cubicacion }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -217,7 +217,7 @@
                             Trámite
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.tramite }}
+                            {{ costo.tramite }}
                         </span>
                     </div>
                        <div class="m-list-settings__item">
@@ -225,7 +225,7 @@
                           <strong>Total Transporte</strong>
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.total_transporte + calculo.tramite }}
+                            {{ costo.total_transporte + costo.tramite }}
                         </span>
                     </div>
                     <br/>
@@ -235,16 +235,16 @@
                             CARGO EXTRA(USD)
                         </h5>
                     </div>
-                    <div class="m-list-settings__item" *ngIf="(!calculo.cargos_extra_con_iva && !calculo.cargos_extra_sin_iva) || 
-                    (calculo.cargos_extra_con_iva && calculo.cargos_extra_sin_iva && calculo.cargos_extra_con_iva == 0 && calculo.cargos_extra_sin_iva ==0)">
+                    <div class="m-list-settings__item" *ngIf="(!costo.cargos_extra_con_iva && !costo.cargos_extra_sin_iva) || 
+                    (costo.cargos_extra_con_iva && costo.cargos_extra_sin_iva && costo.cargos_extra_con_iva == 0 && costo.cargos_extra_sin_iva ==0)">
                         <span class="m-list-settings__item-label">
                             Cargo Extra con Iva
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.cargos_extra }}
+                            {{ costo.cargos_extra }}
                         </span>
                     </div>
-                    <div *ngFor="let con_iva of calculo.lista_cargos" class="m-list-settings__item">
+                    <div *ngFor="let con_iva of costo.lista_cargos" class="m-list-settings__item">
                         <span class="m-list-settings__item-label"  *ngIf="con_iva.iva">
                             {{ con_iva.descripcion }} (con IVA)
                         </span>
@@ -255,12 +255,12 @@
                             {{ con_iva.cargo_extra }}
                         </span>
                     </div>
-                    <div class="m-list-settings__item" *ngIf="(calculo.cargos_extra_sin_iva && calculo.cargos_extra_con_iva && (calculo.cargos_extra_con_iva + calculo.cargos_extra_sin_iva ) < calculo.cargos_extra)">
+                    <div class="m-list-settings__item" *ngIf="(costo.cargos_extra_sin_iva && costo.cargos_extra_con_iva && (costo.cargos_extra_con_iva + costo.cargos_extra_sin_iva ) < costo.cargos_extra)">
                         <span class="m-list-settings__item-label">
                             Otros Cargos Extra con Iva
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.cargos_extra - (calculo.cargos_extra_con_iva + calculo.cargos_extra_sin_iva) }}
+                            {{ costo.cargos_extra - (costo.cargos_extra_con_iva + costo.cargos_extra_sin_iva) }}
                         </span>
                     </div>
                        <br/>
@@ -269,25 +269,25 @@
                           <strong>SUBTOTAL</strong>
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.precio_final_facturacion }}
+                            {{ costo.precio_final_facturacion }}
                         </span>
                     </div>
                     <br/>
 
-                    <div class="m-list-settings__item" *ngIf="calculo.usa_iva">
+                    <div class="m-list-settings__item" *ngIf="costo.usa_iva">
                         <span class="m-list-settings__item-label">
                             IVA
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.iva_pecio_final }}
+                            {{ costo.iva_pecio_final }}
                         </span>
                     </div>
-                     <div class="m-list-settings__item" *ngIf="calculo.usa_iva">
+                     <div class="m-list-settings__item" *ngIf="costo.usa_iva">
                         <span class="m-list-settings__item-label">
                            <strong>Precio Final con IVA</strong>
                         </span>
                         <span class="m-list-settings__item-control" >
-                            {{ calculo.precio_final_facturacion_iva }}
+                            {{ costo.precio_final_facturacion_iva }}
                         </span>
                     </div>
                    
@@ -302,10 +302,10 @@
                     </div>
                     <div class="m-list-settings__item">
                         <span class="m-list-settings__item-label">
-                           Impuesto Arancel({{calculo.porcentaje_arancel}}%)
+                           Impuesto Arancel({{costo.porcentaje_arancel}}%)
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.impuesto_arancel }}
+                            {{ costo.impuesto_arancel }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -313,7 +313,7 @@
                             Salvaguarda
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.salvaguarda }}
+                            {{ costo.salvaguarda }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -321,7 +321,7 @@
                             Fodinfa
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.fodinfa }}
+                            {{ costo.fodinfa }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
@@ -329,15 +329,15 @@
                             I.C.E (Tasa)
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.ice }}
+                            {{ costo.ice }}
                         </span>
                     </div>
                     <div class="m-list-settings__item">
                         <span class="m-list-settings__item-label">
-                           Impuesto IVA({{calculo.porcentaje_iva}}%)
+                           Impuesto IVA({{costo.porcentaje_iva}}%)
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.impuesto_iva }}
+                            {{ costo.impuesto_iva }}
                         </span>
                     </div> 
                     <div class="m-list-settings__item">
@@ -345,7 +345,7 @@
                            <strong>TOTAL IMPUESTOS</strong>
                         </span>
                         <span class="m-list-settings__item-control">
-                            {{ calculo.impuesto_total }}
+                            {{ costo.impuesto_total }}
                         </span>
                     </div> 
                     <br/>
@@ -354,20 +354,20 @@
                         <span class="m-list-settings__item-label">
                            <strong>Precio Final</strong>
                         </span>
-                        <span class="m-list-settings__item-control" *ngIf="calculo.usa_iva">
-                            {{ (calculo.precio_final_facturacion_iva_impuesto_total) }}
+                        <span class="m-list-settings__item-control" *ngIf="costo.usa_iva">
+                            {{ (costo.precio_final_facturacion_iva_impuesto_total) }}
                         </span>
-                         <span class="m-list-settings__item-control" *ngIf="!calculo.usa_iva">
-                            {{ (calculo.precio_final_facturacion_impuesto_total) }}
+                         <span class="m-list-settings__item-control" *ngIf="!costo.usa_iva">
+                            {{ (costo.precio_final_facturacion_impuesto_total) }}
                         </span>
                     </div>
 
                 </div>
             </div>
 
-        </div>
+                    </div>
 
-    </div>
+                </div>
             </ng-template>
             <!--end::Modal-->
 
