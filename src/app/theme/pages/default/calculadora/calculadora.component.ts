@@ -27,6 +27,7 @@ export class CalculadoraComponent implements OnInit {
     aranceles: Arancel[] = [];
     tpeso: number;
     tdimension: number;
+    usa_iva: boolean = true;
     constructor(public tarifariosService: TarifariosService, public arancelesService: ArancelesService,
                 public calculadoraService: CalculadoraService, public ngbModal: NgbModal,
                 public toastr: ToastsManager,
@@ -57,11 +58,17 @@ export class CalculadoraComponent implements OnInit {
     }
 
     calcular(variables: any, modal) {
-        variables.factura = 1;
-        variables.usuario_id = this.appService.user.id;
+        // Create a copy of form data to avoid modifying the original
+        const formData = {
+            ...variables,
+            factura: 1,
+            usuario_id: this.appService.user.id
+        };
+        
         this.appService.loadingMessage = "Realizando calculos...";
         Helpers.setLoading(true);
-        this.calculadoraService.create(variables).subscribe(resultados => {
+        
+        this.calculadoraService.create(formData).subscribe(resultados => {
             Helpers.setLoading(false);
             this.costo = resultados.json().data;
             this.appService.loadingMessage = "Cargando";
@@ -70,9 +77,16 @@ export class CalculadoraComponent implements OnInit {
         }, error => {
             this.appService.loadingMessage = "Cargando";
             Helpers.setLoading(false);
-             this.toastr.error('Ocurrió un error');
-            console.log(this.toastr.error(error.json().error.message));
-           // this.toastr.error(error.json().error.message);
+            
+            // Better error handling that doesn't affect form values
+            try {
+                const errorMessage = error.json().error.message;
+                this.toastr.error(errorMessage);
+            } catch (e) {
+                this.toastr.error('Ocurrió un error al realizar el cálculo');
+            }
+            
+            console.error('Error en cálculo:', error);
         });
     }
 
