@@ -21,7 +21,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class CalculadoraComponent implements OnInit {
     ci: any;
     cp: any;
-    resultado: any[];
+    calculo: any[];
 
     tarifarios: Tarifario[] = [];
     aranceles: Arancel[] = [];
@@ -63,7 +63,7 @@ export class CalculadoraComponent implements OnInit {
         Helpers.setLoading(true);
         this.calculadoraService.create(variables).subscribe(resultados => {
             Helpers.setLoading(false);
-            this.resultado = resultados.json().data;
+            this.calculo = resultados.json().data;
             this.appService.loadingMessage = "Cargando";
             this.ngbModal.open(modal);
             console.log(resultados.json().data);

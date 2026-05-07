@@ -130,120 +130,244 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 m--align-center">
-                            <h4>Total Gastos(USD)</h4>
-                        </div>
-                        <div class="col-12 m--align-center">
-                            <h2>{{resultado.precio_final}}</h2>
-                        </div>
+        <div class="m-portlet__head-caption">
+            <div class="m-list-settings">
+                <div *ngIf="calculo" class="m-list-settings__group">
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Valor FOB (USD)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.precio_total }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <h4>TOTAL TRANSPORTE</h4>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.total_transporte}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Peso(Lb)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.peso | number:'1.2-2' }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Flete</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.flete}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                           Volumen(Vlb)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.volumen }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Seguro</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.seguro}}</span>
-                        </div>
+                    <br/>
+                    <div class="m-list-settings__item">
+                        <h4>
+                            CARGO SERVICIO
+                        </h4>
+                
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Fuel</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.fuel}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Flete
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.flete }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Sobrepeso</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.sobrepeso}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Domicilio
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.domicilio }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Cargo Volumen</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.cubicacion}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Seguro
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.seguro }}
+                        </span>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <h4>Impuestos Aproximados</h4>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.impuesto_total}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Fuel
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.fuel }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Arancel ({{resultado.porcentaje_arancel}}%) </span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.impuesto_arancel}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Sobrepeso
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.sobrepeso }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Impuesto Extra</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.cargos_extra}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Cubicación
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.cubicacion }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Fodinfa</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.fodinfa}}</span>
-                        </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Trámite
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.tramite }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>Tasa</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.ice}}</span>
-                        </div>
+                       <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                          <strong>Total Transporte</strong>
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.total_transporte + calculo.tramite }}
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <span>I.V.A ({{resultado.porcentaje_iva}}%)</span>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.impuesto_iva}}</span>
-                        </div>
-                    </div><br/>
-                    <div class="row">
-                        <div class="col-6 m--align-left">
-                            <h4>Trámite</h4>
-                        </div>
-                        <div class="col-6 m--align-right">
-                            <span>{{resultado.tramite}}</span>
-                        </div>
+                    <br/>
+                    
+                    <div class="m-list-settings__item">
+                        <h5>
+                            CARGO EXTRA(USD)
+                        </h5>
                     </div>
+                    <div class="m-list-settings__item" *ngIf="(!calculo.cargos_extra_con_iva && !calculo.cargos_extra_sin_iva) || 
+                    (calculo.cargos_extra_con_iva && calculo.cargos_extra_sin_iva && calculo.cargos_extra_con_iva == 0 && calculo.cargos_extra_sin_iva ==0)">
+                        <span class="m-list-settings__item-label">
+                            Cargo Extra con Iva
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.cargos_extra }}
+                        </span>
+                    </div>
+                    <div *ngFor="let con_iva of calculo.lista_cargos" class="m-list-settings__item">
+                        <span class="m-list-settings__item-label"  *ngIf="con_iva.iva">
+                            {{ con_iva.descripcion }} (con IVA)
+                        </span>
+                        <span class="m-list-settings__item-label"  *ngIf="!con_iva.iva">
+                            {{ con_iva.descripcion }} (sin IVA)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ con_iva.cargo_extra }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item" *ngIf="(calculo.cargos_extra_sin_iva && calculo.cargos_extra_con_iva && (calculo.cargos_extra_con_iva + calculo.cargos_extra_sin_iva ) < calculo.cargos_extra)">
+                        <span class="m-list-settings__item-label">
+                            Otros Cargos Extra con Iva
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.cargos_extra - (calculo.cargos_extra_con_iva + calculo.cargos_extra_sin_iva) }}
+                        </span>
+                    </div>
+                       <br/>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                          <strong>SUBTOTAL</strong>
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.precio_final_facturacion }}
+                        </span>
+                    </div>
+                    <br/>
+
+                    <div class="m-list-settings__item" *ngIf="calculo.usa_iva">
+                        <span class="m-list-settings__item-label">
+                            IVA
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.iva_pecio_final }}
+                        </span>
+                    </div>
+                     <div class="m-list-settings__item" *ngIf="calculo.usa_iva">
+                        <span class="m-list-settings__item-label">
+                           <strong>Precio Final con IVA</strong>
+                        </span>
+                        <span class="m-list-settings__item-control" >
+                            {{ calculo.precio_final_facturacion_iva }}
+                        </span>
+                    </div>
+                   
+                    <br/>
+
+                     <div class="m-list-settings__item">
+
+                        <h4>
+                            IMPUESTOS APROXIMADOS
+                        </h4>
+                
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                           Impuesto Arancel({{calculo.porcentaje_arancel}}%)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.impuesto_arancel }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Salvaguarda
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.salvaguarda }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            Fodinfa
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.fodinfa }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                            I.C.E (Tasa)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.ice }}
+                        </span>
+                    </div>
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                           Impuesto IVA({{calculo.porcentaje_iva}}%)
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.impuesto_iva }}
+                        </span>
+                    </div> 
+                    <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">
+                           <strong>TOTAL IMPUESTOS</strong>
+                        </span>
+                        <span class="m-list-settings__item-control">
+                            {{ calculo.impuesto_total }}
+                        </span>
+                    </div> 
+                    <br/>
+                
+                     <div class="m-list-settings__item" >
+                        <span class="m-list-settings__item-label">
+                           <strong>Precio Final</strong>
+                        </span>
+                        <span class="m-list-settings__item-control" *ngIf="calculo.usa_iva">
+                            {{ (calculo.precio_final_facturacion_iva_impuesto_total) }}
+                        </span>
+                         <span class="m-list-settings__item-control" *ngIf="!calculo.usa_iva">
+                            {{ (calculo.precio_final_facturacion_impuesto_total) }}
+                        </span>
+                    </div>
+
                 </div>
+            </div>
+
+        </div>
+
+    </div>
             </ng-template>
             <!--end::Modal-->
 
